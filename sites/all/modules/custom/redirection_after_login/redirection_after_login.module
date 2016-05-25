@@ -1,0 +1,24 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: kortum
+ * Date: 20.04.2016
+ */
+
+
+
+function redirection_after_login_form_alter(&$form, &$form_state, $form_id) {
+    if ($form_id == 'user_login') {
+
+        $last_page_value = isset($_SERVER['QUERY_STRING']) ? $_SERVER['QUERY_STRING'] : '';
+
+        if(contains("destination=node", $last_page_value)) {
+            drupal_set_message("Bitte melden Sie sich an, um die Aktion durchführen zu können.<br>
+            Sollten Sie sich registrieren, bitte nochmals auf das Event klicken.");
+
+        }
+    }
+}
+function contains($needle, $haystack) {
+    return strpos($haystack, $needle) !== false;
+}

@@ -1,0 +1,303 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: kortum
+ * Date: 20.04.2016
+ */
+
+
+/*
+ * Wenn ein bestimmter Inhaltstyp abgespeichert wird, wird diese Funktion aktiviert
+ */
+function news_trigger_entity_postsave($entity, $entity_type, $op) {
+
+    //Wenn entweder ein Event oder ein Projekt gespeichert wird...
+    if(!strcmp($entity->type, "event") or !strcmp($entity->type, "projekt")) {
+
+        //Die nid der gespeicherten Entity wird ermittelt
+        list($nid) = entity_extract_ids($entity_type, $entity);
+
+        //der passende Node der nid wird ermittelt
+        $check = db_query("SELECT * FROM {node} as node WHERE node.nid = :id",
+            array(":id" => $nid));
+
+        //Wenn die Werte von created und changed gleich sind... Also wenn der Node erstellt und nicht bearbeitet wurde
+        foreach($check as $c) {
+            if ($c->created == $c->changed) {
+                $id = db_query("SELECT MAX(activities_id) FROM activities")->fetchCol();
+                $id[0]++;
+                $tid = 0;
+                $vid = 0;
+                db_query("INSERT INTO {activities} VALUES (:aid,:id, :vid,:tid,:type)",
+                    array(":aid" => $id, ":id" => $nid, ":vid" => $vid,  ":tid" => $tid, ":type" => $entity->type));
+            }
+        }
+    }
+}
+
+/*
+ * Diese Funktion wird aufgerufen, wenn ein neuer Vokabularname gespeichert wurde. Dieser wird anschließend
+ * in die activities-Tabelle eingespeichert.
+ */
+function news_trigger_taxonomy_vocabulary_insert($vocabulary) {
+
+    $id = db_query("SELECT MAX(activities_id) FROM activities")->fetchCol();
+    $id[0]++;
+
+    $vocab = $vocabulary->module;
+    $vid = $vocabulary->vid;
+    $nid = 0;
+    $tid = 0;
+
+    db_query("INSERT INTO {activities} VALUES (:aid,:id,:vid ,:tid,:type)",
+        array(":aid" => $id, ":id" => $nid, ":vid" => $vid,":tid" => $tid, ":type" => $vocab));
+}
+
+/*
+ * Diese Funktion wird aufgerufen, wenn ein neuer Begriff/Term gespeichert wurde. Dieser wird anschließend
+ * in die activities-Tabelle eingespeichert.
+ */
+function news_trigger_taxonomy_term_insert($term) {
+
+    $id = db_query("SELECT MAX(activities_id) FROM activities")->fetchCol();
+    $id[0]++;
+
+    $vocab = "term";
+    $vid = $term->vid;
+    $tid = $term->tid;
+    $nid = 0;
+
+    db_query("INSERT INTO {activities} VALUES (:aid,:id,:vid ,:tid,:type)",
+        array(":aid" => $id, ":id" => $nid, ":vid" => $vid,":tid" => $tid, ":type" => $vocab));
+}
+
+/*
+ * Diese Funktion wird aufgerufen, wenn ein Node gelöscht wird, der sich noch in der activities-Tabelle befindet
+ */
+function news_trigger_entity_delete($entity, $type) {
+
+    if(!strcmp($type, "node")) {
+        if(!strcmp($entity->type, "event") or !strcmp($entity->type, "projekt")) {
+            $activities = db_query("SELECT * FROM {activities} as ac WHERE ac.nid = :id",
+                array(":id" => $entity->nid));
+            if($activities) {
+                $activities = db_query("DELETE FROM {activities} WHERE nid = :id",
+                    array(":id" => $entity->nid));
+            }
+        }
+    } else if (!strcmp($type, "taxonomy_term")) {
+        $activities = db_query("SELECT * FROM {activities} as ac WHERE ac.tid = :tid",
+            array(":tid" => $entity->tid));
+        if($activities) {
+            $activities = db_query("DELETE FROM {activities} WHERE tid = :tid",
+                array(":tid" => $entity->tid));
+        }
+    } else if(!strcmp($type, "taxonomy_vocabulary")) {
+        $activities = db_query("SELECT * FROM {activities} as ac WHERE ac.vid = :vid",
+            array(":vid" => $entity->vid));
+        if($activities) {
+            $activities = db_query("DELETE FROM {activities} WHERE vid = :vid",
+                array(":vid" => $entity->vid));
+        }
+    }
+}
+
+/*
+ * Diese Funktion bewirkt, dass auf der Seite /activities die Funktion news_trigger_get_activities aufgerufen wird
+ * und somit eine Übersicht über Neuigkeiten erzeugt wird.
+ */
+function news_trigger_menu()
+{
+    $items['activities'] = array(
+        'title' => 'Neueste Aktivitäten:',
+        'page callback' => 'news_trigger_get_activities',
+        'access arguments' => array('access content'),
+    );
+
+    return $items;
+}
+
+/*
+ * Diese Funktion liest die activities-Tabelle aus und speichert die einzelnen Einträge in eine Liste, die dann
+ * auf der Webseite angezeigt wird.
+ */
+function news_trigger_get_activities() {
+
+    $string = "<div id='aktivitaeten_log'>";
+
+    //Tabelle wird ausgelesen
+    $activities = db_query("SELECT * FROM {activities} ORDER BY activities_id DESC LIMIT 10");
+
+    foreach($activities as $a) {
+
+        //Wenn der Eintrag ein Event ist
+        if(!strcmp($a->content_type, "event")) {
+            $string.= "<div class='event_erstellung wrap'>";
+
+            //Ermitteln der node ID des Events
+            $eventNode = node_load($a->nid);
+
+            //Erzeugen eines internen Links
+            $eventNodeURL = url('node/'. $a->nid);
+
+            $string.= "<h2>Event <a href=\"$eventNodeURL\">".$eventNode->title. "</a> wurde erstellt</h2>";
+
+            $eventDescription = news_trigger_get_description($a->nid);
+
+            //Wenn die Beschreibung länger als 300 Zeichen ist, wird sie abgeschnitten
+            $newEventDes = cutDescription($eventDescription);
+
+            $string.= "<p>$newEventDes<p>";
+            $string.= "</div>";
+        }
+
+        //Wenn der Eintrag ein Projekt ist
+        if(!strcmp($a->content_type, "projekt")) {
+            $string.= "<div class='projekt_erstellung wrap'>";
+
+            //Ermitteln der node ID des Projektes
+            $projectNode = node_load($a->nid);
+
+            //Erzeugen eines internen Links
+            $projectNodeURL = url('node/'. $a->nid);
+
+            $string.= "<h2>Projekt <a href=\"$projectNodeURL\">".$projectNode->title. "</a> wurde erstellt</h2>";
+
+            $projectDescription = news_trigger_get_description($a->nid);
+
+            //Wenn die Beschreibung länger als 300 Zeichen ist, wird sie abgeschnitten
+            $newProjecttDes = cutDescription($projectDescription);
+            $string.= "<p>$newProjecttDes<p>";
+            $string.= "</div>";
+        }
+
+        //Wenn der Eintrag ein Vokabularname ist
+        if(!strcmp($a->content_type, "taxonomy")) {
+            $string.= "<div class='dimension_erstellung wrap'>";
+            $taxName = "";
+            $taxDescription = "";
+
+            //Anhand der vid wird der Name und die Beschreibung aus der Datenbank ermittelt
+            $vocabular = db_query("SELECT * FROM {taxonomy_vocabulary} as tax WHERE tax.vid = :id",
+                array(":id" => $a->vid));
+
+            foreach($vocabular as $vocab ) {
+                $taxName = $vocab->name;
+                $taxDescription = $vocab->description;
+            }
+
+            $string.= "<h2>Dimension ".$taxName. " wurde erstellt</h2>";
+
+            //Falls keine Beschreibung vorhanden ist, soll ein Standardtext erzeugt werden.
+            if(!strcmp($taxDescription, "")) {
+                $newTaxDes = "Keine Beschreibung vorhanden";
+            } else {
+                $newTaxDes = $taxDescription;
+            }
+
+            $CuttedDes = cutDescription($newTaxDes);
+            $string.= "<p>$CuttedDes<p>";
+            $string.= "</div>";
+        }
+
+        //Wenn der Eintrag ein Begriff/Term ist
+        if(!strcmp($a->content_type, "term")) {
+            $string.= "<div class='term_erstellung wrap'>";
+            $termName = "";
+            $termDescription = "";
+            $termDimension = "";
+
+            //Name und Beschreibung werden ermittelt
+            $term_data = db_query("SELECT * FROM {taxonomy_term_data} as tax WHERE tax.tid = :id",
+                array(":id" => $a->tid));
+
+            foreach($term_data as $t ) {
+                $termName = $t->name;
+                $termDescription = $t->description;
+            }
+
+            //Die passende Dimension wird ermittelt
+            $term_vocab = db_query("SELECT * FROM {taxonomy_vocabulary} as tax WHERE tax.vid = :id",
+                array(":id" => $a->vid));
+
+            foreach($term_vocab as $tv ) {
+                $termDimension = $tv->name;
+            }
+            
+            $string.= "<h2>Ausprägung ".$termName. " wurde zur Dimension ".$termDimension." hinzugefügt</h2>";
+
+            //Falls keine Beschreibung vorhanden ist, soll ein Standardtext erzeugt werden.
+            if(!strcmp($termDescription, "")) {
+                $newTermDes = "Keine Beschreibung vorhanden";
+            } else {
+                $newTermDes = $termDescription;
+            }
+
+            $CuttedTermDes = cutDescription($newTermDes);
+            $string.= "<p>$CuttedTermDes<p>";
+            $string.= "</div>";
+        }
+    }
+    //Tabelle wird abgeschlossen
+    $string.= "</div>";
+    return $string;
+}
+
+/*
+ * Diese Funktion ermittelt die Beschreibung anhand der Node ID
+ */
+function news_trigger_get_description($nid) {
+
+    //Der Node wird ermittelt
+    $node2 = node_load($nid);
+
+    //Wenn der Node ein Event ist
+    if(!strcmp($node2->type, "event")) {
+
+        $description = "";
+        $result = db_query("SELECT * FROM {node} as node INNER JOIN {field_data_field_news_mehr} AS mehr ON node.nid = mehr.entity_id WHERE node.nid = :nid;",
+            array(":nid" => $nid));
+
+        foreach($result as $r) {
+            $description = $r->field_news_mehr_value;
+        }
+
+        //Falls keine Beschreibung vorhanden ist, soll ein Standardtext erzeugt werden.
+        if (!strcmp($description, "")) {
+            $description = "Keine Beschreibung vorhanden";
+        }
+
+    //Wenn der Node ein Projekt ist
+    } else if(!strcmp($node2->type, "projekt")) {
+        $result = db_query("SELECT * FROM {field_data_body} as body WHERE body.entity_id = :nid;",
+            array(":nid" => $nid));
+
+        foreach($result as $r) {
+            $description = $r->body_value;
+        }
+
+        //Falls keine Beschreibung vorhanden ist, soll ein Standardtext erzeugt werden.
+        if(!strcmp($description, "")) {
+            $description = "Keine Beschreibung vorhanden";
+        }
+    }
+    return $description;
+}
+
+/*
+ * Diese Funktion analysiert die Länge einer Beschreibung und schneidet diese bei Bedarf nach einer gewissen Anzahl
+ * Zeichen ab.
+ */
+function cutDescription($string) {
+
+    if(strlen($string) > 300) {
+        $new = substr($string,0,300);
+        $leerzeichen = " ";
+        $pos = strripos($new, $leerzeichen);
+        $newDes = substr($new,0,$pos);
+        $newDes .=" ...";
+        return $newDes;
+    } else {
+        return $string;
+    }
+}

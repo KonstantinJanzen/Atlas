@@ -1,0 +1,3 @@
+name = Sending Email
+description = This module sent an email, when the user goes on a specific link.
+core = 7.x

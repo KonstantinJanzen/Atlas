@@ -1,0 +1,3 @@
+name = news trigger
+description = Do Things after a node is added
+core = 7.x

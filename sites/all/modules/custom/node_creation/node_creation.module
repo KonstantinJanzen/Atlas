@@ -1,0 +1,46 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hofer
+ * Date: 12.11.2015
+ * Time: 21:48
+ */
+
+
+/**
+ * Implements hook_menu()
+ */
+
+function node_creation_menu(){
+    $items = array();
+
+    //URL: /create_content
+    $items['create_content'] = array(
+        'title' => 'Create Content',
+        'page callback' => 'create_content',
+        'access arguments' => array('access content'),
+    );
+
+    return $items;
+}
+
+function create_content(){
+    //This example does not verify that the data is correct
+    $body_text = 'Lorem ipsum body text geoehns etc';
+
+    $node = new stdClass();
+    $node->type = 'article';
+    node_object_prepare($node);
+
+    $node->title = 'Node created programtically on ' . date('c');
+    $node->language = LANGUAGE_NONE;
+
+    $node->body[$node->language][0]['value']   = $body_text;
+    $node->body[$node->language][0]['summary'] = text_summary($body_text);
+    $node->body[$node->language][0]['format']  = 'filtered_html';
+
+    $path = 'content/my-lipsum';
+    $node->path = array('alias' => $path);
+
+    node_save($node);
+}

@@ -1,0 +1,3 @@
+name = form_meetup
+description = Provides the form to query which Verbundprojekt is on an event
+core = 7.x

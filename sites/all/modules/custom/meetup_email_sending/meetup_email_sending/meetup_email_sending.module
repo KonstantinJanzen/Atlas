@@ -1,0 +1,46 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: kortum
+ * Date: 03.11.2015
+ * Time: 19:20
+ */
+
+/**
+ * Implements block_info
+ */
+function meetup_email_sending_menu() {
+    //When this site is clicked, the method will be activated
+    $items['Email'] = array(
+        "title" => "Email",
+        "page callback" => "meetup_email_sending_send_mail",
+        "access arguments" => array('access content'),
+    );
+
+    return $items;
+}
+
+/**
+ * This method calls the standard drupal method to send an email.
+ * @return string
+ */
+function meetup_email_sending_send_mail() {
+    drupal_mail('meetup_email_sending', 'testmail', 'julien.hofer@googlemail.com', language_default());
+    dsm('mail was sent');
+    return "Email wurde versendet";
+}
+
+function meetup_email_sending_mail($key, &$message, $params) {
+    switch($key) {
+        case 'testmail':
+            $message['subject'] = t('This is a message from the new module');
+            $message['body'][] = t('This is a simple body');
+            break;
+    }
+}
+
+
+
+
+
+

@@ -1,0 +1,28 @@
+# German translation of Permissions per Webform (7.x-1.0-alpha1)
+# Copyright (c) 2013 by the German translation team
+#
+msgid ""
+msgstr ""
+"Project-Id-Version: Permissions per Webform (7.x-1.0-alpha1)\n"
+"POT-Creation-Date: 2013-09-27 22:56+0000\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Language-Team: German\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+msgid "Webform"
+msgstr "Webform"
+msgid "Access own webform submissions"
+msgstr "Auf eigene Einsendungen zugreifen"
+msgid "Edit own webform submissions"
+msgstr "Eigene Einsendungen bearbeiten"
+msgid "Delete own webform submissions"
+msgstr "Eigene Einsendungen löschen"
+msgid ""
+"The %authenticated role applies to any user signed into the site, "
+"regardless of other assigned roles."
+msgstr ""
+"Die %authenticated-Rolle ist für jeden registrierten Benutzer der "
+"Website gültig, unabhängig von weiteren zugewiesenen Rollen."

@@ -1,0 +1,360 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: kortum
+ * Date: 20.04.2016
+ */
+
+function interestedGroups_menu() {
+
+    /*
+     * Die einzelnen Folge-Seiten, sobald der Nutzer auf einen Button geklickt hat
+     */
+    $items['content/Interesse/%'] = array(
+        'title' => 'Interesse am Event',
+        'page callback' => 'interestedGroups_change_interested_status',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+    );
+    $items['node/Interesse/%'] = array(
+        'title' => 'Interesse am Event',
+        'page callback' => 'interestedGroups_change_interested_status',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+    );
+    $items['content/Teilnahme/%'] = array(
+        'title' => 'Teilnahme am Event',
+        'page callback' => 'interestedGroups_change_accept_status',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+    );
+    $items['node/Teilnahme/%'] = array(
+        'title' => 'Teilnahme am Event',
+        'page callback' => 'interestedGroups_change_accept_status',
+        'page arguments' => array(1),
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+
+/**
+ * Diese Methode überprüft, ob sich das Projekt bereits für das entsprechende Event interessiert oder bereits teilnimmt.
+ * @param $eventID Die Node-ID des entsprechenden Events.
+ * @return true, falls ein Eintrag in der DB existiert, false wenn nicht.
+ */
+function interestedGroups_check_current_user_project($eventID) {
+    global $user;
+    $existent = false;
+
+    //Hole Projekt-ID des angemeldeten Benutzers
+    $result = db_query("SELECT DISTINCT verbund.field_verbundprojekt_target_id, abk.field_abk_rzung_projekt_value from {field_data_field_verbundprojekt} as verbund Inner JOIN {field_data_field_abk_rzung_projekt} AS abk ON verbund.field_verbundprojekt_target_id = abk.entity_id WHERE verbund.entity_id = :userID",
+        array(":userID" => $user->uid));
+
+    //Check, ob sich das Projekt für das Event interessiert oder nicht.
+    foreach ($result as $r) {
+        $resultGroups = db_query("SELECT * FROM {interestedGroups} WHERE projectID = :projectID AND eventID = :eventID ",
+            array(":projectID" => $r->field_verbundprojekt_target_id, ":eventID" => $eventID));
+
+        foreach($resultGroups as $groups) {
+            $existent = true;
+        }
+
+        return $existent;
+    }
+
+}
+
+/*
+ * Erweitert die Anzeige des Nodes um die Nutzer-Tabelle
+ */
+function interestedGroups_node_view($node, $view_mode, $langcode) {
+
+    if(strcmp(drupal_get_path_alias(),"indeko-navi-modell")) {
+        $test = $node->type;
+        if (!strcmp($test, "event")) {
+            $node->content['my_additional_field2'] = array(
+                '#markup' => t(interestedGroups_getInterestedGroups()),
+                '#weight' => 1000,
+            );
+        }}
+}
+
+/*
+ * Händelt den Teilnahme-Status des jeweiligen Nutzers und aktualisiert diesen in der DB
+ */
+function interestedGroups_change_accept_status() {
+
+    //Hole Event-ID, User-ID, Projekt-ID und checke, ob bereits ein Eintrag des Projekts in der DB existiert.
+    $eventID = arg(2);
+    $existent = interestedGroups_check_current_user_project($eventID);
+    $projectID = interestedGroups_get_projectID();
+
+    global $user;
+    $url = $_SERVER['HTTP_REFERER'];
+    $site_title = "Zurück zum Event";
+
+    //Falls bereits ein Eintrag existiert...
+    if($existent) {
+
+        $result = db_query("SELECT * from {interestedGroups} as groups WHERE groups.eventID = :id AND groups.projectID = :projectID",
+            array(":id" => $eventID, ":projectID" => $projectID));
+
+        foreach($result as $r) {
+
+                if ($r->accept == 0) {
+
+                    db_query("UPDATE {interestedGroups} SET accept = 1, interested = 1 WHERE projectID = :projectID AND eventID = :id",
+                        array(":id" => $eventID, ":projectID" => $projectID));
+
+                    return "Vielen Dank! Sie nehmen am Event teil.<br><a href=$url>$site_title</a>";
+
+                } else {
+                    db_query("UPDATE {interestedGroups} SET accept = 0 WHERE projectID = :projectID AND eventID = :id",
+                        array(":id" => $eventID, ":projectID" => $projectID));
+
+                    return "Vielen Dank! Sie haben für das Event abgesagt.<br><a href=$url>$site_title</a>";
+                }
+        }
+
+     //Falls noch kein Eintrag in der DB existiert...
+    } else {
+
+        $id = db_query("SELECT MAX(interestedgroups_id) FROM interestedGroups")->fetchCol();
+        $id[0]++;
+        db_query("INSERT INTO {interestedGroups} VALUES (:pk, :userID, :id, 1,1, :projectID)",
+            array(":pk" => $id[0], ":id" => $eventID, ":userID" => $user->uid, ":projectID" => $projectID));
+
+        return "Vielen Dank! Sie nehmen am Event teil.<br><a href=$url>$site_title</a>";
+    }
+}
+
+/*
+ * Händelt den Interesse-Status des jeweiligen Nutzers und aktualisiert diesen in der DB
+ */
+function interestedGroups_change_interested_status()
+{
+    //Hole Event-ID, User-ID, Projekt-ID und checke, ob bereits ein Eintrag des Projekts in der DB existiert.
+    $eventID = arg(2);
+    global $user;
+    $existent = interestedGroups_check_current_user_project($eventID);
+    $projectID = interestedGroups_get_projectID();
+
+
+    $url = $_SERVER['HTTP_REFERER'];
+    $site_title = "Zurück zum Event";
+
+    //Falls bereits ein Eintrag existiert...
+    if ($existent) {
+
+        $result = db_query("SELECT * from {interestedGroups} as groups WHERE groups.eventID = :id AND groups.projectID = :projectID",
+            array(":id" => $eventID, ":projectID" => $projectID));
+
+        foreach ($result as $r) {
+            if ($r->interested == 0) {
+                db_query("UPDATE {interestedGroups} SET interested = 1 WHERE projectID = :projectID AND eventID = :id",
+                    array(":id" => $eventID, ":projectID" => $projectID));
+                return "Vielen Dank! Sie interessieren sich nun für diese Event.<br><a href=$url>$site_title</a>";
+            } else {
+                db_query("UPDATE {interestedGroups} SET interested = 0 WHERE projectID = :projektID AND eventID = :id",
+                    array(":id" => $eventID, ":projektID" => $projectID));
+                return "Vielen Dank! Sie interessieren sich ab sofort nicht mehr für dieses Event.<br><a href=$url>$site_title</a>";
+            }
+        }
+
+    //Falls noch kein Eintrag existiert...
+    } else {
+
+        $id = db_query("SELECT MAX(interestedgroups_id) FROM interestedGroups")->fetchCol();
+        $id[0]++;
+        db_query("INSERT INTO {interestedGroups} VALUES (:pk, :userID, :id, 1,0, :projectID)",
+            array(":pk" => $id[0], ":id" => $eventID, ":userID" => $user->uid, ":projectID" => $projectID));
+
+        return "Vielen Dank! Sie interessieren sich nun für dieses Event.<br><a href=$url>$site_title</a>";
+    }
+}
+
+
+/*
+ * Holt sich die jeweiligen Nutzer aus der DB und zeigt diese in einer Tabelle an
+ */
+function interestedGroups_getInterestedGroups() {
+
+    $node = menu_get_object();
+    $node2 = "Interesse/".$node->nid;
+    $node3 = "Teilnahme/".$node->nid;
+
+
+    $node4 = "../user/login?destination=node/".$node->nid;
+    $tempString = "";
+    $array = array();
+    $projectID = interestedGroups_get_projectID();
+
+    $result = db_query("SELECT * from {interestedGroups} as groups WHERE groups.eventID = :id AND groups.projectID = :projectID",
+        array(":id" => $node->nid, ":projectID" => $projectID));
+
+    /*
+     * Zunächst werden die Button generiert, die danach beschriftet sind, ob der User sich bereits interessiert
+     * oder teilnimmt oder nicht
+     */
+    foreach($result as $r) {
+        array_push($array, "Test");
+
+        //Wenn sich das Projekt entweder interessiert oder teilnimmt:
+        if(user_is_logged_in()) {
+
+            if($r->interested == 1) {
+                if($r->accept != 1) {
+                    $tempString .= "<br><br><br><button onclick=\"window.location.href='$node2'\" type=\"button\" id=\"keinInteresse\">Ich bin nicht interessiert </button> ";
+                }
+            } else {
+                $tempString .= "<br><br><br><button onclick=\"window.location.href='$node2'\" type=\"button\" id=\"interesse\">Ich bin interessiert </button> ";
+            }
+
+            if($r->accept == 1) {
+                $tempString .= " <button onclick=\"window . location . href = '$node3'\" type=\"button\" id=\"keineTeilnahme\">Ich nehme nicht teil </button> ";
+            } else {
+                $tempString .= " <button onclick=\"window . location . href = '$node3'\" type=\"button\" id=\"teilnahme\">Ich nehme teil </button> ";
+            }
+        }
+    }
+
+    //Wenn sich das Projekt noch nicht angemeldet hat:
+    if(sizeof($array) == 0) {
+
+        if(user_is_logged_in()) {
+            $tempString .= "<br><br><br><button onclick=\"window.location.href='$node2'\" type=\"button\" id=\"interesse\">Ich bin interessiert </button> ";
+            $tempString .= " <button onclick=\"window . location . href = '$node3'\" type=\"button\" id=\"teilnahme\">Ich nehme teil </button> ";
+
+        } else {
+            $tempString .= "<br><br><br><button onclick=\"window.location.href='$node4'\" type=\"button\" id=\"interesse\">Ich bin interessiert </button> ";
+            $tempString .= " <button onclick=\"window . location . href = '$node4'\" type=\"button\" id=\"teilnahme\">Ich nehme teil </button> ";
+        }
+    }
+
+
+    $tempString .= "<table><th> Projekt </th><th> interessiert </th> <th> nimmt teil </th> ";
+
+    /*
+     * Für jede Seite außer der Startseite gibt es eine node-ID, daher muss die Startseite rausgenommen werden.
+     */
+    if(strcmp(drupal_get_path_alias(),"indeko-navi-modell")) {
+        $type = $node->type;
+        if (!strcmp($type, "event")) {
+            $result = db_query("SELECT * from {interestedGroups} as groups WHERE groups.eventID = :id ", array(":id" => $node->nid));
+
+            foreach ($result as $r) {
+                $userID = user_load($r->userID);
+                $project = get_project_of_user($userID);
+                if ($r->interested == 0) {
+                    $interested = "Nein";
+                } else {
+                    $interested = "Ja";
+                }
+
+                if ($r->accept == 0) {
+                    $accept = "Nein";
+                } else {
+                    $accept = "Ja";
+                }
+
+                if($r->interested == 1 OR $r->accept == 1) {
+
+                //$tempString = $tempString . '<tr><td>' . $test->name . '</td><td>' . $interested . '</td><td>' . $accept . '</td><td>';
+                    $tempString = $tempString . '<tr><td>' . $project[0] . '</td><td>' . $interested . '</td><td>' . $accept . '</td><td>';
+                }
+            }
+
+            $tempString = $tempString . '</table>';
+            return $tempString;
+        }
+    }
+}
+
+/**
+ * Diese Methode holt die Projekt-ID eines bestimmten Benutzers aus der Datenbank und gibt diese zurück.
+ * @param $user ein bestimmter Benutzer
+ * @return Die entsprechende ID vom Projekt des Benutzers
+ */
+function get_project_id_of_user($user) {
+    //get uid of user object
+    $user_id = $user->uid;
+    $result = db_query("SELECT field_verbundprojekt_target_id FROM field_data_field_verbundprojekt WHERE entity_id = :id", array(":id" => $user_id));
+    $project_id = $result->fetchCol(0);
+    return $project_id[0];
+
+}
+
+/**
+ * Diese Methode holt den Namen eines Projektes anhand der ID aus der DB und gibt diesen zurück.
+ * @param $project_id die ID eines Projektes
+ * @return der entsprechende Titel des Projektes
+ */
+function get_project_name($project_id) {
+    $result = db_query("SELECT field_abk_rzung_projekt_value FROM field_data_field_abk_rzung_projekt WHERE entity_id = :id", array(":id" => $project_id));
+    return $result->fetchCol(0);
+
+}
+
+/**
+ * Diese Methode holt sich den Titel vom Projekt eines bestimmten Benutzers aus der DB und gibt diesen zurück.
+ * @param $user ein bestimmer Benutzer
+ * @return der
+ */
+function get_project_of_user($user){
+    $project_id = get_project_id_of_user($user);
+    $project_name = get_project_name($project_id);
+    return $project_name;
+}
+
+/**
+ * Diese Methode holt sich die Projekt-ID des angemeldeten Benutzers aus der DB und gibt diesen zurück.
+ * @return die Projekt-ID
+ */
+function interestedGroups_get_projectID() {
+    global $user;
+    $projectID = 0;
+    $result = db_query("SELECT DISTINCT verbund.field_verbundprojekt_target_id, abk.field_abk_rzung_projekt_value from {field_data_field_verbundprojekt} as verbund Inner JOIN {field_data_field_abk_rzung_projekt} AS abk ON verbund.field_verbundprojekt_target_id = abk.entity_id WHERE verbund.entity_id = :userID",
+        array(":userID" => $user->uid));
+
+    foreach($result as $re) {
+        $projectID = $re->field_verbundprojekt_target_id;
+    }
+
+    return $projectID;
+}
+
+
+/*
+ * Diese Funktion wird noch nicht benötigt
+ *
+function interestedGroups_save_user_to_event($eventID, $accept) {
+
+    global $user;
+    $existent = false;
+    $result = db_query("SELECT * FROM {user_event} WHERE userID = :userID AND eventID = :eventID",
+        array(":userID" => $user->uid, ":eventID" => $eventID));
+
+    foreach($result as $r) {
+        $existent = true;
+    }
+
+    if($existent) {
+        if($accept) {
+
+        } else {
+
+        }
+    } else {
+        db_query("INSERT INTO {user_event} VALUES (:userID, :eventID)",
+            array(":userID" => $user->uid, ":eventID" => $eventID)
+        );
+
+    }
+}
+
+*/

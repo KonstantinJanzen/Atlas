@@ -1,0 +1,79 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hofer
+ * Date: 04.03.2016
+ * Time: 19:17
+ */
+
+
+//Create Table Schema in Database
+
+/**
+ *   |MeetupID|EventID|EventName|Verbundpojekt|Datum|Aufgabe|
+ *
+ */
+
+
+/**
+ * Implement hook schema
+ */
+function form_meetup_schema()
+{
+    $schema = array();
+
+
+    $schema['meetup_event'] = array(
+        'description' => 'Information about the events.',
+        'fields' => array(
+            'MeetupID' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'description' => 'The ID of the meetup entity'
+            ),
+
+            'EventID' => array(
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+                'description' => 'The ID of the event'
+            ),
+
+            'EventName' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'description' => 'The Name of the event'
+            ),
+
+            'Verbundprojekt' => array(
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'description' => 'The Name of the Verbundprojekt'
+            ),
+
+            'Datum' => array(
+                'type' => 'int',
+                'not null' => TRUE,
+                'description' => 'The UNIX timestamp of the event'
+            ),
+
+        ),
+        'primary key' => array('MeetupID'),
+    );
+
+    return $schema;
+}
+
+
+
+/**
+ * Implements hook_update_N()
+**/
+
+function form_meetup_update_7000()
+{
+    drupal_install_schema('form_meetup');
+}

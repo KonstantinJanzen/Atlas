@@ -1,0 +1,72 @@
+<?php
+
+/**
+ * Implement hook_schema()
+ */
+
+function interestedGroups_schema() {
+    $schema = array();
+
+    $schema['interestedGroups'] = array(
+        'description' => 'The table for the interestedGroups',
+        'fields' => array(
+            'interestedgroups_id' => array(
+                'description' => 'The primary identifier for interestedGroups.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+            ),
+            'userID' => array(
+                'description' => 'The user id',
+                'type' => 'int',
+                'not null' => FALSE,
+                'sortable' => TRUE,
+                'views' => TRUE,
+                'not null' => TRUE,
+            ),
+            'eventID' => array(
+                'description' => 'The event id',
+                'type' => 'int',
+                'sortable' => TRUE,
+                'views' => TRUE,
+                'not null' => TRUE,
+            ),
+            'interested' => array(
+                'description' => 'Check if the user is interested',
+                'type' => 'int',
+                'sortable' => TRUE,
+                'views' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'accept' => array(
+                'description' => 'Check if the user accept the event',
+                'type' => 'int',
+                'sortable' => TRUE,
+                'views' => TRUE,
+                'not null' => TRUE,
+                'default' => 0,
+            ),
+            'projectID' => array(
+                            'description' => 'The project id',
+                            'type' => 'int',
+                            'sortable' => TRUE,
+                            'views' => TRUE,
+                            'not null' => TRUE,
+                            'default' => 0,
+            ),
+        ),
+
+        'primary key' => array('interestedgroups_id'),
+    );
+
+    return $schema;
+}
+
+/**
+ * Implements hook_update_N()
+ */
+
+function interestedGroups_update_7000() {
+    drupal_install_schema('interestedGroups');
+}

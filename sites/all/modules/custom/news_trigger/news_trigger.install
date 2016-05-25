@@ -1,0 +1,64 @@
+<?php
+
+/**
+ * Implement hook_schema()
+ */
+
+function news_trigger_schema() {
+    $schema = array();
+
+    $schema['activities'] = array(
+        'description' => 'The table for the activities',
+        'fields' => array(
+            'activities_id' => array(
+                'description' => 'The primary identifier for activities.',
+                'type' => 'int',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+            ),
+            'nid' => array(
+                'description' => 'The node id',
+                'type' => 'int',
+                'not null' => FALSE,
+                'sortable' => TRUE,
+                'views' => TRUE,
+                'not null' => TRUE,
+            ),
+            'vid' => array(
+                            'description' => 'The vabulary id',
+                            'type' => 'int',
+                            'not null' => FALSE,
+                            'sortable' => TRUE,
+                            'views' => TRUE,
+                            'not null' => TRUE,
+            ),
+            'tid' => array(
+                            'description' => 'The term id',
+                            'type' => 'int',
+                            'not null' => FALSE,
+                            'sortable' => TRUE,
+                            'views' => TRUE,
+                            'not null' => TRUE,
+            ),
+            'content_type' => array(
+                            'description' => 'The content type',
+                            'type' => 'varchar',
+                            'length' => 255,
+                            'not null' => TRUE,
+                            'default' => '',
+            ),
+        ),
+
+        'primary key' => array('activities_id'),
+    );
+
+    return $schema;
+}
+
+/**
+ * Implements hook_update_N()
+ */
+
+function news_trigger_update_7000() {
+    drupal_install_schema('activities');
+}

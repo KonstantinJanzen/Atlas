@@ -1,0 +1,3 @@
+name = email_verteiler
+description = Modul für den Emailverteiler
+core = 7.x

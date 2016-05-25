@@ -1,0 +1,226 @@
+<?php
+
+/**
+ * @file
+ * Add an Image Download display format for image fields.
+ */
+
+const IMAGE_DOWNLOAD_MENU_PATH_PREFIX = 'download/image';
+
+/**
+ *  Implements hook_menu().
+ */
+function image_download_formatter_menu() {
+  $items = array();
+  $path_count = count(explode('/', IMAGE_DOWNLOAD_MENU_PATH_PREFIX));
+  $items[IMAGE_DOWNLOAD_MENU_PATH_PREFIX . '/%file'] = array(
+    'title' => 'Image download',
+    'page callback' => 'image_download_callback',
+    'page arguments' => array($path_count),
+    'access callback' => TRUE,
+    'type' => MENU_CALLBACK,
+  );
+
+  return $items;
+}
+
+/**
+ * Page callback for image download.
+ *
+ * @param $file object
+ *  Drupal File object.
+ */
+function image_download_callback($file) {
+  if (isset($file->uri) && isset($file->filename)) {
+    $uri = $file->uri;
+    $filename = $file->filename;
+    $headers = array(
+      'Content-disposition' => 'attachment; filename="' . $filename . '"'
+    ) + file_get_content_headers($file);
+    file_transfer($uri, $headers);
+  }
+  else {
+    drupal_not_found();
+  }
+
+  drupal_exit();
+}
+
+/**
+ * Implements hook_theme().
+ */
+function image_download_formatter_theme() {
+  return array(
+    'image_download_formatter' => array(
+      'variables' => array(
+        'item' => NULL,
+        'link' => NULL,
+        'image_style' => NULL,
+      ),
+    ),
+  );
+}
+
+/**
+ * Implements hook_field_formatter_info().
+ */
+function image_download_formatter_field_formatter_info() {
+  $formatters = array(
+    'image_download' => array(
+      'label' => t('Image Download'),
+      'field types' => array('image'),
+      'settings' => array(
+        'image_style' => '',
+      ),
+    ),
+  );
+
+  return $formatters;
+}
+
+/**
+ * Implements hook_field_formatter_settings_form().
+ */
+function image_download_formatter_field_formatter_settings_form($field, $instance, $view_mode, $form, &$form_state) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $image_styles = image_style_options(FALSE);
+  $element['image_style'] = array(
+    '#title' => t('Image style'),
+    '#type' => 'select',
+    '#default_value' => $settings['image_style'],
+    '#empty_option' => t('None (original image)'),
+    '#options' => $image_styles,
+  );
+
+  return $element;
+}
+
+/**
+ * Implements hook_field_formatter_settings_summary().
+ */
+function image_download_formatter_field_formatter_settings_summary($field, $instance, $view_mode) {
+  $display = $instance['display'][$view_mode];
+  $settings = $display['settings'];
+
+  $summary = array();
+
+  $image_styles = image_style_options(FALSE);
+  // Unset possible 'No defined styles' option.
+  unset($image_styles['']);
+  // Styles could be lost because of enabled/disabled modules that defines
+  // their styles in code.
+  if (isset($image_styles[$settings['image_style']])) {
+    $summary[] = t('Image style: @style', array('@style' => $image_styles[$settings['image_style']]));
+  }
+  else {
+    $summary[] = t('Original image');
+  }
+
+  return implode('<br />', $summary);
+}
+/**
+ * Implements hook_field_formatter_view().
+ */
+function image_download_formatter_field_formatter_view($entity_type, $entity, $field, $instance, $langcode, $items, $display) {
+  $element = array();
+
+  if (isset($display['type'])
+      && isset($display['settings'])
+      && is_array($items)
+      && $display['type'] == 'image_download'
+  ) {
+    $settings = $display['settings'];
+
+    $image_style = NULL;
+    if (isset($settings['image_style'])) {
+      $image_style = $settings['image_style'];
+    }
+
+    foreach ($items as $delta => $item) {
+      $path = IMAGE_DOWNLOAD_MENU_PATH_PREFIX . '/' . $item['fid'];
+
+      $link = array(
+        'path' => url($path, array('absolute' => TRUE)),
+        'options' => array(),
+      );
+
+      $element[$delta] = array(
+        '#theme' => 'image_download_formatter',
+        '#item' => $item,
+        '#image_style' => $image_style,
+        '#link' => $link,
+      );
+    }
+  }
+
+  return $element;
+}
+
+/**
+ * Returns HTML for an image field formatted with a download button.
+ *
+ * @param array $variables
+ *  An associative array containing:
+ *  - item: An array of image data, which may include "uri", "alt",
+ *     "width", "height", "title" and "attributes".
+ *  - link: An array containing the download link "path" and link "options".
+ *  - image_style: An optional image style.
+ *
+ * @return string
+ *  Themed image output.
+ *
+ * @ingroup themeable
+ */
+function theme_image_download_formatter($variables) {
+  $item = $variables['item'];
+  $image = array(
+    'path' => $item['uri'],
+  );
+
+  if (array_key_exists('alt', $item)) {
+    $image['alt'] = $item['alt'];
+  }
+
+  if (isset($item['attributes'])) {
+    $image['attributes'] = $item['attributes'];
+  }
+
+  if (isset($item['width']) && isset($item['height'])) {
+    $image['width'] = $item['width'];
+    $image['height'] = $item['height'];
+  }
+
+  // Do not output an empty 'title' attribute.
+  if (isset($item['title']) && drupal_strlen($item['title']) > 0) {
+    $image['title'] = $item['title'];
+  }
+
+  if ($variables['image_style']) {
+    $image['style_name'] = $variables['image_style'];
+    $output = theme('image_style', $image);
+  }
+  else {
+    $output = theme('image', $image);
+  }
+
+  // The link options are optional, but for the download button link to be
+  // processed, the link path must at least be set.
+  if (isset($variables['link']['path'])) {
+    $path = $variables['link']['path'];
+    $action = 'Download';
+    $options = isset($variables['link']['options']) ? $variables['link']['options'] : array();
+    $class = 'button';
+    if (isset($options['attributes']['class'])) {
+      $class = $options['attributes']['class'] . " $class";
+    }
+    $options['attributes']['class'] = $class;
+    $options['attributes']['title'] = t(
+      "$action @filename", array('@filename' => $item['filename'])
+    );
+    $output .= l(t($action), $path, $options);
+  }
+
+  return $output;
+}

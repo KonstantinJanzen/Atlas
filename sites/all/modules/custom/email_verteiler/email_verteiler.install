@@ -1,0 +1,41 @@
+<?php
+
+/**
+ * Implement hook_schema()
+ */
+
+function email_verteiler_schema() {
+    $schema = array();
+
+    $schema['email_verteiler'] = array(
+        'description' => 'The table for the email verteiler',
+        'fields' => array(
+            'email_verteiler_id' => array(
+                'description' => 'The primary identifier for email addresses.',
+                'type' => 'serial',
+                'unsigned' => TRUE,
+                'not null' => TRUE,
+            ),
+            'email_address' => array(
+                'description' => 'The email address',
+                'type' => 'varchar',
+                'length' => 255,
+                'not null' => TRUE,
+                'default' => '',
+            ),
+        ),
+
+        'primary key' => array('email_verteiler_id'),
+    );
+
+
+    return $schema;
+}
+
+/**
+ * Implements hook_update_N()
+ */
+
+function email_verteiler_update_7000() {
+    drupal_install_schema('email_verteiler');
+}

@@ -1,0 +1,45 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hofer
+ * Date: 03.03.2016
+ * Time: 11:21
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function meetup_email_sending_menu()
+{
+    $items['/test/sent_email'] = array(
+        'title' => "Sent email",
+        'page callback' => 'drupal_mail',
+        'access arguments' => array('access content'),
+        'type' => MENU_CALLBACK,
+    );
+
+    return $items;
+}
+
+
+
+
+/**
+ * Implements hook_mail().
+ */
+function meetup_email_sending_mail($key, &$message, $params)
+{
+    switch($key){
+
+        case 'mymail':
+            dsm($key);
+            //Set properties of Email
+            $message['to'] = "hoferj@uni-hildesheim.de"; //TODO email parameterisieren
+            $message['subject'] = "Testmail";
+            $message['body'][] = t("Hello World!!!");
+        break;
+    }
+}
+
+
+drupal_mail($module, $key, $to, $language,  $from = NULL, $send = TRUE);

@@ -1,0 +1,21 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hofer
+ * Date: 03.03.2016
+ * Time: 16:08
+ */
+
+
+function form_meetup_menu()
+{
+    $items['meetup_form'] = array(
+        'title' => 'Meetup Form',
+        'page callback' => 'form_meetup_page',
+        'access arguments' => array('access content'),
+        'file' => 'form_meetup.events.inc',
+        'weight' => 1,
+    );
+
+    return $items;
+}

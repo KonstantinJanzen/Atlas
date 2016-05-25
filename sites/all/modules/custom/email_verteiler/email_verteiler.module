@@ -1,0 +1,116 @@
+<?php
+/**
+ * Created by PhpStorm.
+ * User: hofer
+ * Date: 26.10.2015
+ * Time: 16:36
+ */
+
+/**
+ * Implements hook_menu()
+ */
+
+function email_verteiler_menu() {
+    $items[] = array();
+
+    $items['email_verteiler'] = array(
+        'title' => 'Email Verteiler',
+        'page callback' => 'form_fun_email_verteiler_page',
+        'access arguments' => array('access content'),
+    );
+
+    return $items;
+}
+
+function form_fun_email_verteiler_page(){
+
+
+
+
+
+
+
+    return drupal_get_form('form_fun_email_verteiler');
+}
+
+function form_fun_email_verteiler() {
+    $result = get_email_address_from_database();
+
+    $form = array();
+
+    $form['some_text'] = array(
+        '#markup' => build_HTML_paragraph_list($result),
+    );
+
+    $form['email'] = array(
+        '#type' => 'textfield',
+        '#titel' => t('Enter your email'),
+        '#description' => t('Bitte geben Sie hier eine Emailadresse ein, die Sie hinzufügen möchten.'),
+    );
+
+//    $form['vorname'] = array(
+//        '#type' => 'textfield',
+//        '#titel' => t('Enter your email'),
+//        '#description' => t('Please enter your email here.'),
+//    );
+
+
+
+
+    //Submitting
+    $form['buttons']['submit'] = array(
+        '#type' => 'submit',
+        '#value' => t('Abschicken'),
+    );
+
+    return $form;
+}
+
+
+
+
+//todo Function for getting email addresses from the database
+function get_email_address_from_database() {
+    $result = db_query('SELECT email_address FROM email_verteiler;');
+    return $result;
+}
+
+
+
+//todo Function for saving email adress to the database
+function save_email_address_to_database($form_state) {
+    $email_address = db_insert('email_verteiler')
+        ->fields(array(
+            'email_address' => $form_state['values']['email']
+        ))
+        ->execute();
+}
+
+
+//todo Function to bulid HTML List with email adresses
+function build_HTML_paragraph_list($result){
+    $p_list = array();
+    foreach($result as $record) {
+        $email_address = $record->email_address;
+        //dsm($email_adress);
+        $p_list[] = '<p>' . $email_address . '</p>';
+    }
+    //dsm($p_list);
+
+    //Build an unordered list
+    $p_list_start_item = "<p>";
+    foreach($p_list as $p_list_item) {
+        $p_list_start_item .= $p_list_item;
+    }
+    $p_list_start_item .= "</p>";
+    //dsm($p_list_start_item);
+    return $p_list_start_item;
+
+}
+
+function form_fun_email_verteiler_submit(&$form, &$form_state) {
+    save_email_address_to_database($form_state);
+    //dsm($form_state['values']);
+    //dsm($form_state['values']['email']);
+    $form_state['redirect'] = '/email_verteiler';
+}
