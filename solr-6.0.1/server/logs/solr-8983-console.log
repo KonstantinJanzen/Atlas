@@ -1,0 +1,322 @@
+0    INFO  (main) [   ] o.e.j.u.log Logging initialized @997ms
+360  INFO  (main) [   ] o.e.j.s.Server jetty-9.3.8.v20160314
+375  INFO  (main) [   ] o.e.j.d.p.ScanningAppProvider Deployment monitor [file:///C:/xampp/htdocs/fulltextsearch/solr-6.0.1/server/contexts/] at interval 0
+938  INFO  (main) [   ] o.e.j.w.StandardDescriptorProcessor NO JSP Support for /solr, did not find org.apache.jasper.servlet.JspServlet
+953  WARN  (main) [   ] o.e.j.s.SecurityHandler ServletContext@o.e.j.w.WebAppContext@5383967b{/solr,file:///C:/xampp/htdocs/fulltextsearch/solr-6.0.1/server/solr-webapp/webapp/,STARTING}{C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server/solr-webapp/webapp} has uncovered http methods for path: /
+969  INFO  (main) [   ] o.a.s.s.SolrDispatchFilter SolrDispatchFilter.init(): WebAppClassLoader=1465085305@57536d79
+1000 INFO  (main) [   ] o.a.s.c.SolrResourceLoader JNDI not configured for solr (NoInitialContextEx)
+1015 INFO  (main) [   ] o.a.s.c.SolrResourceLoader using system property solr.solr.home: C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr
+1015 INFO  (main) [   ] o.a.s.c.SolrResourceLoader new SolrResourceLoader for directory: 'C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr'
+1015 INFO  (main) [   ] o.a.s.c.SolrResourceLoader JNDI not configured for solr (NoInitialContextEx)
+1015 INFO  (main) [   ] o.a.s.c.SolrResourceLoader using system property solr.solr.home: C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr
+1015 INFO  (main) [   ] o.a.s.c.SolrXmlConfig Loading container configuration from C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\solr.xml
+1188 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Config-defined core root directory: C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr
+1235 INFO  (main) [   ] o.a.s.c.CoreContainer New CoreContainer 1658926803
+1235 INFO  (main) [   ] o.a.s.c.CoreContainer Loading cores into CoreContainer [instanceDir=C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr]
+1235 WARN  (main) [   ] o.a.s.c.CoreContainer Couldn't add files from C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\lib to classpath: C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\lib
+1250 INFO  (main) [   ] o.a.s.h.c.HttpShardHandlerFactory created with socketTimeout : 600000,connTimeout : 60000,maxConnectionsPerHost : 20,maxConnections : 10000,corePoolSize : 0,maximumPoolSize : 2147483647,maxThreadIdleTime : 5,sizeOfQueue : -1,fairnessPolicy : false,useRetries : false,
+1438 INFO  (main) [   ] o.a.s.u.UpdateShardHandler Creating UpdateShardHandler HTTP client with params: socketTimeout=600000&connTimeout=60000&retry=true
+1453 INFO  (main) [   ] o.a.s.l.LogWatcher SLF4J impl is org.slf4j.impl.Log4jLoggerFactory
+1453 INFO  (main) [   ] o.a.s.l.LogWatcher Registering Log Listener [Log4j (org.slf4j.impl.Log4jLoggerFactory)]
+1453 INFO  (main) [   ] o.a.s.c.CoreContainer Security conf doesn't exist. Skipping setup for authorization module.
+1453 INFO  (main) [   ] o.a.s.c.CoreContainer No authentication plugin used.
+1532 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Looking for core definitions underneath C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr
+1641 INFO  (main) [   ] o.a.s.c.CoreDescriptor Created CoreDescriptor: {name=drupal, config=solrconfig.xml, loadOnStartup=true, schema=schema.xml, configSetProperties=configsetprops.json, transient=false, dataDir=data}
+1641 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found core drupal in C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal
+1641 INFO  (main) [   ] o.a.s.c.CorePropertiesLocator Found 1 core definitions
+1938 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter user.dir=C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server
+1938 INFO  (main) [   ] o.a.s.s.SolrDispatchFilter SolrDispatchFilter.init() done
+1938 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrResourceLoader new SolrResourceLoader for directory: 'C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal'
+1954 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrResourceLoader JNDI not configured for solr (NoInitialContextEx)
+1954 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrResourceLoader using system property solr.solr.home: C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr
+1954 INFO  (main) [   ] o.e.j.s.h.ContextHandler Started o.e.j.w.WebAppContext@5383967b{/solr,file:///C:/xampp/htdocs/fulltextsearch/solr-6.0.1/server/solr-webapp/webapp/,AVAILABLE}{C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server/solr-webapp/webapp}
+1985 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrConfig current version of requestparams : -1
+2000 INFO  (main) [   ] o.e.j.s.ServerConnector Started ServerConnector@cccb3fe{HTTP/1.1,[http/1.1]}{0.0.0.0:8983}
+2000 INFO  (main) [   ] o.e.j.s.Server Started @3011ms
+2000 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.u.SolrIndexConfig IndexWriter infoStream solr logging is enabled
+2016 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrConfig Using Lucene MatchVersion: 6.0.1
+2172 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.SolrConfig Loaded SolrConfig: solrconfig.xml
+2219 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.s.IndexSchema [drupal] Schema name=example
+3360 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.s.IndexSchema unique key field: id
+3375 INFO  (qtp12209492-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json} status=0 QTime=1226
+3516 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.s.FileExchangeRateProvider Reloading exchange rates from file currency.xml
+3531 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.s.FileExchangeRateProvider Reloading exchange rates from file currency.xml
+3531 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.ConfigSetProperties Did not find ConfigSet properties, assuming default properties: Can't find resource 'configsetprops.json' in classpath or 'C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal'
+3531 INFO  (coreLoadExecutor-6-thread-1) [   ] o.a.s.c.CoreContainer Creating SolrCore 'drupal' using configuration from instancedir C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal
+3531 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SolrCore solr.NRTCachingDirectoryFactory
+3735 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SolrCore [[drupal] ] Opening new SolrCore at [C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal], dataDir=[C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal\data\]
+3750 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.JmxMonitoredMap No JMX servers found, not exposing Solr information with JMX.
+3750 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SchemaCodecFactory Using default compressionMode: BEST_SPEED
+3859 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.CachingDirectoryFactory return new directory for C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal\data
+3859 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SolrCore New index directory detected: old=null new=C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal\data\index/
+3859 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.CachingDirectoryFactory return new directory for C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal\data\index
+3891 INFO  (OldIndexDirectoryCleanupThreadForCore-drupal) [   x:drupal] o.a.s.c.SolrCore Looking for old index directories to cleanup for core drupal in C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal\data\
+4000 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SolrCore no updateRequestProcessorChain defined as default, creating implicit default
+4047 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.h.l.XMLLoader xsltCacheLifetimeSeconds=60
+4047 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.h.l.XMLLoader xsltCacheLifetimeSeconds=60
+4047 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.h.l.XMLLoader xsltCacheLifetimeSeconds=60
+4047 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.h.l.XMLLoader xsltCacheLifetimeSeconds=60
+4141 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.PluginBag requestHandler : '/analysis/field' created with startup=lazy 
+4141 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.PluginBag requestHandler : '/analysis/document' created with startup=lazy 
+4141 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.PluginBag requestHandler : '/terms' created with startup=lazy 
+4141 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.RequestHandlers Registered paths: /admin/mbeans,/update/json/docs,/admin/luke,/export,/get,/admin/properties,/update/json,/admin/threads,/query,/analysis/field,/analysis/document,/update/csv,/sql,/select,/admin/segments,/admin/system,/replication,/config,/stream,/schema,/admin/plugins,/admin/logging,/admin/ping,/update,/admin/file,/debug/dump,/terms
+4141 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SolrCore Using default statsCache cache: org.apache.solr.search.stats.LocalStatsCache
+4157 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.UpdateHandler Using UpdateLog implementation: org.apache.solr.update.UpdateLog
+4157 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.UpdateLog Initializing UpdateLog: dataDir= defaultSyncLevel=FLUSH numRecordsToKeep=100 maxNumLogsToKeep=10 numVersionBuckets=65536
+4157 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.CommitTracker Hard AutoCommit: if uncommited for 15000ms; 
+4157 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.CommitTracker Soft AutoCommit: disabled
+4219 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SolrDeletionPolicy SolrDeletionPolicy.onInit: commits: num=1
+	commit{dir=NRTCachingDirectory(MMapDirectory@C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal\data\index lockFactory=org.apache.lucene.store.NativeFSLockFactory@401522d8; maxCacheMB=48.0 maxMergeSizeMB=4.0),segFN=segments_1,generation=1}
+4219 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.SolrDeletionPolicy newest commit generation = 1
+4234 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.s.SolrIndexSearcher Opening [Searcher@6f448e2a[drupal] main]
+4251 WARN  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.r.ManagedResourceStorage Cannot write to config directory C:\xampp\htdocs\fulltextsearch\solr-6.0.1\server\solr\drupal\conf; switching to use InMemory storage instead.
+4251 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.r.RestManager Initializing RestManager with initArgs: {}
+4266 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.r.ManagedResourceStorage Reading _rest_managed.json using InMemoryStorage
+4266 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.r.RestManager Initializing 0 registered ManagedResources
+4266 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.h.ReplicationHandler Commits will be reserved for  10000
+4298 INFO  (searcherExecutor-7-thread-1-processing-x:drupal) [   x:drupal] o.a.s.c.SolrCore [drupal] Registered new searcher Searcher@6f448e2a[drupal] main{ExitableDirectoryReader(UninvertingDirectoryReader())}
+4298 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.UpdateLog Looking up max value of version field to seed version buckets
+4298 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.VersionInfo Refreshing highest value of _version_ for 65536 version buckets from index
+4298 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.VersionInfo No terms found for _version_, cannot seed version bucket highest value from index
+4298 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.UpdateLog Could not find max version in index or recent updates, using new clock 1539207119259041792
+4298 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.u.UpdateLog Took 3.0ms to seed version buckets with highest version 1539207119259041792
+4298 INFO  (coreLoadExecutor-6-thread-1) [   x:drupal] o.a.s.c.CoreContainer registering core: drupal
+13658 INFO  (qtp12209492-34) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902306340} status=0 QTime=2
+13669 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902306342} status=0 QTime=12
+13721 INFO  (qtp12209492-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902306342} status=0 QTime=39
+136034 INFO  (qtp12209492-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=6
+136057 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=28
+136076 INFO  (qtp12209492-35) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=12
+194099 INFO  (qtp12209492-34) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=2
+194122 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1467902428741} status=0 QTime=18
+194142 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=42
+194199 INFO  (qtp12209492-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=0
+194204 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1467902428741} status=0 QTime=1
+194212 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=9
+487307 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=2
+487325 INFO  (qtp12209492-34) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=17
+487349 INFO  (qtp12209492-35) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=16
+489892 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=1
+489907 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&_=1467902782852&since=0} status=0 QTime=7
+489919 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=26
+499893 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&_=1467902782852&since=0} status=0 QTime=0
+509892 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&_=1467902782852&since=0} status=0 QTime=0
+511129 INFO  (qtp12209492-35) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=0
+511143 INFO  (qtp12209492-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&_=1467902782852} status=0 QTime=7
+511154 INFO  (qtp12209492-34) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=24
+516060 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=0
+516064 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1467902428741} status=0 QTime=2
+516071 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=12
+516154 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=0
+516159 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={wt=json&_=1467902428741} status=0 QTime=3
+516168 INFO  (qtp12209492-35) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=13
+549199 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=0
+549202 INFO  (qtp12209492-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/properties params={wt=json&_=1467902842162} status=0 QTime=0
+549223 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=22
+552066 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902428741} status=0 QTime=0
+552088 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902428743} status=0 QTime=20
+552099 INFO  (qtp12209492-16) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/threads params={wt=json&_=1467902845029} status=0 QTime=31
+563861 INFO  (qtp12209492-39) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902856824} status=0 QTime=0
+563918 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902856862} status=0 QTime=21
+576862 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=0&_=1467902869827} status=0 QTime=0
+584374 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1467902877338} status=0 QTime=0
+584430 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1467902877373} status=0 QTime=22
+584460 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=0&_=1467902877427} status=0 QTime=0
+594475 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902887439} status=0 QTime=0
+604490 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902897453} status=0 QTime=0
+614507 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902907470} status=0 QTime=0
+624527 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902917486} status=0 QTime=0
+634557 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902927523} status=0 QTime=0
+644609 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902937566} status=0 QTime=0
+654632 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902947593} status=0 QTime=0
+664658 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902957623} status=0 QTime=0
+674677 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902967635} status=0 QTime=2
+684695 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902977657} status=0 QTime=0
+694707 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902987672} status=0 QTime=0
+704720 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467902997682} status=0 QTime=0
+714735 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903007696} status=0 QTime=0
+724755 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903017720} status=0 QTime=0
+734765 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903027730} status=0 QTime=0
+744781 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903037743} status=0 QTime=0
+754807 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903047768} status=0 QTime=0
+764851 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903057814} status=0 QTime=0
+774868 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903067828} status=0 QTime=0
+784881 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903077846} status=0 QTime=0
+794904 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903087856} status=0 QTime=0
+804935 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903097897} status=0 QTime=0
+814948 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903107912} status=0 QTime=0
+824961 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903117927} status=0 QTime=0
+835002 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903127942} status=0 QTime=0
+845048 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903138014} status=0 QTime=0
+855078 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903148028} status=0 QTime=11
+865116 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903158080} status=0 QTime=0
+875140 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903168104} status=0 QTime=0
+885153 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903178119} status=0 QTime=0
+895167 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903188130} status=0 QTime=0
+905182 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903198144} status=0 QTime=0
+915197 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903208159} status=0 QTime=0
+925205 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903218172} status=0 QTime=0
+935215 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903228182} status=0 QTime=0
+945228 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903238193} status=0 QTime=0
+955243 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903248205} status=0 QTime=0
+965255 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903258219} status=0 QTime=0
+975265 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903268229} status=0 QTime=0
+985276 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903278241} status=0 QTime=0
+995287 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903288252} status=0 QTime=0
+1005302 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903298268} status=0 QTime=0
+1015315 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903308276} status=0 QTime=0
+1025328 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903318290} status=0 QTime=0
+1035348 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903328313} status=0 QTime=0
+1045361 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903338322} status=0 QTime=0
+1055372 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903348336} status=0 QTime=0
+1065508 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903358351} status=0 QTime=116
+1075522 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903368486} status=0 QTime=0
+1085540 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903378499} status=0 QTime=0
+1095577 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903388539} status=0 QTime=0
+1105588 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903398553} status=0 QTime=0
+1115626 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903408585} status=0 QTime=0
+1125664 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903418626} status=0 QTime=0
+1135695 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903428650} status=0 QTime=0
+1145706 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903438673} status=0 QTime=0
+1155734 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903448687} status=0 QTime=0
+1165758 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903458721} status=0 QTime=0
+1175782 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903468747} status=0 QTime=0
+1185797 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903478762} status=0 QTime=0
+1195808 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903488774} status=0 QTime=0
+1205821 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903498786} status=0 QTime=0
+1215841 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903508795} status=0 QTime=0
+1225850 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903518814} status=0 QTime=0
+1235862 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903528825} status=0 QTime=0
+1245887 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903538850} status=0 QTime=0
+1255913 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903548876} status=0 QTime=0
+1265940 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903558893} status=0 QTime=0
+1275950 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903568915} status=0 QTime=0
+1285961 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903578924} status=0 QTime=0
+1295970 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903588935} status=0 QTime=0
+1305984 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903598947} status=0 QTime=0
+1316006 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903608968} status=0 QTime=0
+1326016 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903618981} status=0 QTime=0
+1336032 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903628992} status=0 QTime=0
+1346049 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903639014} status=0 QTime=0
+1356059 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903649025} status=0 QTime=0
+1366069 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903659035} status=0 QTime=0
+1376078 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903669044} status=0 QTime=0
+1386087 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903679053} status=0 QTime=0
+1396100 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903689065} status=0 QTime=0
+1406122 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903699084} status=0 QTime=0
+1416139 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903709103} status=0 QTime=0
+1426164 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903719127} status=0 QTime=0
+1436182 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903729148} status=0 QTime=0
+1446195 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903739157} status=0 QTime=2
+1456203 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903749169} status=0 QTime=0
+1466219 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903759177} status=0 QTime=0
+1476228 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903769193} status=0 QTime=0
+1486246 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903779211} status=0 QTime=0
+1496255 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903789219} status=0 QTime=0
+1506263 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903799228} status=0 QTime=0
+1516295 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903809238} status=0 QTime=0
+1526317 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903819282} status=0 QTime=0
+1536334 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903829299} status=0 QTime=0
+1546344 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903839308} status=0 QTime=0
+1556365 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903849328} status=0 QTime=0
+1566375 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903859343} status=0 QTime=0
+1576413 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903869356} status=0 QTime=0
+1586434 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903879398} status=0 QTime=0
+1596459 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903889423} status=0 QTime=0
+1606474 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903899436} status=0 QTime=1
+1616487 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903909451} status=0 QTime=0
+1626543 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903919470} status=0 QTime=0
+1636576 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903929538} status=0 QTime=0
+1646622 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903939588} status=0 QTime=0
+1656649 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903949610} status=0 QTime=0
+1666666 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903959629} status=0 QTime=0
+1676677 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903969641} status=0 QTime=0
+1686689 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903979652} status=0 QTime=0
+1696709 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903989673} status=0 QTime=0
+1706726 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467903999684} status=0 QTime=0
+1716751 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904009711} status=0 QTime=0
+1726775 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904019731} status=0 QTime=0
+1736791 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904029751} status=0 QTime=0
+1746819 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904039782} status=0 QTime=0
+1756838 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904049797} status=0 QTime=0
+1766874 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904059839} status=0 QTime=0
+1776883 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904069849} status=0 QTime=0
+1786896 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904079862} status=0 QTime=0
+1796906 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904089870} status=0 QTime=0
+1806924 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904099891} status=0 QTime=0
+1816941 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904109906} status=0 QTime=0
+1826958 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904119919} status=0 QTime=0
+1836977 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904129940} status=0 QTime=0
+1846996 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904139958} status=0 QTime=0
+1857023 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904149985} status=0 QTime=0
+1867043 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904160000} status=0 QTime=0
+1877066 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904170032} status=0 QTime=0
+1887083 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904180044} status=0 QTime=0
+1897120 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904190080} status=0 QTime=0
+1907136 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904200103} status=0 QTime=0
+1917157 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904210117} status=0 QTime=0
+1927171 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904220138} status=0 QTime=0
+1937183 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904230146} status=0 QTime=0
+1947194 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904240159} status=0 QTime=0
+1957264 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904250174} status=0 QTime=0
+1967272 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904260239} status=0 QTime=0
+1977286 INFO  (qtp12209492-21) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904270251} status=0 QTime=0
+1987333 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904280297} status=0 QTime=0
+1997736 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904290705} status=0 QTime=0
+2008732 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904301698} status=0 QTime=0
+2019733 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904312697} status=0 QTime=0
+2030734 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904323698} status=0 QTime=0
+2041746 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904334705} status=0 QTime=0
+2052741 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904345705} status=0 QTime=0
+2063749 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904356704} status=0 QTime=0
+2074740 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904367704} status=0 QTime=0
+2085747 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904378704} status=0 QTime=0
+2096746 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904389705} status=0 QTime=0
+2107746 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904400704} status=0 QTime=1
+2118761 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904411704} status=0 QTime=0
+2129747 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904422705} status=0 QTime=0
+2140747 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904433705} status=0 QTime=0
+2151748 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904444704} status=0 QTime=0
+2162741 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904455704} status=0 QTime=0
+2173764 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904466705} status=0 QTime=0
+2184758 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904477704} status=0 QTime=0
+2195747 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904488705} status=0 QTime=0
+2206746 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904499705} status=0 QTime=0
+2217747 INFO  (qtp12209492-14) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904510706} status=0 QTime=0
+2228747 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904521706} status=0 QTime=0
+2239747 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904532705} status=0 QTime=0
+2250760 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904543706} status=0 QTime=0
+2261746 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904554704} status=0 QTime=0
+2272748 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904565704} status=0 QTime=0
+2283747 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904576704} status=0 QTime=0
+2294746 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904587704} status=0 QTime=0
+2305752 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904598704} status=0 QTime=0
+2316746 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904609704} status=0 QTime=0
+2327750 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904620706} status=0 QTime=0
+2338749 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904631705} status=0 QTime=0
+2349746 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904642705} status=0 QTime=0
+2360747 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904653705} status=0 QTime=0
+2371754 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904664705} status=0 QTime=0
+2382763 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904675706} status=0 QTime=0
+2393747 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904686705} status=0 QTime=0
+2404767 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904697705} status=0 QTime=0
+2415747 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904708705} status=0 QTime=0
+2426747 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904719705} status=0 QTime=0
+2437747 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904730705} status=0 QTime=0
+2448746 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904741705} status=0 QTime=0
+2459750 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904752705} status=0 QTime=0
+2470747 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904763706} status=0 QTime=0
+2481746 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904774705} status=0 QTime=0
+2492747 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904785706} status=0 QTime=0
+2503755 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904796705} status=0 QTime=0
+2514747 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904807706} status=0 QTime=0
+2525743 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904818705} status=0 QTime=2
+2536749 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904829706} status=0 QTime=0
+2547749 INFO  (qtp12209492-36) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904840705} status=0 QTime=0
+2558784 INFO  (qtp12209492-19) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904851706} status=0 QTime=0
+2569750 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904862706} status=0 QTime=0
+2580742 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904873706} status=0 QTime=0
+2591741 INFO  (qtp12209492-20) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=1467902297220&_=1467904884705} status=0 QTime=0
+1275191776 INFO  (qtp12209492-13) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/cores params={indexInfo=false&wt=json&_=1469177484609} status=0 QTime=100
+1275191969 INFO  (qtp12209492-37) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/system params={wt=json&_=1469177484803} status=0 QTime=137
+1275192039 INFO  (qtp12209492-18) [   ] o.a.s.s.HttpSolrCall [admin] webapp=null path=/admin/info/logging params={wt=json&since=0&_=1469177485000} status=0 QTime=2
