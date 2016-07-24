@@ -1205,6 +1205,7 @@ imgmap.prototype.addNewArea = function() {
 		this.areas[id].shape     = "undefined";
 		
 		this.currentid = id;
+		LoadSelect(this.currentid);
 		this.fireEvent('onAddArea', id);
 		return id;
 };
@@ -2606,6 +2607,7 @@ imgmap.prototype.area_dblclick = function(e) {
 				return;
 			}
 			this.currentid = obj.aid;
+			LoadSelect(this.currentid);
 		}
 		this.fireEvent('onDblClickArea', this.areas[this.currentid]);
 		//stop event propagation to document level
@@ -2646,6 +2648,7 @@ imgmap.prototype.area_mousedown = function(e) {
 				return;
 			}
 			this.currentid = obj.aid;
+			LoadSelect(this.currentid);
 		}
 		//this.log('selected = '+this.currentid);
 		this.draggedId  = this.currentid;
