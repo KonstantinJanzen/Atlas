@@ -4,8 +4,8 @@ $ = jQuery;
 var ViewMode = true;
 
 window.onload = function(){
-	$('#field-markierte-bereiche-add-more-wrapper').hide();
-	$('.field-name-field-markierte-bereiche').hide();
+	//$('#field-markierte-bereiche-add-more-wrapper').hide();
+	//$('.field-name-field-markierte-bereiche').hide();
 	
 	if ($('#field-markierte-bereiche-add-more-wrapper').length > 0) ViewMode = false;
 	if ($('.field-name-field-markierte-bereiche').length > 0) ViewMode = true;
@@ -16,25 +16,33 @@ window.onload = function(){
 		var l_oImageView = document.getElementsByClassName('image-style-none');
 		
 		if (l_oImageEdit.length > 0){
+			// EditMode
 			myimgmap = {};
-			instanciate_maschek_image(document.getElementsByClassName("image-preview")[0]);
 			
 			var loadedValue = $("#field-markierte-bereiche-add-more-wrapper :input").val();
-			if (loadedValue != "") $(loadedValue).appendTo($('#field-markierte-bereiche-add-more-wrapper'));
-			$('canvas').click(function(e){
-				var message = "ugr " + $(e.target).attr('ugr');
-				message += " bran " + $(e.target).attr('bran');
-				alert(message);
-			})
+			//if (loadedValue != "") $(loadedValue).appendTo($('.image-preview'));
+
+			instanciate_maschek_image(document.getElementsByClassName("image-preview")[0]);
+			myimgmap.setMapHTML(loadedValue);
 		} else if (l_oImageView.length > 0) {
+			// ViewMode
 			var parent = $('.image-style-none').parent();
 			var div = $(parent[0]).parent();
 			myimgmap = {};
-			instanciate_maschek_image(div[0]);
-			
-			var loadedValue = $($(".field-name-field-markierte-bereiche").children()[1]).text()
-			if (loadedValue != "") $(loadedValue).appendTo($('.pic_container'));
-			$('canvas').click(function(e){
+			//instanciate_maschek_image(div[0]);
+
+			// load areas
+			var loadedValue = $($(".field-name-field-markierte-bereiche").children()[1]).text();
+			var l_oPicContainer = $('.field-type-image').find('div');
+			if (loadedValue != "" && l_oPicContainer.length === 1) $(loadedValue).appendTo(l_oPicContainer);
+
+			//lese id aus map
+			if (l_oPicContainer.find('map').length === 1) {
+				var l_sId = l_oPicContainer.find('map').attr('id');
+				l_oPicContainer.find('img').attr('USEMAP', l_sId);
+			}
+
+			$('area').click(function(e){
 				var message = "ugr " + $(e.target).attr('ugr');
 				message += " bran " + $(e.target).attr('bran');
 				alert(message);
@@ -112,7 +120,7 @@ function instanciate_maschek_image(p_oPic){
  *	@return	The generated map code without the map wrapper.  
  */
 imgmap.prototype.getMapInnerHTML = function(flags) {
-	/*var html, coords;
+	var html, coords;
 	html = '';
 	var l_aUnternehmensgr = $('#edit-field-unternehmensg-er-und').val();
 	
@@ -148,21 +156,22 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 				' coords="' + coords + '"' +
 				' href="' +	this.areas[i].ahref + '"' +
 				' target="' + this.areas[i].atarget + '" />';
-			//}
+
 		}
-	}*/
-	//alert(html);
-	
-	var html = "";
-	var l_aCanvas = $('canvas');
-	for (var i=0; i < this.areas.length; i++) {
-		html += $($('canvas')[i]).prop('outerHTML');
 	}
 	
 	return html;
+
+//alert(html);
+
+/*var html = "";
+ var l_aCanvas = $('canvas');
+ for (var i=0; i < this.areas.length; i++) {
+ html += $($('canvas')[i]).prop('outerHTML');
+ }*/
 };
 
-// wenn currentid geändert wird, sollen die Combos geert werden
+// wenn currentid geï¿½ndert wird, sollen die Combos geert werden
 function LoadSelect(newCurrentId){
 	$('#edit-field-unternehmensg-er-und').val(-1);
 	$('#edit-field-branche-und').val(-1);
@@ -177,7 +186,7 @@ function LoadSelect(newCurrentId){
 		var lastChar = l_sId[l_sId.length-1];
 			
 		if (lastChar == myimgmap.currentid){
-			// Unternehmensgröße
+			// Unternehmensgrï¿½ï¿½e
 			var l_sSelected = $(l_aCanvas[i]).attr('ugr');
 			if (typeof l_sSelected != 'undefined' && l_sSelected != null ){
 				var l_aSelected = l_sSelected.split(',');
