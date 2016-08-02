@@ -145,8 +145,8 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 					coords = cs.join(',');
 				}
 
-				var l_aUnternehmensgr = typeof $(this.areas[i]).attr('ugr') != 'undefined' ? typeof $(this.areas[i]).attr('ugr') : "";
-				var l_aBranche = typeof $(this.areas[i]).attr('bran') != 'undefined' ? typeof $(this.areas[i]).attr('bran') : "";
+				var l_aUnternehmensgr = typeof $(this.areas[i]).attr('ugr') != 'undefined' ? $(this.areas[i]).attr('ugr') : "";
+				var l_aBranche = typeof $(this.areas[i]).attr('bran') != 'undefined' ? $(this.areas[i]).attr('bran') : "";
 
 				html+= '<area shape="' + this.areas[i].shape + '"' +
 				' alt="' + this.areas[i].aalt + '"' +
