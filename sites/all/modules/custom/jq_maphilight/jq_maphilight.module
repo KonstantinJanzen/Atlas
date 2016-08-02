@@ -3,7 +3,7 @@
  * @file
  * Configurable javascript based image map highlighting using the jquery maphilight plugin.
  *
- * EDIT
+ * EDITED
  * "Add Maphilight library to every page true/false" option was broken. Even after fixing,
  * if it is set to false all custom hover effects will be discarded (working as intended).
  * Added new configuration option "content type" and replaced hook_init() with hook_preprocess_page().
@@ -11,7 +11,11 @@
  * if it matches the specified "content type". 
  */
 
+// const MAPHILIGHT_LIBRARY_NAME = 'jquery.maphilight.min.js';
+const MAPHILIGHT_LIBRARY_NAME = 'jquery.maphilight.js';
+
 /**
+ * EDITED
  * Implements hook_library().
  */
 function jq_maphilight_library() {
@@ -20,14 +24,14 @@ function jq_maphilight_library() {
     'website' => 'http://plugins.jquery.com/project/maphilight',
     'version' => '1.2.2 (EDITED)',
     'js' => array(
-      libraries_get_path('jquery.maphilight', FALSE) . '/jquery.maphilight.min.js' => array(),
+      libraries_get_path('jquery.maphilight', FALSE) . '/' . MAPHILIGHT_LIBRARY_NAME => array(),
     ),
   );
   return $libraries;
 }
 
  /**
- * EDIT
+ * EDITED
  * Implements hook_preprocess_page.
  * Add the jquery maphilight plugin code and hover settings to all nodes of type "content type".
  */
@@ -54,8 +58,8 @@ function jq_maphilight_preprocess_page(&$vars) {
         'allMapsEnabled' => variable_get('jq_maphilight_all_maps_enabled', 'true'),
       )
     );
-    drupal_add_js($settings, 'setting');
-    drupal_add_js(drupal_get_path('module', 'jq_maphilight') . '/jq_maphilight.js');
+    drupal_add_js($settings, 'setting', array('scope'=>'footer', 'weight' => 99));
+    drupal_add_js(drupal_get_path('module', 'jq_maphilight') . '/jq_maphilight_settings.js', array('scope'=>'footer', 'weight' => 100));
   }
 }
 
@@ -77,6 +81,7 @@ function jq_maphilight_menu() {
 }
 
 /**
+ * EDITED
  * Implements hook_form().
  */
 function jq_maphilight_admin_settings() {
@@ -217,11 +222,12 @@ function jq_maphilight_admin_settings() {
 }
 
 /**
+ * EDITED
  * Check if the jquery.maphilight.min.js file is available.
  */
 function _jq_maphilight_available() {
   if (module_exists('libraries')) {
-    $available = libraries_get_path('jquery.maphilight') . '/jquery.maphilight.min.js';
+    $available = libraries_get_path('jquery.maphilight') . '/' . MAPHILIGHT_LIBRARY_NAME;
     if (is_file($available)) {
       return $available;
     }
