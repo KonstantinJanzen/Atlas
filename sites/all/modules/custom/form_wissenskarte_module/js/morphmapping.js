@@ -3,7 +3,7 @@ var myimgmap = {};
 $ = jQuery;
 var ViewMode = true;
 
-window.onload = function(){
+//window.onload = function(){
 	//$('#field-markierte-bereiche-add-more-wrapper').hide();
 	//$('.field-name-field-markierte-bereiche').hide();
 
@@ -24,6 +24,7 @@ window.onload = function(){
 
 			instanciate_maschek_image(document.getElementsByClassName("image-preview")[0]);
 			myimgmap.setMapHTML(loadedValue);
+			myimgmap.addNewArea();
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
 			var parent = $('.image-style-none').parent();
@@ -38,7 +39,7 @@ window.onload = function(){
 
 			//lese id aus map
 			if (l_oPicContainer.find('map').length === 1) {
-				var l_sId = l_oPicContainer.find('map').attr('id');
+				var l_sId = '#' + l_oPicContainer.find('map').attr('id');
 				l_oPicContainer.find('img').attr('USEMAP', l_sId);
 			}
 
@@ -49,7 +50,7 @@ window.onload = function(){
 			})
 		}
 	}
-}
+//}
 
 function instanciate_maschek_image(p_oPic){
 	myimgmap = new imgmap({

@@ -3,6 +3,6 @@ function form_wissenskarte_module_preprocess_page(&$vars)
 {
     if (!empty($vars['node']) && $vars['node']->type == 'wissenskarte')
     {
-        drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module')."/js/morphmapping.js");
+        drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module')."/js/morphmapping.js", array('scope'=>'footer','weight' => 5));
     }
 };
