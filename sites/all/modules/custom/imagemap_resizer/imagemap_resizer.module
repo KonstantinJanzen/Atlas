@@ -1,0 +1,104 @@
+<?php
+/**
+ *
+ */
+
+// const IMAGEMAP_RESIZER_LIBRARY_NAME = 'imageMapResizer.min.js';
+const IMAGEMAP_RESIZER_LIBRARY_NAME = 'imageMapResizer.js';
+
+/**
+ * Implements hook_library().
+ */
+function imagemap_resizer_library() {
+  $libraries['image-map-resizer'] = array(
+    'title' => 'Image Map Resizer',
+    'website' => 'https://github.com/davidjbradshaw/image-map-resizer',
+    'version' => '1.0.3',
+    'js' => array(
+      libraries_get_path('image-map-resizer', FALSE) . '/' . IMAGEMAP_RESIZER_LIBRARY_NAME => array(),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Check if the image map resizer js library is available.
+ */
+function imagemap_resizer_available() {
+    if (module_exists('libraries')) {
+        $available = libraries_get_path('image-map-resizer') . '/' . IMAGEMAP_RESIZER_LIBRARY_NAME;
+        if (is_file($available)) {
+            return $available;
+        }
+    }
+    return FALSE;
+}
+
+ /**
+ * Implements hook_preprocess_page.
+ * Add the Image Map Resizer js library and code to all nodes of type "content type".
+ */
+function imagemap_resizer_preprocess_page(&$vars) {
+	
+  if (imagemap_resizer_available() !== FALSE && isset($vars['node']) && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'article')) {
+    if (module_exists('jquery_plugin')) {
+      drupal_add_library('jquery_plugin', 'metadata');
+    }
+    drupal_add_library('imagemap_resizer', 'image-map-resizer');
+    drupal_add_js(drupal_get_path('module', 'imagemap_resizer') . '/imagemap_resizer_load.js', array('scope' => 'footer', 'weight' => 90));
+  }
+}
+
+/**
+ * Implements hook_menu().
+ */
+function imagemap_resizer_menu() {
+  $items = array();
+  $items['admin/config/content/imagemap_resizer'] = array(
+    'title' => 'Image Map Resizer',
+    'description' => 'Javascript image map resizing using imageMapResizer.js library.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('imagemap_resizer_admin_settings'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_form().
+ */
+function imagemap_resizer_admin_settings() {
+  $available = imagemap_resizer_available();
+  if ($available == FALSE) {
+    $desc = t('The image map resizer library is unavailable.');
+  }
+  else {
+    $desc = t('The image map resizer library is located at:') . ' ' . $available;
+  }
+  $form['imagemap_resizer_status'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('Plugin status'),
+    '#weight' => -10,
+    '#description' => $desc
+  );
+
+  $form['imagemap_resizer_general'] = array(
+    '#type' => 'fieldset',
+    '#title' => t('General settings'),
+    '#weight' => -9,
+  );
+
+  $form['imagemap_resizer_general']['imagemap_resizer_content_type'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Content Type'),
+    '#default_value' => variable_get('imagemap_resizer_content_type', 'article'),
+    '#size' => 16,
+    '#description' => 'Load js libraries only on pages with specified content type.'
+  );
+
+  return system_settings_form($form);
+}
+
+
