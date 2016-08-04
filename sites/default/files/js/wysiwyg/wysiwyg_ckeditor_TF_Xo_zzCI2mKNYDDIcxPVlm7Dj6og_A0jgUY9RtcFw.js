@@ -1,1 +1,0 @@
-window.CKEDITOR_BASEPATH = '/indeko_dev/sites/all/libraries/ckeditor/';
