@@ -102,3 +102,8 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+.idea/deployment.xml
+.idea/modules.xml
+.idea/indeko.iml
+.idea/*

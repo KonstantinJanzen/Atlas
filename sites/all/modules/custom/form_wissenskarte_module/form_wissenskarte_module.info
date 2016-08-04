@@ -1,0 +1,7 @@
+name = form_wissenskarte_module
+description = Bearbeiten der Wissenskarte
+core = 7.x
+files[] = form_wissenskarte_module.module
+package = Knowledge Map
+
+scripts[] = js/imgmap.js

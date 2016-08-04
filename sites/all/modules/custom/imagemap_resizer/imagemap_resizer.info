@@ -1,0 +1,7 @@
+name = Image Map Resizer
+description = Makes HTML image maps responsive, so that they automatically stay scaled to the size of the image they are attached to. It detects the window being resized and updates the co-ordinates of the image map accordingly.
+core = 7.x
+package = Knowledge Map
+
+configure = admin/config/content/imagemap_resizer
+dependencies[] = libraries
