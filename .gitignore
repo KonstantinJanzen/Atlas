@@ -107,3 +107,7 @@ $RECYCLE.BIN/
 .idea/modules.xml
 .idea/indeko.iml
 .idea/*
+/sites/default/files/js/wysiwyg/*.js
+/sites/default/files/ctools/css/*.css
+
+
