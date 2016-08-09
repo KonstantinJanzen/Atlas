@@ -4,6 +4,10 @@ $ = jQuery;
 var ViewMode = true;
 
 
+//$("label[for='edit-field-wk-bild-und-0-upload']").hide()
+$("#edit-field-markierte-bereiche").hide();
+$("#morphological-box").hide();
+
 var fieldset = document.createElement("fieldset");
 var legend = document.createElement("legend");
 legend.innerText = "Bild auswählen";
@@ -17,17 +21,18 @@ fieldset.appendChild(div);
 
 parent.insertBefore(fieldset, imagemap);
 
-var chooseDescription = document.createElement("span");
-chooseDescription.innerText = "Bild vom Computer auswählen: ";
-
-var acceptImage = document.createElement("span");
-acceptImage.innerText = "Bild akzeptieren und hochladen: ";
+// var chooseDescription = document.createElement("span");
+// chooseDescription.innerText = "Bild vom Computer auswählen: ";
+//
+// var acceptImage = document.createElement("span");
+// acceptImage.innerText = "Bild akzeptieren und hochladen: ";
 
 var upload = document.getElementById("edit-field-wk-bild-und-0-upload");
 var fileChoose = document.getElementById("edit-field-wk-bild-und-0-upload-button");
 
-$("#edit-field-wk-bild-und-0-upload", div).before(chooseDescription);
-$("#edit-field-wk-bild-und-0-upload-button", div).before(acceptImage);
+$("#edit-field-wk-bild-und-0-upload").wrap("<div>Bild vom Computer auswählen:  </div>");
+$("#edit-field-wk-bild-und-0-upload-button").wrap("<div>Bild akzeptieren und hochladen: </div>");
+
 
 var count = 1;
 var observer = new MutationObserver(function(mutations) {
@@ -42,6 +47,9 @@ var observer = new MutationObserver(function(mutations) {
 	if (!$("#edit-title").val()) {
 		$("#edit-title").val(filename);
 	}
+
+	$("#edit-field-markierte-bereiche").show();
+	$("#morphological-box").show();
 
 	count++;
 });
