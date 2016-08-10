@@ -40,11 +40,11 @@ function  initView() {
 				l_oPicContainer.find('img').attr('USEMAP', l_sId);
 			}
 
-			$('area').click(function(e){
-				var message = "ugr " + $(e.target).attr('ugr');
-				message += " bran " + $(e.target).attr('bran');
-				alert(message);
-			})
+			// $('area').click(function(e){
+			// 	var message = "ugr " + $(e.target).attr('ugr');
+			// 	message += " bran " + $(e.target).attr('bran');
+			// 	alert(message);
+			// })
 		}
 	}
 //}
@@ -153,7 +153,7 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 				' ugr="' + l_aUnternehmensgr + '"' +
 				' bran="' + l_aBranche + '"' +
 				' coords="' + coords + '"' +
-				' href="' +	this.areas[i].ahref + '"' +
+				' href="' +	generateSearchString(this.areas[i]) + '"' +
 				' target="' + this.areas[i].atarget + '" />';
 
 		}
@@ -204,4 +204,35 @@ function LoadSelect(newCurrentId){
 	}
 
 	return false;
+};
+
+// TODO
+// Generate search string to search for several taxonomy ids (tid) using Apache Solr
+// quick and dirty test
+function generateSearchString(area) {
+	var baseSolrSearchUrl = Drupal.settings.basePath + "search/site/";
+    var solrSearchQuery = "";
+
+    if (typeof $(area).attr('ugr') != 'undefined') {
+        solrSearchQuery += $(area).attr('ugr');
+        solrSearchQuery = solrSearchQuery.replace(/_none/g,"").replace(/,_none/g,"").replace(/,,/g,",");
+    }
+
+    if (typeof $(area).attr('bran') != 'undefined') {
+        if (solrSearchQuery != "") {
+            solrSearchQuery += "," + $(area).attr('bran');
+            solrSearchQuery = solrSearchQuery.replace(/_none/g,"").replace(/,_none/g,"").replace(/,,/g,",");
+        }
+    }
+
+    if (solrSearchQuery != "") {
+        solrSearchQuery = "tid:" + solrSearchQuery;
+        solrSearchQuery = solrSearchQuery.replace(/,/g, " AND tid:");
+    } else {
+        solrSearchQuery = "*";
+    }
+
+    var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery
+    return solrSearchUrl;
+
 };
