@@ -1,13 +1,14 @@
-function  initView() {
+function  initView(ViewMode) {
 	//window.onload = function(){
 //$('#field-markierte-bereiche-add-more-wrapper').hide();
 //$('.field-name-field-markierte-bereiche').hide();
+	var result = false;
 
 	if ($('#field-markierte-bereiche-add-more-wrapper').length > 0) ViewMode = false;
 	if ($('.field-name-field-markierte-bereiche').length > 0) ViewMode = true;
 
-	if (document.getElementsByClassName('image-style-wissenkarte')){
-
+	if (document.getElementsByClassName('image-style-wissenkarte').length > 0){
+		result = true;
 		var l_oImageEdit = document.getElementsByClassName('image-style-wissenkarte');
 		var l_oImageView = document.getElementsByClassName('image-style-none');
 
@@ -47,6 +48,8 @@ function  initView() {
 			// })
 		}
 	}
+	
+	return result;
 //}
 }
 
