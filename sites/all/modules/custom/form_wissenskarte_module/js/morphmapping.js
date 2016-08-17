@@ -3,11 +3,19 @@ function  initView(ViewMode) {
 //$('#field-markierte-bereiche-add-more-wrapper').hide();
 //$('.field-name-field-markierte-bereiche').hide();
 	var result = false;
+	var imageClassName = "";
 
-	if ($('#field-markierte-bereiche-add-more-wrapper').length > 0) ViewMode = false;
-	if ($('.field-name-field-markierte-bereiche').length > 0) ViewMode = true;
+	if ($('#field-markierte-bereiche-add-more-wrapper').length > 0) {
+		ViewMode = false;
+		imageClassName = 'image-style-wissenkarte';
+	}
 
-	if (document.getElementsByClassName('image-style-wissenkarte').length > 0){
+	if ($('.field-name-field-markierte-bereiche').length > 0) {
+		ViewMode = true;
+		imageClassName = 'image-style-none';
+	}
+
+	if (document.getElementsByClassName(imageClassName).length > 0){
 		result = true;
 		var l_oImageEdit = document.getElementsByClassName('image-style-wissenkarte');
 		var l_oImageView = document.getElementsByClassName('image-style-none');
@@ -235,7 +243,7 @@ function generateSearchString(area) {
         solrSearchQuery = "*";
     }
 
-    var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery
+    var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
     return solrSearchUrl;
 
 };

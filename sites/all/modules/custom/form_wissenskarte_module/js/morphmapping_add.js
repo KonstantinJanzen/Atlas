@@ -35,10 +35,22 @@ Indeko.AddForm = (function() {
 		$("#edit-field-wk-bild-und-0-upload-button").wrap("<div>Bild akzeptieren und hochladen: </div>");
 	}
 
+    /*
+     * Check and return true if the JS Object is a DOM element
+     */
+    function isElement(object){
+        return (
+            typeof HTMLElement === "object" ? object instanceof HTMLElement : //DOM2
+            object && typeof object === "object" && object !== null && object.nodeType === 1 && typeof object.nodeName==="string"
+        );
+    }
+
 	/*
 	 * Add Maschek Editor to the image and show the morphological box
 	 */
 	function addEditor() {
+
+        $("#field-markierte-bereiche-add-more-wrapper :input").val('');
 		initView(true);
 		// if no node title is set use the filename as title
 		var filename = $(".file").find("a").text();
@@ -68,9 +80,13 @@ Indeko.AddForm = (function() {
 			 * Drupal modifies the DOM multiple times, so it
 			 * checks each time if the image was added...
 			 */
-			if(mutations[mutations.length-1].addedNodes.length > 0)
-			{
-				imageAdded = mutations[mutations.length-1].addedNodes[0].getElementsByClassName('image-style-wissenkarte');
+			if(mutations[mutations.length-1].addedNodes.length > 0) {
+                var addedNode = mutations[mutations.length-1].addedNodes[0];
+
+                if(isElement(addedNode)) {
+                    imageAdded = addedNode.getElementsByClassName('image-style-wissenkarte');
+                }
+
 			}
 
 
@@ -93,7 +109,7 @@ Indeko.AddForm = (function() {
 
 		var config = { subtree: true, childList: true };
 		observer.observe(imageDiv, config);
-	}
+	};
 
 	return module;
 
