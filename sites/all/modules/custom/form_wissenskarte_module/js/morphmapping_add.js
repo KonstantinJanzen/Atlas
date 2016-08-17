@@ -1,8 +1,6 @@
 $ = jQuery;
 
-/*
- * Create a Namespace for Indeko javascript objects (no objects in global namespace)
- */
+//Create a Namespace for Indeko javascript objects (no objects in global namespace)
 var Indeko = Indeko || {};
 
 Indeko.AddForm = (function() {
@@ -11,12 +9,9 @@ Indeko.AddForm = (function() {
 	var imageDiv = null;
 
 	/*
-	 * Modify the html elements to fit the mockups
+	 * Insert the fieldset for the image
 	 */
-	function modifyControls() {
-
-		$("#edit-field-markierte-bereiche").hide();
-		$("#morphological-box").hide();
+	function insertImageFieldSet() {
 
 		var fieldset = document.createElement("fieldset");
 		var legend = document.createElement("legend");
@@ -24,16 +19,32 @@ Indeko.AddForm = (function() {
 
 		var imagemap = document.getElementById("edit-field-markierte-bereiche");
 		imageDiv = document.getElementById("edit-field-wk-bild");
-		var parent = imageDiv.parentNode;
+		var parent = imagemap.parentNode;
 
 		fieldset.appendChild(legend);
 		fieldset.appendChild(imageDiv);
 
 		parent.insertBefore(fieldset, imagemap);
 
-		$("#edit-field-wk-bild-und-0-upload").wrap("<div>Bild vom Computer auswählen:  </div>");
-		$("#edit-field-wk-bild-und-0-upload-button").wrap("<div>Bild akzeptieren und hochladen: </div>");
 	}
+
+    // Hide the Morphological Box and the textfield with the image map
+    function hideMorphologicalBox() {
+        $("#edit-field-markierte-bereiche").hide();
+        $("#morphological-box").hide();
+    }
+
+    // Show the Morphological Box and the textfield with the image map
+    function showMorphologicalBox() {
+        $("#edit-field-markierte-bereiche").show();
+        $("#morphological-box").show();
+    }
+
+    // Wrap up the Upload Button (modified to fit the mockups)
+    function wrapUploadButton() {
+        $("#edit-field-wk-bild-und-0-upload").wrap("<div>Bild vom Computer auswählen:  </div>");
+        $("#edit-field-wk-bild-und-0-upload-button").wrap("<div>Bild akzeptieren und hochladen: </div>");
+    }
 
     /*
      * Check and return true if the JS Object is a DOM element
@@ -46,7 +57,7 @@ Indeko.AddForm = (function() {
     }
 
 	/*
-	 * Add Maschek Editor to the image and show the morphological box
+	 * Add Maschek Editor to the image
 	 */
 	function addEditor() {
 
@@ -57,14 +68,27 @@ Indeko.AddForm = (function() {
 		if (!$("#edit-title").val()) {
 			$("#edit-title").val(filename);
 		}
-
-		$("#edit-field-markierte-bereiche").show();
-		$("#morphological-box").show();
 	}
 
+    // If the image gets removed, hide the morphological box and wrap up the upload button
+    function imageRemoved() {
+        hideMorphologicalBox();
+        wrapUploadButton();
+    }
+
+    // If the image gets uploaded, show the morphological box and attach Maschek Editor
+    function imageAddedEvent() {
+        addEditor();
+        showMorphologicalBox();
+    }
+
+    // Initialize the create form in Knowledge Map (first time)
 	module.init = function() {
 
-		modifyControls();
+		insertImageFieldSet();
+        wrapUploadButton();
+        hideMorphologicalBox();
+
 
 		/*
 		 * The observer looks for modification inside the drupal
@@ -74,37 +98,42 @@ Indeko.AddForm = (function() {
 		 */
 		var observer = new MutationObserver(function(mutations) {
 
-			var imageAdded = [];
+			var addedNode = null;
 
 			/*
 			 * Drupal modifies the DOM multiple times, so it
 			 * checks each time if the image was added...
 			 */
 			if(mutations[mutations.length-1].addedNodes.length > 0) {
-                var addedNode = mutations[mutations.length-1].addedNodes[0];
+                addedNode = mutations[mutations.length - 1].addedNodes[0];
+            }
 
-                if(isElement(addedNode)) {
-                    imageAdded = addedNode.getElementsByClassName('image-style-wissenkarte');
+            if (isElement(addedNode)) {
+                //check if the user uploaded an image
+                if(addedNode.getElementsByClassName('image-style-wissenkarte').length > 0) {
+                    var imageAdded = addedNode.getElementsByClassName('image-style-wissenkarte');
+
+                    /*
+                     * If the image tag was added, attach a load function.
+                     * This function is called after the image tag has loaded
+                     * the actual image data.
+                     *
+                     * Todo: the observer fires 3 times, the last two times the mutations
+                     * Object contains the img tag, hence this if branch is called twice.
+                     * This is no problem, because the onload function is attached two times,
+                     * but the image tag calls it only one time (when the image is loaded).
+                     */
+                    imageAdded[0].onload = function () {
+                        imageAddedEvent();
+                    };
                 }
+                //check if the user clicked the "delete" button
+                else if($('#edit-field-wk-bild-und-0-upload', addedNode).length > 0 &&
+                        $('#edit-field-wk-bild-und-0-upload-button', addedNode).length > 0) {
+                    imageRemoved();
+                }
+            }
 
-			}
-
-
-			if(imageAdded.length > 0) {
-				/*
-				 * If the image tag was added, attach a load function.
-				 * This function is called after the image tag has loaded
-				 * the actual image data.
-				 *
-				 * Todo: the observer fires 3 times, the last two times the mutations
-				 * Object contains the img tag, hence this if branch is called twice.
-				 * This is no problem, because the onload function is attached two times,
-				 * but the image tag calls it only one time (when the image is loaded).
-				 */
-				imageAdded[0].onload = function() {
-					addEditor();
-				};
-			}
 		});
 
 		var config = { subtree: true, childList: true };
