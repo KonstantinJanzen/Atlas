@@ -1,3 +1,1 @@
-jQuery(document).ready(function() {
-    jQuery('map').imageMapResize();
-});
+jQuery('map').imageMapResize();
