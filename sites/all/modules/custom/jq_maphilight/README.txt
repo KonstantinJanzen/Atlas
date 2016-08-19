@@ -1,20 +1,20 @@
-jquery Map Hilight Module 7.x
+jQuery Maphilight Module 7.x
 
 
 -------------------------
 Description
 -------------------------
-jquery Map Hilight is a javascript wrapper module for the jQuery Maphilight plugin. It enables the simple addition
+jQuery Maphilight is a javascript wrapper module for the jQuery Maphilight plugin. It enables the simple addition
 of mouseover highlighting of hotspots to HTML image maps without requiring the editing of theme files or knowledge
 of Javascript/jQuery.
 
-EDIT:
-"Add Maphilight library to every page true/false" option was broken. Even after fixing,
-if it is set to false all custom hover effects will be discarded (working as intended).
-Added new configuration option "content type" and replaced hook_init() with hook_preprocess_page().
-hook_preprocess_page() will only add js libraries and mouseover settings to a page
-if it matches the specified "content type". 
-
+EDIT ATLAS VERSION:
+- Fixed "Add Maphilight library to every page true/false" functionality.
+- Fixed that only default highlighting options were used if plugin was not added to every page (working as intended by developer).
+- Added new configuration option "content type" and replaced hook_init() with hook_preprocess_page().
+- Module will only add js libraries and highlighting options to a page if it matches the specified "content type".
+- Added functionality to have different opacity options for mouseover and permanent highlighting.
+- Complete revamp of module's configuration page.
 
 -------------------------
 Installation Instructions

@@ -1,4 +1,4 @@
-name = jQuery Map Hilight (EDITED)
+name = jQuery Maphilight (ATLAS VERSION)
 description = jQuery Map Hilight adds javascript mouseover highlighting of hotspots to HTML image maps. EDIT: necessary libraries and settings only added to nodes of specified content type.
 core = 7.x
 package = Knowledge Map
