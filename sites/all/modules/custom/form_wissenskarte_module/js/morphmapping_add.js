@@ -28,17 +28,21 @@ Indeko.AddForm = (function() {
 
 	}
 
-    // Hide the Morphological Box and the textfield with the image map
+    // Hide the Morphological Box
     function hideMorphologicalBox() {
-        $("#edit-field-markierte-bereiche").hide();
         $("#morphological-box").hide();
     }
 
-    // Show the Morphological Box and the textfield with the image map
+    // Show the Morphological Box
     function showMorphologicalBox() {
-        $("#edit-field-markierte-bereiche").show();
         $("#morphological-box").show();
     }
+
+    // Hide title and image map text section
+	function hideElements() {
+		$(".form-item.form-type-textfield.form-item-title").hide();
+		$("#edit-field-markierte-bereiche").hide();
+	}
 
     // Wrap up the Upload Button (modified to fit the mockups)
     function wrapUploadButton() {
@@ -85,6 +89,7 @@ Indeko.AddForm = (function() {
     // Initialize the create form in Knowledge Map (first time)
 	module.init = function() {
 
+		hideElements();
 		insertImageFieldSet();
         wrapUploadButton();
         hideMorphologicalBox();

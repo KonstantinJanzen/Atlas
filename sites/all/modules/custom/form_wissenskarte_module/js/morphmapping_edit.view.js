@@ -3,4 +3,4 @@ var myimgmap = {};
 $ = jQuery;
 var ViewMode = true;
 
-initView();
+initView(ViewMode);

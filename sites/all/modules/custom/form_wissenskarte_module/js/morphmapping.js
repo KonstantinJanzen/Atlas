@@ -23,6 +23,8 @@ function  initView(ViewMode) {
 		if (l_oImageEdit.length > 0){
 			// EditMode
 			myimgmap = {};
+			$("#edit-field-markierte-bereiche").hide();
+			$(".form-item.form-type-textfield.form-item-title").hide();
 
 			var loadedValue = $("#field-markierte-bereiche-add-more-wrapper :input").val();
 			//if (loadedValue != "") $(loadedValue).appendTo($('.image-preview'));
