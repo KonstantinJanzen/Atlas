@@ -249,3 +249,84 @@ function generateSearchString(area) {
     return solrSearchUrl;
 
 };
+
+var props = [];
+
+function instanciateAreaDescription(){
+	$('fieldset').prepend('<input type="submit" class="addAreaButton" value="">');
+	$('fieldset').prepend('<div id="areadescription"></div>');
+	gui_addArea(1);
+}
+
+function gui_addArea(id) {
+	//var id = props.length;
+	//id = 1;
+	props[id] = document.createElement('DIV');
+	$('#areadescription').append(props[id]);
+
+	props[id].id        = 'img_area_' + id;
+	props[id].aid       = id;
+	props[id].className = 'img_area';
+	//hook ROW event handlers
+	/*myimgmap.addEvent(props[id], 'mouseover', gui_row_mouseover);
+	myimgmap.addEvent(props[id], 'mouseout',  gui_row_mouseout);
+	myimgmap.addEvent(props[id], 'click',     gui_row_click);*/
+
+	$('<input type="text"  name="img_id" class="img_id" value="' + id + '" readonly="1"/>').appendTo(props[id]);
+	$('<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'" hidden>').appendTo(props[id]);
+
+	var l_oSelect = $('<select name="img_shape" class="img_shape">').appendTo(props[id]);
+	$('<option value="rect">Recheck</option>').appendTo(l_oSelect);
+	$('<option value="circle">Kreis</option>').appendTo(l_oSelect);
+	$('<option value="poly">Polygon</option>').appendTo(l_oSelect);
+	l_oSelect.val("rect");
+
+	$('<Label class="img_label">Titel:</Label>').appendTo(props[id]);
+	$('<input type="text" name="img_alt" class="img_alt" value="">').appendTo(props[id]);
+
+	$('<input type="submit" class="removeAreaButton" value="">').appendTo(props[id]);
+
+	//hook more event handlers to individual inputs
+	/*myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
+	myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'keydown', gui_coords_keydown);
+	myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'change', gui_input_change);
+	myimgmap.addEvent(props[id].getElementsByTagName('input')[3],  'change', gui_input_change);
+	myimgmap.addEvent(props[id].getElementsByTagName('input')[4],  'change', gui_input_change);
+	myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_input_change);
+	myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_input_change);
+	if (myimgmap.isSafari) {
+		//need these for safari
+		myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
+		myimgmap.addEvent(props[id].getElementsByTagName('select')[1], 'change', gui_row_click);
+	}
+
+	//set shape as nextshape if set
+	if (myimgmap.nextShape) {props[id].getElementsByTagName('select')[0].value = myimgmap.nextShape;}
+	//alert(this.props[id].parentNode.innerHTML);*/
+	gui_row_select(id, true);
+}
+
+/**
+ *	Handles click on a property row.
+ *	@author	Adam Maschek (adam.maschek(at)gmail.com)
+ *	@date	2006-06-06 16:55:29
+ */
+function gui_row_select(id, setfocus, multiple) {
+	if (myimgmap.is_drawing) {return;}//exit if in drawing state
+	if (myimgmap.viewmode === 1) {return;}//exit if preview mode
+	if (!document.getElementById('img_active_'+id)) {return;}
+	//if (!multiple)
+	gui_cb_unselect_all();
+	document.getElementById('img_active_'+id).checked = 1;
+	if (setfocus) {
+		document.getElementById('img_active_'+id).focus();
+	}
+	//remove all background styles
+	for (var i = 0; i < props.length; i++) {
+		if (props[i]) {
+			props[i].style.background = '';
+		}
+	}
+	//put highlight on actual props row
+	props[id].style.background = '#e7e7e7';
+}

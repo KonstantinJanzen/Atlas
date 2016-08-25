@@ -5,6 +5,8 @@ function form_wissenskarte_module_preprocess_page(&$vars)
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping.js", array('scope' => 'footer', 'weight' => 5));
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_edit.view.js", array('scope' => 'footer', 'weight' => 5));
 
+    drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/morphmapping.css", array('scope' => 'footer', 'weight' => 5));
+
     // Don't display title on nodes of type "wissenskarte"
     $vars['title'] = '';
   }
@@ -19,5 +21,7 @@ function form_wissenskarte_module_field_widget_image_image_form_alter(&$element,
   if ($isPathAddWissenskarte) {
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping.js", array('scope' => 'footer', 'weight' => 5));
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_add.js", array('scope' => 'footer', 'weight' => 5));
+    
+    drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/morphmapping.css", array('scope' => 'footer', 'weight' => 5));
   }
 }

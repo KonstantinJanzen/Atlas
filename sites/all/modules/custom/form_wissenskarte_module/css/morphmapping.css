@@ -1,0 +1,38 @@
+.img_area {
+    display: block;
+    vertical-align: middle;
+    line-height: 20px;
+    height: 20px;
+}
+
+.img_id{
+    font-weight: bold;
+    width: 25px;
+    padding: 0px 3px;
+    text-align: right;
+    border: none!important;
+    background: none;
+}
+
+.img_label{
+    display: inline;
+    margin-left: 10px;
+}
+
+.addAreaButton {
+    background: url("images/add.gif") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    border: 0px;
+    width: 20px;
+    height: 15px;
+    margin-left: 10px;
+}
+
+.removeAreaButton {
+    background: url("images/delete.gif") no-repeat scroll 0 0 transparent;
+    cursor: pointer;
+    border: 0px;
+    width: 20px;
+    height: 15px;
+    margin-left: 10px;
+}

@@ -84,6 +84,7 @@ Indeko.AddForm = (function() {
     function imageAddedEvent() {
         addEditor();
         showMorphologicalBox();
+		instanciateAreaDescription();
     }
 
     // Initialize the create form in Knowledge Map (first time)
