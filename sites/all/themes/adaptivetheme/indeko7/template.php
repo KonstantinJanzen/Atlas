@@ -84,9 +84,20 @@ function indeko7_process_comment(&$vars) {
 
 
 /**
+ * Override or insert variables into the comment wrapper templates.
+ */
+function indeko7_preprocess_comment_wrapper(&$vars) {
+  // Add JavaScript to style wissenskarte comments
+  if (!empty($vars['theme_hook_original']) && $vars['theme_hook_original'] == "comment_wrapper__node_wissenskarte") {
+    drupal_add_js(drupal_get_path('theme', 'indeko7') . '/js/node-wissenskarte-comments-style.js', array('scope' => 'footer'));
+  }
+}
+
+
+/**
  * Override or insert variables into the block templates.
  */
-/* -- Delete this line if you want to use these functions
+ /* -- Delete this line if you want to use these functions
 function indeko7_preprocess_block(&$vars) {
 }
 function indeko7_process_block(&$vars) {

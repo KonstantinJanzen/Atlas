@@ -14,7 +14,7 @@
  * - $footer_attributes: attributes such as classes to apply to the footer element.
  * - $links_attributes: attributes such as classes to apply to the nav element.
  * - $is_mobile: Mixed, requires the Mobile Detect or Browscap module to return
- *   TRUE for mobile.  Note that tablets are also considered mobile devices.  
+ *   TRUE for mobile.  Note that tablets are also considered mobile devices.
  *   Returns NULL if the feature could not be detected.
  * - $is_tablet: Mixed, requires the Mobile Detect to return TRUE for tablets.
  *   Returns NULL if the feature could not be detected.
@@ -77,38 +77,39 @@
  */
 
 hide($content['links']);
+
+// Hide and don't print "Log in or register to post comments." message below every comment for unregistered users.
+hide($content['links']['#links']['comment_forbidden']);
+
+// Hide and don't print reply-Link below comment.
+// hide($content['links']['#links']['comment-reply']); 
 ?>
 <article class="<?php print $classes; ?> clearfix"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
-
   <?php if ($title || $new): ?>
     <header<?php print $header_attributes; ?>>
-      <!-- Don't display comment title
-	  <?php if ($title): ?>
-        <h3<?php print $title_attributes; ?>><?php print $title ?></h3>
-      <?php endif; ?> 
+      <!-- Don't print comment title.
+    <?php if ($title): ?>
+      <h3<?php print $title_attributes; ?>><?php print $title ?></h3>
+    <?php endif; ?>
 	  -->
-      <?php if ($new): ?>
-        <em class="new"><?php print $new ?></em>
-      <?php endif; ?>
+    <?php if ($new): ?>
+      <em class="new"><?php print $new ?></em>
+    <?php endif; ?>
     </header>
   <?php endif; ?>
-
   <?php if ($picture || $submitted): ?>
     <footer<?php print $footer_attributes; ?>>
       <?php print $picture; ?>
       <p class="author-datetime"><?php print $submitted; ?></p>
     </footer>
   <?php endif; ?>
-
   <div<?php print $content_attributes; ?>>
     <?php print render($content); ?>
   </div>
-
   <?php if ($signature): ?>
     <div class="user-signature"><?php print $signature ?></div>
   <?php endif; ?>
-
   <?php if ($links = render($content['links'])): ?>
     <nav<?php print $links_attributes; ?>><?php print $links; ?></nav>
   <?php endif; ?>
