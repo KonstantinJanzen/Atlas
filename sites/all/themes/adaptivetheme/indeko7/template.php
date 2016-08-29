@@ -64,9 +64,16 @@ function indeko7_process_page(&$vars) {
 /**
  * Override or insert variables into the node templates.
  */
-/* -- Delete this line if you want to use these functions
 function indeko7_preprocess_node(&$vars) {
+  // Hide comment title and marked areas field on write comment page of knowledge maps.
+  $pathWriteComment = 'comment/reply/*';
+  $isPathWriteComment = drupal_match_path(current_path(), $pathWriteComment);
+  if (isset($vars['type']) && $vars['type'] == 'wissenskarte' && $isPathWriteComment) {
+    $vars['title'] = '';
+    hide($vars['content']['field_markierte_bereiche']);
+  }
 }
+/* -- Delete this line if you want to use these functions
 function indeko7_process_node(&$vars) {
 }
 // */
@@ -88,7 +95,7 @@ function indeko7_process_comment(&$vars) {
  */
 function indeko7_preprocess_comment_wrapper(&$vars) {
   // Add JavaScript to style wissenskarte comments
-  if (!empty($vars['theme_hook_original']) && $vars['theme_hook_original'] == "comment_wrapper__node_wissenskarte") {
+  if (isset($vars['theme_hook_original']) && $vars['theme_hook_original'] == "comment_wrapper__node_wissenskarte") {
     drupal_add_js(drupal_get_path('theme', 'indeko7') . '/js/node-wissenskarte-comments-style.js', array('scope' => 'footer'));
   }
 }
