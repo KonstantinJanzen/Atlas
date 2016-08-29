@@ -1,0 +1,9 @@
+.comment .comment-content .field-name-comment-body .field-item .comment-shortener-link {
+    color: blue;
+    cursor: pointer;
+    text-decoration: none;
+}
+
+.comment .comment-content .field-name-comment-body .field-item .comment-shortener-link:before {
+    content: " ";
+}

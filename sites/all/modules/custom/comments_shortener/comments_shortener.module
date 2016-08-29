@@ -1,0 +1,32 @@
+<?php
+/**
+ * @file
+ * Allows trimmed comments to be displayed.
+ */
+
+/**
+ * Implements Hook
+ * @param $vars
+ */
+function comments_shortener_preprocess_comment(&$vars) {
+    drupal_add_js(drupal_get_path('module', 'comments_shortener') . "/js/comments_shortener.js", array('scope' => 'footer', 'weight' => 5));
+    drupal_add_css(drupal_get_path('module', 'comments_shortener') . "/css/comments_shortener.css", array('scope' => 'footer', 'weight' => 5));
+}
+
+/**
+ * Implements Hook comment_load().
+ * @param $comments
+ * @return comment sorted by created descending.
+ */
+function comments_shortener_comment_load($comments) {
+    //Todo: Doesn't work. Different Hook?
+    // Sort the comments
+    usort($comments, "compare");
+    return $comments;
+}
+
+// The function compares two comments (a and b).
+// Todo: Which order? Asc or desc?
+function compare($a, $b) {
+    return $b->created - $a->created;
+}
