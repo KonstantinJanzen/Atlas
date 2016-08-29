@@ -1,0 +1,3 @@
+name = Comments Shortener
+description = Allows trimmed comments to be displayed.
+core = 7.x
