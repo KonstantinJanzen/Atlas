@@ -1,32 +1,37 @@
 <?php
 /**
  * @file
- * Allows trimmed comments to be displayed.
+ * Allows trimmed comments to be displayed. New Comments will be displayed on top.
  */
 
 /**
- * Implements Hook
- * @param $vars
+ * Implements Hook to attach JavaScript.
+ * @param $vars is called for every comment.
  */
 function comments_shortener_preprocess_comment(&$vars) {
     drupal_add_js(drupal_get_path('module', 'comments_shortener') . "/js/comments_shortener.js", array('scope' => 'footer', 'weight' => 5));
     drupal_add_css(drupal_get_path('module', 'comments_shortener') . "/css/comments_shortener.css", array('scope' => 'footer', 'weight' => 5));
 }
 
-/**
- * Implements Hook comment_load().
- * @param $comments
- * @return comment sorted by created descending.
- */
-function comments_shortener_comment_load($comments) {
-    //Todo: Doesn't work. Different Hook?
-    // Sort the comments
-    usort($comments, "compare");
-    return $comments;
-}
 
-// The function compares two comments (a and b).
-// Todo: Which order? Asc or desc?
-function compare($a, $b) {
-    return $b->created - $a->created;
+/** Implements hook_query_TAG_alter().
+ *
+ * Alter comments query to order by DESC as well as the default ASC.
+ */
+function comments_shortener_query_comment_filter_alter(QueryAlterableInterface $query) {
+    $orderby = &$query->getOrderBy();
+
+    // Sorting for threaded comments.
+    if (isset($orderby['torder'])) {
+        // Sort by root parent first, then normal threaded.
+        $query->addExpression("SUBSTRING_INDEX(c.thread, '.', 1)", 'rparent');
+        $orderby = array('rparent' => 'DESC') + $orderby;
+    }
+    // Sorting for flat comments.
+    else if (isset($orderby['c.cid'])) {
+        $direction = 'DESC';
+
+        $orderby['c.cid'] = $direction;
+        $orderby = array('c.created' => $direction) + $orderby;
+    }
 }
