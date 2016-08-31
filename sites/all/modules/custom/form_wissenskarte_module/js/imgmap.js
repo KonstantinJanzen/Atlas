@@ -463,6 +463,7 @@ imgmap.prototype.onLoad = function(e) {
  *	@param	callback	The callback function (named if you want it to be removed).
  */
 imgmap.prototype.addEvent = function(obj, evt, callback) {
+	if (!obj) return;
 	if (obj.attachEvent) {
 		//Microsoft style registration model
 		return obj.attachEvent("on" + evt, callback);
