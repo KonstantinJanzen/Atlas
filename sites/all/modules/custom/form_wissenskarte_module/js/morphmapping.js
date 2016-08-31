@@ -69,7 +69,10 @@ function instanciate_maschek_image(p_oPic){
 		button_container: document.getElementById('button_container'),
 		imgroot: 'example1_files/',
 		buttons : ['add','delete','preview','html'],
-		custom_callbacks : {},
+		custom_callbacks : {
+			'onAddArea'       : function(id)  {gui_addArea(id);},//to add new form element on gui
+			'onRemoveArea'    : function(id)  {gui_removeArea(id);}//to remove form elements from gui
+		},
 		pic_container: p_oPic,//elements on your page
 		html_container: p_oPic,
 		status_container: p_oPic,
@@ -253,9 +256,16 @@ function generateSearchString(area) {
 var props = [];
 
 function instanciateAreaDescription(){
-	$('fieldset').prepend('<input type="submit" class="addAreaButton" value="">');
+	$('fieldset').prepend('<div id="addAreaButton" class="addAreaButton" value="" />');
 	$('fieldset').prepend('<div id="areadescription"></div>');
-	gui_addArea(1);
+
+	//clickevent an addAreaButton
+	$('#addAreaButton').click(function () {
+		myimgmap.addNewArea();
+	});
+
+	myimgmap.addNewArea();
+	//gui_addArea(1);
 }
 
 function gui_addArea(id) {
@@ -284,7 +294,10 @@ function gui_addArea(id) {
 	$('<Label class="img_label">Titel:</Label>').appendTo(props[id]);
 	$('<input type="text" name="img_alt" class="img_alt" value="">').appendTo(props[id]);
 
-	$('<input type="submit" class="removeAreaButton" value="">').appendTo(props[id]);
+	var removeAreaButton = $('<button class="removeAreaButton" value="">').appendTo(props[id]);
+	removeAreaButton.click(function () {
+		myimgmap.removeArea(myimgmap.currentid);
+	})
 
 	//hook more event handlers to individual inputs
 	/*myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
@@ -303,7 +316,31 @@ function gui_addArea(id) {
 	//set shape as nextshape if set
 	if (myimgmap.nextShape) {props[id].getElementsByTagName('select')[0].value = myimgmap.nextShape;}
 	//alert(this.props[id].parentNode.innerHTML);*/
+
+
 	gui_row_select(id, true);
+}
+
+/**
+ *	Called from imgmap when an area was removed.
+ */
+function gui_removeArea(id) {
+	if (props[id]) {
+		//shall we leave the last one?
+		var pprops = props[id].parentNode;
+		if (pprops) {
+			pprops.removeChild(props[id]);
+			var lastid = pprops.lastChild.aid;
+			props[id] = null;
+			try {
+				gui_row_select(lastid, true);
+				myimgmap.currentid = lastid;
+			}
+			catch (err) {
+				//alert('noparent');
+			}
+		}
+	}
 }
 
 /**

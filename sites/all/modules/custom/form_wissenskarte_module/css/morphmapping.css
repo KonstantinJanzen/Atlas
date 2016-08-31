@@ -26,6 +26,9 @@
     width: 20px;
     height: 15px;
     margin-left: 10px;
+    padding: 0px;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
+    margin-top: 20px;
 }
 
 .removeAreaButton {
@@ -35,4 +38,6 @@
     width: 20px;
     height: 15px;
     margin-left: 10px;
+    padding: 0px;
+    box-shadow: 0px 0px 0px rgba(0,0,0,0);
 }
