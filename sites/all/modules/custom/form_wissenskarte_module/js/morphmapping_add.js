@@ -61,6 +61,7 @@ Indeko.AddForm = (function() {
     }
 
 	/*
+	 * TODO
 	 * Add Maschek Editor to the image
 	 */
 	function addEditor() {
@@ -84,7 +85,8 @@ Indeko.AddForm = (function() {
     function imageAddedEvent() {
         addEditor();
         showMorphologicalBox();
-		instanciateAreaDescription();
+		// wird in initView erledigt, damit es nicht nur bei add geladen wird, sondern auch bei edit
+		// instanciateAreaDescription();
     }
 
     // Initialize the create form in Knowledge Map (first time)

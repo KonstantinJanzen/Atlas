@@ -33,17 +33,18 @@ function  initView(ViewMode) {
 		var l_oImageView = document.getElementsByClassName('image-style-none');
 
 		if (l_oImageEdit.length > 0){
-			// EditMode
+			// Edit and Add Mode
 			myimgmap = {};
 			$("#edit-field-markierte-bereiche").hide();
 			$(".form-item.form-type-textfield.form-item-title").hide();
 
-			var loadedValue = $("#field-markierte-bereiche-add-more-wrapper :input").val();
+			var loadedValue = $('#edit-field-markierte-bereiche-und-0-value').val();
 			//if (loadedValue != "") $(loadedValue).appendTo($('.image-preview'));
 
 			instanciate_maschek_image(document.getElementsByClassName("image-preview")[0]);
+			instanciateAreaDescription();
 			myimgmap.setMapHTML(loadedValue);
-			//myimgmap.addNewArea();
+			myimgmap.addNewArea();
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
 			$('.field-name-field-markierte-bereiche').hide();
@@ -91,7 +92,8 @@ function instanciate_maschek_image(p_oPic){
 		html_container: p_oPic,
 		status_container: p_oPic,
 		form_container: p_oPic,
-		bounding_box : true
+		bounding_box : true,
+		label : "%t",
 	});
 
 	var l_oUnternehmensgr  = document.getElementById('edit-field-unternehmensg-er-und');
@@ -270,9 +272,13 @@ function generateSearchString(area) {
 var props = [];
 
 function instanciateAreaDescription(){
-	$('fieldset').prepend('<div id="addAreaButton" class="addAreaButton" value="" />');
-	$('fieldset').prepend('<label id="addAreaError" />');
-	$('fieldset').prepend('<div id="areadescription"></div>');
+
+	// TODO: edit content type wissenskarte to add div wrapper around image for clear identification
+	var guiArea = $('#edit-field-wk-bild');
+
+	guiArea.prepend('<div id="addAreaButton" class="addAreaButton" value="" />');
+	guiArea.prepend('<label id="addAreaError" />');
+	guiArea.prepend('<div id="areadescription"></div>');
 
 	//clickevent an addAreaButton
 	$('#addAreaButton').click(function () {
@@ -290,7 +296,7 @@ function instanciateAreaDescription(){
 		}
 	});
 
-	myimgmap.addNewArea();
+	//myimgmap.addNewArea(); // hier nur GUI für add/edit initialisieren
 	//gui_addArea(1);
 }
 
