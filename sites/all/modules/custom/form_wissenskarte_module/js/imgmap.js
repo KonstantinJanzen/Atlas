@@ -2207,7 +2207,8 @@ imgmap.prototype.img_mousedown = function(e) {
 		if (this.areas[this.currentid] == this._getLastArea()) {
 			//editor mode adds next area automatically
 			//document.getElementById('edit-field-markierte-bereiche-und-0-value').value = this.getMapHTML('noscale');
-			if (this.config.mode != "editor2") {this.addNewArea();}
+			// Janzen: just add a new area by click
+			//if (this.config.mode != "editor2") {this.addNewArea();}
 			return;
 		}
 		return;

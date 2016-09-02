@@ -1,3 +1,15 @@
+var ValidationResult = function() {
+	var l_oValidationResult = {
+		isTitelValid: false,
+		messageTitel: "Bitte geben Sie der Kontur einen Titel um fortzufahren.",
+		isAreaValid: false,
+		messageArea: "Nicht alle Konturen enthalten markierte Bereiche im Bild.",
+		l_oInputTitel: {}
+	};
+
+	return l_oValidationResult;
+}
+
 function  initView(ViewMode) {
 	//window.onload = function(){
 //$('#field-markierte-bereiche-add-more-wrapper').hide();
@@ -267,13 +279,14 @@ function instanciateAreaDescription(){
 
 
 		var l_oResult = validateLastArea();
-		if (l_oResult.isValid === true){
+		if (l_oResult.isTitelValid === false){
+			$('#addAreaError').text(l_oResult.messageTitel);
+			$(l_oResult.l_oInputTitel).addClass('addAreaError');
+		} else if (l_oResult.isAreaValid === false){
+			$('#addAreaError').text(l_oResult.messageArea);
+		} else {
 			$('#addAreaError').text("");
 			$('input').removeClass('addAreaError');
-			myimgmap.addNewArea();
-		} else {
-			$('#addAreaError').text(l_oResult.message);
-			$(l_oResult.l_oInputTitel).addClass('addAreaError');
 		}
 	});
 
@@ -282,30 +295,59 @@ function instanciateAreaDescription(){
 }
 
 function validateLastArea(){
-	var l_oValidationResult = {
-		isValid: false,
-		message: "Bitte geben Sie der Kontur einen Titel um fortzufahren.",
-		l_oInputTitel: {}
-	};
-
+	var l_oValidationResult = new ValidationResult();
 
 	if (myimgmap.currentid > -1){
 		var l_oArea = $('#img_area_'+myimgmap.currentid);
 		if (l_oArea.length > 0) {
 			var l_oInputTitel = $('#img_area_'+myimgmap.currentid).find('input[name=img_alt]');
 			if (l_oInputTitel.val().trim() != "") {
-				l_oValidationResult.isValid = true;
+				l_oValidationResult.isTitelValid = true;
 				l_oValidationResult.message = "";
 			} else {
 				l_oValidationResult.l_oInputTitel = l_oInputTitel;
 			}
 		} else {
-			l_oValidationResult.isValid = true;
+			l_oValidationResult.isTitelValid = true;
 			l_oValidationResult.message = "";
 		}
 	}
 
+	if (myimgmap.areas && myimgmap.areas.length == $('input[name=img_alt]').length){
+		if (myimgmap.areas[0].tagName === 'CANVAS') {
+			l_oValidationResult.isAreaValid = true;
+		} else {
+			l_oValidationResult.isAreaValid = false;
+		}
+	} else {
+		l_oValidationResult.isAreaValid = false;
+	}
+
 	return l_oValidationResult;
+}
+
+function validateAllAreas(){
+	var l_bIsValid = true;
+
+	// all titels inputs from areas
+	var l_aInputTitelfromAreas = $('input[name=img_alt]');
+
+	for (var i = 0; i < l_aInputTitelfromAreas.length; i++) {
+		if ($(l_aInputTitelfromAreas[i]).val().trim() == ""){
+			$(l_aInputTitelfromAreas[i]).addClass('addAreaError');
+			l_bIsValid = false;
+		} else {
+			$(l_aInputTitelfromAreas[i]).removeClass('addAreaError');
+		}
+	}
+
+	if (l_bIsValid === true){
+		$('#addAreaError').text("");
+		$('input').removeClass('addAreaError');
+	} else {
+		var l_oValidationResult = new ValidationResult();
+		$('#addAreaError').text(l_oValidationResult.messageTitel);
+	}
 }
 
 function gui_addArea(id) {
@@ -337,6 +379,7 @@ function gui_addArea(id) {
 	var removeAreaButton = $('<div class="removeAreaButton" value="" />').appendTo(props[id]);
 	removeAreaButton.click(function () {
 		myimgmap.removeArea(myimgmap.currentid);
+		validateAllAreas();
 	})
 
 	//hook more event handlers to individual inputs
@@ -474,12 +517,14 @@ function gui_cb_unselect_all() {
  */
 function gui_input_change(e) {
 	var l_oResult = validateLastArea();
-	if (l_oResult.isValid === true){
+	if (l_oResult.isTitelValid === false){
+		$('#addAreaError').text(l_oResult.messageTitel);
+		$(l_oResult.l_oInputTitel).addClass('addAreaError');
+	} else if (l_oResult.isAreaValid === false){
+		$('#addAreaError').text(l_oResult.messageArea);
+	} else {
 		$('#addAreaError').text("");
 		$('input').removeClass('addAreaError');
-	} else {
-		$('#addAreaError').text(l_oResult.message);
-		$(l_oResult.l_oInputTitel).addClass('addAreaError');
 	}
 
 	if (myimgmap.viewmode === 1) {return;}//exit if preview mode

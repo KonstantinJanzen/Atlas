@@ -209,7 +209,7 @@ function gui_input_change(e) {
 	var id = obj.parentNode.aid;
 	//console.log(this.areas[id]);
 	if (obj.name == 'img_href')        {myimgmap.areas[id].ahref   = obj.value;}
-	else if (obj.name == 'img_alt')    {myimgmap.areas[id].aalt    = obj.value;}
+	else if (obj.name == 'img_alt')    {myimgmap.areas[id].aalt    = obj.value; myimgmap.areas[id].atitle  = obj.value;}
 	else if (obj.name == 'img_title')  {myimgmap.areas[id].atitle  = obj.value;}
 	else if (obj.name == 'img_target') {myimgmap.areas[id].atarget = obj.value;}
 	else if (obj.name == 'img_shape') {
