@@ -85,8 +85,10 @@ function instanciate_maschek_image(p_oPic){
 		custom_callbacks : {
 			'onAddArea'       : function(id)  {gui_addArea(id);},//to add new form element on gui
 			'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
-			'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},
-			'onSelectArea'    : function(obj) {gui_selectArea(obj);}//to select form element when an area is clicked
+			'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},// update form elements with selected area values
+			'onSelectArea'    : function(obj) {gui_selectArea(obj);},//to select form element when an area is clicked
+			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);}// to update "markierte Bereiche"
+
 		},
 		pic_container: p_oPic,//elements on your page
 		html_container: p_oPic,
@@ -583,4 +585,15 @@ function gui_areaChanged(area) {
 
 function gui_selectArea(obj) {
 	gui_row_select(obj.aid, true, false);
+}
+
+/**
+ * Called from imgmap event with the new html code when changes occur.
+ *
+ * @param str	html image map code as a string
+ */
+function gui_htmlChanged(str) {
+	if (document.getElementById('edit-field-markierte-bereiche-und-0-value')) {
+		document.getElementById('edit-field-markierte-bereiche-und-0-value').value = str;
+	}
 }
