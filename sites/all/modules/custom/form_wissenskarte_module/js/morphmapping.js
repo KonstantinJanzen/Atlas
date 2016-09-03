@@ -202,10 +202,11 @@ function instanciateAreaDescription(){
 		} else {
 			$('#addAreaError').text("");
 			$('input').removeClass('addAreaError');
+			myimgmap.addNewArea(); // add new area on validation success
 		}
 	});
 
-	//myimgmap.addNewArea(); // hier nur GUI für add/edit initialisieren
+	//myimgmap.addNewArea(); // hier nur GUI für add/edit initialisieren?
 	//gui_addArea(1);
 }
 
