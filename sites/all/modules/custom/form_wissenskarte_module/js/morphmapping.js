@@ -1,3 +1,8 @@
+$ = jQuery;
+//Create a Namespace for Indeko javascript objects (no objects in global namespace)
+var Indeko = Indeko || {};
+var props = [];
+
 var ValidationResult = function() {
 	var l_oValidationResult = {
 		isTitelValid: false,
@@ -11,7 +16,6 @@ var ValidationResult = function() {
 }
 
 function  initView(ViewMode) {
-	//window.onload = function(){
 //$('#field-markierte-bereiche-add-more-wrapper').hide();
 //$('.field-name-field-markierte-bereiche').hide();
 	var result = false;
@@ -43,6 +47,7 @@ function  initView(ViewMode) {
 
 			instanciate_maschek_image(document.getElementsByClassName("image-preview")[0]);
 			instanciateAreaDescription();
+			Indeko.MorphBox.loadDummy();
 			myimgmap.setMapHTML(loadedValue);
 			myimgmap.addNewArea();
 		} else if (l_oImageView.length > 0) {
@@ -63,17 +68,10 @@ function  initView(ViewMode) {
 				var l_sId = '#' + l_oPicContainer.find('map').attr('id');
 				l_oPicContainer.find('img').attr('USEMAP', l_sId);
 			}
-
-			// $('area').click(function(e){
-			// 	var message = "ugr " + $(e.target).attr('ugr');
-			// 	message += " bran " + $(e.target).attr('bran');
-			// 	alert(message);
-			// })
 		}
 	}
 	
 	return result;
-//}
 }
 
 function instanciate_maschek_image(p_oPic){
@@ -97,50 +95,6 @@ function instanciate_maschek_image(p_oPic){
 		bounding_box : true,
 		label : "%t",
 	});
-
-	var l_oUnternehmensgr  = document.getElementById('edit-field-unternehmensg-er-und');
-	if (l_oUnternehmensgr != null && l_oUnternehmensgr.length != 0) {
-		l_oUnternehmensgr.addEventListener('change', function(e){
-			var l_aCanvas = $('canvas');
-
-			var l_nCurrentId = myimgmap.currentid;
-			if (myimgmap.currentid == l_aCanvas.length) l_nCurrentId--;
-
-			for (var i=0; i < l_aCanvas.length; i++) {
-				var l_sId = l_aCanvas[i].id;
-				var lastChar = l_sId[l_sId.length-1];
-
-				if (lastChar == l_nCurrentId){
-					var l_aUnternehmensgr = $('#edit-field-unternehmensg-er-und').val();
-					$(l_aCanvas[i]).attr('ugr', l_aUnternehmensgr.toString());
-				}
-			}
-
-			document.getElementById('edit-field-markierte-bereiche-und-0-value').value = myimgmap.getMapHTML('noscale');
-		});
-	}
-
-	var l_oBranche  = document.getElementById('edit-field-branche-und');
-	if (l_oBranche != null && l_oBranche.length != 0) {
-		l_oBranche.addEventListener('change', function(e){
-			var l_aCanvas = $('canvas');
-
-			var l_nCurrentId = myimgmap.currentid;
-			if (myimgmap.currentid == l_aCanvas.length) l_nCurrentId--;
-
-			for (var i=0; i < l_aCanvas.length; i++) {
-				var l_sId = l_aCanvas[i].id;
-				var lastChar = l_sId[l_sId.length-1];
-
-				if (lastChar == l_nCurrentId){
-					var l_aBranche = $('#edit-field-branche-und').val();
-					$(l_aCanvas[i]).attr('bran', l_aBranche.toString());
-				}
-			}
-
-			document.getElementById('edit-field-markierte-bereiche-und-0-value').value = myimgmap.getMapHTML('noscale');
-		});
-	}
 
 	myimgmap.useImage(p_oPic);
 }
@@ -177,101 +131,54 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 				coords = cs.join(',');
 			}
 
-			var l_aUnternehmensgr = typeof $(this.areas[i]).attr('ugr') != 'undefined' ? $(this.areas[i]).attr('ugr') : "";
-			var l_aBranche = typeof $(this.areas[i]).attr('bran') != 'undefined' ? $(this.areas[i]).attr('bran') : "";
-
 			html+= '<area shape="' + this.areas[i].shape + '"' +
 				' alt="' + this.areas[i].aalt + '"' +
 				' title="' + this.areas[i].atitle + '"' +
 				' id="' + this.areas[i].id + '"' +
-				' ugr="' + l_aUnternehmensgr + '"' +
-				' bran="' + l_aBranche + '"' +
 				' coords="' + coords + '"' +
-				' href="' +	generateSearchString(this.areas[i]) + '"' +
+				' href="' +	this.areas[i].ahref + '"' +
 				' target="' + this.areas[i].atarget + '" />';
-
 		}
 	}
 
 	return html;
-
-//alert(html);
-
-	/*var html = "";
-	 var l_aCanvas = $('canvas');
-	 for (var i=0; i < this.areas.length; i++) {
-	 html += $($('canvas')[i]).prop('outerHTML');
-	 }*/
 };
 
-// wenn currentid ge�ndert wird, sollen die Combos geert werden
+// wenn currentid ge�ndert wird, sollen die Combos geert werden. Remove loadselect from imfmap and morphmapping
 function LoadSelect(newCurrentId){
-	$('#edit-field-unternehmensg-er-und').val(-1);
-	$('#edit-field-branche-und').val(-1);
-
-	var l_aCanvas = $('canvas');
-
-	var l_nCurrentId = newCurrentId;
-	if (newCurrentId == l_aCanvas.length) l_nCurrentId--;
-
-	for (var i=0; i < l_aCanvas.length; i++) {
-		var l_sId = l_aCanvas[i].id;
-		var lastChar = l_sId[l_sId.length-1];
-
-		if (lastChar == myimgmap.currentid){
-			// Unternehmensgr��e
-			var l_sSelected = $(l_aCanvas[i]).attr('ugr');
-			if (typeof l_sSelected != 'undefined' && l_sSelected != null ){
-				var l_aSelected = l_sSelected.split(',');
-
-				$('#edit-field-unternehmensg-er-und').val(l_aSelected);
-			}
-
-			// Branche
-			l_sSelected = $(l_aCanvas[i]).attr('bran');
-			if (typeof l_sSelected != 'undefined' && l_sSelected != null ){
-				var l_aSelected = l_sSelected.split(',');
-
-				$('#edit-field-branche-und').val(l_aSelected);
-			}
-		}
-	}
+	// $('#edit-field-unternehmensg-er-und').val(-1);
+	// $('#edit-field-branche-und').val(-1);
+    //
+	// var l_aCanvas = $('canvas');
+    //
+	// var l_nCurrentId = newCurrentId;
+	// if (newCurrentId == l_aCanvas.length) l_nCurrentId--;
+    //
+	// for (var i=0; i < l_aCanvas.length; i++) {
+	// 	var l_sId = l_aCanvas[i].id;
+	// 	var lastChar = l_sId[l_sId.length-1];
+    //
+	// 	if (lastChar == myimgmap.currentid){
+	// 		// Unternehmensgr��e
+	// 		var l_sSelected = $(l_aCanvas[i]).attr('ugr');
+	// 		if (typeof l_sSelected != 'undefined' && l_sSelected != null ){
+	// 			var l_aSelected = l_sSelected.split(',');
+    //
+	// 			$('#edit-field-unternehmensg-er-und').val(l_aSelected);
+	// 		}
+    //
+	// 		// Branche
+	// 		l_sSelected = $(l_aCanvas[i]).attr('bran');
+	// 		if (typeof l_sSelected != 'undefined' && l_sSelected != null ){
+	// 			var l_aSelected = l_sSelected.split(',');
+    //
+	// 			$('#edit-field-branche-und').val(l_aSelected);
+	// 		}
+	// 	}
+	// }
 
 	return false;
 };
-
-// TODO
-// Generate search string to search for several taxonomy ids (tid) using Apache Solr
-// quick and dirty test
-function generateSearchString(area) {
-	var baseSolrSearchUrl = Drupal.settings.basePath + "search/site/";
-    var solrSearchQuery = "";
-
-    if (typeof $(area).attr('ugr') != 'undefined') {
-        solrSearchQuery += $(area).attr('ugr');
-        solrSearchQuery = solrSearchQuery.replace(/_none/g,"").replace(/,_none/g,"").replace(/,,/g,",");
-    }
-
-    if (typeof $(area).attr('bran') != 'undefined') {
-        if (solrSearchQuery != "") {
-            solrSearchQuery += "," + $(area).attr('bran');
-            solrSearchQuery = solrSearchQuery.replace(/_none/g,"").replace(/,_none/g,"").replace(/,,/g,",");
-        }
-    }
-
-    if (solrSearchQuery != "") {
-        solrSearchQuery = "tid:" + solrSearchQuery;
-        solrSearchQuery = solrSearchQuery.replace(/,/g, " AND tid:");
-    } else {
-        solrSearchQuery = "*";
-    }
-
-    var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
-    return solrSearchUrl;
-
-};
-
-var props = [];
 
 function instanciateAreaDescription(){
 
@@ -442,6 +349,8 @@ function gui_row_click(e) {
 	//gui_row_select(obj.aid, false, multiple);
 	gui_row_select(obj.aid, false, false);
 	myimgmap.currentid = obj.aid;
+
+	Indeko.MorphBox.update(obj.aid); // Update selected morphological box items
 }
 
 /**
@@ -490,20 +399,6 @@ function gui_row_mouseout(e) {
 	var obj = (myimgmap.isMSIE) ? window.event.srcElement : e.currentTarget;
 	if (typeof obj.aid == 'undefined') {obj = obj.parentNode;}
 	myimgmap.blurArea(obj.aid);
-}
-
-/**
- *	Handles click on props row.
- */
-function gui_row_click(e) {
-	if (myimgmap.viewmode === 1) {return;}//exit if preview mode
-	var obj = (myimgmap.isMSIE) ? window.event.srcElement : e.currentTarget;
-	//var multiple = (e.originalTarget.name == 'img_active');
-	//myimgmap.log(e.originalTarget);
-	if (typeof obj.aid == 'undefined') {obj = obj.parentNode;}
-	//gui_row_select(obj.aid, false, multiple);
-	gui_row_select(obj.aid, false, false);
-	myimgmap.currentid = obj.aid;
 }
 
 /**
@@ -585,15 +480,208 @@ function gui_areaChanged(area) {
 
 function gui_selectArea(obj) {
 	gui_row_select(obj.aid, true, false);
+
+	Indeko.MorphBox.update(obj.aid); // Update selected morphological box items
 }
 
 /**
- * Called from imgmap event with the new html code when changes occur.
+ * Called from imgmap "onHtmlChanged" event with the new html code when changes occur.
  *
- * @param str	html image map code as a string
+ * @param str	html image map code in string format.
  */
 function gui_htmlChanged(str) {
 	if (document.getElementById('edit-field-markierte-bereiche-und-0-value')) {
 		document.getElementById('edit-field-markierte-bereiche-und-0-value').value = str;
 	}
+}
+
+/*
+ * Variables and functions surrounding the morphological box.
+ */
+Indeko.MorphBox = {
+	// DOM element that contains the representation of the morphological box.
+	element : $('#morphological-box'),
+
+	// array represention of the selected morphological box items (first element fulltext string, following items taxonomy IDs)
+	dataArray : [] // e.g. ["Kompetenz", "38", "40"]
+}
+
+/*
+ * Converts the data array to an Apache Solr search URL.
+ * ["Kompetenz", "38", "40"] -> /indeko/search/site/Kompetenz AND tid:38 AND tid:40
+ *
+ * @return Complete search URL in string format.
+ */
+Indeko.MorphBox.dataToUrl = function() {
+	var baseSolrSearchUrl = Drupal.settings.basePath + "search/site/";
+	var solrSearchQuery = "";
+
+	$.each(Indeko.MorphBox.dataArray, function(index, value) {
+		// first element of data array is the fulltext search string
+		if (index === 0) {
+			solrSearchQuery += value;
+		} else {
+			solrSearchQuery += " AND tid:" + value
+		}
+	});
+
+	var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
+	return solrSearchUrl;
+}
+
+/*
+ * Converts a search URL to data array.
+ * /indeko/search/site/Kompetenz AND tid:38 AND tid:40 -> ["Kompetenz", "38", "40"]
+ *
+ * @param searchURL Search URL in string format.
+ */
+Indeko.MorphBox.urlToData = function(searchURL) {
+	if (typeof searchURL === 'undefined') {
+		return;
+	}
+	dataArray = searchURL.split("search/site/")[1]; // search query
+	dataArray = dataArray.split(" AND tid:");		// search items
+
+	Indeko.MorphBox.dataArray = dataArray;
+}
+
+/*
+ * Updates morphological box display after selecting a new knowledge map area.
+ *
+ * @paran id 	ID of the selected area.
+ */
+Indeko.MorphBox.update = function(id) {
+	if (myimgmap.areas[id] == null) { // TODO
+		return;
+	}
+	Indeko.MorphBox.clear();
+	Indeko.MorphBox.urlToData(myimgmap.areas[id].ahref);
+	Indeko.MorphBox.selectItems();
+}
+
+/*
+ * Extract selected items from the morphological box and save them in the data array.
+ * !!! Has to be changed depending on the representation of the morphological box !!!
+ */
+Indeko.MorphBox.toData = function() {
+	Indeko.MorphBox.dataArray = [];
+
+	var inputFulltextSearch = jQuery("#input_fulltext_search").val();
+	// replace empty fulltext search field with "*" search
+	if (!inputFulltextSearch) {
+		inputFulltextSearch = "*";
+	}
+	Indeko.MorphBox.dataArray.push(inputFulltextSearch);
+
+	jQuery("td.selected").each(function() {
+		Indeko.MorphBox.dataArray.push($(this).attr("tid"));
+	});
+}
+
+/*
+ * Select items in the morphologocal box that match the data array.
+ * !!! Has to be changed depending on the representation of the morphological box !!!
+ */
+Indeko.MorphBox.selectItems = function() {
+	$.each(Indeko.MorphBox.dataArray, function(index, value) {
+		// first element of data array is the fulltext search string
+		if (index === 0) {
+			$("#input_fulltext_search").val(value);
+		} else {
+			Indeko.MorphBox.element.find("[tid=" + value + "]").removeClass("unselected").addClass("selected");
+		}
+	});
+}
+
+/*
+ * Clear the selected values of the morphological box.
+ * !!! Has to be changed depending on the representation of the morphological box !!!
+ */
+Indeko.MorphBox.clear = function() {
+	jQuery("td.selected").removeClass("selected").addClass("unselected");
+	jQuery("#input_fulltext_search").val('');
+}
+
+/*
+ * Inserts morphbox dummy into the DOM. Dirty copy and paste from search morphbox dummy.
+ */
+Indeko.MorphBox.loadDummy = function () {
+	// Delete all child elements from existing morphbox representation to replace it with this dummy.
+	Indeko.MorphBox.element.empty();
+
+	// Dummy MorphBox add table.
+	Indeko.MorphBox.element.append('<div class="morphbox">\
+		<input id="input_fulltext_search" title="Geben Sie die Begriffe ein, nach denen Sie suchen." class="form-text" size="46" maxlength="128" value=""> Volltextsuchfeld\
+		<table id="morphbox">\
+		<tr>\
+		<td class="taxonomyname">Unternehmensgröße</td>\
+		<td class="unselected" tid="36">Kleinstunternehmen (weniger als 10 Beschäftigte)</td>\
+		<td class="unselected" tid="37">Kleinunternehmen (10 bis 49 Beschäftigte)</td>\
+		<td class="unselected" tid="38">Mittlere Unternehmen (50 bis 249 Beschäftigte)</td>\
+		<td class="unselected" tid="39">Großunternehmen (250 oder mehr Beschäftigte)</td>\
+		<td class="unselected" tid="40">Virtuelle Netzwerke</td>\
+		</tr>\
+		<tr>\
+		<td class="taxonomyname">Branche</td>\
+		<td class="unselected" tid="41">Baugewerbe</td>\
+		<td class="unselected" tid="42">Energieversorgung</td>\
+		<td class="unselected" tid="43">Finanz- und Versicherungsdienstleistung</td>\
+		<td class="unselected" tid="44">Gastgewerbe</td>\
+		<td class="unselected" tid="45">Gesundheit und Sozialwesen</td>\
+		<td class="unselected" tid="46">Grundstücks- und Wohnungswesen</td>\
+		<td class="unselected" tid="47">Handel</td>\
+		<td class="unselected" tid="48">Information und Kommunikation</td>\
+		<td class="unselected" tid="49">Land- und Forstwirtschaft</td>\
+		<td class="unselected" tid="50">Öffentliche Verwaltung</td>\
+		<td class="unselected" tid="51">Sonstiges</td>\
+		<td class="unselected" tid="52">Verarbeitendes Gewerbe</td>\
+		<td class="unselected" tid="53">Verkehr und Lagerei</td>\
+		<td class="unselected" tid="54">Wasserversorgung</td>\
+		</tr>\
+		</table>\
+		</div>\
+		<div id="result"></div>'
+	);
+
+
+	// Dummy MorphBox add CSS
+	Indeko.MorphBox.element.append('<style>\
+		.selected { background-color: #2da046; color: white; }\
+		.unselected { background-color: white; color: #444; }\
+		.taxonomyname {font-weight: bold; color: #444; }\
+		.morphbox  { width: 100%;	overflow-y: hidden; overflow: auto; -ms-user-select: none; /* IE 10+ */\
+		-moz-user-select: -moz-none;\
+		-khtml-user-select: none;\
+		-webkit-user-select: none;\
+		user-select: none;}\
+		td { border: 1px solid gray; text-align:center; }\
+		</style>'
+	);
+
+
+	// Dummy MorphBox logic
+	jQuery("td.unselected").click(function () {
+		//<!-- if clicked cell is selected, just deselect it and stop -->
+		if (jQuery(this).hasClass("selected")) {
+			this.className = (this.className == 'unselected' ? 'selected' : 'unselected')
+			return;
+		}
+
+		//<!-- if taxonomy is singleselect only, deselect all cells in this row -->
+		var parentRow = jQuery(this).parent();
+		if (parentRow.hasClass("single")) {
+			parentRow.find(".selected").removeClass("selected").addClass("unselected");
+		}
+
+		//<!-- change class (color) of cell on click -->
+		this.className = (this.className == 'unselected' ? 'selected' : 'unselected')
+	});
+
+
+	// save selected values once mouse leaves the morphbox
+	Indeko.MorphBox.element.mouseleave(function () {
+		Indeko.MorphBox.toData();
+		myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
+		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+	});
 }
