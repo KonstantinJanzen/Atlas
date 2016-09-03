@@ -186,7 +186,7 @@ function instanciateAreaDescription(){
 	var guiArea = $('#edit-field-wk-bild');
 
 	guiArea.prepend('<div id="addAreaButton" class="addAreaButton" value="" />');
-	guiArea.prepend('<label id="addAreaError" />');
+	guiArea.prepend('<label id="addAreaError" class="labelAreaErrorText" />');
 	guiArea.prepend('<div id="areadescription"></div>');
 
 	//clickevent an addAreaButton
@@ -205,9 +205,6 @@ function instanciateAreaDescription(){
 			myimgmap.addNewArea(); // add new area on validation success
 		}
 	});
-
-	//myimgmap.addNewArea(); // hier nur GUI für add/edit initialisieren?
-	//gui_addArea(1);
 }
 
 function validateLastArea(){
@@ -229,12 +226,8 @@ function validateLastArea(){
 		}
 	}
 
-	if (myimgmap.areas && myimgmap.areas.length == $('input[name=img_alt]').length){
-		if (myimgmap.areas[0].tagName === 'CANVAS') {
-			l_oValidationResult.isAreaValid = true;
-		} else {
-			l_oValidationResult.isAreaValid = false;
-		}
+	if (getValidAreaCount() == $('input[name=img_alt]').length){
+		l_oValidationResult.isAreaValid = true;
 	} else {
 		l_oValidationResult.isAreaValid = false;
 	}
@@ -242,12 +235,14 @@ function validateLastArea(){
 	return l_oValidationResult;
 }
 
+/* validate all ares */
 function validateAllAreas(){
 	var l_bIsValid = true;
 
 	// all titels inputs from areas
 	var l_aInputTitelfromAreas = $('input[name=img_alt]');
 
+	/* validate all titels */
 	for (var i = 0; i < l_aInputTitelfromAreas.length; i++) {
 		if ($(l_aInputTitelfromAreas[i]).val().trim() == ""){
 			$(l_aInputTitelfromAreas[i]).addClass('addAreaError');
@@ -263,7 +258,31 @@ function validateAllAreas(){
 	} else {
 		var l_oValidationResult = new ValidationResult();
 		$('#addAreaError').text(l_oValidationResult.messageTitel);
+		return false;
 	}
+
+	/* validate gui areas */
+	if (getValidAreaCount() == $('input[name=img_alt]').length){
+		return true;
+	}
+
+	var l_oValidationResult = new ValidationResult();
+	$('#addAreaError').text(l_oValidationResult.messageArea);
+	return false;
+}
+
+/* returns the valid/real count of areas */
+function getValidAreaCount(){
+	var l_nCount = 0;
+	for (var i = 0; i < myimgmap.areas.length; i++) {
+		if (myimgmap.areas[i] != null && typeof myimgmap.areas[i] != 'undefined') {
+			if (myimgmap.areas[i].tagName == "CANVAS") {
+				l_nCount++;
+			}
+		}
+	}
+
+	return l_nCount;
 }
 
 function gui_addArea(id) {
@@ -294,9 +313,13 @@ function gui_addArea(id) {
 
 	var removeAreaButton = $('<div class="removeAreaButton" value="" />').appendTo(props[id]);
 	removeAreaButton.click(function () {
+		// eventuell auslagern
 		myimgmap.removeArea(myimgmap.currentid);
 		validateAllAreas();
+		var l_nPropsPosition = props.length > 0 ? props.length - 1 : 0;
+		enableDeleteButtonOnSelectedGuiArea(props[l_nPropsPosition]); // enable deletebutton of last area
 	})
+	enableDeleteButtonOnSelectedGuiArea(props[id]);
 
 	//hook more event handlers to individual inputs
 	//myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
@@ -352,6 +375,18 @@ function gui_row_click(e) {
 	myimgmap.currentid = obj.aid;
 
 	Indeko.MorphBox.update(obj.aid); // Update selected morphological box items
+
+	enableDeleteButtonOnSelectedGuiArea(e.currentTarget)
+}
+
+function enableDeleteButtonOnSelectedGuiArea(selectedArea){
+	/* check if  area to select exist */
+	var l_aAreaToSelect = $('#areadescription').find("#" + selectedArea.id);
+	if (l_aAreaToSelect.length === 1) {
+		$(props).find('.removeAreaButton').hide();
+		$(selectedArea).find('.removeAreaButton').show();
+	}
+	return false;
 }
 
 /**
@@ -420,6 +455,7 @@ function gui_cb_unselect_all() {
  *	@author	Adam Maschek (adam.maschek(at)gmail.com)
  */
 function gui_input_change(e) {
+	// validation first
 	var l_oResult = validateLastArea();
 	if (l_oResult.isTitelValid === false){
 		$('#addAreaError').text(l_oResult.messageTitel);
@@ -537,7 +573,7 @@ Indeko.MorphBox.dataToUrl = function() {
  * @param searchURL Search URL in string format.
  */
 Indeko.MorphBox.urlToData = function(searchURL) {
-	if (typeof searchURL === 'undefined') {
+	if (typeof searchURL === 'undefined' || searchURL === '') {
 		return;
 	}
 	dataArray = searchURL.split("search/site/")[1]; // search query
