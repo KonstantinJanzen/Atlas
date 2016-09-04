@@ -49,6 +49,7 @@ function  initView(ViewMode) {
 			instanciateAreaDescription();
 			Indeko.MorphBox.loadDummy();
 			myimgmap.setMapHTML(loadedValue);
+			Indeko.ImageMap.scale(l_oImageEdit); // scale areas
 			myimgmap.addNewArea();
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
@@ -125,8 +126,15 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 			if (flags && flags.match(/noscale/)) {
 				//for preview use real coordinates, not scaled
 				var cs = coords.split(',');
-				for (var j=0; j < cs.length; j++) {
-					cs[j] = Math.round(cs[j] * this.globalscale);
+				if (Indeko.ImageMap.scalingFactor === 1) {
+					for (var j=0, le2 = cs.length; j<le2; j++) {
+						cs[j] = Math.round(cs[j] * this.globalscale);
+					}
+				// if image has been scaled, rescale area coordinates to match original image size
+				} else {
+					for (var j=0, le2 = cs.length; j<le2; j++) {
+						cs[j] = Math.round(cs[j] * (1 / Indeko.ImageMap.scalingFactor));
+					}
 				}
 				coords = cs.join(',');
 			}
@@ -576,6 +584,11 @@ Indeko.MorphBox.urlToData = function(searchURL) {
 	if (typeof searchURL === 'undefined' || searchURL === '') {
 		return;
 	}
+
+	if (typeof dataArray === 'undefined' || searchURL === '') { // TODO for old "handmade" knowledgemap prototypes
+		return;
+	}
+
 	dataArray = searchURL.split("search/site/")[1]; // search query
 	dataArray = dataArray.split(" AND tid:");		// search items
 
@@ -721,4 +734,26 @@ Indeko.MorphBox.loadDummy = function () {
 		myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
 		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 	});
+}
+
+
+Indeko.ImageMap = {
+	scalingFactor: 1
+}
+
+/*
+ * Scales image map area coordinates in add and edit mode to the current displayed width in the browser if the image
+ * width differs from it's original width.
+ * (Drupal automatically scales image width depending on browser width and page (image width in view node can be
+ * different from width in add node can be different from width in edit node).
+ *
+ * @param domImage DOM element containing the image.
+ */
+Indeko.ImageMap.scale = function(domImage) {
+	var image = $(domImage).get(0);
+
+	if (image.width !== image.naturalWidth) {
+		Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
+		myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
+	}
 }
