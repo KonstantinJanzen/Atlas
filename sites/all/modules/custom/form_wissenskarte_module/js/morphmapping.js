@@ -210,7 +210,8 @@ function instanciateAreaDescription(){
 		} else {
 			$('#addAreaError').text("");
 			$('input').removeClass('addAreaError');
-			myimgmap.addNewArea(); // add new area on validation success
+			myimgmap.addNewArea();      // add new area on validation success...
+            Indeko.MorphBox.clear();    // ... and clear the morphological box
 		}
 	});
 }
@@ -585,9 +586,9 @@ Indeko.MorphBox.urlToData = function(searchURL) {
 		return;
 	}
 
-	if (typeof dataArray === 'undefined' || searchURL === '') { // TODO for old "handmade" knowledgemap prototypes
-		return;
-	}
+	// if (typeof dataArray === 'undefined' || searchURL === '') { // TODO for old "handmade" knowledgemap prototypes
+	// 	return;
+	// }
 
 	dataArray = searchURL.split("search/site/")[1]; // search query
 	dataArray = dataArray.split(" AND tid:");		// search items
@@ -650,6 +651,7 @@ Indeko.MorphBox.selectItems = function() {
 Indeko.MorphBox.clear = function() {
 	jQuery("td.selected").removeClass("selected").addClass("unselected");
 	jQuery("#input_fulltext_search").val('');
+    Indeko.MorphBox.dataArray = [];
 }
 
 /*
