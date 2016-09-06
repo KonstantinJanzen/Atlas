@@ -15,6 +15,7 @@ var ValidationResult = function() {
 	return l_oValidationResult;
 }
 
+
 function  initView(ViewMode) {
 //$('#field-markierte-bereiche-add-more-wrapper').hide();
 //$('.field-name-field-markierte-bereiche').hide();
@@ -63,7 +64,7 @@ function  initView(ViewMode) {
 			var loadedValue = $($(".field-name-field-markierte-bereiche").children()[1]).text();
 			var l_oPicContainer = $('.field-type-image').find('div');
 			if (loadedValue != "" && l_oPicContainer.length === 1) $(loadedValue).appendTo(l_oPicContainer);
-
+			$('area').tooltip();
 			//lese id aus map
 			if (l_oPicContainer.find('map').length === 1) {
 				var l_sId = '#' + l_oPicContainer.find('map').attr('id');
@@ -86,8 +87,10 @@ function instanciate_maschek_image(p_oPic){
 			'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
 			'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},// update form elements with selected area values
 			'onSelectArea'    : function(obj) {gui_selectArea(obj);},//to select form element when an area is clicked
-			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);}// to update "markierte Bereiche"
-
+			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},// to update "markierte Bereiche"
+			'onDrawArea'		  : function(areaId) {
+				$(myimgmap.areas[areaId]).tooltip();
+			}
 		},
 		pic_container: p_oPic,//elements on your page
 		html_container: p_oPic,
