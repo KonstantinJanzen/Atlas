@@ -51,16 +51,3 @@
     padding-top: 8px;
     color: red;
 }
-
-.ui-tooltip {
-    background: #000;
-    font-size:12px;
-    height:70px;
-    width:160px;
-    padding:25px;
-    color:#fff;
-}
-
-/*
- <div id="ui-tooltip-13" role="tooltip" class="ui-tooltip ui-widget ui-corner-all ui-widget-content" style="position: relative; top: -1287px; left: 0px; display: block;"><div class="ui-tooltip-content">Daumen</div></div>
-*/

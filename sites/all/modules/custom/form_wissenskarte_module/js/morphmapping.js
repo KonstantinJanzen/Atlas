@@ -64,7 +64,13 @@ function  initView(ViewMode) {
 			var loadedValue = $($(".field-name-field-markierte-bereiche").children()[1]).text();
 			var l_oPicContainer = $('.field-type-image').find('div');
 			if (loadedValue != "" && l_oPicContainer.length === 1) $(loadedValue).appendTo(l_oPicContainer);
-			$('area').tooltip();
+			// shows the tooltip
+			$('area').qtip({
+				show: {
+					delay: 1
+				}
+			});
+
 			//lese id aus map
 			if (l_oPicContainer.find('map').length === 1) {
 				var l_sId = '#' + l_oPicContainer.find('map').attr('id');
@@ -87,17 +93,14 @@ function instanciate_maschek_image(p_oPic){
 			'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
 			'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},// update form elements with selected area values
 			'onSelectArea'    : function(obj) {gui_selectArea(obj);},//to select form element when an area is clicked
-			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},// to update "markierte Bereiche"
-			'onDrawArea'		  : function(areaId) {
-				$(myimgmap.areas[areaId]).tooltip();
-			}
+			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);}// to update "markierte Bereiche"
 		},
 		pic_container: p_oPic,//elements on your page
 		html_container: p_oPic,
 		status_container: p_oPic,
 		form_container: p_oPic,
 		bounding_box : true,
-		label : "%t",
+		label : "%t"
 	});
 
 	myimgmap.useImage(p_oPic);
@@ -330,7 +333,7 @@ function gui_addArea(id) {
 		validateAllAreas();
 		var l_nPropsPosition = props.length > 0 ? props.length - 1 : 0;
 		enableDeleteButtonOnSelectedGuiArea(props[l_nPropsPosition]); // enable deletebutton of last area
-	})
+	});
 	enableDeleteButtonOnSelectedGuiArea(props[id]);
 
 	//hook more event handlers to individual inputs
@@ -553,7 +556,7 @@ Indeko.MorphBox = {
 
 	// array represention of the selected morphological box items (first element fulltext string, following items taxonomy IDs)
 	dataArray : [] // e.g. ["Kompetenz", "38", "40"]
-}
+};
 
 /*
  * Converts the data array to an Apache Solr search URL.
@@ -576,7 +579,7 @@ Indeko.MorphBox.dataToUrl = function() {
 
 	var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
 	return solrSearchUrl;
-}
+};
 
 /*
  * Converts a search URL to data array.
@@ -597,7 +600,7 @@ Indeko.MorphBox.urlToData = function(searchURL) {
 	dataArray = dataArray.split(" AND tid:");		// search items
 
 	Indeko.MorphBox.dataArray = dataArray;
-}
+};
 
 /*
  * Updates morphological box display after selecting a new knowledge map area.
@@ -611,7 +614,7 @@ Indeko.MorphBox.update = function(id) {
 	Indeko.MorphBox.clear();
 	Indeko.MorphBox.urlToData(myimgmap.areas[id].ahref);
 	Indeko.MorphBox.selectItems();
-}
+};
 
 /*
  * Extract selected items from the morphological box and save them in the data array.
@@ -630,7 +633,7 @@ Indeko.MorphBox.toData = function() {
 	jQuery("td.selected").each(function() {
 		Indeko.MorphBox.dataArray.push($(this).attr("tid"));
 	});
-}
+};
 
 /*
  * Select items in the morphologocal box that match the data array.
@@ -645,7 +648,7 @@ Indeko.MorphBox.selectItems = function() {
 			Indeko.MorphBox.element.find("[tid=" + value + "]").removeClass("unselected").addClass("selected");
 		}
 	});
-}
+};
 
 /*
  * Clear the selected values of the morphological box.
@@ -655,7 +658,7 @@ Indeko.MorphBox.clear = function() {
 	jQuery("td.selected").removeClass("selected").addClass("unselected");
 	jQuery("#input_fulltext_search").val('');
     Indeko.MorphBox.dataArray = [];
-}
+};
 
 /*
  * Inserts morphbox dummy into the DOM. Dirty copy and paste from search morphbox dummy.
@@ -718,7 +721,7 @@ Indeko.MorphBox.loadDummy = function () {
 	jQuery("td.unselected").click(function () {
 		//<!-- if clicked cell is selected, just deselect it and stop -->
 		if (jQuery(this).hasClass("selected")) {
-			this.className = (this.className == 'unselected' ? 'selected' : 'unselected')
+			this.className = (this.className == 'unselected' ? 'selected' : 'unselected');
 			return;
 		}
 
@@ -729,7 +732,7 @@ Indeko.MorphBox.loadDummy = function () {
 		}
 
 		//<!-- change class (color) of cell on click -->
-		this.className = (this.className == 'unselected' ? 'selected' : 'unselected')
+		this.className = (this.className == 'unselected' ? 'selected' : 'unselected');
 	});
 
 
@@ -739,12 +742,12 @@ Indeko.MorphBox.loadDummy = function () {
 		myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
 		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 	});
-}
+};
 
 
 Indeko.ImageMap = {
 	scalingFactor: 1
-}
+};
 
 /*
  * Scales image map area coordinates in add and edit mode to the current displayed width in the browser if the image
@@ -761,4 +764,4 @@ Indeko.ImageMap.scale = function(domImage) {
 		Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
 		myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
 	}
-}
+};
