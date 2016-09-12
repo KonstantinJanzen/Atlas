@@ -53,8 +53,9 @@ function  initView(ViewMode) {
 			instanciateAreaDescription();
 			Indeko.MorphBox.loadDummy();
 			myimgmap.setMapHTML(loadedValue);
+            Indeko.MorphBox.update(myimgmap.currentid);
 			Indeko.ImageMap.scale(l_oImageEdit); // scale areas
-			myimgmap.addNewArea();
+			//myimgmap.addNewArea();
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
 			$('.field-name-field-markierte-bereiche').hide();
@@ -285,9 +286,15 @@ function validateAllAreas(){
 	* empty the morphological box through the GUI (always at least '*' search returned) */
 	var allAreas = myimgmap.areas;
 	$.each(allAreas, function(index, area) {
+	    if(area == null) {
+	        return;
+        }
 		if (area.ahref === '' || area.ahref === 'undefined') {
+            $($(myimgmap.pic_container).find('canvas')[index]).addClass('canvasError');
 			l_bIsValid = false;
-		}
+		} else {
+            $($(myimgmap.pic_container).find('canvas')[index]).removeClass('canvasError');
+        }
 	});
 
 	if (l_bIsValid === true){
@@ -339,6 +346,7 @@ function gui_addArea(id) {
 
 	$('<input type="text"  name="img_id" class="img_id" value="' + id + '" readonly="1"/>').appendTo(props[id]);
 	$('<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'" >').appendTo(props[id]);
+    $('.img_active').hide();
 
 	var l_oSelect = $('<select name="img_shape" class="img_shape">').appendTo(props[id]);
 	$('<option value="rect">Recheck</option>').appendTo(l_oSelect);
@@ -554,7 +562,7 @@ function gui_areaChanged(area) {
 }
 
 function gui_selectArea(obj) {
-	gui_row_select(obj.aid, true, false);
+	gui_row_select(obj.aid, false, false);
 
 	Indeko.MorphBox.update(obj.aid); // Update selected morphological box items
 }

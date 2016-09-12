@@ -47,6 +47,11 @@
     border-color: red;
 }
 
+.canvasError {
+    background-color: rgba(255, 0, 0, 0.50)!important;
+    border-width: 3px!important;
+}
+
 .labelAreaErrorText{
     padding-top: 8px;
     color: red;
