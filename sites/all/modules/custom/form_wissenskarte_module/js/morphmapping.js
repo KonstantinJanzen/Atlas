@@ -254,7 +254,8 @@ function validateLastArea(){
 	}
 
 	/* Check if the drawn area is linked to content on the website. */
-	if ($.isEmptyObject(Indeko.MorphBox.dataArray)) {
+
+	if ($.isEmptyObject(Indeko.MorphBox.dataArray) && myimgmap.areas[0] !== null) {
 		l_oValidationResult.isMorphboxValid = false;
 	} else {
 		l_oValidationResult.isMorphboxValid = true;
