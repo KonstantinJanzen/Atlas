@@ -9,6 +9,9 @@ var ValidationResult = function() {
 		messageTitel: "Bitte geben Sie der Kontur einen Titel um fortzufahren.",
 		isAreaValid: false,
 		messageArea: "Nicht alle Konturen enthalten markierte Bereiche im Bild.",
+		isMorphboxValid: false,
+		messageMorphbox: "Nicht allen Konturen sind Inhalte aus dem Portal zugeordnet.",
+
 		l_oInputTitel: {}
 	};
 
@@ -211,6 +214,8 @@ function instanciateAreaDescription(){
 		if (l_oResult.isTitelValid === false){
 			$('#addAreaError').text(l_oResult.messageTitel);
 			$(l_oResult.l_oInputTitel).addClass('addAreaError');
+		} else if (l_oResult.isMorphboxValid === false) {
+			$('#addAreaError').text(l_oResult.messageMorphbox);
 		} else if (l_oResult.isAreaValid === false){
 			$('#addAreaError').text(l_oResult.messageArea);
 		} else {
@@ -247,6 +252,15 @@ function validateLastArea(){
 		l_oValidationResult.isAreaValid = false;
 	}
 
+	/* Check if the drawn area is linked to content on the website. */
+	if ($.isEmptyObject(Indeko.MorphBox.dataArray)) {
+		l_oValidationResult.isMorphboxValid = false;
+	} else {
+		l_oValidationResult.isMorphboxValid = true;
+	}
+
+
+
 	return l_oValidationResult;
 }
 
@@ -267,6 +281,15 @@ function validateAllAreas(){
 		}
 	}
 
+	/* Validate linked content.	Shouldn't be possible to fail after validateLastArea() check since a user cannot
+	* empty the morphological box through the GUI (always at least '*' search returned) */
+	var allAreas = myimgmap.areas;
+	$.each(allAreas, function(index, area) {
+		if (area.ahref === '' || area.ahref === 'undefined') {
+			l_bIsValid = false;
+		}
+	});
+
 	if (l_bIsValid === true){
 		$('#addAreaError').text("");
 		$('input').removeClass('addAreaError');
@@ -278,7 +301,7 @@ function validateAllAreas(){
 
 	/* validate gui areas */
 	if (getValidAreaCount() == $('input[name=img_alt]').length){
-		return true;
+		return true; // TODO ???
 	}
 
 	var l_oValidationResult = new ValidationResult();
