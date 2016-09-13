@@ -44,7 +44,9 @@
 }
 
 .addAreaError{
-    border-color: red;
+    border-color: red!important;
+    border-width: 3px!important;
+    border-style: solid!important;
 }
 
 .canvasError {

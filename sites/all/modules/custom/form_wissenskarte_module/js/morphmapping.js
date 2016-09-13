@@ -8,9 +8,9 @@ var ValidationResult = function() {
 		isTitelValid: false,
 		messageTitel: "Bitte geben Sie der Kontur einen Titel um fortzufahren.",
 		isAreaValid: false,
-		messageArea: "Bitte zeichnen Sie zuerst ihre letzte Kontur im Bild ein.",
+		messageArea: "Bitte zeichnen Sie zuerst eine Kontur im Bild ein.",
 		isMorphboxValid: false,
-		messageMorphbox: "Nicht allen Konturen sind Inhalte aus dem Portal zugeordnet.",
+		messageMorphbox: "Bitte weisen Sie der Kontur Inhalte aus dem Portal zu.",
 
 		l_oInputTitel: {}
 	};
@@ -212,20 +212,42 @@ function instanciateAreaDescription(){
 
 
 		var l_oResult = validateLastArea();
-		if (l_oResult.isTitelValid === false){
-			$('#addAreaError').text(l_oResult.messageTitel);
-			$(l_oResult.l_oInputTitel).addClass('addAreaError');
-		} else if (l_oResult.isMorphboxValid === false) {
-			$('#addAreaError').text(l_oResult.messageMorphbox);
-		} else if (l_oResult.isAreaValid === false){
-			$('#addAreaError').text(l_oResult.messageArea);
-		} else {
-			$('#addAreaError').text("");
-			$('input').removeClass('addAreaError');
-			myimgmap.addNewArea();      // add new area on validation success...
+        validateHighlight(l_oResult);
+
+		if (l_oResult.isTitelValid === true && l_oResult.isMorphboxValid === true && l_oResult.isAreaValid === true) {
+            myimgmap.addNewArea();      // add new area on validation success...
             Indeko.MorphBox.clear();    // ... and clear the morphological box
 		}
 	});
+}
+
+/*
+ * Highlights knowledge map form elements that failed the validation and displays warning messages.
+ * @param l_oResult validation result object
+ */
+function validateHighlight(l_oResult) {
+    $('#addAreaError').text("");
+
+    if (l_oResult.isAreaValid === false){
+        $('#addAreaError').append("<br>").append(l_oResult.messageArea);
+        $('.image-style-wissenkarte').addClass('addAreaError');
+    } else {
+        $('.image-style-wissenkarte').removeClass('addAreaError');
+    }
+
+    if (l_oResult.isTitelValid === false){
+        $('#addAreaError').append("<br>").append(l_oResult.messageTitel);
+        $(l_oResult.l_oInputTitel).addClass('addAreaError');
+    } else {
+        $('input').removeClass('addAreaError');
+    }
+
+    if (l_oResult.isMorphboxValid === false) {
+        $('#addAreaError').append("<br>").append(l_oResult.messageMorphbox);
+        Indeko.MorphBox.element.addClass('addAreaError');
+    } else {
+        Indeko.MorphBox.element.removeClass('addAreaError');
+    }
 }
 
 function validateLastArea(){
@@ -503,17 +525,13 @@ function gui_cb_unselect_all() {
  *	@author	Adam Maschek (adam.maschek(at)gmail.com)
  */
 function gui_input_change(e) {
-	// validation first
-	var l_oResult = validateLastArea();
-	if (l_oResult.isTitelValid === false){
-		$('#addAreaError').text(l_oResult.messageTitel);
-		$(l_oResult.l_oInputTitel).addClass('addAreaError');
-	} else if (l_oResult.isAreaValid === false){
-		$('#addAreaError').text(l_oResult.messageArea);
-	} else {
-		$('#addAreaError').text("");
-		$('input').removeClass('addAreaError');
-	}
+	// validation first if title field changes
+    if (e.target.name === "img_alt") {
+        var l_oResult = validateLastArea();
+
+        validateHighlight(l_oResult);
+    }
+
 
 	if (myimgmap.viewmode === 1) {return;}//exit if preview mode
 	if (myimgmap.is_drawing) {return;}//exit if drawing
