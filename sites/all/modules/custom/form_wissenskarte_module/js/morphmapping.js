@@ -8,7 +8,7 @@ var ValidationResult = function() {
 		isTitelValid: false,
 		messageTitel: "Bitte geben Sie der Kontur einen Titel um fortzufahren.",
 		isAreaValid: false,
-		messageArea: "Nicht alle Konturen enthalten markierte Bereiche im Bild.",
+		messageArea: "Bitte zeichnen Sie zuerst ihre letzte Kontur im Bild ein.",
 		isMorphboxValid: false,
 		messageMorphbox: "Nicht allen Konturen sind Inhalte aus dem Portal zugeordnet.",
 
@@ -357,6 +357,7 @@ function gui_addArea(id) {
 
 	$('<Label class="img_label">Titel:</Label>').appendTo(props[id]);
 	$('<input type="text" name="img_alt" class="img_alt" value="">').appendTo(props[id]);
+	$('<input type="text" name="img_coords" class="img_coords" value="" style="display: none;">').appendTo(props[id]);
 
 	var removeAreaButton = $('<div class="removeAreaButton" value="" />').appendTo(props[id]);
 	removeAreaButton.click(function () {
@@ -371,15 +372,15 @@ function gui_addArea(id) {
 	//hook more event handlers to individual inputs
 	//myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
 	//myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'keydown', gui_coords_keydown);
-	myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'change', gui_input_change);
-	myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_input_change);
+	myimgmap.addEvent($(props[id]).find('input[name=img_alt]')[0],  'change', gui_input_change);
+	myimgmap.addEvent($(props[id]).find('select[name=img_shape]')[0], 'change', gui_input_change);
 	/*if (myimgmap.isSafari) {
 		//need these for safari
 		myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
 	}*/
 
 	//set shape as nextshape if set
-	if (myimgmap.nextShape) {props[id].getElementsByTagName('select')[0].value = myimgmap.nextShape;}
+	if (myimgmap.nextShape) {$(props[id]).find('select[name=img_shape]').val(myimgmap.nextShape);}
 	//alert(this.props[id].parentNode.innerHTML);*/
 
 
@@ -530,14 +531,14 @@ function gui_input_change(e) {
 			//shape changed, adjust coords intelligently inside _normCoords
 			var coords = '';
 			if (props[id]) {
-				coords  =  props[id].getElementsByTagName('input')[2].value;
+				coords  =  $(props[id]).find('input[name=img_coords]').val();
 			}
 			else {
 				coords = myimgmap.areas[id].lastInput || '' ;
 			}
 			coords = myimgmap._normCoords(coords, obj.value, 'from'+myimgmap.areas[id].shape);
 			if (props[id]) {
-				props[id].getElementsByTagName('input')[2].value  = coords;
+				$(props[id]).find('input[name=img_coords]').val(coords);
 			}
 			myimgmap.areas[id].shape = obj.value;
 			myimgmap._recalculate(id, coords);
@@ -548,7 +549,7 @@ function gui_input_change(e) {
 		}
 	}
 	if (myimgmap.areas[id] && myimgmap.areas[id].shape != 'undefined') {
-		myimgmap._recalculate(id, props[id].getElementsByTagName('input')[2].value);
+		myimgmap._recalculate(id, $(props[id]).find('input[name=img_coords]').val());
 		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());//temp ## shouldnt be here
 	}
 }
@@ -556,9 +557,9 @@ function gui_input_change(e) {
 function gui_areaChanged(area) {
 	var id = area.aid;
 	if (props[id]) {
-		if (area.shape)  {props[id].getElementsByTagName('select')[0].value = area.shape;}
-		if (area.lastInput) {props[id].getElementsByTagName('input')[1].value  = area.lastInput;}
-		if (area.aalt)    {props[id].getElementsByTagName('input')[2].value  = area.aalt;}
+		if (area.shape)  {$(props[id]).find('select[name=img_shape]').val(area.shape);}
+		if (area.lastInput) {$(props[id]).find('input[name=img_coords]').val(area.lastInput);}
+		if (area.aalt)    {$(props[id]).find('input[name=img_alt]').val(area.aalt);}
 	}
 }
 
