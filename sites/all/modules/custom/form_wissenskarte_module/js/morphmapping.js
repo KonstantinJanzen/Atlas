@@ -423,6 +423,7 @@ function gui_removeArea(id) {
 			try {
 				gui_row_select(lastid, true);
 				myimgmap.currentid = lastid;
+                Indeko.MorphBox.update(myimgmap.currentid); // update values of morphological box
 			}
 			catch (err) {
 				//alert('noparent');
