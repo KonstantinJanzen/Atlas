@@ -98,7 +98,8 @@ function instanciate_maschek_image(p_oPic){
 			'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},// update form elements with selected area values
 			'onSelectArea'    : function(obj) {gui_selectArea(obj);},//to select form element when an area is clicked
 			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},// to update "markierte Bereiche"
-            'onDrawArea'      : function(id)  {gui_updateArea(id);} // to update drawn area
+            'onDrawArea'      : function(id)  {gui_updateArea(id);}, // to update drawn area
+            'onStatusMessage' : function(str) {gui_statusMessage(str);}// to display status messages on gui
 		},
 		pic_container: p_oPic,//elements on your page
 		html_container: p_oPic,
@@ -634,6 +635,23 @@ function gui_updateArea(id) {
     }
 
     myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+}
+
+/**
+ * Displays status messages on GUI.
+ * Called from imgmap "onStatusMessage" event.
+ *
+ * @param str	Status message in string format.
+ */
+function gui_statusMessage(str) {
+    var statusArea = $('.form-item-field-wk-bild-und-0').find('label');
+    if (str.toLowerCase().indexOf("shift") >= 0) {
+        if (statusArea) {
+            statusArea.append('<span class="knowledgemapStatusMessage"> ' + str + '</span>');
+        }
+    } else {
+        $('.knowledgemapStatusMessage').remove()
+    }
 }
 
 /*
