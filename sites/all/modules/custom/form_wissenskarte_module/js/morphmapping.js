@@ -645,12 +645,13 @@ function gui_updateArea(id) {
  */
 function gui_statusMessage(str) {
     var statusArea = $('.form-item-field-wk-bild-und-0').find('label');
+    if (typeof str == 'undefined') {return};
     if (str.toLowerCase().indexOf("shift") >= 0) {
         if (statusArea) {
             statusArea.append('<span class="knowledgemapStatusMessage"> ' + str + '</span>');
         }
     } else {
-        $('.knowledgemapStatusMessage').remove()
+        $('.knowledgemapStatusMessage').remove();
     }
 }
 
