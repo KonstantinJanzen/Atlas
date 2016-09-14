@@ -645,13 +645,18 @@ function gui_updateArea(id) {
  */
 function gui_statusMessage(str) {
     var statusArea = $('.form-item-field-wk-bild-und-0').find('label');
-    if (typeof str == 'undefined') {return};
+
+	// status strings not loaded properly
+	if (typeof str == 'undefined') {
+		myimgmap.loadStrings(imgmapStrings);
+		return;
+    };
+
+	$('.knowledgemapStatusMessage').remove();
     if (str.toLowerCase().indexOf("shift") >= 0) {
         if (statusArea) {
             statusArea.append('<span class="knowledgemapStatusMessage"> ' + str + '</span>');
         }
-    } else {
-        $('.knowledgemapStatusMessage').remove();
     }
 }
 
