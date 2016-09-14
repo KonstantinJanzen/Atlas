@@ -97,14 +97,18 @@ function instanciate_maschek_image(p_oPic){
 			'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
 			'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},// update form elements with selected area values
 			'onSelectArea'    : function(obj) {gui_selectArea(obj);},//to select form element when an area is clicked
-			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);}// to update "markierte Bereiche"
+			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},// to update "markierte Bereiche"
+            'onDrawArea'      : function(id)  {gui_updateArea(id);} // to update drawn area
 		},
 		pic_container: p_oPic,//elements on your page
 		html_container: p_oPic,
 		status_container: p_oPic,
 		form_container: p_oPic,
 		bounding_box : true,
-		label : "%t"
+		label : "%t",
+        hint: "%t %h",
+        label_style: 'font-family: sans-serif; font-size: 87.5%; color: #444',
+		norm_opacity: '30'
 	});
 
 	myimgmap.useImage(p_oPic);
@@ -530,7 +534,14 @@ function gui_input_change(e) {
     if (e.target.name === "img_alt") {
         var l_oResult = validateLastArea();
 
-        validateHighlight(l_oResult);
+        //validateHighlight(l_oResult); // TODO validate only title field otherwise there will be always an error
+        if (l_oResult.isTitelValid === false){
+            $('#addAreaError').append("<br>").append(l_oResult.messageTitel);
+            $(l_oResult.l_oInputTitel).addClass('addAreaError');
+        } else {
+            $('input').removeClass('addAreaError');
+            $('#addAreaError').text("");
+        }
     }
 
 
@@ -597,6 +608,32 @@ function gui_htmlChanged(str) {
 	if (document.getElementById('edit-field-markierte-bereiche-und-0-value')) {
 		document.getElementById('edit-field-markierte-bereiche-und-0-value').value = str;
 	}
+}
+
+/**
+ * Adds title and morpholigical box content to the current area if this info was set prior to drawing an area.
+ * Called from imgmap "onDrawArea" event.
+ *
+ * @param id    ID of the area being drawn by user.
+ */
+function gui_updateArea(id) {
+    // add href to area if user already selected values from the morphological box
+    if (!$.isEmptyObject(Indeko.MorphBox.dataArray)) {
+        Indeko.MorphBox.toData();
+        myimgmap.areas[id].ahref = Indeko.MorphBox.dataToUrl();
+    }
+
+    // add title to area if the user already entered a title prior to drawing an area
+    if (props[id]) {
+        var areaTitle = $(props[id]).find('input[name=img_alt]').val();
+
+        if (!$.isEmptyObject(areaTitle)) {
+            myimgmap.areas[id].aalt    = areaTitle;
+            myimgmap.areas[id].atitle  = areaTitle;
+        }
+    }
+
+    myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 }
 
 /*
