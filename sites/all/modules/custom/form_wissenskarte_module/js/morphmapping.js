@@ -49,7 +49,7 @@ function  initView(ViewMode) {
 			var loadedValue = $('#edit-field-markierte-bereiche-und-0-value').val();
 			//if (loadedValue != "") $(loadedValue).appendTo($('.image-preview'));
 
-			instanciate_maschek_image(document.getElementsByClassName("image-preview")[0]);
+			instanciate_maschek_image(l_oImageEdit[0]);
 			instanciateAreaDescription();
 			Indeko.MorphBox.loadDummy();
 			myimgmap.setMapHTML(loadedValue);
