@@ -25,7 +25,6 @@ Indeko.AddForm = (function() {
 		fieldset.appendChild(imageDiv);
 
 		parent.insertBefore(fieldset, imagemap);
-
 	}
 
     // Hide the Morphological Box
@@ -37,6 +36,16 @@ Indeko.AddForm = (function() {
     function showMorphologicalBox() {
         $("#morphological-box").show();
     }
+
+	// Hide the Submit Button
+	function hideSubmitButton() {
+		$("#edit-submit").hide();
+	}
+
+	// Show the Submit Button
+	function showSubmitButton() {
+		$("#edit-submit").show();
+	}
 
     // Hide title and image map text section
 	function hideElements() {
@@ -79,12 +88,15 @@ Indeko.AddForm = (function() {
     function imageRemoved() {
         hideMorphologicalBox();
         wrapUploadButton();
+		hideSubmitButton();
+
     }
 
     // If the image gets uploaded, show the morphological box and attach Maschek Editor
     function imageAddedEvent() {
         addEditor();
         showMorphologicalBox();
+		showSubmitButton();
 		// wird in initView erledigt, damit es nicht nur bei add geladen wird, sondern auch bei edit
 		// instanciateAreaDescription();
     }
@@ -96,6 +108,7 @@ Indeko.AddForm = (function() {
 		insertImageFieldSet();
         wrapUploadButton();
         hideMorphologicalBox();
+		hideSubmitButton();
 
 
 		/*
@@ -133,6 +146,7 @@ Indeko.AddForm = (function() {
                      */
                     imageAdded[0].onload = function () {
                         imageAddedEvent();
+						showSubmitButton();
                     };
                 }
                 //check if the user clicked the "delete" button
