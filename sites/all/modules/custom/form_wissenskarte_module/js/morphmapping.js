@@ -16,7 +16,7 @@ var ValidationResult = function() {
 	};
 
 	return l_oValidationResult;
-}
+};
 
 
 function  initView(ViewMode) {
@@ -650,7 +650,7 @@ function gui_statusMessage(str) {
 	if (typeof str == 'undefined') {
 		myimgmap.loadStrings(imgmapStrings);
 		return;
-    };
+    }
 
 	$('.knowledgemapStatusMessage').remove();
     if (str.toLowerCase().indexOf("shift") >= 0) {

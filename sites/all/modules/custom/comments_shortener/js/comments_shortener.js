@@ -19,7 +19,7 @@ var Indeko = (function (Indeko) {
 
                 var a = document.createElement('a');
                 var linkText = document.createTextNode("...");
-                // Ellipses
+                // Add Ellipsis
                 a.appendChild(linkText);
                 a.className = "comment-shortener-link";
                 a.title = "view more";

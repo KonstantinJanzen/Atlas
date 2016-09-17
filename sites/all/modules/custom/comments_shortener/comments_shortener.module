@@ -6,15 +6,17 @@
 
 /**
  * Implements Hook to attach JavaScript.
+ *
  * @param $vars is called for every comment.
  */
 function comments_shortener_preprocess_comment(&$vars) {
-    drupal_add_js(drupal_get_path('module', 'comments_shortener') . "/js/comments_shortener.js", array('scope' => 'footer', 'weight' => 5));
-    drupal_add_css(drupal_get_path('module', 'comments_shortener') . "/css/comments_shortener.css", array('scope' => 'footer', 'weight' => 5));
+    drupal_add_js(drupal_get_path('module', 'comments_shortener') . "/js/comments_shortener.js");
+    drupal_add_css(drupal_get_path('module', 'comments_shortener') . "/css/comments_shortener.css");
 }
 
 
-/** Implements hook_query_TAG_alter().
+/**
+ * Implements hook_query_TAG_alter().
  *
  * Alter comments query to order by DESC as well as the default ASC.
  */
@@ -34,4 +36,22 @@ function comments_shortener_query_comment_filter_alter(QueryAlterableInterface $
         $orderby['c.cid'] = $direction;
         $orderby = array('c.created' => $direction) + $orderby;
     }
+}
+
+function comments_shortener_form_alter(&$form, &$form_state, $form_id) {
+    if($form_id == 'comment_node_wissenskarte_form' && $form['#method'] == 'post') {
+        array_push($form['#submit'], 'some_function');
+    }
+}
+
+/**
+ * Attaches the redirect to the submitted form.
+ *
+ * @param unknown_type $form
+ * @param unknown_type $form_state
+ * @return unknown
+ */
+function some_function($form, &$form_state) {
+    // Redirect to the first page
+    $form_state['redirect'][1]['query']['page'] = 0;
 }
