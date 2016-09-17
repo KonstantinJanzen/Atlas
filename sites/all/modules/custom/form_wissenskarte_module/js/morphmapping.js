@@ -20,8 +20,6 @@ var ValidationResult = function() {
 
 
 function  initView(ViewMode) {
-//$('#field-markierte-bereiche-add-more-wrapper').hide();
-//$('.field-name-field-markierte-bereiche').hide();
 	var result = false;
 	var imageClassName = "";
 
@@ -44,8 +42,6 @@ function  initView(ViewMode) {
 			// Edit and Add Mode
 			myimgmap = {};
 			$("#edit-field-markierte-bereiche").hide();
-			$(".form-item.form-type-textfield.form-item-title").hide();
-
 			var loadedValue = $('#edit-field-markierte-bereiche-und-0-value').val();
 			//if (loadedValue != "") $(loadedValue).appendTo($('.image-preview'));
 
@@ -55,6 +51,7 @@ function  initView(ViewMode) {
 			myimgmap.setMapHTML(loadedValue);
             Indeko.MorphBox.update(myimgmap.currentid);
 			Indeko.ImageMap.scale(l_oImageEdit); // scale areas
+			Indeko.ImageMap.hookSaveButton(); // for client side validation
 			//myimgmap.addNewArea();
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
@@ -878,3 +875,19 @@ Indeko.ImageMap.scale = function(domImage) {
 		myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
 	}
 };
+
+
+/**
+ * Adds client side validation to save / submit button.
+ */
+Indeko.ImageMap.hookSaveButton = function() {
+	$('#edit-submit').click(function() {
+		// Error if title is empty
+		var titleElement = $("#edit-title");
+		if ($.isEmptyObject(titleElement.val())) {
+			titleElement.addClass('error');
+			titleElement.focus();
+			return false;
+		}
+	});
+}

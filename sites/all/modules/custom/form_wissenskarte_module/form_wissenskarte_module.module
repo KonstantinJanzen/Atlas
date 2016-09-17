@@ -8,10 +8,6 @@ function form_wissenskarte_module_preprocess_page(&$vars)
     drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/morphmapping.css");
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/jquery.qtip.min.js");
     drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/jquery.qtip.css");
-
-
-    // Don't display title on nodes of type "wissenskarte"
-    $vars['title'] = '';
   }
 }
 

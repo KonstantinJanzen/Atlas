@@ -49,7 +49,6 @@ Indeko.AddForm = (function() {
 
     // Hide title and image map text section
 	function hideElements() {
-		$(".form-item.form-type-textfield.form-item-title").hide();
 		$("#edit-field-markierte-bereiche").hide();
 	}
 
