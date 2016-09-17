@@ -880,14 +880,52 @@ Indeko.ImageMap.scale = function(domImage) {
 /**
  * Adds client side validation to save / submit button.
  */
-Indeko.ImageMap.hookSaveButton = function() {
-	$('#edit-submit').click(function() {
-		// Error if title is empty
-		var titleElement = $("#edit-title");
-		if ($.isEmptyObject(titleElement.val())) {
-			titleElement.addClass('error');
-			titleElement.focus();
-			return false;
-		}
-	});
+Indeko.ImageMap.hookSaveButton = function () {
+    $('#edit-submit').click(function () {
+        var l_bIsValid = true;
+        // Error if title is empty
+        var titleElement = $("#edit-title");
+        if ($.isEmptyObject(titleElement.val())) {
+            titleElement.addClass('error');
+            titleElement.focus();
+            l_bIsValid = false;
+        } else {
+            titleElement.removeClass('error');
+        }
+
+        // guarantee that last drawn area was saved properly
+        gui_updateArea(myimgmap.currentid);
+
+        // Validate all drawn areas
+        var allAreas = myimgmap.areas;
+        var allCanvasAreas = $(myimgmap.pic_container).find('canvas');
+        $.each(allAreas, function (index, area) {
+            var currentCanvasArea = $(allCanvasAreas[index]);
+            if (area == null) {
+                return;
+            }
+
+            // validate linked content
+            if ($.isEmptyObject(area.ahref)) {
+                currentCanvasArea.addClass('canvasError');
+                Indeko.MorphBox.element.addClass('addAreaError');
+                l_bIsValid = false;
+            }
+
+            // validate area titles
+            if ($.isEmptyObject(area.atitle)) {
+                currentCanvasArea.addClass('canvasError');
+                $('#img_area_' + index).find("input[name=img_alt]").addClass("addAreaError");
+                l_bIsValid = false;
+            }
+        });
+
+        // update map areas before saving
+        if (l_bIsValid) {
+            myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+        }
+
+        return l_bIsValid;
+
+    });
 }
