@@ -896,6 +896,13 @@ Indeko.ImageMap.hookSaveButton = function () {
         // guarantee that last drawn area was saved properly
         gui_updateArea(myimgmap.currentid);
 
+
+        var l_oResult = validateLastArea();
+        if (l_oResult.isTitelValid === false || l_oResult.isMorphboxValid === false || l_oResult.isAreaValid === false) {
+            validateHighlight(l_oResult);
+            l_bIsValid = false;
+        }
+
         // Validate all drawn areas
         var allAreas = myimgmap.areas;
         var allCanvasAreas = $(myimgmap.pic_container).find('canvas');
