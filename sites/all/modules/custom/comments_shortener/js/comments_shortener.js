@@ -3,7 +3,7 @@
  */
 
 //Create a Namespace for Indeko javascript objects (no objects in global namespace)
-var Indeko = (function (Indeko) {
+var Indeko = (function ($, Indeko) {
 
     Indeko.Comments = Indeko.Comments || {};
 
@@ -34,10 +34,10 @@ var Indeko = (function (Indeko) {
     return Indeko;
 
 
-})(Indeko || {});
+})(jQuery, Indeko || {});
 
 
-$(document).ready(function () {
+jQuery(document).ready(function () {
 
     Indeko.Comments.init();
 

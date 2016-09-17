@@ -10,7 +10,7 @@
  * @param $vars is called for every comment.
  */
 function comments_shortener_preprocess_comment(&$vars) {
-    drupal_add_js(drupal_get_path('module', 'comments_shortener') . "/js/comments_shortener.js");
+    drupal_add_js(drupal_get_path('module', 'comments_shortener') . "/js/comments_shortener.js", array('scope' => 'footer'));
     drupal_add_css(drupal_get_path('module', 'comments_shortener') . "/css/comments_shortener.css");
 }
 
