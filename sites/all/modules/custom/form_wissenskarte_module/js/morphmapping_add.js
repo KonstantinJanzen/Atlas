@@ -1,6 +1,8 @@
 $ = jQuery;
 
-//Create a Namespace for Indeko javascript objects (no objects in global namespace)
+/*
+ * Create a Namespace for Indeko javascript objects (no objects in global namespace)
+ */
 var Indeko = Indeko || {};
 
 Indeko.AddForm = (function() {
@@ -27,32 +29,51 @@ Indeko.AddForm = (function() {
 		parent.insertBefore(fieldset, imagemap);
 	}
 
-    // Hide the Morphological Box
-    function hideMorphologicalBox() {
-        $("#morphological-box").hide();
-    }
-
-    // Show the Morphological Box
+	/*
+	 * Show the Morphological Box
+	 */
     function showMorphologicalBox() {
         $("#morphological-box").show();
     }
 
-	// Hide the Submit Button
-	function hideSubmitButton() {
-		$("#edit-submit").hide();
-	}
-
-	// Show the Submit Button
+	/*
+	 * Show the Submit Button
+	 */
 	function showSubmitButton() {
 		$("#edit-submit").show();
 	}
 
-    // Hide title and image map text section
+	/*
+	 * Hide the Morphological Box
+	 */
+	function hideMorphologicalBox() {
+		$("#morphological-box").hide();
+	}
+
+	/*
+	 * Hide the Submit Button
+	 */
+	function hideSubmitButton() {
+		$("#edit-submit").hide();
+	}
+
+	/*
+	 * Hide the "+"-icon Button
+	 */
+	function hidePlusButton() {
+		$("#addAreaButton").hide();
+	}
+
+    /*
+     * Hide image map text section (marked areas text field)
+     */
 	function hideElements() {
 		$("#edit-field-markierte-bereiche").hide();
 	}
 
-    // Wrap up the Upload Button (modified to fit the mockups)
+	/*
+	 * Wrap up the Upload Button (modified to fit the mockups)
+	 */
     function wrapUploadButton() {
         $("#edit-field-wk-bild-und-0-upload").wrap("<div>Bild vom Computer auswählen:  </div>");
         $("#edit-field-wk-bild-und-0-upload-button").wrap("<div>Bild akzeptieren und hochladen: </div>");
@@ -64,13 +85,13 @@ Indeko.AddForm = (function() {
     function isElement(object){
         return (
             typeof HTMLElement === "object" ? object instanceof HTMLElement : //DOM2
-            object && typeof object === "object" && object !== null && object.nodeType === 1 && typeof object.nodeName==="string"
+            object && typeof object === "object" && object !== null && object.nodeType === 1 &&
+				typeof object.nodeName==="string"
         );
     }
 
 	/*
-	 * TODO
-	 * Add Maschek Editor to the image
+	 * Add Maschek Editor to the image via initView
 	 */
 	function addEditor() {
 
@@ -83,24 +104,30 @@ Indeko.AddForm = (function() {
 		}
 	}
 
-    // If the image gets removed, hide the morphological box and wrap up the upload button
+    /*
+     * If the image gets removed,
+     * hide the morphological box and the submit button and wrap up the upload button
+     */
     function imageRemoved() {
+
         hideMorphologicalBox();
         wrapUploadButton();
 		hideSubmitButton();
+		hidePlusButton();
 
     }
 
     // If the image gets uploaded, show the morphological box and attach Maschek Editor
     function imageAddedEvent() {
-        addEditor();
-        showMorphologicalBox();
+
 		showSubmitButton();
-		// wird in initView erledigt, damit es nicht nur bei add geladen wird, sondern auch bei edit
-		// instanciateAreaDescription();
+		showMorphologicalBox();
+		addEditor();
     }
 
-    // Initialize the create form in Knowledge Map (first time)
+    /*
+     * Initialize the create form in Knowledge Map (first time)
+     */
 	module.init = function() {
 
 		hideElements();
@@ -108,7 +135,6 @@ Indeko.AddForm = (function() {
         wrapUploadButton();
         hideMorphologicalBox();
 		hideSubmitButton();
-
 
 		/*
 		 * The observer looks for modification inside the drupal
@@ -145,7 +171,6 @@ Indeko.AddForm = (function() {
                      */
                     imageAdded[0].onload = function () {
                         imageAddedEvent();
-						showSubmitButton();
                     };
                 }
                 //check if the user clicked the "delete" button
@@ -154,7 +179,6 @@ Indeko.AddForm = (function() {
                     imageRemoved();
                 }
             }
-
 		});
 
 		var config = { subtree: true, childList: true };
@@ -170,8 +194,3 @@ jQuery(document).ready(function() {
 	Indeko.AddForm.init();
 
 });
-
-
-
-
-
