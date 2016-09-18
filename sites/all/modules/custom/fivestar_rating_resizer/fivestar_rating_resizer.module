@@ -1,8 +1,0 @@
-<?php
-
-/**
- * Implements hook_preprocess().
- */
-function fivestar_rating_resizer_preprocess_page(&$variables) {
-    drupal_add_css(drupal_get_path('module', 'fivestar_rating_resizer') . "/css/fivestar_rating_resizer.css");
-}
