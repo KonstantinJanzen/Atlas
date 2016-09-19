@@ -1,7 +1,7 @@
 $ = jQuery;
 //Create a Namespace for Indeko javascript objects (no objects in global namespace)
 var Indeko = Indeko || {};
-var props = [];
+var props = []; // GUI element rows above knowledge map
 
 var ValidationResult = function() {
 	var l_oValidationResult = {
@@ -12,13 +12,47 @@ var ValidationResult = function() {
 		isMorphboxValid: false,
 		messageMorphbox: "Bitte weisen Sie der Kontur Inhalte aus dem Portal zu.",
 
+		/**
+		 * @returns {boolean} TRUE if all validations are true, otherwiese FALSE.
+		 */
+		isValid: function() {
+			if (this.isTitelValid && this.isAreaValid && this.isMorphboxValid) {
+				return true;
+			} else {
+				return false;
+			}
+		},
+
 		l_oInputTitel: {}
 	};
 
 	return l_oValidationResult;
 };
 
+/**
+ * Variables and functions namespace of the image map.
+ */
+Indeko.ImageMap = {
+	scalingFactor: 1,
+};
 
+/**
+ * Variables and functions namespace of the morphological box.
+ */
+Indeko.MorphBox = {
+	// DOM element that contains the representation of the morphological box.
+	element : $('#morphological-box'),
+
+	// array represention of the selected morphological box items (first element fulltext string, following items taxonomy IDs)
+	dataArray : [] // e.g. ["Kompetenz", "38", "40"]
+};
+
+/**
+ * Initializes knowledge map editor in add/edit modes and attaches map areas to image in view mode.
+ *
+ * @param {boolean} ViewMode TRUE for viewing a knowledge map, FALSE for adding or editing a knowledge map.
+ * @returns {boolean} TRUE if image is found and imagemap can be initialized, otherwise FALSE.
+ */
 function  initView(ViewMode) {
 	var result = false;
 	var imageClassName = "";
@@ -41,30 +75,28 @@ function  initView(ViewMode) {
 		if (l_oImageEdit.length > 0){
 			// Edit and Add Mode
 			myimgmap = {};
-			$("#edit-field-markierte-bereiche").hide();
+			$('#edit-field-markierte-bereiche').hide();
 			var loadedValue = $('#edit-field-markierte-bereiche-und-0-value').val();
-			//if (loadedValue != "") $(loadedValue).appendTo($('.image-preview'));
 
-			instanciate_maschek_image(l_oImageEdit[0]);
-			instanciateAreaDescription();
-			Indeko.MorphBox.loadDummy();
-			myimgmap.setMapHTML(loadedValue);
-            Indeko.MorphBox.update(myimgmap.currentid);
-			Indeko.ImageMap.scale(l_oImageEdit); // scale areas
-			Indeko.ImageMap.hookSaveButton(); // for client side validation
-			//myimgmap.addNewArea();
+			instanciate_maschek_image(l_oImageEdit[0]);		// instantiate image map object
+			instanciateAreaDescription();					// load GUI
+			myimgmap.setMapHTML(loadedValue);				// load image map areas
+			Indeko.ImageMap.scale(l_oImageEdit); 			// scale image map areas to current image display size
+			Indeko.ImageMap.hookSaveButton(); 				// attach client side validation to save button
+			Indeko.MorphBox.loadDummy();					// load morphological box table dummy
+			Indeko.MorphBox.update(myimgmap.currentid);		// show selected morphological box items of current map area
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
 			$('.field-name-field-markierte-bereiche').hide();
 			var parent = $('.image-style-none').parent();
 			var div = $(parent[0]).parent();
 			myimgmap = {};
-			//instanciate_maschek_image(div[0]);
 
 			// load areas
 			var loadedValue = $($(".field-name-field-markierte-bereiche").children()[1]).text();
 			var l_oPicContainer = $('.field-type-image').find('div');
 			if (loadedValue != "" && l_oPicContainer.length === 1) $(loadedValue).appendTo(l_oPicContainer);
+
 			// shows the tooltip
 			$('area').qtip({
 				show: {
@@ -72,7 +104,7 @@ function  initView(ViewMode) {
 				}
 			});
 
-			//lese id aus map
+			// read map id and attach to image
 			if (l_oPicContainer.find('map').length === 1) {
 				var l_sId = '#' + l_oPicContainer.find('map').attr('id');
 				l_oPicContainer.find('img').attr('USEMAP', l_sId);
@@ -83,12 +115,14 @@ function  initView(ViewMode) {
 	return result;
 }
 
+/**
+ * Instanciates the imagemap object to draw areas and interact with the GUI.
+ *
+ * @param p_oPic The DOM image element.
+ */
 function instanciate_maschek_image(p_oPic){
 	myimgmap = new imgmap({
 		mode : "editor",
-		button_container: document.getElementById('button_container'),
-		imgroot: 'example1_files/',
-		buttons : ['add','delete','preview','html'],
 		custom_callbacks : {
 			'onAddArea'       : function(id)  {gui_addArea(id);},//to add new form element on gui
 			'onRemoveArea'    : function(id)  {gui_removeArea(id);},//to remove form elements from gui
@@ -98,11 +132,8 @@ function instanciate_maschek_image(p_oPic){
             'onDrawArea'      : function(id)  {gui_updateArea(id);}, // to update drawn area
             'onStatusMessage' : function(str) {gui_statusMessage(str);}// to display status messages on gui
 		},
-		pic_container: p_oPic,//elements on your page
-		html_container: p_oPic,
-		status_container: p_oPic,
-		form_container: p_oPic,
-		bounding_box : true,
+		pic_container: p_oPic, // element containing the image
+		bounding_box : false,
 		label : "%t",
         hint: "%t %h",
         label_style: 'font-family: sans-serif; font-size: 87.5%; color: #444',
@@ -132,7 +163,7 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 			if (flags && flags.match(/noscale/)) {
 				//for preview use real coordinates, not scaled
 				var cs = coords.split(',');
-				if (Indeko.ImageMap.scalingFactor === 1) {
+				if (Indeko.ImageMap.scalingFactor === 1) { // ATLAS
 					for (var j=0, le2 = cs.length; j<le2; j++) {
 						cs[j] = Math.round(cs[j] * this.globalscale);
 					}
@@ -174,7 +205,7 @@ function instanciateAreaDescription(){
 		var l_oResult = validateLastArea();
         validateHighlight(l_oResult);
 
-		if (l_oResult.isTitelValid === true && l_oResult.isMorphboxValid === true && l_oResult.isAreaValid === true) {
+		if (l_oResult.isValid()) {
             myimgmap.addNewArea();      // add new area on validation success...
             Indeko.MorphBox.clear();    // ... and clear the morphological box
 		}
@@ -615,17 +646,6 @@ function gui_statusMessage(str) {
 }
 
 /*
- * Variables and functions surrounding the morphological box.
- */
-Indeko.MorphBox = {
-	// DOM element that contains the representation of the morphological box.
-	element : $('#morphological-box'),
-
-	// array represention of the selected morphological box items (first element fulltext string, following items taxonomy IDs)
-	dataArray : [] // e.g. ["Kompetenz", "38", "40"]
-};
-
-/*
  * Converts the data array to an Apache Solr search URL.
  * ["Kompetenz", "38", "40"] -> /indeko/search/site/Kompetenz AND tid:38 AND tid:40
  *
@@ -811,11 +831,6 @@ Indeko.MorphBox.loadDummy = function () {
 	});
 };
 
-
-Indeko.ImageMap = {
-	scalingFactor: 1
-};
-
 /*
  * Scales image map area coordinates in add and edit mode to the current displayed width in the browser if the image
  * width differs from it's original width.
@@ -855,7 +870,7 @@ Indeko.ImageMap.hookSaveButton = function () {
 
 
         var l_oResult = validateLastArea();
-        if (l_oResult.isTitelValid === false || l_oResult.isMorphboxValid === false || l_oResult.isAreaValid === false) {
+        if (!l_oResult.isValid()) {
             validateHighlight(l_oResult);
             l_bIsValid = false;
         }
