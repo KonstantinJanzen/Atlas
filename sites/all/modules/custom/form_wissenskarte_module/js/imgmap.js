@@ -54,10 +54,10 @@ function imgmap(config) {
 	this.version = "2.2";
 	
 	/** Build date of imgmap */
-	this.buildDate = "2009/07/26 16:29";
+	this.buildDate = "2009/08/12 22:18";
 	
 	/** Sequential build number of imgmap */
-	this.buildNumber = "108";
+	this.buildNumber = "113";
 	
 	/** Config object of the imgmap instance */
 	this.config = {};
@@ -220,7 +220,7 @@ function imgmap(config) {
 	
 	//browser sniff
 	var ua = navigator.userAgent;
-	this.isMSIE    = (navigator.appName == "Microsoft Internet Explorer");
+	this.isMSIE    = (navigator.appName == "Microsoft Internet Explorer") || (navigator.appName == 'Netscape' && navigator.userAgent.search('Trident') != -1);
 	this.isMSIE5   = this.isMSIE && (ua.indexOf('MSIE 5')   != -1);
 	this.isMSIE5_0 = this.isMSIE && (ua.indexOf('MSIE 5.0') != -1);
 	this.isMSIE7   = this.isMSIE && (ua.indexOf('MSIE 7')   != -1);
@@ -305,6 +305,7 @@ imgmap.prototype.setup = function(config) {
 		}
 		//search for scripts
 		var scripts = document.getElementsByTagName('script');
+		var found = false;
 		for (i=0; i<scripts.length; i++) {//i declared earlier
 			if (scripts[i].src && scripts[i].src.match(/imgmap\w*\.js(\?.*?)?$/)) {
 				var src = scripts[i].src;
@@ -318,9 +319,14 @@ imgmap.prototype.setup = function(config) {
 					this.config.baseroot = src;
 				}
 				//exit loop
+				found = true;
 				break;
 			}
 		}
+		if (!found && this.config.baseroot === '') {
+			this.log("Unable to detect baseroot.", 1);
+		}
+
 	}
 
 	//load excanvas js - as soon as possible
@@ -567,10 +573,9 @@ imgmap.prototype.script_load = function(e) {
 	var obj = (this.isMSIE) ? window.event.srcElement : e.currentTarget;
 	var url = obj.src;
 	var complete = false;
-	//alert(url);
 	if (typeof obj.readyState != 'undefined') {
 		//explorer
-		if (obj.readyState == 'complete') {
+		if (obj.readyState == 'complete' || obj.readyState == 'loaded') {
 			complete = true;
 		}
 	}
@@ -920,7 +925,7 @@ imgmap.prototype._normCoords = function(coords, shape, flag) {
 	if (coords === '') {return '';}
 	var oldcoords = coords;
 	//replace some general junk
-	coords = coords.replace(/(\d)(\D)+(\d)/g, "$1,$3");
+	coords = coords.replace(/(\d)([^\d\.])+(\d)/g, "$1,$3"); // Other software might create decimal points, respect them
 	coords = coords.replace(/,\D+(\d)/g, ",$1");//cut leading junk
 	coords = coords.replace(/,0+(\d)/g, ",$1");//cut leading zeros
 	coords = coords.replace(/(\d)(\D)+,/g, "$1,");
@@ -1206,7 +1211,6 @@ imgmap.prototype.addNewArea = function() {
 		this.areas[id].shape     = "undefined";
 		
 		this.currentid = id;
-		LoadSelect(this.currentid);
 		this.fireEvent('onAddArea', id);
 		return id;
 };
@@ -1596,6 +1600,10 @@ imgmap.prototype._repaint = function(area, color, x, y) {
 	if (area.shape == 'circle') {
 		width  = parseInt(area.style.width, 10);
 		var radius = Math.floor(width/2) - 1;
+		if (radius < 0) {
+			radius=0;
+        }
+
 		//get canvas context
 		//alert(area.tagName);
 		ctx = area.getContext("2d");
@@ -2206,7 +2214,6 @@ imgmap.prototype.img_mousedown = function(e) {
 		this.relaxArea(this.currentid);
 		if (this.areas[this.currentid] == this._getLastArea()) {
 			//editor mode adds next area automatically
-			//document.getElementById('edit-field-markierte-bereiche-und-0-value').value = this.getMapHTML('noscale');
 			// Janzen: just add a new area by click
 			//if (this.config.mode != "editor2") {this.addNewArea();}
 			return;
@@ -2609,7 +2616,6 @@ imgmap.prototype.area_dblclick = function(e) {
 				return;
 			}
 			this.currentid = obj.aid;
-			LoadSelect(this.currentid);
 		}
 		this.fireEvent('onDblClickArea', this.areas[this.currentid]);
 		//stop event propagation to document level
@@ -2650,7 +2656,6 @@ imgmap.prototype.area_mousedown = function(e) {
 				return;
 			}
 			this.currentid = obj.aid;
-			LoadSelect(this.currentid);
 		}
 		//this.log('selected = '+this.currentid);
 		this.draggedId  = this.currentid;

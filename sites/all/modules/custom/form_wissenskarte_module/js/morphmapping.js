@@ -122,12 +122,6 @@ function instanciate_maschek_image(p_oPic){
 imgmap.prototype.getMapInnerHTML = function(flags) {
 	var html, coords;
 	html = '';
-	var l_aUnternehmensgr = $('#edit-field-unternehmensg-er-und').val();
-
-	var myCurrentId = myimgmap.currentid;
-	if (myimgmap.currentid >= this.areas.length - 1 && this.areas.length > 1)
-		myCurrentId--;
-
 	//foreach area properties
 	for (var i=0; i < this.areas.length; i++) {
 		if (this.areas[i]) {
@@ -142,7 +136,7 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 					for (var j=0, le2 = cs.length; j<le2; j++) {
 						cs[j] = Math.round(cs[j] * this.globalscale);
 					}
-				// if image has been scaled, rescale area coordinates to match original image size
+				// ATLAS: if image has been scaled, rescale area coordinates to match original image size
 				} else {
 					for (var j=0, le2 = cs.length; j<le2; j++) {
 						cs[j] = Math.round(cs[j] * (1 / Indeko.ImageMap.scalingFactor));
@@ -162,42 +156,6 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 	}
 
 	return html;
-};
-
-// wenn currentid ge�ndert wird, sollen die Combos geert werden. Remove loadselect from imfmap and morphmapping
-function LoadSelect(newCurrentId){
-	// $('#edit-field-unternehmensg-er-und').val(-1);
-	// $('#edit-field-branche-und').val(-1);
-    //
-	// var l_aCanvas = $('canvas');
-    //
-	// var l_nCurrentId = newCurrentId;
-	// if (newCurrentId == l_aCanvas.length) l_nCurrentId--;
-    //
-	// for (var i=0; i < l_aCanvas.length; i++) {
-	// 	var l_sId = l_aCanvas[i].id;
-	// 	var lastChar = l_sId[l_sId.length-1];
-    //
-	// 	if (lastChar == myimgmap.currentid){
-	// 		// Unternehmensgr��e
-	// 		var l_sSelected = $(l_aCanvas[i]).attr('ugr');
-	// 		if (typeof l_sSelected != 'undefined' && l_sSelected != null ){
-	// 			var l_aSelected = l_sSelected.split(',');
-    //
-	// 			$('#edit-field-unternehmensg-er-und').val(l_aSelected);
-	// 		}
-    //
-	// 		// Branche
-	// 		l_sSelected = $(l_aCanvas[i]).attr('bran');
-	// 		if (typeof l_sSelected != 'undefined' && l_sSelected != null ){
-	// 			var l_aSelected = l_sSelected.split(',');
-    //
-	// 			$('#edit-field-branche-und').val(l_aSelected);
-	// 		}
-	// 	}
-	// }
-
-	return false;
 };
 
 function instanciateAreaDescription(){
@@ -394,8 +352,6 @@ function gui_addArea(id) {
 	enableDeleteButtonOnSelectedGuiArea(props[id]);
 
 	//hook more event handlers to individual inputs
-	//myimgmap.addEvent(props[id].getElementsByTagName('input')[1],  'keydown', gui_cb_keydown);
-	//myimgmap.addEvent(props[id].getElementsByTagName('input')[2],  'keydown', gui_coords_keydown);
 	myimgmap.addEvent($(props[id]).find('input[name=img_alt]')[0],  'change', gui_input_change);
 	myimgmap.addEvent($(props[id]).find('select[name=img_shape]')[0], 'change', gui_input_change);
 	/*if (myimgmap.isSafari) {
@@ -569,6 +525,7 @@ function gui_input_change(e) {
 				$(props[id]).find('input[name=img_coords]').val(coords);
 			}
 			myimgmap.areas[id].shape = obj.value;
+			myimgmap.nextShape =  obj.value;
 			myimgmap._recalculate(id, coords);
 			myimgmap.areas[id].lastInput = coords;
 		}
