@@ -363,7 +363,7 @@ function gui_addArea(id) {
     $('.img_active').hide();
 
 	var l_oSelect = $('<select name="img_shape" class="img_shape">').appendTo(props[id]);
-	$('<option value="rect">Recheck</option>').appendTo(l_oSelect);
+	$('<option value="rect">Rechteck</option>').appendTo(l_oSelect);
 	$('<option value="circle">Kreis</option>').appendTo(l_oSelect);
 	$('<option value="poly">Polygon</option>').appendTo(l_oSelect);
 	l_oSelect.val("rect");
