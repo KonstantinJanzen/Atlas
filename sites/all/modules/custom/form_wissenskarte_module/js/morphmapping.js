@@ -367,6 +367,7 @@ function gui_addArea(id) {
 	$('<option value="circle">Kreis</option>').appendTo(l_oSelect);
 	$('<option value="poly">Polygon</option>').appendTo(l_oSelect);
 	l_oSelect.val("rect");
+	l_oSelect.chosen({disable_search: true}); // transform to chosen select box
 
 	$('<Label class="img_label">Titel:</Label>').appendTo(props[id]);
 	$('<input type="text" name="img_alt" class="img_alt" value="">').appendTo(props[id]);
@@ -384,14 +385,17 @@ function gui_addArea(id) {
 
 	//hook more event handlers to individual inputs
 	myimgmap.addEvent($(props[id]).find('input[name=img_alt]')[0],  'change', gui_input_change);
-	myimgmap.addEvent($(props[id]).find('select[name=img_shape]')[0], 'change', gui_input_change);
+	l_oSelect.change(function(event) {gui_input_change(event)});
 	/*if (myimgmap.isSafari) {
 		//need these for safari
 		myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
 	}*/
 
 	//set shape as nextshape if set
-	if (myimgmap.nextShape) {$(props[id]).find('select[name=img_shape]').val(myimgmap.nextShape);}
+	if (myimgmap.nextShape) {
+		l_oSelect.val(myimgmap.nextShape);
+		l_oSelect.trigger('chosen:updated');
+	}
 	//alert(this.props[id].parentNode.innerHTML);*/
 
 
@@ -573,7 +577,10 @@ function gui_input_change(e) {
 function gui_areaChanged(area) {
 	var id = area.aid;
 	if (props[id]) {
-		if (area.shape)  {$(props[id]).find('select[name=img_shape]').val(area.shape);}
+		if (area.shape)  {
+			$(props[id]).find('select[name=img_shape]').val(area.shape);
+			$(props[id]).find('select[name=img_shape]').trigger('chosen:updated');
+		}
 		if (area.lastInput) {$(props[id]).find('input[name=img_coords]').val(area.lastInput);}
 		if (area.aalt)    {$(props[id]).find('input[name=img_alt]').val(area.aalt);}
 	}
