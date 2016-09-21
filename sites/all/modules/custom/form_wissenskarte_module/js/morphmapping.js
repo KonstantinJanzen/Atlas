@@ -864,6 +864,12 @@ Indeko.ImageMap.scale = function(domImage) {
 	}
 
 	console.log(Indeko.ImageMap.scalingFactor);
+
+    image = $('.image-style-wissenkarte')[0];
+    $(image).load(function(){
+        console.log("img load");
+        Indeko.ImageMap.scale($('.image-style-wissenkarte'));
+        });
 };
 
 
