@@ -44,31 +44,40 @@ function jq_maphilight_preprocess_page(&$vars)
 {
   // Check if maphilight library is available and processed node matches desired "content type" for highlighting.
   if (_jq_maphilight_available() != FALSE && isset($vars['node']) && $vars['node']->type == variable_get('jq_maphilight_content_type', 'article')) {
-    drupal_add_library('jq_maphilight', 'jquery.maphilight');
 
-    // Try to get user settings, otherwise use default values.
-    $settings = array(
-      'jq_maphilight' => array(
-        'fill' => variable_get('jq_maphilight_fill', 'true'),
-        'fillColor' => variable_get('jq_maphilight_fillcolor', '000000'),
-        'fillOpacity' => variable_get('jq_maphilight_fillopacity', 2) / 10,
-        'stroke' => variable_get('jq_maphilight_stroke', 'true'),
-        'strokeColor' => variable_get('jq_maphilight_strokecolor', 'ff0000'),
-        'strokeOpacity' => variable_get('jq_maphilight_strokeopacity', 10) / 10,
-        'strokeWidth' => variable_get('jq_maphilight_strokewidth', 2),
-        'fade' => variable_get('jq_maphilight_fade', 'true'),
-        'alwaysOn' => variable_get('jq_maphilight_alwayson', 'false'),
-        'neverOn' => variable_get('jq_maphilight_neveron', 'false'),
-        'groupBy' => variable_get('jq_maphilight_groupby', 'false'),
-        'allMapsEnabled' => variable_get('jq_maphilight_all_maps_enabled', 'true'),
-        'fillOpacityMouseover' => variable_get('jq_maphilight_fillopacitymouseover', 2) / 10,
-        'strokeOpacityMouseover' => variable_get('jq_maphilight_strokeopacitymouseover', 10) / 10,
-      )
-    );
+    $pathEdit = 'node/*/edit';
+    $pathClone = 'node/*/clone/confirm';
+    $isPathEdit = drupal_match_path(current_path(), $pathEdit);
+    $isPathClone = drupal_match_path(current_path(), $pathClone);
 
-    // Add js to footer with a high weight to ensure highlighting is done after map areas are added/scaled.
-    drupal_add_js($settings, 'setting', array('scope' => 'footer', 'weight' => 99));
-    drupal_add_js(drupal_get_path('module', 'jq_maphilight') . '/js/jq_maphilight_settings.js', array('scope' => 'footer', 'weight' => 100));
+    // Don't load JS on edit or clone
+    if (!$isPathEdit && !$isPathClone) {
+      drupal_add_library('jq_maphilight', 'jquery.maphilight');
+
+      // Try to get user settings, otherwise use default values.
+      $settings = array(
+        'jq_maphilight' => array(
+          'fill' => variable_get('jq_maphilight_fill', 'true'),
+          'fillColor' => variable_get('jq_maphilight_fillcolor', '000000'),
+          'fillOpacity' => variable_get('jq_maphilight_fillopacity', 2) / 10,
+          'stroke' => variable_get('jq_maphilight_stroke', 'true'),
+          'strokeColor' => variable_get('jq_maphilight_strokecolor', 'ff0000'),
+          'strokeOpacity' => variable_get('jq_maphilight_strokeopacity', 10) / 10,
+          'strokeWidth' => variable_get('jq_maphilight_strokewidth', 2),
+          'fade' => variable_get('jq_maphilight_fade', 'true'),
+          'alwaysOn' => variable_get('jq_maphilight_alwayson', 'false'),
+          'neverOn' => variable_get('jq_maphilight_neveron', 'false'),
+          'groupBy' => variable_get('jq_maphilight_groupby', 'false'),
+          'allMapsEnabled' => variable_get('jq_maphilight_all_maps_enabled', 'true'),
+          'fillOpacityMouseover' => variable_get('jq_maphilight_fillopacitymouseover', 2) / 10,
+          'strokeOpacityMouseover' => variable_get('jq_maphilight_strokeopacitymouseover', 10) / 10,
+        )
+      );
+
+      // Add js to footer with a high weight to ensure highlighting is done after map areas are added/scaled.
+      drupal_add_js($settings, 'setting', array('scope' => 'footer', 'weight' => 99));
+      drupal_add_js(drupal_get_path('module', 'jq_maphilight') . '/js/jq_maphilight_settings.js', array('scope' => 'footer', 'weight' => 100));
+    }
   }
 }
 

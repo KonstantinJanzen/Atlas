@@ -41,11 +41,19 @@ function imagemap_resizer_available() {
 function imagemap_resizer_preprocess_page(&$vars) {
 	
   if (imagemap_resizer_available() !== FALSE && isset($vars['node']) && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'article')) {
-    if (module_exists('jquery_plugin')) {
-      drupal_add_library('jquery_plugin', 'metadata');
+    $pathEdit = 'node/*/edit';
+    $pathClone = 'node/*/clone/confirm';
+    $isPathEdit = drupal_match_path(current_path(), $pathEdit);
+    $isPathClone = drupal_match_path(current_path(), $pathClone);
+
+    // Don't load JS on edit or clone
+    if (!$isPathEdit && !$isPathClone) {
+      if (module_exists('jquery_plugin')) {
+        drupal_add_library('jquery_plugin', 'metadata');
+      }
+      drupal_add_library('imagemap_resizer', 'image-map-resizer');
+      drupal_add_js(drupal_get_path('module', 'imagemap_resizer') . '/imagemap_resizer_load.js', array('scope' => 'footer', 'weight' => 90));
     }
-    drupal_add_library('imagemap_resizer', 'image-map-resizer');
-    drupal_add_js(drupal_get_path('module', 'imagemap_resizer') . '/imagemap_resizer_load.js', array('scope' => 'footer', 'weight' => 90));
   }
 }
 
