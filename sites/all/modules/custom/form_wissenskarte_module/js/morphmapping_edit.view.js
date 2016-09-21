@@ -1,5 +1,5 @@
 // globals
-var myimgmap = {};
+var myimgmap = myimgmap || {};
 $ = jQuery;
 var ViewMode = true;
 

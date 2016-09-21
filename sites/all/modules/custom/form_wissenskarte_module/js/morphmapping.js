@@ -32,7 +32,7 @@ var ValidationResult = function() {
 /**
  * Variables and functions namespace of the image map.
  */
-Indeko.ImageMap = {
+Indeko.ImageMap = Indeko.ImageMap || {
 	scalingFactor: 1,
 };
 
@@ -80,12 +80,11 @@ function  initView(ViewMode) {
 
 			instanciate_maschek_image(l_oImageEdit[0]);		// instantiate image map object
 			instanciateAreaDescription();					// load GUI
-			myimgmap.setMapHTML(loadedValue);				// load image map areas
-			Indeko.ImageMap.scale(l_oImageEdit); 			// scale image map areas to current image display size
-			Indeko.ImageMap.hookSaveButton(); 				// attach client side validation to save button
+            myimgmap.setMapHTML(loadedValue);				// load image map areas
+            Indeko.ImageMap.hookSaveButton(); 				// attach client side validation to save button
 			Indeko.MorphBox.loadDummy();					// load morphological box table dummy
 			Indeko.MorphBox.update(myimgmap.currentid);		// show selected morphological box items of current map area
-		} else if (l_oImageView.length > 0) {
+        } else if (l_oImageView.length > 0) {
 			// ViewMode
 			$('.field-name-field-markierte-bereiche').hide();
 			var parent = $('.image-style-none').parent();
@@ -110,7 +109,7 @@ function  initView(ViewMode) {
 				l_oPicContainer.find('img').attr('USEMAP', l_sId);
 			}
 		}
-	}
+    }
 	
 	return result;
 }
@@ -130,14 +129,18 @@ function instanciate_maschek_image(p_oPic){
 			'onSelectArea'    : function(obj) {gui_selectArea(obj);},//to select form element when an area is clicked
 			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},// to update "markierte Bereiche"
             'onDrawArea'      : function(id)  {gui_updateArea(id);}, // to update drawn area
-            'onStatusMessage' : function(str) {gui_statusMessage(str);}// to display status messages on gui
+            'onStatusMessage' : function(str) {gui_statusMessage(str);},// to display status messages on gui
+            'onLoadImage'     : function(pic) {Indeko.ImageMap.scale(pic);} // scale image map areas to current image display size
 		},
 		pic_container: p_oPic, // element containing the image
 		bounding_box : false,
 		label : "%t",
         hint: "%t %h",
         label_style: 'font-family: sans-serif; font-size: 87.5%; color: #444',
-		norm_opacity: '30'
+        draw_opacity: '50',
+        CL_NORM_SHAPE: '#0000FF',
+        CL_DRAW_SHAPE: '#0000FF',
+        CL_HIGHLIGHT_SHAPE: '#0000FF'
 	});
 
 	myimgmap.useImage(p_oPic);
@@ -411,10 +414,10 @@ function gui_removeArea(id) {
 		var pprops = props[id].parentNode;
 		if (pprops) {
 			pprops.removeChild(props[id]);
-			var lastid = pprops.lastChild.aid;
 			props[id] = null;
 			try {
-				gui_row_select(lastid, true);
+                var lastid = pprops.lastChild.aid;
+                gui_row_select(lastid, true);
 				myimgmap.currentid = lastid;
                 Indeko.MorphBox.update(myimgmap.currentid); // update values of morphological box
 			}
@@ -849,7 +852,8 @@ Indeko.MorphBox.loadDummy = function () {
 Indeko.ImageMap.scale = function(domImage) {
 	var image = $(domImage).get(0);
 
-	if (image.width !== image.naturalWidth) {
+    Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
+    if (image.width !== image.naturalWidth) {
 		Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
 		myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
 	}
