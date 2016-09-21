@@ -36,13 +36,26 @@
 
 @font-face{
 	font-family:'MyWebFont';
-	 src: url('thesansplain.ttf') format('truetype');
+		src: url('firalight.woff2') format('woff2');
 }
 
 @font-face{
 	font-family:'MyWebFont';
-	 src: url('thesansplainbold.ttf') format('truetype');
-	 font-weight: bold;
+		src: url('firamedium.woff2') format('woff2');
+	font-weight: bold;
+}
+
+@font-face{
+	font-family:'MyWebFont';
+		src: url('firaregular.woff2') format('woff2');
+	font-weight: 500;
+}
+
+@font-face{
+	font-family:'MyWebFont';
+		src: url('firalightitalic.woff2') format('woff2');
+	font-style: italic;
+	font-weight: normal;
 }
 
 body {
@@ -63,11 +76,10 @@ h3,
 h4,
 h5,
 h6 {
-  color: #2da046;
   text-align:left;
-  text-transform: uppercase;
-  font-weight: normal;
+  font-weight: bold;
 }
+
 
 p {}
 
@@ -135,7 +147,7 @@ var {
 }
 
 button {
-	background-color: #2da046;
+	background-color: #52B166;
 	border: 0;
 	padding: .5rem 1rem;
 	margin: 1rem 1rem 1rem 0;
@@ -149,7 +161,10 @@ button:active,
 button:focus	{
 	background-color: #5aaf6c;
 	}
-	
+
+input {
+	font-family: 'MyWebFont';
+	}
 	
 	
 /* =============================================================================
@@ -177,7 +192,7 @@ button:focus	{
  * Wraps the sidebars the content column
  */
 #columns {
-margin-top: 4.5rem;
+margin-top: 8rem;
 }
 
 /*
@@ -190,8 +205,8 @@ margin-top: 4.5rem;
  * wrapper to style the entire main content column
  */
 #main-content {
-margin-left: 0;
-padding: 10px 0 10px 10px;
+margin-left: 2rem;
+padding:	0;
 
 }
 
@@ -209,23 +224,12 @@ padding: 10px 0 10px 10px;
 #footer {
   padding-top: 1em;
   margin-top: 1em;
-  color: #ffffff;
-}
-
-#footer a {
-  color: #009020;
 }
 
 #footer img {
 	margin-right: 10px;
 	}
 
-#footer a:hover,
-#footer a:active,
-#footer a:focus {
-  color: #009020;
-  text-decoration: dotted;
-}
 /*
  * Panels may need additional margin wrangling when in the $content region
  */
@@ -363,10 +367,19 @@ padding: 10px 0 10px 10px;
  * The main page title (h1)
  */
 #page-title {
-  margin: 0;
+	color: #888;
+	font-weight: bold;
+	margin-bottom: 2rem;
 }
 
-
+#page-title, 
+.block-title {
+	text-transform: uppercase;
+	font-size: 1rem;
+	letter-spacing: .05rem;
+	}
+	
+	
 /* =============================================================================
  *   Misc Global Styles
  * ========================================================================== */
@@ -404,7 +417,7 @@ padding: 10px 0 10px 10px;
  a[href*="//"]:not([href*="www.indeko-navi.de"]):not(.button) {
 	background-position: right center;
 	background-repeat: no-repeat;
-	background-image: linear-gradient(transparent, transparent), url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Cg%20transform%3D%22translate%28-826.429%20-698.791%29%22%3E%3Crect%20width%3D%225.982%22%20height%3D%225.982%22%20x%3D%22826.929%22%20y%3D%22702.309%22%20fill%3D%22%23fff%22%20stroke%3D%22%232da046%22%2F%3E%3Cg%3E%3Cpath%20d%3D%22M831.194%20698.791h5.234v5.391l-1.571%201.545-1.31-1.31-2.725%202.725-2.689-2.689%202.808-2.808-1.311-1.311z%22%20fill%3D%22%232da046%22%2F%3E%3Cpath%20d%3D%22M835.424%20699.795l.022%204.885-1.817-1.817-2.881%202.881-1.228-1.228%202.881-2.881-1.851-1.851z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
+	background-image: linear-gradient(transparent, transparent), url("data:image/svg+xml,%3C%3Fxml%20version%3D%221.0%22%20encoding%3D%22UTF-8%22%3F%3E%3Csvg%20xmlns%3D%22http%3A%2F%2Fwww.w3.org%2F2000%2Fsvg%22%20width%3D%2210%22%20height%3D%2210%22%3E%3Cg%20transform%3D%22translate%28-826.429%20-698.791%29%22%3E%3Crect%20width%3D%225.982%22%20height%3D%225.982%22%20x%3D%22826.929%22%20y%3D%22702.309%22%20fill%3D%22%23fff%22%20stroke%3D%22%2352B166%22%2F%3E%3Cg%3E%3Cpath%20d%3D%22M831.194%20698.791h5.234v5.391l-1.571%201.545-1.31-1.31-2.725%202.725-2.689-2.689%202.808-2.808-1.311-1.311z%22%20fill%3D%22%2352B166%22%2F%3E%3Cpath%20d%3D%22M835.424%20699.795l.022%204.885-1.817-1.817-2.881%202.881-1.228-1.228%202.881-2.881-1.851-1.851z%22%20fill%3D%22%23fff%22%2F%3E%3C%2Fg%3E%3C%2Fg%3E%3C%2Fsvg%3E");
 	padding-right: 13px;
 	}
  
@@ -505,7 +518,10 @@ ul.links li {
 /*
  * First sidebar
  */
-.region-sidebar-first {}
+.region-sidebar-first .block{
+	padding: 10px;
+	background-color: #e7e7e7;
+	}
 
 /*
  * Second sidebar
@@ -514,9 +530,9 @@ ul.links li {
 }
 
 .region-sidebar-second .block {
-  padding: 10px;
-  background-color: #e7e7e7;
-}
+	padding: 10px;
+	background-color: #e7e7e7;  
+	}
 
 /*
  * Tertiary content
@@ -545,13 +561,13 @@ a:visited {
 
 a:active,
 a.active {
-	color: #2da046;
+	color: #52B166;
 	text-decoration: none;
 }
 
 a:hover,
 a:focus {
-  color: #2da046;
+  color: #52B166;
   text-decoration: none;
 }
 
@@ -563,31 +579,35 @@ a:focus {
 .nav {
   clear: both;
   margin: 0;
-  max-height: 3em;
+  float: left;
+  height: 70px;
   background: #e7e7e7;
-  font-size: 1.25em;
+  font-size: .8rem;
   z-index: 9999;
   position: absolute;
   top: 0;
   right: 0;
   left: 0;
-  font-variant: all-small-caps;
-  letter-spacing: 2px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
 }
 
-.nav > * {
-  height: 100%;
-  float: left;
+.menu-wrapper {
+	margin-left: 0;
 }
 
-.block-block-2 {
-  width: 3em;
+#block-block-2 {
+  width: 3.5rem;
+  float: right;
+  margin: 0;
+  padding: 5px;
+  font-size:0;
+  background-color: #e7e7e7;
 }
 
 .nav img {
-  padding: 5px;
-  height: 2.5em;
-  width: 2.5em;
+  padding: 0;
+  width: 100%;
 }
 
 .nav ul,
@@ -664,10 +684,17 @@ a:focus {
 }
 
 .nav .block-search {
-	line-height: 6em;
-	font-size: 0.5em;
-	float: right;
+	font-size: 1rem;
+	float: none;
+	position: absolute;
+	top: 0;
+	right: 48px;
 }
+
+#edit-search-block-form--2 {
+	margin:0;
+	padding: .5rem 1rem;
+	}
 
 .nav .block-search button {
   visibility: hidden;
@@ -682,7 +709,69 @@ a:focus {
   top: 2px;
 }
 
+/* MOBILE NAVIGATION */
 
+#sidr-0-button {
+	font-size: 1rem;
+	background-color: #52B166;
+	color: #fff;
+	padding: 1rem;
+	float: left;
+	min-height: 39px;
+	text-align: center;
+}
+
+#sidr-0 {
+	font-family: 'MyWebFont', Verdana, Arial, sans-serif;
+	font-size: .8rem;
+	background-color: #e7e7e7;
+	color: #444;
+}
+
+.sidr ul {
+	border-top: 0;
+	border-bottom: 0;
+}
+
+.sidr ul li {
+	border-top: 0;
+	border-bottom: 0;
+}
+
+.sidr ul li ul {
+	border-top: 1px solid #aeaeae;
+	border-bottom: 1px solid #aeaeae;
+}
+
+.sidr ul li:hover { 
+	line-height: 48px;
+}
+
+.sidr ul li ul li:hover,
+.sidr ul li ul li:active,
+.sidr ul li ul li:focus {
+	line-height: 40px;
+}
+
+#sidr-0,
+.sidr ul li:hover > a,
+.sidr ul li ul li:hover > a {
+	box-shadow: none;
+}
+
+.sidr ul li ul li a {
+	color: #444;
+}
+
+.sidr a:hover
+/*.sidr ul li ul li:hover > a, 
+.sidr ul li ul li:active > a, 
+.sidr ul li ul li:focus > a */{
+	box-shadow: none;
+	background-color: #cdcdcd;
+}
+
+	
 /* =============================================================================
  *   Superfish
  * ========================================================================== */
@@ -1292,7 +1381,7 @@ ul.action-links li {}
  * Main wrapper for most blocks, block_system_main does not have it
  */
 .block {
-  margin-bottom: 10px;
+  margin-bottom: .33rem;
   text-align: left;
 }
 
@@ -1475,6 +1564,7 @@ ul.action-links li {}
 	padding: 0.5rem;
 	box-shadow: 0px 1px 4px rgba(0,0,0,.2);
 	text-decoration: none;
+	font-size: .75rem;
 	}
 	
 #block-system-user-menu li a:hover,
@@ -1487,12 +1577,12 @@ ul.action-links li {}
 #block-user-login .form-submit {
 	width: 100%;
 	margin-left: 0px;
-	background-color: #2da046;
+	background-color: #52B166;
 	}
 	
 #block-system-user-menu .form-submit:hover,
 #block-user-login .form-submit:hover {
-	background-color: #5aaf6c;
+	background-color: #60CE78;
 	}
 
 /*
@@ -1609,7 +1699,8 @@ ul.action-links li {}
  * Wrapper for the list of comments and its titles
  */
 #comments {
-  margin: 1.5em 0;
+  margin: 1rem 0 0 1rem;
+  max-width: 33rem;
 }
 
 #comments h2 {}
@@ -1748,9 +1839,10 @@ option {
 	border: 0;
 	padding: .5rem 1rem;
 	margin: 1rem;
-	background-color: #2da046;
-	color: #fff;
-	font-weight: bold;
+	background-color: #444;
+	color: #e7e7e7;
+	font-weight: 500;
+	font-size: .75rem;
 	}
 
 .container-inline div,
@@ -1809,7 +1901,7 @@ table h3 {
 }
 
 table h2 {
-	border-bottom: solid 2px #2da046;
+	border-bottom: solid 2px #52B166;
 	}
 
 table.sticky-header {
@@ -2092,10 +2184,11 @@ tr.error {}
   font-size: 1em !important;
 }
 
-
+/*
 nav#block-system-main-menu {
 	height: calc(1.5em *1.95);
 }
+*/
 
 nav#block-system-main-menu ul.menu { 
 	list-style: none;
@@ -2120,7 +2213,7 @@ nav#block-system-main-menu ul.menu li:hover > ul,
 nav#block-system-main-menu ul.menu li.active-trail:hover > ul {
 	display: block;
 	z-index: 99998;
-	box-shadow: 0 1000px 0 1000px rgba(255,255,255,.9);
+	box-shadow: 0 2000px 0 2000px rgba(255,255,255,.9);
 }	
 
 nav#block-system-main-menu ul.menu li.active-trail > ul {
@@ -2130,7 +2223,7 @@ nav#block-system-main-menu ul.menu li.active-trail > ul {
 nav#block-system-main-menu ul.menu li a {
 	display: block;
 	text-decoration: none;
-	padding: 0 .5rem;
+	padding: 1rem;
 }
 	
 
@@ -2246,7 +2339,7 @@ nav#block-system-main-menu ul.menu ul ul {
 	top: -4rem;
 	padding: 1rem 4rem;
 	border:0;
-	background-color: #2da046;
+	background-color: #52B166;
 	color: #fff;
 	font-weight: bold;
 }
@@ -2447,15 +2540,425 @@ nav#block-system-main-menu ul.menu ul ul {
 	float: left;
 	}
 	
-/* EVENTERSTELLUNG*/
+/* EVENT ERSTELLUNG*/
 
 #aktivitaeten_log .event_erstellung::before {
 	background-image: url("../images/aktivitaeten_log/event_erstellung.svg");
 	}
 	
-	/* PROJEKTERSTELLUNG*/
+/* PROJEKT ERSTELLUNG*/
 
 #aktivitaeten_log .projekt_erstellung::before {
 	background-image: url("../images/aktivitaeten_log/projekt_erstellung.svg");
+	}
+	
+/* DIMENSION ERSTELLUNG*/
+
+#aktivitaeten_log .dimension_erstellung::before {
+	background-image: url("../images/aktivitaeten_log/dimension_erstellung.svg");
+	}
+	
+
+/* =============================================================================
+ * NEWSLETTER EMAIL
+ * ========================================================================== */
+ 
+ .background_wrap {
+		padding: 3%;
+		background-color: #52B166;
+	}
+	
+ .email_wrap {
+	background-color: #fff;
+	box-shadow: 2px 2px 4px rgba(0,0,0,.3);
+	overflow: hidden;
+	padding: 1rem;
+	}
+	
+ .email_wrap #header {
+	width: 100%;
+	}
+	
+ .email_wrap #branding {
+	clear: both;
+	padding: 1rem 2rem;
+	overflow: hidden;
+	}
+	
+ .email_wrap #branding img {
+	float: right;
+	width: 77px;
+	}
+
+ .email_wrap #branding h1 {
+	float: left;
+	font-size: 400%;
+	font-weight: bold;
+	margin: 0;
+	}
+	
+#info_bar {
+	width: 100%;
+	display: block;
+	overflow: hidden;
+	}
+	
+#info_bar p {
+	float: left;
+	padding-left: 2rem;
+	}
+	
+#body_wrap {
+	max-width: 33rem;
+	margin: 0 auto;
+	}
+
+.email_wrap .content {
+	margin: 1rem;
+	margin-top: 2rem;
+	border-top: 5px solid #52B166;
+	}
+	
+.email_wrap #footer {
+	width: 100%;
+	overflow: hidden;
+	padding: 0 .5rem;
+	margin: 2rem 0;
+	margin-top: 6rem;
+	}
+	
+.email_wrap #footer a {
+	float: left;
+	padding-left: 2rem;
+	}
+	
+/* =============================================================================
+ *FOKUSGRUPPEN REDESIGN
+ * ========================================================================== */
+ 
+.node-fokusgruppe p,
+.node-fokusgruppe ul {
+	max-width: 33rem;
+	background-color: #fff;
+	}
+	
+.node-fokusgruppe {
+	background-repeat: no-repeat;
+	background-position: right top;
+	background-attachment: scroll;
+	background-size: 20%;
+	}
+
+#node-43 {
+	background-image: url(../images/fokusgruppen_redesign/fg1_illu_s.svg);
+	}
+
+#node-45 {
+	background-image: url(../images/fokusgruppen_redesign/fg2_illu_s.svg);
+	}
+	
+#node-46 {
+	background-image: url(../images/fokusgruppen_redesign/fg3_illu_s.svg);
+	}
+	
+#node-47 {
+	background-image: url(../images/fokusgruppen_redesign/fg4_illu_s.svg);
+	}
+	
+#node-48 {
+	background-image: url(../images/fokusgruppen_redesign/fg5_illu_s.svg);
+	}
+
+#node-49 {
+	background-image: url(../images/fokusgruppen_redesign/fg6_illu_s.svg);
+	}
+
+#node-50 {
+	background-image: url(../images/fokusgruppen_redesign/fg7_illu_s.svg);
+	}
+
+/* PROJEKTLOGOS*/
+
+.field-name-field-projekte-der-fokusgruppe {
+	display: inline-block;
+	width: 100%;
+	background-color: #fff;
+	}
+
+.field-name-field-projekte-der-fokusgruppe a {
+	float: left;
+	width:100px;
+	margin: 2rem;
+	font-size: 0;
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a:after {
+	content: '';
+	width: 100%;
+	height: 50px;
+	float: left;
+	margin-top: 1rem;	
+	background-size: 100%;
+	background-repeat: no-repeat;
+	background-position: center;
+	}
+	
+	
+/* FOKUSGRUPPE 1 */
+
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/engage"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg1/engage.jpg);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/lernda"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg1/lernda.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/pm-kompare"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg1/pmkompare.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/resilire"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg1/resilire.png);
+	}
+	
+	
+/* FOKUSGRUPPE 2 */
+
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/akip"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg2/akip.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/alfa-agrar"] {
+	font-size: 1em;
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/bepeso"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg2/bepeso.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/k-ha"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg2/inkha.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/webutatio"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg2/webutatio.png);
+	}
+	
+/* FOKUSGRUPPE 3 */
+
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/epo-kad"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg3/epokad.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/facharzt-plus"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg3/facharztplus.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/flip"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg3/flip.jpg);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/rebeko"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg3/rebeko.jpg);
+	}
+
+	
+/* FOKUSGRUPPE 4 */
+
+
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/abeko"] {
+	font-size: 1em;
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/4c4-learn"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg4/4c4learn.jpg);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/alfaclu"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg4/alfaclu.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/arkoh"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg4/arkoh.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/km3"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg4/webutatio.png);
+	}
+	
+/* FOKUSGRUPPE 5 */
+
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/pikoma"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg5/pikoma.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/pluglearn"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg5/plugnlearn.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/prokom-40"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg5/prokom.jpg);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/rakoon"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg5/rakoon.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/transdemo"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg5/transdemo.png);
+	}
+	
+	
+/* FOKUSGRUPPE 6 */
+
+
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/champnet"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg6/champnet.jpg);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/brofessio"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg6/brofessio.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/handel-kompetent"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg6/handelkompetent.png);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/staysmart"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg6/staysmart.jpg);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/zielkom"] {
+	font-size: 1em;
+	}
+
+/* FOKUSGRUPPE 7 */
+
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/ilinno"] {
+	font-size: 1em;
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/refo"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg7/refo.jpg);
+	}
+	
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/strakosphere"]:after {
+	background-image: url(../images/fokusgruppen_redesign/logos/fg7/strakosphere.png);
+	}
+
+	
+/* =============================================================================
+ *FOREN STYLING
+ * ========================================================================== */
+ 
+	.node-forum-og {
+		margin: 1rem 0;
+	}
+		
+	
+	.node-forum-og header {
+		float: left;
+		width: 50%;
+		background-color: #dedede;
+		transition: border-color .5s;
+		border-left: .5rem solid #dedede;
+	}
+	
+	.view-foreneintr-ge a {
+		transition: border-color .5s;
+		border-left: .5rem solid #e7e7e7;
+		background-color: #e7e7e7;
+		text-decoration: none;
+	}
+		
+		
+	.node-forum-og header:hover,
+	.node-forum-og header:active,
+	.view-foreneintr-ge a:hover,
+	.view-foreneintr-ge a:active {
+		border-left: .5rem solid #666;
+	}
+		
+	#node-411.node-forum-og header:hover {
+		border-left: .5rem solid #81C1E3;
+	}
+		
+	#node-410.node-forum-og header:hover {
+		border-left: .5rem solid #C2DA98;
+	}
+
+	#node-409.node-forum-og header:hover {
+		border-left: .5rem solid #A3D4C1;
+		}
+		
+	#node-408.node-forum-og header:hover {
+		border-left: .5rem solid #8DD3F0;
+		}
+		
+	#node-407.node-forum-og header:hover {
+		border-left: .5rem solid #EFEB6A;
+		}
+		
+	#node-406.node-forum-og header:hover {
+	border-left: .5rem solid #85C0A6;
+		}
+		
+	#node-388.node-forum-og header:hover {
+	border-left: .5rem solid #84CCD1;
+		}
+		
+	.node-forum-og header a {
+		display: block;
+		box-sizing: border-box;
+		width: 100%;
+		padding: 2rem;
+		letter-spacing: -.08rem;
+		color: #666;
+		text-decoration: none;
+		}
+		
+	.node-forum-og header a:hover,
+	.node-forum-og header a:active{
+		color: #888;
+	}
+	
+	.node-forum-og footer,
+	.node-forum-og .node-content,
+	.node-forum-og nav.clearfix {
+		float: right;
+		font-style: italic;
+		width: calc( 50% - 10px - 1rem);
+		}
+		
+	.node-forum-og footer p {
+		margin-bottom: 0;
+		}
+		
+	.node-type-forum-og .panels-flexible-row {
+		border-bottom: 1px solid #aaa;
+		padding: 2rem;
+		}
+		
+	.node-type-forum-og .panels-flexible-region-last {
+		padding-left: 2rem;
+		margin-left: -2rem;
+		}
+		
+	.view-foreneintr-ge a {
+		display: block;
+		width: calc(100% - 1rem);
+		box-sizing: border-box;
+		padding: 1rem;
+		font-weight: 500;
+	}
+		
+	.view-foreneintr-ge {
+		margin: 1rem 1rem 0 0;
+	}
+	
+	.panels-flexible-region-1-right_region {
+		width: auto;
 	}
 	
