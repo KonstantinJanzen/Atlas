@@ -850,13 +850,20 @@ Indeko.MorphBox.loadDummy = function () {
  * @param domImage DOM element containing the image.
  */
 Indeko.ImageMap.scale = function(domImage) {
+    console.log(domImage);
 	var image = $(domImage).get(0);
+
+    console.log(image.width);
+    console.log(image.naturalWidth);
 
     Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
     if (image.width !== image.naturalWidth) {
 		Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
 		myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
+        console.log("scale");
 	}
+
+	console.log(Indeko.ImageMap.scalingFactor);
 };
 
 
