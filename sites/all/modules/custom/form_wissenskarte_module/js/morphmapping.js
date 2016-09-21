@@ -146,52 +146,6 @@ function instanciate_maschek_image(p_oPic){
 	myimgmap.useImage(p_oPic);
 }
 
-/**
- *	Get the map areas part only of the current imagemap.
- *	@see	#getMapHTML
- *	@author	adam
- *	@param	flags	Currently ony 'noscale' used to prevent scaling of coordinates in preview mode.
- *	@return	The generated map code without the map wrapper.
- */
-imgmap.prototype.getMapInnerHTML = function(flags) {
-	var html, coords;
-	html = '';
-	//foreach area properties
-	for (var i=0; i < this.areas.length; i++) {
-		if (this.areas[i]) {
-			//if (this.areas[i].shape && this.areas[i].shape != 'undefined') {
-			coords = this.areas[i].lastInput;
-			if (typeof coords == 'undefined' || coords == null) continue;
-
-			if (flags && flags.match(/noscale/)) {
-				//for preview use real coordinates, not scaled
-				var cs = coords.split(',');
-				if (Indeko.ImageMap.scalingFactor === 1) { // ATLAS
-					for (var j=0, le2 = cs.length; j<le2; j++) {
-						cs[j] = Math.round(cs[j] * this.globalscale);
-					}
-				// ATLAS: if image has been scaled, rescale area coordinates to match original image size
-				} else {
-					for (var j=0, le2 = cs.length; j<le2; j++) {
-						cs[j] = Math.round(cs[j] * (1 / Indeko.ImageMap.scalingFactor));
-					}
-				}
-				coords = cs.join(',');
-			}
-
-			html+= '<area shape="' + this.areas[i].shape + '"' +
-				' alt="' + this.areas[i].aalt + '"' +
-				' title="' + this.areas[i].atitle + '"' +
-				' id="' + this.areas[i].id + '"' +
-				' coords="' + coords + '"' +
-				' href="' +	this.areas[i].ahref + '"' +
-				' target="' + this.areas[i].atarget + '" />';
-		}
-	}
-
-	return html;
-};
-
 function instanciateAreaDescription(){
 
 	// TODO: edit content type wissenskarte to add div wrapper around image for clear identification
@@ -849,27 +803,31 @@ Indeko.MorphBox.loadDummy = function () {
  *
  * @param domImage DOM element containing the image.
  */
-Indeko.ImageMap.scale = function(domImage) {
+Indeko.ImageMap.scale = function (domImage) {
     console.log(domImage);
-	var image = $(domImage).get(0);
+    console.log(domImage.outerHTML);
+
+    var image = $(domImage).get(0);
 
     console.log(image.width);
     console.log(image.naturalWidth);
 
     Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
     if (image.width !== image.naturalWidth) {
-		Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
-		myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
+        Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
+        myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
         console.log("scale");
-	}
+    }
 
-	console.log(Indeko.ImageMap.scalingFactor);
+    console.log(Indeko.ImageMap.scalingFactor);
 
-    image = $('.image-style-wissenkarte')[0];
-    $(image).load(function(){
-        console.log("img load");
-        Indeko.ImageMap.scale($('.image-style-wissenkarte'));
+    if (image.width === 0 || image.naturalWidth === 0) {
+        image = $('.image-style-wissenkarte')[0];
+        $(image).load(function () {
+            console.log("img load");
+            Indeko.ImageMap.scale($('.image-style-wissenkarte'));
         });
+    }
 };
 
 
