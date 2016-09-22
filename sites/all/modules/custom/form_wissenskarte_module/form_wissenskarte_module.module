@@ -3,11 +3,21 @@ function form_wissenskarte_module_preprocess_page(&$vars)
 {
   if (isset($vars['node']) && $vars['node']->type == 'wissenskarte') {
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping.js", array('scope' => 'footer', 'weight' => 5));
-    drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_edit.view.js", array('scope' => 'footer', 'weight' => 6));
-
+    drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/jquery.qtip.min.js", array('scope' => 'footer'));
     drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/morphmapping.css");
-    drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/jquery.qtip.min.js");
     drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/jquery.qtip.css");
+
+    $pathEdit = 'node/*/edit';
+    $pathClone = 'node/*/clone/confirm';
+    $isPathEdit = drupal_match_path(current_path(), $pathEdit);
+    $isPathClone = drupal_match_path(current_path(), $pathClone);
+
+    // add for knowledge map edit and clone modes
+    if ($isPathEdit || $isPathClone) {
+      drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_edit.js", array('scope' => 'footer', 'weight' => 6));
+    } else { // add for for knowledge map view mode
+      drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_view.js", array('scope' => 'footer', 'weight' => 6));
+    }
   }
 }
 
