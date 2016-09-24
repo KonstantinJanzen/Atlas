@@ -75,7 +75,6 @@ function  initView(ViewMode) {
 		if (l_oImageEdit.length > 0){
 			// Edit and Add Mode
 			myimgmap = {};
-			$('#edit-field-markierte-bereiche').hide();
 			var loadedValue = $('#edit-field-markierte-bereiche-und-0-value').val();
 
 			instanciate_maschek_image(l_oImageEdit[0]);		// instantiate image map object
@@ -86,7 +85,6 @@ function  initView(ViewMode) {
 			Indeko.MorphBox.update(myimgmap.currentid);		// show selected morphological box items of current map area
         } else if (l_oImageView.length > 0) {
 			// ViewMode
-			$('.field-name-field-markierte-bereiche').hide();
 			var parent = $('.image-style-none').parent();
 			var div = $(parent[0]).parent();
 			myimgmap = {};
@@ -96,12 +94,7 @@ function  initView(ViewMode) {
 			var l_oPicContainer = $('.field-type-image').find('div');
 			if (loadedValue != "" && l_oPicContainer.length === 1) $(loadedValue).appendTo(l_oPicContainer);
 
-			// shows the tooltip
-			$('area').qtip({
-				show: {
-					delay: 1
-				}
-			});
+            Indeko.ImageMap.addTooltip();
 
 			// read map id and attach to image
 			if (l_oPicContainer.find('map').length === 1) {
@@ -711,6 +704,20 @@ Indeko.MorphBox.clear = function() {
     Indeko.MorphBox.dataArray = [];
 };
 
+/**
+ * Show the Morphological Box
+ */
+Indeko.MorphBox.show = function() {
+    Indeko.MorphBox.element.show();
+}
+
+/**
+ * Hide the Morphological Box
+ */
+Indeko.MorphBox.hide = function() {
+    Indeko.MorphBox.element.hide();
+}
+
 /*
  * Inserts morphbox dummy into the DOM. Dirty copy and paste from search morphbox dummy.
  */
@@ -896,4 +903,22 @@ Indeko.ImageMap.hookSaveButton = function () {
  */
 Indeko.ImageMap.addNewArea = function () {
 	myimgmap.addNewArea();
+}
+
+/**
+ * Hide image map text section (marked areas text field)
+ */
+Indeko.ImageMap.hideElements = function() {
+    $("#edit-field-markierte-bereiche").hide();
+}
+
+/**
+ * Adds the tooltip to knowledge map areas.
+ */
+Indeko.ImageMap.addTooltip = function() {
+    $('area').qtip({
+        show: {
+            delay: 1
+        }
+    });
 }

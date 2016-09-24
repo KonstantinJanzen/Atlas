@@ -30,24 +30,10 @@ Indeko.AddForm = (function() {
 	}
 
 	/*
-	 * Show the Morphological Box
-	 */
-    function showMorphologicalBox() {
-        $("#morphological-box").show();
-    }
-
-	/*
 	 * Show the Submit Button
 	 */
 	function showSubmitButton() {
 		$("#edit-submit").show();
-	}
-
-	/*
-	 * Hide the Morphological Box
-	 */
-	function hideMorphologicalBox() {
-		$("#morphological-box").hide();
 	}
 
 	/*
@@ -57,18 +43,13 @@ Indeko.AddForm = (function() {
 		$("#edit-submit").hide();
 	}
 
-	/*
-	 * Hide the "+"-icon Button
+	/**
+	 * Removes the GUI elements to draw areas.
 	 */
-	function hidePlusButton() {
-		$("#addAreaButton").hide();
-	}
-
-    /*
-     * Hide image map text section (marked areas text field)
-     */
-	function hideElements() {
-		$("#edit-field-markierte-bereiche").hide();
+	function removeGuiElements() {
+		$('#areadescription').remove();
+		$('#addAreaError').remove();
+		$('#addAreaButton').remove();
 	}
 
 	/*
@@ -111,10 +92,10 @@ Indeko.AddForm = (function() {
      */
     function imageRemoved() {
 
-        hideMorphologicalBox();
+		Indeko.MorphBox.hide();
         wrapUploadButton();
 		hideSubmitButton();
-		hidePlusButton();
+		removeGuiElements();
 
     }
 
@@ -122,7 +103,7 @@ Indeko.AddForm = (function() {
     function imageAddedEvent() {
 
 		showSubmitButton();
-		showMorphologicalBox();
+		Indeko.MorphBox.show();
 		addEditor();
     }
 
@@ -131,10 +112,10 @@ Indeko.AddForm = (function() {
      */
 	module.init = function() {
 
-		hideElements();
+		Indeko.ImageMap.hideElements();
 		insertImageFieldSet();
         wrapUploadButton();
-        hideMorphologicalBox();
+		Indeko.MorphBox.hide();
 		hideSubmitButton();
 
 		/*
