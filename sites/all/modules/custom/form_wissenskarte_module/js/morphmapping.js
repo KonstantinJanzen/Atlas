@@ -163,7 +163,7 @@ function instanciateAreaDescription(){
         validateHighlight(l_oResult);
 
 		if (l_oResult.isValid()) {
-            myimgmap.addNewArea();      // add new area on validation success...
+			Indeko.ImageMap.addNewArea();      // add new area on validation success...
             Indeko.MorphBox.clear();    // ... and clear the morphological box
 		}
 	});
@@ -889,4 +889,11 @@ Indeko.ImageMap.hookSaveButton = function () {
         return l_bIsValid;
 
     });
+}
+
+/**
+ * Adds a new area to the image map.
+ */
+Indeko.ImageMap.addNewArea = function () {
+	myimgmap.addNewArea();
 }

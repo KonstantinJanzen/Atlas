@@ -97,6 +97,7 @@ Indeko.AddForm = (function() {
 
         $("#field-markierte-bereiche-add-more-wrapper :input").val('');
 		initView(true);
+		Indeko.ImageMap.addNewArea();
 		// if no node title is set use the filename as title
 		var filename = $(".file").find("a").text();
 		if (!$("#edit-title").val()) {
