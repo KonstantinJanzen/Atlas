@@ -1,0 +1,93 @@
+<?php
+/**
+ * Implements hook_block_info(). Declares that the 'morphsearch-block' is provided by this module.
+ *
+ * @return array Each component of the which is an array of block information.
+ *               The array keys are the 'delta' values used in other block hooks.
+ */
+function morphsearch_block_info() {
+  $blocks['morphsearch-block'] = array(
+    'info' => t('Morphsearch Block'),
+    'cache' => DRUPAL_NO_CACHE, // DRUPAL_CACHE_GLOBAL: The block is the same for every user on every page where it is visible.
+    'status' => TRUE,
+    'region' => 'sidebar_second',
+  );
+
+  return $blocks;
+}
+
+
+/**
+ * Implements hook_block_view(). Generates the content of the 'morphsearch-block' block.
+ *
+ * @param string $delta : Which block to render. This is a unique identifier for the block within the module,
+ *                        defined in hook_block_info().
+ * @return array  Either an empty array so the block will not be shown or an array containing the following elements:
+ *              subject: The default localized title of the block. If the block does not have a default title,
+ *                       this should be set to NULL.
+ *              content: The content of the block's body. This may be a renderable array (preferable) or a string
+ *                       containing rendered HTML content. If the content is empty the block will not be shown.
+ */
+function morphsearch_block_view($delta = '') {
+  $block = array();
+  switch ($delta) {
+    case 'morphsearch-block':
+      $block['subject'] = t('Morphsearch Block');
+      $block['content'] = createMorphsearchContent();
+      break;
+  }
+  return $block;
+}
+
+
+/**
+ * Generate block content (fulltext search, morphological search, typographic search, submit, ...).
+ *
+ * @return array Renderable array containing the block's body.
+ */
+function createMorphsearchContent() {
+  // taxonomy SQL table/field info https://atlas-indeko.slack.com/archives/development/p1474617733000003
+  // DB queries als Referenz/Vergleich z.B. auch in den anderen custom Modulen von Julien (interestedGroups.module, ...)
+
+  $content = array();
+
+  $test = '</option>';
+  $html = '';
+  $html .= '<label>Unternehmensgröße</label>';
+  $html .= '<select multiple="multiple" class="morphsearch-select" style="width: 100%;">';
+  $html .= '<option value="36">Kleinstunternehmen (weniger als 10 Beschäftigte)</option>';
+  $html .= '<option value="37">Kleinunternehmen (10 bis 49 Beschäftigte)</option>';
+  $html .= '<option value="38">Mittlere Unternehmen (50 bis 249 Beschäftigte)</option>';
+  $html .= '<option value="39">Großunternehmen (250 oder mehr Beschäftigte)</option>';
+  $html .= '<option value="40">Virtuelle Netzwerke</option><option value="84">Sonstiges' . $test;
+  $html .= '</select>';
+
+  $content = array(
+    // create elements using form API
+    'fulltextsearch' => array(
+      '#type' => 'textfield',
+      '#title' => t('Portalsuche'),
+      '#attributes' => array(
+        'class' => array('morphsearch-fulltext'),
+        'id' => 'fulltextsearch',
+        'style' => 'width: 100%;',
+      )
+    ),
+    'typesearch' => array('#type' => 'select',
+      '#title' => t('Search only for pages of content type:'),
+      '#options' => node_type_get_names(), // drupal function, returns all content type names
+      '#attributes' => array(
+        'class' => array('morphsearch-type'),
+        'id' => 'typesearch',
+        'style' => 'width: 100%;',
+      )
+    ),
+    // and pure html output
+    'morphsearch' => array(
+      '#markup' => $html,
+      '#suffix' => '',
+    ),
+  );
+
+  return $content;
+}
