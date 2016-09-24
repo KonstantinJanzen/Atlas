@@ -3,6 +3,6 @@ var myimgmap = myimgmap || {};
 $ = jQuery;
 var ViewMode = true;
 
-Indeko.ImageMap.hideElements();
+$('.field-name-field-markierte-bereiche').hide();
 
 initView(ViewMode);
