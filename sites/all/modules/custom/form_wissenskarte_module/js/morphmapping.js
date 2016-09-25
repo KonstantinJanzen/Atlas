@@ -471,6 +471,7 @@ function gui_cb_unselect_all() {
 function gui_input_change(e) {
 	// validation first if title field changes
     if (e.target.name === "img_alt") {
+        var l_oId = myimgmap.currentid;
         var l_oResult = validateLastArea();
 
         //validateHighlight(l_oResult); // TODO validate only title field otherwise there will be always an error
@@ -478,7 +479,9 @@ function gui_input_change(e) {
             $('#addAreaError').append("<br>").append(l_oResult.messageTitel);
             $(l_oResult.l_oInputTitel).addClass('addAreaError');
         } else {
-            $('input').removeClass('addAreaError');
+            //$('input').removeClass('addAreaError');
+            $('#img_area_'+myimgmap.currentid).find('input[name=img_alt]').removeClass('addAreaError');
+            $(myimgmap.pic_container).find('canvas[id*="area' + myimgmap.currentid +'"]').removeClass('canvasError');
             $('#addAreaError').text("");
         }
     }
@@ -575,6 +578,8 @@ function gui_updateArea(id) {
             myimgmap.areas[id].atitle  = areaTitle;
         }
     }
+
+    $('.image-style-wissenkarte').removeClass('addAreaError');
 
     myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 }
@@ -798,7 +803,8 @@ Indeko.MorphBox.loadDummy = function () {
 	Indeko.MorphBox.element.mouseleave(function () {
 		Indeko.MorphBox.toData();
 		myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
-		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+        Indeko.MorphBox.element.removeClass('addAreaError');
+        myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 	});
 };
 

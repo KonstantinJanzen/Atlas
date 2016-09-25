@@ -1,8 +1,8 @@
 .img_area {
     display: block;
     vertical-align: middle;
-    line-height: 20px;
-    height: 20px;
+    line-height: 25px;
+    //height: 20px;
 }
 
 .img_id{
@@ -45,11 +45,12 @@
 
 .addAreaError{
     border-color: red!important;
-    border-width: 3px!important;
+    border-width: 2px!important;
     border-style: solid!important;
 }
 
 .canvasError {
+    border-color: red!important;
     background-color: rgba(255, 0, 0, 0.50)!important;
     border-width: 3px!important;
 }
