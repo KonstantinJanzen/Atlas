@@ -8,7 +8,7 @@
 function morphsearch_block_info() {
   $blocks['morphsearch-block'] = array(
     'info' => t('Morphsearch Block'),
-    'cache' => DRUPAL_NO_CACHE, // DRUPAL_CACHE_GLOBAL: The block is the same for every user on every page where it is visible.
+    'cache' => DRUPAL_CACHE_GLOBAL, // The block is the same for every user on every page where it is visible.
     'status' => TRUE,
     'region' => 'sidebar_second',
   );
@@ -32,8 +32,13 @@ function morphsearch_block_view($delta = '') {
   $block = array();
   switch ($delta) {
     case 'morphsearch-block':
-      $block['subject'] = t('Morphsearch Block');
+      drupal_add_js(drupal_get_path('module', 'morphsearch') . "/js/morphsearch.js", array('scope' => 'footer'));
+
+      //$block['subject'] = t('Morphsearch Block');
       $block['content'] = createMorphsearchContent();
+
+      // Attach morphsearch CSS to block.
+      $block['content']['#attached']['css']  = array(drupal_get_path('module', 'morphsearch') . "/css/morphsearch.css");
       break;
   }
   return $block;
@@ -51,17 +56,6 @@ function createMorphsearchContent() {
 
   $content = array();
 
-  $test = '</option>';
-  $html = '';
-  $html .= '<label>Unternehmensgröße</label>';
-  $html .= '<select multiple="multiple" class="morphsearch-select" style="width: 100%;">';
-  $html .= '<option value="36">Kleinstunternehmen (weniger als 10 Beschäftigte)</option>';
-  $html .= '<option value="37">Kleinunternehmen (10 bis 49 Beschäftigte)</option>';
-  $html .= '<option value="38">Mittlere Unternehmen (50 bis 249 Beschäftigte)</option>';
-  $html .= '<option value="39">Großunternehmen (250 oder mehr Beschäftigte)</option>';
-  $html .= '<option value="40">Virtuelle Netzwerke</option><option value="84">Sonstiges' . $test;
-  $html .= '</select>';
-
   $content = array(
     // create elements using form API
     'fulltextsearch' => array(
@@ -74,7 +68,7 @@ function createMorphsearchContent() {
       )
     ),
     'typesearch' => array('#type' => 'select',
-      '#title' => t('Search only for pages of content type:'),
+      '#title' => t('Typensuche:'),
       '#options' => node_type_get_names(), // drupal function, returns all content type names
       '#attributes' => array(
         'class' => array('morphsearch-type'),
@@ -84,10 +78,68 @@ function createMorphsearchContent() {
     ),
     // and pure html output
     'morphsearch' => array(
-      '#markup' => $html,
+      '#markup' => buildSearchHtml(),
       '#suffix' => '',
+    ),
+
+    'submit' => array(
+      '#type' => 'submit',
+      '#value' => t('Suche'),
+      '#name' => 'searchbutton',
+    ),
+
+    'reset' => array(
+      '#markup' => "<button id='morphsearch-reset'>Reset</button>",
     ),
   );
 
+  buildSearchHtml();
   return $content;
+}
+
+/**
+ * Creates the HTML for the dynamic search block.
+ */
+function buildSearchHtml() {
+
+  $query = "SELECT taxonomy_vocabulary.name AS vocabulary_name, taxonomy_vocabulary.machine_name AS vocabulary_machinename,
+              taxonomy_vocabulary.vid AS vocabulary_vid, taxonomy_term_data.name AS term_name, taxonomy_term_data.vid AS term_vid,
+              taxonomy_term_data.tid AS tid, taxonomy_vocabulary.weight AS vocabulary_weight, taxonomy_term_data.weight AS term_weight 
+            FROM {taxonomy_term_data} taxonomy_term_data
+            LEFT JOIN {taxonomy_vocabulary} taxonomy_vocabulary ON taxonomy_term_data.vid = taxonomy_vocabulary.vid
+            WHERE taxonomy_vocabulary.machine_name LIKE 'tax_morph_%'
+            ORDER BY vocabulary_name ASC, term_weight ASC;";
+  $result = db_query($query);
+
+  $html = '';
+
+  $currentLabel = '';
+  foreach ($result as $row) {
+
+    // new morphological item, add new label and select
+    if ($currentLabel !== $row->vocabulary_name) {
+      if ($currentLabel !== '') {
+        $html .= "</select>";
+      }
+
+      $html .= "<label>$row->vocabulary_name</label>";
+
+      // Check for multivalued morphological item
+      if (strpos($row->vocabulary_machinename, 'tax_morph_m_') === false) { // singleselect
+        $html .= "<select class='morphsearch-select'>";
+      } else { // multiselect
+        $html .= "<select multiple='multiple' class='morphsearch-select'>";
+      }
+
+      $html .= "<option value=''></option>";
+
+
+
+      $currentLabel = $row->vocabulary_name;
+    }
+
+    $html .= "<option value='$row->tid'>$row->term_name</option>";
+  }
+
+  return $html;
 }
