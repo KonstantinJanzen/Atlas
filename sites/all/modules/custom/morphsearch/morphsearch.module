@@ -32,13 +32,18 @@ function morphsearch_block_view($delta = '') {
   $block = array();
   switch ($delta) {
     case 'morphsearch-block':
-      drupal_add_js(drupal_get_path('module', 'morphsearch') . "/js/morphsearch.js", array('scope' => 'footer'));
+      //drupal_add_js(drupal_get_path('module', 'morphsearch') . "/js/morphsearch.js", array('scope' => 'footer'));
 
       //$block['subject'] = t('Morphsearch Block');
       $block['content'] = createMorphsearchContent();
 
       // Attach morphsearch CSS to block.
       $block['content']['#attached']['css']  = array(drupal_get_path('module', 'morphsearch') . "/css/morphsearch.css");
+      $block['content']['#attached']['js'][] = array(
+        'data' => drupal_get_path('module', 'morphsearch') . "/js/morphsearch.js",
+        'scope' => 'footer',
+      );
+
       break;
   }
   return $block;
@@ -68,7 +73,7 @@ function createMorphsearchContent() {
       )
     ),
     'typesearch' => array('#type' => 'select',
-      '#title' => t('Typensuche:'),
+      '#title' => t('Inhaltstypensuche (noch nicht in Suche aufgenommen):'),
       '#options' => node_type_get_names(), // drupal function, returns all content type names
       '#attributes' => array(
         'class' => array('morphsearch-type'),
@@ -128,7 +133,7 @@ function buildSearchHtml() {
       if (strpos($row->vocabulary_machinename, 'tax_morph_m_') === false) { // singleselect
         $html .= "<select class='morphsearch-select'>";
       } else { // multiselect
-        $html .= "<select multiple='multiple' class='morphsearch-select'>";
+        $html .= "<select multiple='multiple' class='morphsearch-select' size='1'>";
       }
 
       $html .= "<option value=''></option>";
