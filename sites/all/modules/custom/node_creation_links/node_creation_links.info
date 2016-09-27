@@ -1,0 +1,5 @@
+name = Dynamic node creation links
+description = Dynamically creates node creation links (if the user has sufficient permissions) and adds them to the user menu block.
+core = 7.x
+
+scripts[] = js/nodecreation.js

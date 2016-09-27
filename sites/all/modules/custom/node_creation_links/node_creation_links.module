@@ -1,0 +1,40 @@
+<?php
+/**
+ * Implements hook_block_view_MODULE_DELTA_alter().
+ * Dynamically adds node creation links to the user menu block depending on the users permissions.
+ *
+ *
+ * @param $data The data as returned from the hook_block_view() implementation of the module that defined the block.
+ * @param $block The block object, as loaded from the database.
+ */
+function morphsearch_block_view_system_user_menu_alter(&$data, $block) {
+  global $user;
+
+  // Only logged in users can add new content
+  if (user_is_logged_in()) {
+
+    // Add "create element" link that will toggle the specific content type links
+    $data['content']['createnewelement'] = array(
+      '#markup' => '<li id="newelement">
+                    <a href="#blank">Element anlegen</a>
+                    </li>',
+    );
+
+    // Loop over all content types
+    foreach (node_type_get_names() as $typeMachineName => $typeDescription) {
+
+      // If the current user has permission to create the content type...
+      if (node_access('create', $typeMachineName, $user)) {
+
+        //... add a hidden create link to the block
+        $data['content'][$typeMachineName] = array(
+          '#markup' => '<li class="nodeAddLink" style="display: none;">
+                        <a href=node/add/' . $typeMachineName . '>' . $typeDescription . ' anlegen</a>
+                        </li>',
+        );
+      }
+    }
+  }
+}
+
+
