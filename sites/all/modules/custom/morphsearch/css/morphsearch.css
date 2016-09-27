@@ -1,10 +1,26 @@
 .morphsearch-select {
-    width: 100%;
     margin-bottom: 0.5rem;
+    width: 100%;
 }
 
 .morphsearch-type {
-    margin: 0rem!important;
-    padding: 0rem!important;
+    margin: 0!important;
+    padding: 0!important;
     width: 100%;
+}
+
+#morphsearch-select-block {
+    display: none;
+    //overflow-y: auto;
+    //height: 500px;
+}
+
+.chosen-container .chosen-choices .search-field:only-child input {
+    width: 100% !important;
+}
+
+#fulltextsearch {
+    margin-right: -30px;
+    //padding-right: -30px;
+    //background: url("the-magnifying-glass-icon.png") no-repeat right
 }

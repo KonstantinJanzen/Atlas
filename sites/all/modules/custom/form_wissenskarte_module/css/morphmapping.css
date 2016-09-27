@@ -59,3 +59,7 @@
     padding-top: 8px;
     color: red;
 }
+
+.field-name-field-markierte-bereiche, #edit-field-markierte-bereiche {
+    display: none;
+}

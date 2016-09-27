@@ -9,6 +9,7 @@ function morphsearch_block_info() {
   $blocks['morphsearch-block'] = array(
     'info' => t('Morphsearch Block'),
     'cache' => DRUPAL_CACHE_GLOBAL, // The block is the same for every user on every page where it is visible.
+    //'cache' => DRUPAL_NO_CACHE,
     'status' => TRUE,
     'region' => 'sidebar_second',
   );
@@ -73,7 +74,7 @@ function createMorphsearchContent() {
       )
     ),
     'typesearch' => array('#type' => 'select',
-      '#title' => t('Inhaltstypensuche (noch nicht in Suche aufgenommen):'),
+      '#title' => t('Inhaltstypensuche (POC, no functionality):'),
       '#options' => node_type_get_names(), // drupal function, returns all content type names
       '#attributes' => array(
         'class' => array('morphsearch-type'),
@@ -84,7 +85,9 @@ function createMorphsearchContent() {
     // and pure html output
     'morphsearch' => array(
       '#markup' => buildSearchHtml(),
-      '#suffix' => '',
+      '#prefix' => '<a href="#blank" id="morphsearch-select-block-toggle">Morphologische Suche</a>' .
+                   '<div id="morphsearch-select-block">',
+      '#suffix' => '</div>',
     ),
 
     'submit' => array(
@@ -98,7 +101,6 @@ function createMorphsearchContent() {
     ),
   );
 
-  buildSearchHtml();
   return $content;
 }
 
@@ -118,6 +120,10 @@ function buildSearchHtml() {
 
   $html = '';
 
+  // Drupal translatable placeholder text if no element is selected
+  $placeholderSingle = t("Choose an option");
+  $placeholderMulti = t("Choose some options");
+
   $currentLabel = '';
   foreach ($result as $row) {
 
@@ -125,20 +131,19 @@ function buildSearchHtml() {
     if ($currentLabel !== $row->vocabulary_name) {
       if ($currentLabel !== '') {
         $html .= "</select>";
+        $html .= "</label>";
       }
 
-      $html .= "<label>$row->vocabulary_name</label>";
+      $html .= "<label>$row->vocabulary_name";
 
       // Check for multivalued morphological item
       if (strpos($row->vocabulary_machinename, 'tax_morph_m_') === false) { // singleselect
-        $html .= "<select class='morphsearch-select'>";
+        $html .= "<select class='morphsearch-select' data-placeholder='$placeholderSingle'>";
       } else { // multiselect
-        $html .= "<select multiple='multiple' class='morphsearch-select' size='1'>";
+        $html .= "<select multiple='multiple' class='morphsearch-select' size='1' data-placeholder='$placeholderMulti'>";
       }
 
       $html .= "<option value=''></option>";
-
-
 
       $currentLabel = $row->vocabulary_name;
     }
@@ -146,5 +151,7 @@ function buildSearchHtml() {
     $html .= "<option value='$row->tid'>$row->term_name</option>";
   }
 
+  $html .= "</select>";
+  $html .= "</label>";
   return $html;
 }

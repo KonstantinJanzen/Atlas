@@ -5,12 +5,14 @@ var Indeko = Indeko || {};
  * Variables and functions namespace of the search.
  */
 Indeko.Morphsearch = Indeko.Morphsearch || {
-        elemFulltext: $('#fulltextsearch'),
-        elemType: $('.morphsearch-type'),
-        elemMorph: $('.morphsearch-select'),
-        elemBlock: $('#block-morphsearch-morphsearch-block'),
-        buttonSearch: $('input[name=searchbutton]'),
-        buttonReset: $('#morphsearch-reset')
+        elemFulltext: $('#fulltextsearch'),                     // fulltext search element
+        elemType: $('.morphsearch-type'),                       // type search element
+        elemMorph: $('.morphsearch-select'),                    // all morphological box select elements
+        elemMorphBlock: $('#morphsearch-select-block'),          // element containing all morphological box select elements
+        elemBlock: $('#block-morphsearch-morphsearch-block'),   // whole search block
+        buttonSearch: $('input[name=searchbutton]'),            // search button
+        buttonReset: $('#morphsearch-reset'),                   // reset button
+        buttonMorphbox: $('#morphsearch-select-block-toggle')   // "button" to toggle morphological box search
 };
 
 /**
@@ -18,13 +20,31 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
  */
 Indeko.Morphsearch.hookSearchButton = function() {
     Indeko.Morphsearch.buttonSearch.click( function() {
-        // save selected search values
-        var searchArray = Indeko.Morphsearch.toArray();
-        localStorage["searchValues"] = JSON.stringify(searchArray);
+        Indeko.Morphsearch.doSearch();
+    });
+};
 
-        // redirect to search results
-        var searchUrl = Indeko.Morphsearch.toUrl(searchArray);
-        window.location.replace(searchUrl);
+/**
+ * Execute search. Save selected values and redirect to search results.
+ */
+Indeko.Morphsearch.doSearch = function() {
+    // save selected search values
+    var searchArray = Indeko.Morphsearch.toArray();
+    localStorage["searchValues"] = JSON.stringify(searchArray);
+
+    // redirect to search results
+    var searchUrl = Indeko.Morphsearch.toUrl(searchArray);
+    window.location.replace(searchUrl);
+};
+
+/**
+ * Execute Search on keypress "ENTER"
+ */
+Indeko.Morphsearch.hookFulltextInput = function() {
+    this.elemFulltext.keypress(function (e) {
+        if (e.keyCode == 13) {
+            Indeko.Morphsearch.doSearch();
+        }
     });
 };
 
@@ -35,6 +55,15 @@ Indeko.Morphsearch.hookResetButton = function() {
     Indeko.Morphsearch.buttonReset.click( function() {
         Indeko.Morphsearch.reset();
         localStorage.removeItem("searchValues");
+    });
+};
+
+/**
+ * Toggles visibility of morphological search on click.
+ */
+Indeko.Morphsearch.hookMorphologicalSearchToggle = function() {
+    this.buttonMorphbox.click( function() {
+        Indeko.Morphsearch.elemMorphBlock.toggle();
     });
 };
 
@@ -104,6 +133,11 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
         }
     });
 
+    // display morphological box, if morphological box elements were selected
+    if(searchArray.length > 1) {
+        Indeko.Morphsearch.elemMorphBlock.show();
+    }
+
     // make chosen adopt the changes
     Indeko.Morphsearch.elemMorph.trigger("chosen:updated");
 };
@@ -112,12 +146,23 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
  * Initialize morphsearch block.
  */
 Indeko.Morphsearch.init = function() {
+    // transform select to chosen boxes
+    Indeko.Morphsearch.elemMorph.chosen({
+        inherit_select_classes: true,
+        allow_single_deselect: true,
+        width:"100%"
+    });
+
     Indeko.Morphsearch.hookResetButton();
     Indeko.Morphsearch.hookSearchButton();
+    Indeko.Morphsearch.hookFulltextInput();
+    Indeko.Morphsearch.hookMorphologicalSearchToggle();
+
 
     // rebuild selected search block items if there are any values saved locally
     var localSearchJson = localStorage["searchValues"];
 
+    // load selected search values
     if ($.isEmptyObject(localSearchJson)) {
         Indeko.Morphsearch.reset();
     } else {
