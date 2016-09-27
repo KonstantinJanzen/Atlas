@@ -15,12 +15,31 @@
     //height: 500px;
 }
 
+/*
+ * Fix cut chosen placeholder text
+ */
 .chosen-container .chosen-choices .search-field:only-child input {
     width: 100% !important;
 }
 
+/*
+ * Position info icon on the right side of fulltext search field
+ */
+#fulltextsearchrow * {
+    margin-bottom: 0;
+}
+
 #fulltextsearch {
-    margin-right: -30px;
-    //padding-right: -30px;
-    //background: url("the-magnifying-glass-icon.png") no-repeat right
+    width: 90%;
+    float: left;
+    margin-bottom: 1em!important;
+}
+
+#fulltextsearchinfo {
+    background: url("images/info.png") no-repeat right;
+    background-size: 21px 21px;
+    width: 21px;
+    height: 23px;
+    float: right;
+    position: absolute;
 }

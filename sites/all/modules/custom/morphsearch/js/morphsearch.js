@@ -6,6 +6,7 @@ var Indeko = Indeko || {};
  */
 Indeko.Morphsearch = Indeko.Morphsearch || {
         elemFulltext: $('#fulltextsearch'),                     // fulltext search element
+        elemFulltextInfo: $('#fulltextsearchinfo'),             // fulltext search info element
         elemType: $('.morphsearch-type'),                       // type search element
         elemMorph: $('.morphsearch-select'),                    // all morphological box select elements
         elemMorphBlock: $('#morphsearch-select-block'),          // element containing all morphological box select elements
@@ -152,6 +153,11 @@ Indeko.Morphsearch.init = function() {
         allow_single_deselect: true,
         width:"100%"
     });
+    Indeko.Morphsearch.elemType.chosen({
+        inherit_select_classes: true,
+        allow_single_deselect: true,
+        width:"100%"
+    });
 
     Indeko.Morphsearch.hookResetButton();
     Indeko.Morphsearch.hookSearchButton();
@@ -170,7 +176,6 @@ Indeko.Morphsearch.init = function() {
         Indeko.Morphsearch.reset();
         Indeko.Morphsearch.toSearchblock(searchArray);
     }
-
 };
 
 /**

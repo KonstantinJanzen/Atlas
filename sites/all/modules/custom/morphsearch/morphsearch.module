@@ -39,12 +39,11 @@ function morphsearch_block_view($delta = '') {
       $block['content'] = createMorphsearchContent();
 
       // Attach morphsearch CSS to block.
-      $block['content']['#attached']['css']  = array(drupal_get_path('module', 'morphsearch') . "/css/morphsearch.css");
+      $block['content']['#attached']['css'] = array(drupal_get_path('module', 'morphsearch') . "/css/morphsearch.css");
       $block['content']['#attached']['js'][] = array(
         'data' => drupal_get_path('module', 'morphsearch') . "/js/morphsearch.js",
         'scope' => 'footer',
       );
-
       break;
   }
   return $block;
@@ -70,8 +69,13 @@ function createMorphsearchContent() {
       '#attributes' => array(
         'class' => array('morphsearch-fulltext'),
         'id' => 'fulltextsearch',
-        'style' => 'width: 100%;',
-      )
+        ),
+      '#prefix' => '<div id="fulltextsearchrow">'
+    ),
+    'fulltextsearchimage' => array(
+      '#markup' => '<span title="Use tooltip to display search syntax? See qtip^2 plugin already used by morphmapping module." ' .
+                    'id="fulltextsearchinfo"></span>',
+      '#suffix' => '</div>',
     ),
     'typesearch' => array('#type' => 'select',
       '#title' => t('Inhaltstypensuche (POC, no functionality):'),
