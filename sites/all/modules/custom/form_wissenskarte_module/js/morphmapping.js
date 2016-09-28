@@ -817,32 +817,21 @@ Indeko.MorphBox.loadDummy = function () {
  * @param domImage DOM element containing the image.
  */
 Indeko.ImageMap.scale = function (domImage) {
-    console.log(domImage);
-    console.log(domImage.outerHTML);
 
-    var image = $(domImage).get(0);
+	var parentContainer = $(domImage.parentNode);
 
-    console.log(image.width);
-    console.log(image.naturalWidth);
+	/* Wait until the image is resized after it was put in parentContainer. */
+	var timer = window.setTimeout(function() {
 
-    Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
-    if (image.width !== image.naturalWidth) {
-        Indeko.ImageMap.scalingFactor = image.width / image.naturalWidth;
-        myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
-        console.log("scale");
-    }
+		if(domImage.width <= parentContainer.width() &&
+			domImage.height <= parentContainer.height()) {
+			Indeko.ImageMap.scalingFactor = domImage.width / domImage.naturalWidth;
+			myimgmap.scaleAllAreas(Indeko.ImageMap.scalingFactor);
 
-    console.log(Indeko.ImageMap.scalingFactor);
-
-    if (image.width === 0 || image.naturalWidth === 0) {
-        image = $('.image-style-wissenkarte')[0];
-        $(image).load(function () {
-            console.log("img load");
-            Indeko.ImageMap.scale($('.image-style-wissenkarte'));
-        });
-    }
+			window.clearTimeout(timer);
+		}
+	}, 100);
 };
-
 
 /**
  * Adds client side validation to save / submit button.
