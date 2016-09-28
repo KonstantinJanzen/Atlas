@@ -46,6 +46,9 @@ function morphsearch_block_view($delta = '') {
       );
       break;
   }
+  // add qtip2 library to display search syntax as a tooltip
+  libraries_load('qtip');
+
   return $block;
 }
 
@@ -72,11 +75,17 @@ function createMorphsearchContent() {
         ),
       '#prefix' => '<div id="fulltextsearchrow">'
     ),
+
     'fulltextsearchimage' => array(
       '#markup' => '<span title="Use tooltip to display search syntax? See qtip^2 plugin already used by morphmapping module." ' .
                     'id="fulltextsearchinfo"></span>',
       '#suffix' => '</div>',
     ),
+
+    'searchSyntax' => array(
+      '#markup' => buildSearchSyntax(),
+    ),
+
     'typesearch' => array('#type' => 'select',
       '#title' => t('Inhaltstypensuche (POC, no functionality):'),
       '#options' => node_type_get_names(), // drupal function, returns all content type names
@@ -86,6 +95,7 @@ function createMorphsearchContent() {
         'style' => 'width: 100%;',
       )
     ),
+
     // and pure html output
     'morphsearch' => array(
       '#markup' => buildSearchHtml(),
@@ -110,6 +120,8 @@ function createMorphsearchContent() {
 
 /**
  * Creates the HTML for the dynamic search block.
+ *
+ * @return string Contains the HTML code for the dynamic morphological search block.
  */
 function buildSearchHtml() {
 
@@ -158,4 +170,82 @@ function buildSearchHtml() {
   $html .= "</select>";
   $html .= "</label>";
   return $html;
+}
+
+/**
+ * Creates the HTML for the search syntax tooltip.
+ *
+ * @return string Contains the HTML code for the search syntax tooltip.
+ */
+function buildSearchSyntax() {
+  $html = '';
+  $html .= '<div id="searchSyntax" class="element-hidden">
+              <table id="searchSyntaxTable">
+                <tr>
+                  <td>+</td>
+                  <td>Wortkombination (kann weggelassen werden)</td>
+                </tr>
+                <tr>
+                  <td>-</td>
+                  <td>Schließt Ergebnisse aus, die den Begriff enthalten</td>
+                </tr>
+                <tr>
+                  <td>"xxx"</td>
+                  <td>Ergebnisse mit exakter Übereinstimmung</td>
+                </tr>
+                <tr>
+                  <td>|</td>
+                  <td>Entweder-Oder-Suche</td>
+                </tr>
+                <tr>
+                  <td>*</td>
+                  <td>Wildcard-Suche, wenn Teile des Strings unbekannt sind</td>
+                </tr>
+                <tr>
+                  <td>Filetype:</td>
+                  <td>Suche nach bestimmten Dateitypen</td>
+                </tr>
+                <tr>
+                  <td>Autor: / Author:</td>
+                  <td>Suche nach bestimmten Autoren</td>
+                </tr>
+                <tr>
+                  <td>URL:</td>
+                  <td>Suche nach verlinkten Adressen</td>
+                </tr>
+                <tr>
+                  <td>ISBN: / DOI:</td>
+                  <td>Suche nach referenzierten ISBN/DOI-Nummern</td>
+                </tr>
+              </table>
+            </div>';
+  return $html;
+}
+
+
+/**
+ * Implements hook_libraries_info().
+ * Register qtip2 library to conviniently load it with libraries_load('qtip'); in any module.
+ */
+function morphsearch_libraries_info() {
+  $libraries['qtip'] = array(
+    'name'              => 'qTip2',
+    'vendor url'        => 'http://qtip2.com',
+    'download url'      => 'http://qtip2.com/download',
+    'version arguments' => array(
+      'file'    => 'jquery.qtip.min.js',
+      'pattern' => '/\/\* qtip2 v([0-9\.]{5})/',
+      'lines'   => 1,
+    ),
+    'files' => array(
+      'js' => array(
+        'jquery.qtip.min.js',
+      ),
+      'css' => array(
+        'jquery.qtip.min.css',
+      ),
+    ),
+  );
+
+  return $libraries;
 }

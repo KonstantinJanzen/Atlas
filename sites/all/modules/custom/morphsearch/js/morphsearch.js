@@ -7,9 +7,10 @@ var Indeko = Indeko || {};
 Indeko.Morphsearch = Indeko.Morphsearch || {
         elemFulltext: $('#fulltextsearch'),                     // fulltext search element
         elemFulltextInfo: $('#fulltextsearchinfo'),             // fulltext search info element
+        elemSearchSyntax: $('#searchSyntax'),                   // element with search syntax representaion
         elemType: $('.morphsearch-type'),                       // type search element
         elemMorph: $('.morphsearch-select'),                    // all morphological box select elements
-        elemMorphBlock: $('#morphsearch-select-block'),          // element containing all morphological box select elements
+        elemMorphBlock: $('#morphsearch-select-block'),         // element containing all morphological box select elements
         elemBlock: $('#block-morphsearch-morphsearch-block'),   // whole search block
         buttonSearch: $('input[name=searchbutton]'),            // search button
         buttonReset: $('#morphsearch-reset'),                   // reset button
@@ -163,6 +164,7 @@ Indeko.Morphsearch.init = function() {
     Indeko.Morphsearch.hookSearchButton();
     Indeko.Morphsearch.hookFulltextInput();
     Indeko.Morphsearch.hookMorphologicalSearchToggle();
+    Indeko.Morphsearch.addSearchInfo();
 
 
     // rebuild selected search block items if there are any values saved locally
@@ -201,6 +203,23 @@ Indeko.Morphsearch.toUrl = function(searchArray) {
 
     var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
     return solrSearchUrl;
+};
+
+/**
+ * Adds tooltip with information about the search syntax to the search info element.
+ */
+Indeko.Morphsearch.addSearchInfo = function() {
+    // TODO fallback option if no qtip2?
+    Indeko.Morphsearch.elemFulltextInfo.qtip({
+        content: {
+            // use hidden element (created in morphsearch.module -> createMorphsearchContent) as tooltip
+            text: Indeko.Morphsearch.elemSearchSyntax,
+            title:{ text: "Such-Syntax"}
+        },
+        position: {
+            viewport: $(window)
+        },
+    })
 };
 
 Indeko.Morphsearch.init();

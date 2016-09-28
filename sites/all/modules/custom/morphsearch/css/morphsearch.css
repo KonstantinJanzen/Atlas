@@ -43,3 +43,22 @@
     float: right;
     position: absolute;
 }
+
+/*
+ * Style search syntax tooltip
+ */
+#searchSyntax {
+    white-space: nowrap;
+    width: 100%;
+    font-size: 14px;
+    line-height: 21px;
+    color: #444;
+}
+
+#searchSyntax tr td:first-child {
+    text-align: right;
+}
+
+.qtip { max-width: none !important; }
+
+
