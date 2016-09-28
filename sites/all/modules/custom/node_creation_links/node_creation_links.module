@@ -27,9 +27,10 @@ function morphsearch_block_view_system_user_menu_alter(&$data, $block) {
       if (node_access('create', $typeMachineName, $user)) {
 
         //... add a hidden create link to the block
+        $addLink = base_path() . 'node/add/' . $typeMachineName;
         $data['content'][$typeMachineName] = array(
           '#markup' => '<li class="nodeAddLink" style="display: none;">
-                        <a href=node/add/' . $typeMachineName . '>' . $typeDescription . ' anlegen</a>
+                        <a href=' . $addLink . '>' . $typeDescription . ' anlegen</a>
                         </li>',
         );
       }
