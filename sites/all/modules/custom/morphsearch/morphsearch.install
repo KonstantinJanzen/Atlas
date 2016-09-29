@@ -43,10 +43,3 @@ function morphsearch_schema() {
 
   return $schema;
 }
-
-/**
- * Implements hook_update_N()
- */
-function morphsearch_update_7000() {
-  drupal_install_schema('morphsearch_saved_input');
-}
