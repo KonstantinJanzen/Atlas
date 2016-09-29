@@ -3,7 +3,7 @@
 /**
  * Implement hook_schema()
  */
-function morphsearch_verteiler_schema() {
+function morphsearch_schema() {
   $schema = array();
 
   $schema['morphsearch_saved_input'] = array(
@@ -47,6 +47,6 @@ function morphsearch_verteiler_schema() {
 /**
  * Implements hook_update_N()
  */
-function morphsearch_verteiler_update_7000() {
+function morphsearch_update_7000() {
   drupal_install_schema('morphsearch_saved_input');
 }
