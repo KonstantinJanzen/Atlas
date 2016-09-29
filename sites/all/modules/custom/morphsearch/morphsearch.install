@@ -1,0 +1,52 @@
+<?php
+
+/**
+ * Implement hook_schema()
+ */
+function morphsearch_verteiler_schema() {
+  $schema = array();
+
+  $schema['morphsearch_saved_input'] = array(
+    'description' => 'The table for the saved users searches',
+    'fields' => array(
+      'id' => array(
+        'description' => 'The primary identifier for saved user searches.',
+        'type' => 'serial',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'user_id' => array(
+        'description' => 'The user identifier for the user saved input.',
+        'type' => 'int',
+        'unsigned' => TRUE,
+        'not null' => TRUE,
+      ),
+      'input' => array(
+        'description' => 'The saved search input.',
+        'type' => 'varchar',
+        'length' => 10000,
+        'not null' => TRUE,
+        'default' => '',
+      ),
+      'timestamp' => array(
+        'description' => 'The timestamp.',
+        'type' => 'datetime',
+        'mysql_type' => 'DATETIME',     // The equivalent MySQL data type
+        'pgsql_type' => 'timestamp',    // The equivalent PostgreSQL data type
+        'not null' => TRUE,
+      ),
+    ),
+
+    'primary key' => array('id'),
+  );
+
+
+  return $schema;
+}
+
+/**
+ * Implements hook_update_N()
+ */
+function morphsearch_verteiler_update_7000() {
+  drupal_install_schema('morphsearch_saved_input');
+}
