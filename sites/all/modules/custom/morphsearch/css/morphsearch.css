@@ -61,4 +61,31 @@
 
 .qtip { max-width: none !important; }
 
+/*
+ * Search button positioning
+ */
+#searchbutton {
+    text-align: right;
+    display: table-cell;
+}
 
+#morphsearch-reset {
+    display: table;
+}
+
+#morphsearch-save {
+    display: table;
+}
+
+.morphblocktable {
+    display: table
+}
+
+.morphblockcell {
+    display: table-cell;
+    vertical-align: middle;
+}
+#morphsearch-select-block-toggle {
+    margin-bottom: 1em;
+    display: block;
+}

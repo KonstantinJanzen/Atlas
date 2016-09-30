@@ -12,9 +12,10 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
         elemMorph: $('.morphsearch-select'),                    // all morphological box select elements
         elemMorphBlock: $('#morphsearch-select-block'),         // element containing all morphological box select elements
         elemBlock: $('#block-morphsearch-morphsearch-block'),   // whole search block
-        buttonSearch: $('input[name=searchbutton]'),            // search button
+        buttonSearch: $('#searchbutton'),                       // search button
         buttonReset: $('#morphsearch-reset'),                   // reset button
-        buttonMorphbox: $('#morphsearch-select-block-toggle')   // "button" to toggle morphological box search
+        buttonMorphbox: $('#morphsearch-select-block-toggle'),  // "button" to toggle morphological box search
+        buttonSave: $('#morphsearch-save')                      // link to save the selected search values
 };
 
 /**
@@ -57,6 +58,34 @@ Indeko.Morphsearch.hookResetButton = function() {
     Indeko.Morphsearch.buttonReset.click( function() {
         Indeko.Morphsearch.reset();
         localStorage.removeItem("searchValues");
+    });
+};
+
+/**
+ * Save the selected search values.
+ */
+Indeko.Morphsearch.hookSaveButton = function() {
+    Indeko.Morphsearch.buttonSave.click(function () {
+        var searchArray = Indeko.Morphsearch.toArray();
+        var search = JSON.stringify(searchArray);
+
+        // AJAX POST request to send data to Drupal
+        $.ajax({
+            url: Drupal.settings.basePath + 'usersavesearch',   // in module defined URL to process the request
+            type: "POST",
+            data: {
+                saveData: search,                               // array with all search values
+                saveUrl: Indeko.Morphsearch.toUrl(searchArray)  // full search string
+            },
+
+            // TODO evaluate server response and notify user
+            success: function () {
+                console.log("success");
+            },
+            error: function () {
+                console.log("fail");
+            }
+        });
     });
 };
 
@@ -218,7 +247,7 @@ Indeko.Morphsearch.addSearchInfo = function() {
         },
         position: {
             viewport: $(window)
-        },
+        }
     })
 };
 

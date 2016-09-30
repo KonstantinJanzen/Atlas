@@ -65,27 +65,30 @@ function createMorphsearchContent() {
   $content = array();
 
   $content = array(
-    // create elements using form API
+    // fulltext search element
     'fulltextsearch' => array(
       '#type' => 'textfield',
       '#title' => t('Portalsuche'),
       '#attributes' => array(
         'class' => array('morphsearch-fulltext'),
         'id' => 'fulltextsearch',
-        ),
+      ),
       '#prefix' => '<div id="fulltextsearchrow">'
     ),
 
+    // search info icon
     'fulltextsearchimage' => array(
       '#markup' => '<span title="Use tooltip to display search syntax? See qtip^2 plugin already used by morphmapping module." ' .
-                    'id="fulltextsearchinfo"></span>',
+        'id="fulltextsearchinfo"></span>',
       '#suffix' => '</div>',
     ),
 
+    // HTML help about the available search syntax
     'searchSyntax' => array(
       '#markup' => buildSearchSyntax(),
     ),
 
+    // all type search elements
     'typesearch' => array('#type' => 'select',
       '#title' => t('Inhaltstypensuche (POC, no functionality):'),
       '#options' => node_type_get_names(), // drupal function, returns all content type names
@@ -96,22 +99,34 @@ function createMorphsearchContent() {
       )
     ),
 
-    // and pure html output
+    // all morphological search elements
     'morphsearch' => array(
       '#markup' => buildSearchHtml(),
-      '#prefix' => '<a href="#blank" id="morphsearch-select-block-toggle">Morphologische Suche</a>' .
-                   '<div id="morphsearch-select-block">',
+      '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">'.t('Morphologische Suche').'</a>' .
+        '<div id="morphsearch-select-block">',
       '#suffix' => '</div>',
     ),
 
+    // reset search block link
+    'reset' => array(
+      '#markup' => '<a href="javascript:void(0)" id="morphsearch-reset">'.t('Suche zurücksetzen').'</a>',
+      '#prefix' => '<div class="morphblocktable"><div class="morphblockcell">'
+    ),
+
+    // save selected search block elements link
+    'savesearch' => array(
+      '#markup' => '<a href="javascript:void(0)" id="morphsearch-save">'.t('Suche speichern').'</a>',
+      '#suffix' => '</div>'
+
+    ),
+
+    // execute search button
     'submit' => array(
       '#type' => 'submit',
       '#value' => t('Suche'),
-      '#name' => 'searchbutton',
-    ),
+      '#id' => 'searchbutton',
+      '#suffix' => '</div>',
 
-    'reset' => array(
-      '#markup' => "<button id='morphsearch-reset'>Reset</button>",
     ),
   );
 
@@ -150,6 +165,7 @@ function buildSearchHtml() {
         $html .= "</label>";
       }
 
+      // create label for new select box
       $html .= "<label>$row->vocabulary_name";
 
       // Check for multivalued morphological item
@@ -159,14 +175,17 @@ function buildSearchHtml() {
         $html .= "<select multiple='multiple' class='morphsearch-select' size='1' data-placeholder='$placeholderMulti'>";
       }
 
+      // add an empty select option for every select box
       $html .= "<option value=''></option>";
 
       $currentLabel = $row->vocabulary_name;
     }
 
+    // add all options to the current select box
     $html .= "<option value='$row->tid'>$row->term_name</option>";
   }
 
+  // close tags after last element
   $html .= "</select>";
   $html .= "</label>";
   return $html;
@@ -248,4 +267,53 @@ function morphsearch_libraries_info() {
   );
 
   return $libraries;
+}
+
+/**
+ * For some reason CURRENT_TIMESTAMP is not accepted as default value during schema definition,
+ * so change it on enabling the module.
+ */
+function morphsearch_enable() {
+  db_query('
+      ALTER TABLE {morphsearch_saved_input}
+      MODIFY timestamp TIMESTAMP NOT NULL
+      DEFAULT CURRENT_TIMESTAMP
+      ON UPDATE CURRENT_TIMESTAMP'
+  );
+}
+
+/**
+ * Implementation of hook_menu.
+ * Used to receive data from AJAX equest.
+ */
+function morphsearch_menu() {
+  $items['usersavesearch'] = array(
+    'type' => MENU_CALLBACK,
+    'page callback' => 'save_search',
+    'access arguments' => array('access content'),
+  );
+
+  return $items;
+}
+
+/**
+ * Saved search data from JS AJAX request to database.
+ *
+ * @return DatabaseStatementInterface|int Unique ID of the inserted row.
+ */
+function save_search() {
+  $data = $_POST['saveData'];
+  $url = $_POST['saveUrl'];
+
+  global $user;
+
+  $id = db_insert('morphsearch_saved_input')
+    ->fields(array(
+      'user_id' => $user->uid,
+      'input' => $data,
+      'url' => $url,
+    ))
+    ->execute();
+
+  return $id;
 }

@@ -28,6 +28,13 @@ function morphsearch_schema() {
         'not null' => TRUE,
         'default' => '',
       ),
+      'url' => array(
+         'description' => 'The full search URL.',
+         'type' => 'varchar',
+         'length' => 10000,
+         'not null' => TRUE,
+         'default' => '',
+      ),
       'timestamp' => array(
         'description' => 'The timestamp.',
         'type' => 'datetime',
@@ -39,7 +46,6 @@ function morphsearch_schema() {
 
     'primary key' => array('id'),
   );
-
 
   return $schema;
 }
