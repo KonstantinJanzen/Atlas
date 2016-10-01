@@ -71,19 +71,21 @@ Indeko.Morphsearch.hookSaveButton = function() {
 
         // AJAX POST request to send data to Drupal
         $.ajax({
-            url: Drupal.settings.basePath + 'usersavesearch',   // in module defined URL to process the request
+            url: Drupal.settings.basePath + 'user/savesearch/ajax',   // in module defined URL to process the request
             type: "POST",
             data: {
                 saveData: search,                               // array with all search values
                 saveUrl: Indeko.Morphsearch.toUrl(searchArray)  // full search string
             },
 
-            // TODO evaluate server response and notify user
-            success: function () {
-                console.log("success");
+            dataType: "json",
+            success: function (data, textStatus, jqXHR) {
+                console.log(data.success);
+                console.log(data.message);
+                alert(data.message); // TODO
             },
-            error: function () {
-                console.log("fail");
+            error: function (jqXHR, textStatus, errorThrown) {
+                console.log(textStatus);
             }
         });
     });
@@ -193,6 +195,7 @@ Indeko.Morphsearch.init = function() {
     Indeko.Morphsearch.hookSearchButton();
     Indeko.Morphsearch.hookFulltextInput();
     Indeko.Morphsearch.hookMorphologicalSearchToggle();
+    Indeko.Morphsearch.hookSaveButton();
     Indeko.Morphsearch.addSearchInfo();
 
 

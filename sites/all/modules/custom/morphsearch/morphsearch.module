@@ -64,70 +64,73 @@ function createMorphsearchContent() {
 
   $content = array();
 
-  $content = array(
-    // fulltext search element
-    'fulltextsearch' => array(
-      '#type' => 'textfield',
-      '#title' => t('Portalsuche'),
-      '#attributes' => array(
-        'class' => array('morphsearch-fulltext'),
-        'id' => 'fulltextsearch',
-      ),
-      '#prefix' => '<div id="fulltextsearchrow">'
+  // fulltext search element
+  $content['fulltextsearch'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Portalsuche'),
+    '#attributes' => array(
+      'class' => array('morphsearch-fulltext'),
+      'id' => 'fulltextsearch',
     ),
+    '#prefix' => '<div id="fulltextsearchrow">'
+  );
 
-    // search info icon
-    'fulltextsearchimage' => array(
-      '#markup' => '<span title="Use tooltip to display search syntax? See qtip^2 plugin already used by morphmapping module." ' .
-        'id="fulltextsearchinfo"></span>',
-      '#suffix' => '</div>',
-    ),
+  // search info icon
+  $content['fulltextsearchimage'] = array(
+    '#markup' => '<span title="Use tooltip to display search syntax? See qtip^2 plugin already used by morphmapping module." ' .
+      'id="fulltextsearchinfo"></span>',
+    '#suffix' => '</div>',
+  );
 
-    // HTML help about the available search syntax
-    'searchSyntax' => array(
-      '#markup' => buildSearchSyntax(),
-    ),
+  // HTML help about the available search syntax
+  $content['searchSyntax'] = array(
+    '#markup' => buildSearchSyntax(),
+  );
 
-    // all type search elements
-    'typesearch' => array('#type' => 'select',
-      '#title' => t('Inhaltstypensuche (POC, no functionality):'),
-      '#options' => node_type_get_names(), // drupal function, returns all content type names
-      '#attributes' => array(
-        'class' => array('morphsearch-type'),
-        'id' => 'typesearch',
-        'style' => 'width: 100%;',
-      )
-    ),
+  // all type search elements
+  $content['typesearch'] = array(
+    '#type' => 'select',
+    '#title' => t('Inhaltstypensuche (POC, no functionality):'),
+    '#options' => node_type_get_names(), // drupal function, returns all content type names
+    '#attributes' => array(
+      'class' => array('morphsearch-type'),
+      'id' => 'typesearch',
+      'style' => 'width: 100%;',
+    )
+  );
 
-    // all morphological search elements
-    'morphsearch' => array(
-      '#markup' => buildSearchHtml(),
-      '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">'.t('Morphologische Suche').'</a>' .
-        '<div id="morphsearch-select-block">',
-      '#suffix' => '</div>',
-    ),
+  // all morphological search elements
+  $content['morphsearch'] = array(
+    '#markup' => buildSearchHtml(),
+    '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">' . t('Morphologische Suche') . '</a>' .
+      '<div id="morphsearch-select-block">',
+    '#suffix' => '</div>',
+  );
 
-    // reset search block link
-    'reset' => array(
-      '#markup' => '<a href="javascript:void(0)" id="morphsearch-reset">'.t('Suche zurücksetzen').'</a>',
-      '#prefix' => '<div class="morphblocktable"><div class="morphblockcell">'
-    ),
+  // reset search filter link
+  $content['reset'] = array(
+    '#markup' => '<a href="javascript:void(0)" id="morphsearch-reset">' . t('Filter zurücksetzen') . '</a>',
+    '#prefix' => '<div class="morphblocktable"><div class="morphblockcell">'
+  );
 
-    // save selected search block elements link
-    'savesearch' => array(
-      '#markup' => '<a href="javascript:void(0)" id="morphsearch-save">'.t('Suche speichern').'</a>',
+  // save selected search block elements link (only for logged in users)
+  if (user_is_logged_in()) {
+    $content['savesearch'] = array(
+      '#markup' => '<a href="javascript:void(0)" id="morphsearch-save">' . t('Suche speichern') . '</a>',
       '#suffix' => '</div>'
+    );
+  } else {
+    $content['closediv'] = array(
+      '#suffix' => '</div>'
+    );
+  }
 
-    ),
-
-    // execute search button
-    'submit' => array(
-      '#type' => 'submit',
-      '#value' => t('Suche'),
-      '#id' => 'searchbutton',
-      '#suffix' => '</div>',
-
-    ),
+  // execute search button
+  $content['submit'] = array(
+    '#type' => 'submit',
+    '#value' => t('Suche'),
+    '#id' => 'searchbutton',
+    '#suffix' => '</div>',
   );
 
   return $content;
@@ -287,33 +290,70 @@ function morphsearch_enable() {
  * Used to receive data from AJAX equest.
  */
 function morphsearch_menu() {
-  $items['usersavesearch'] = array(
+  $items['user/savesearch/ajax'] = array(
     'type' => MENU_CALLBACK,
     'page callback' => 'save_search',
-    'access arguments' => array('access content'),
+    'access callback' => 'user_is_logged_in',
   );
 
   return $items;
 }
 
 /**
- * Saved search data from JS AJAX request to database.
+ * Save search data from JS AJAX request to database.
  *
- * @return DatabaseStatementInterface|int Unique ID of the inserted row.
+ * @return JSON object containing the save result and result message for the user.
  */
+
 function save_search() {
+  global $user;
   $data = $_POST['saveData'];
   $url = $_POST['saveUrl'];
+  $uid = $user->uid;
 
-  global $user;
+  // don't save duplicate search
+  if (is_duplicate_search($uid, $data)) {
+    $output = array('success' => 'false', 'message' => t('Die Suche wurde bereits gespeichert.'));
+    return drupal_json_output($output);
 
-  $id = db_insert('morphsearch_saved_input')
-    ->fields(array(
-      'user_id' => $user->uid,
-      'input' => $data,
-      'url' => $url,
-    ))
-    ->execute();
+  } else {
+    try {
+      $id = db_insert('morphsearch_saved_input')
+        ->fields(array(
+          'user_id' => $uid,
+          'input' => $data,
+          'url' => $url,
+        ))
+        ->execute();
 
-  return $id;
+      $output = array('success' => 'true', 'message' => t('Die Suche wurde erfolgreich unter Mein Konto gespeichert.'));
+      return drupal_json_output($output);
+
+    } catch (Exception $e) {
+      $output = array('success' => 'false', 'message' => t('Die Suche wurde nicht gespeichert.'));
+      return drupal_json_output($output);
+    }
+  }
+}
+
+/**
+ * Checks if the same search is already in the database.
+ *
+ * @param $uid ID of the user
+ * @param $data search parameter array to be saved
+ * @return bool TRUE if user already saved the an identical search, FALSE otherwise
+ */
+function is_duplicate_search($uid, $data) {
+  $isDuplicate = false;
+
+  $query = "SELECT id FROM {morphsearch_saved_input}
+            WHERE user_id = :uid AND input = :input;";
+  $result = db_query($query, array(":uid" => $uid, ":input" => $data));
+
+  // the entry is a duplicate if there are results
+  if ($result->rowCount() > 0) {
+    $isDuplicate = true;
+  }
+
+  return $isDuplicate;
 }
