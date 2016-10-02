@@ -357,3 +357,60 @@ function is_duplicate_search($uid, $data) {
 
   return $isDuplicate;
 }
+
+
+function morphsearch_user_view_alter(&$build) {
+  // Check for the existence of a field added by another module.
+  if (isset($build['an_additional_field'])) {
+    // Change its weight.
+    $build['an_additional_field']['#weight'] = -10;
+  }
+
+  // Add a #post_render callback to act on the rendered HTML of the user.
+  $build['#post_render'][] = 'morphsearch_user_post_render';
+}
+
+function morphsearch_user_post_render($element, $form_state) {
+  global $user;
+  $uid = $user->uid;
+
+  $query = "SELECT id, timestamp FROM {morphsearch_saved_input}
+            WHERE user_id = :uid;";
+  $result = db_query($query, array(":uid" => $uid));
+  $result = $result->fetchAll();
+
+  /* Dummy for saved Search. */
+  $html = "<h3>Gespeicherte Suchen</h3>";
+  foreach($result as $currentresult) {
+
+    $html .= "<fieldset>";
+    /* Format date to fit the mockup. */
+    $html .= "<legend>" . "Suche vom " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
+    $html .= "<table>";
+    $html .= "<tr>";
+    $html .= "<td>" . "Kompetenzentwicklung:" . "</td>";
+    $html .= "<td>" . "Individuell, Führungskräfte" . "</td>";
+    $html .= "<td>" . "<div class='actions' id='". $currentresult->id . "'><a class='delete'>Löschen</a><div class='confirmation' 
+                      style='display:none;'><h4>Diese Suche wirklich löschen?</h4><button class='no'>Nein</button><button 
+                      class='yes'>Ja</button></div></div>" . "</td>";
+    $html .= "</tr>";
+    $html .= "<tr>";
+    $html .= "<td>" . "Unternehmensgröße:" . "</td>";
+    $html .= "<td>" . "Kleinunternehmen" . "</td>";
+    $html .= "<td>" . "<a href='url'>>> Zu den Ergebnissen</a>" . "</td>";
+    $html .= "</tr>";
+    $html .= "</tr>";
+    $html .= "<tr>";
+    $html .= "<td>" . "Forschungsergebnistyp:" . "</td>";
+    $html .= "<td>" . "Theorie" . "</td>";
+    $html .= "</tr>";
+    $html .= "<tr>";
+    $html .= "<td>" . "Projektstart:" . "</td>";
+    $html .= "<td>" . "März 2015" . "</td>";
+    $html .= "</tr>";
+    $html .= "</table>";
+    $html .= "</fieldset>";
+  }
+
+  return $element . $html;
+}

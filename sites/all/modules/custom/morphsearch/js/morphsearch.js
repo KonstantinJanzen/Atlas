@@ -256,9 +256,38 @@ Indeko.Morphsearch.addSearchInfo = function() {
 
 Indeko.Morphsearch.init();
 
+$(document).ready(function() {
+    /* Delete Button: */
+    $(".actions .delete").click(function(){
+        Indeko.Morphsearch.showConfirmation($(this).parent());
+    });
 
+    /* No Button. */
+    $(".actions .no").click(function(){
+        Indeko.Morphsearch.hideConfirmation($(this).parent());
+    });
 
+    /* Yes Button. */
+    $(".actions .yes").click(function(){
+        //delete the selected saved Search
+    });
+});
 
+/**
+ * Function to show the delete confirmation.
+ * @param element
+ */
+Indeko.Morphsearch.showConfirmation = function(element) {
+    $(".confirmation", element).show();
+};
+
+/**
+ * Function to hide the delete confirmation.
+ * @param element
+ */
+Indeko.Morphsearch.hideConfirmation = function(element) {
+    $(element).hide();
+};
 
 
 
