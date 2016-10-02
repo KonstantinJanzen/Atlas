@@ -89,3 +89,13 @@
     margin-bottom: 1em;
     display: block;
 }
+
+/*
+ * Saved Search Delete Button.
+ */
+.confirmation {
+    position: absolute;
+    background-color: white;
+    border: 1px solid;
+    padding: 5px;
+}
