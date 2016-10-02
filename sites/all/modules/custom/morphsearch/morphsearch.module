@@ -316,6 +316,7 @@ function delete_search() {
 
   $id_deleted = db_delete('morphsearch_saved_input')
       -> condition('id', $id)
+      -> condition('uid', $user->uid)
       -> execute();
 
   return drupal_json_output($id);
