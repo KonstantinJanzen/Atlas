@@ -91,11 +91,18 @@
 }
 
 /*
- * Saved Search Delete Button.
+ * Pop-up window for saved search delete confirmation.
  */
 .confirmation {
     position: absolute;
     background-color: white;
     border: 1px solid;
     padding: 5px;
+}
+
+/*
+ * Delete link for saved search.
+ */
+.actions .delete:hover {
+    cursor: pointer;
 }

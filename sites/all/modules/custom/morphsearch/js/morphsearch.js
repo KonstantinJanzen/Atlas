@@ -256,26 +256,42 @@ Indeko.Morphsearch.addSearchInfo = function() {
 
 Indeko.Morphsearch.init();
 
+/*
+ * A function to execute after the DOM is fully loaded.
+ */
 $(document).ready(function() {
-    /* Delete Button: */
+
+    /* Delete Link: */
     $(".actions .delete").click(function(){
         Indeko.Morphsearch.showConfirmation($(this).parent());
     });
 
-    /* No Button. */
+    /* No-Button. */
     $(".actions .no").click(function(){
         Indeko.Morphsearch.hideConfirmation($(this).parent());
-    });
-
-    /* Yes Button. */
-    $(".actions .yes").click(function(){
-        //delete the selected saved Search
     });
 });
 
 /**
+ * Function to delete the saved search and to remove the fieldset of the saved search
+ * in the user profile view.
+ *
+ * @param id The id of the saved search.
+ */
+Indeko.Morphsearch.deleteSavedSearch = function(id) {
+    $.post(Drupal.settings.basePath + 'user/deletesearch/ajax',
+            {
+                savedSearchId: id
+            },
+            function (data, textStatus, jqXHR) {
+                $('fieldset#' + id).remove();
+            });
+};
+
+/**
  * Function to show the delete confirmation.
- * @param element
+ *
+ * @param element The element to be shown.
  */
 Indeko.Morphsearch.showConfirmation = function(element) {
     $(".confirmation", element).show();
@@ -283,7 +299,8 @@ Indeko.Morphsearch.showConfirmation = function(element) {
 
 /**
  * Function to hide the delete confirmation.
- * @param element
+ *
+ * @param element The element to be hidden.
  */
 Indeko.Morphsearch.hideConfirmation = function(element) {
     $(element).hide();

@@ -296,8 +296,31 @@ function morphsearch_menu() {
     'access callback' => 'user_is_logged_in',
   );
 
+  $items['user/deletesearch/ajax'] = array(
+      'type' => MENU_CALLBACK,
+      'page callback' => 'delete_search',
+      'access callback' => 'user_is_logged_in',
+  );
+
   return $items;
 }
+
+/**
+ * Function to delete the saved search data from the database.
+ *
+ * @return JSON object containing the deleted search of the user.
+ */
+function delete_search() {
+  global $user;
+  $id = $_POST['savedSearchId'];
+
+  $id_deleted = db_delete('morphsearch_saved_input')
+      -> condition('id', $id)
+      -> execute();
+
+  return drupal_json_output($id);
+}
+
 
 /**
  * Save search data from JS AJAX request to database.
@@ -358,18 +381,23 @@ function is_duplicate_search($uid, $data) {
   return $isDuplicate;
 }
 
-
+/**
+ * Implements Hook_user_view_alter.
+ *
+ * @param $build
+ */
 function morphsearch_user_view_alter(&$build) {
-  // Check for the existence of a field added by another module.
-  if (isset($build['an_additional_field'])) {
-    // Change its weight.
-    $build['an_additional_field']['#weight'] = -10;
-  }
-
   // Add a #post_render callback to act on the rendered HTML of the user.
   $build['#post_render'][] = 'morphsearch_user_post_render';
 }
 
+/**
+ * Implements Hook_views_post_render.
+ *
+ * @param $element
+ * @param $form_state
+ * @return string
+ */
 function morphsearch_user_post_render($element, $form_state) {
   global $user;
   $uid = $user->uid;
@@ -383,7 +411,7 @@ function morphsearch_user_post_render($element, $form_state) {
   $html = "<h3>Gespeicherte Suchen</h3>";
   foreach($result as $currentresult) {
 
-    $html .= "<fieldset>";
+    $html .= "<fieldset id='" . $currentresult->id . "'>";
     /* Format date to fit the mockup. */
     $html .= "<legend>" . "Suche vom " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
     $html .= "<table>";
@@ -392,7 +420,7 @@ function morphsearch_user_post_render($element, $form_state) {
     $html .= "<td>" . "Individuell, Führungskräfte" . "</td>";
     $html .= "<td>" . "<div class='actions' id='". $currentresult->id . "'><a class='delete'>Löschen</a><div class='confirmation' 
                       style='display:none;'><h4>Diese Suche wirklich löschen?</h4><button class='no'>Nein</button><button 
-                      class='yes'>Ja</button></div></div>" . "</td>";
+                      class='yes' onclick='javascript:Indeko.Morphsearch.deleteSavedSearch(" . $currentresult->id . ");'>Ja</button></div></div>" . "</td>";
     $html .= "</tr>";
     $html .= "<tr>";
     $html .= "<td>" . "Unternehmensgröße:" . "</td>";
