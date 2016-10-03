@@ -77,15 +77,14 @@ Indeko.Morphsearch.hookSaveButton = function() {
                 saveData: search,                               // array with all search values
                 saveUrl: Indeko.Morphsearch.toUrl(searchArray)  // full search string
             },
-
             dataType: "json",
+
+            // display notifications on main content block
             success: function (data, textStatus, jqXHR) {
-                console.log(data.success);
-                console.log(data.message);
-                alert(data.message); // TODO
+                Indeko.createNotification(data.message, $('#main-content'));
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                console.log(textStatus);
+                Indeko.createNotification(textStatus, $('#main-content'));
             }
         });
     });
@@ -254,23 +253,58 @@ Indeko.Morphsearch.addSearchInfo = function() {
     })
 };
 
-Indeko.Morphsearch.init();
-
-/*
- * A function to execute after the DOM is fully loaded.
+/**
+ * Displays a notification on a selected DOM target.
+ *
+ * @param message String text to be displayed in the notification.
+ * @param target DOM element that will be th target position of the notification.
  */
-$(document).ready(function() {
-
-    /* Delete Link: */
-    $(".actions .delete").click(function(){
-        Indeko.Morphsearch.showConfirmation($(this).parent());
+Indeko.createNotification = function(message, target) {
+    $('<div/>').qtip({
+        content: {
+            text: message,
+            title: {
+                text: 'Hinweis!',
+                button: false
+            }
+        },
+        position: {
+            viewport: $(window) ,
+            my: 'top right',
+            at: 'top right',
+            target: target
+        },
+        show: {
+            event: false,
+            ready: true,
+            effect: function() {
+                $(this).stop(0, 1).animate({ height: 'toggle' }, 400, 'swing');
+            },
+            delay: 0
+        },
+        hide: {
+            effect: function(api) {
+                $(this).stop(0, 1).animate({ height: 'toggle' }, 400, 'swing');
+            }
+        },
+        style: {
+            width: 400,
+            classes: 'searchNotification',
+            tip: false
+        },
+        events: {
+            render: function(event, api) {
+                clearTimeout(api.timer);
+                if (event.type !== 'mouseover') {
+                    api.timer = setTimeout(function() {
+                        api.destroy();
+                    }, 4000);
+                }
+            }
+        }
     });
+};
 
-    /* No-Button. */
-    $(".actions .no").click(function(){
-        Indeko.Morphsearch.hideConfirmation($(this).parent());
-    });
-});
 
 /**
  * Function to delete the saved search and to remove the fieldset of the saved search
@@ -280,12 +314,12 @@ $(document).ready(function() {
  */
 Indeko.Morphsearch.deleteSavedSearch = function(id) {
     $.post(Drupal.settings.basePath + 'user/deletesearch/ajax',
-            {
-                savedSearchId: id
-            },
-            function (data, textStatus, jqXHR) {
-                $('fieldset#' + id).remove();
-            });
+        {
+            savedSearchId: id
+        },
+        function (data, textStatus, jqXHR) {
+            $('fieldset#' + id).remove();
+        });
 };
 
 /**
@@ -305,6 +339,24 @@ Indeko.Morphsearch.showConfirmation = function(element) {
 Indeko.Morphsearch.hideConfirmation = function(element) {
     $(element).hide();
 };
+
+Indeko.Morphsearch.init();
+
+/*
+ * A function to execute after the DOM is fully loaded.
+ */
+$(document).ready(function() {
+
+    /* Delete Link: */
+    $(".actions .delete").click(function(){
+        Indeko.Morphsearch.showConfirmation($(this).parent());
+    });
+
+    /* No-Button. */
+    $(".actions .no").click(function(){
+        Indeko.Morphsearch.hideConfirmation($(this).parent());
+    });
+});
 
 
 

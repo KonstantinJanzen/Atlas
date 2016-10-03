@@ -61,6 +61,12 @@
 
 .qtip { max-width: none !important; }
 
+.searchNotification {
+    font-size: 14px;
+    line-height: 21px;
+    color: #444;
+}
+
 /*
  * Search button positioning
  */
