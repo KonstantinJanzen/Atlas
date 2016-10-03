@@ -58,6 +58,10 @@ Indeko.Morphsearch.hookResetButton = function() {
     Indeko.Morphsearch.buttonReset.click( function() {
         Indeko.Morphsearch.reset();
         localStorage.removeItem("searchValues");
+
+        // close morphological search and return to the top of the page
+        Indeko.Morphsearch.elemMorphBlock.hide();
+        $(window).scrollTop(0);
     });
 };
 
@@ -182,11 +186,13 @@ Indeko.Morphsearch.init = function() {
     Indeko.Morphsearch.elemMorph.chosen({
         inherit_select_classes: true,
         allow_single_deselect: true,
+        display_selected_options: false,
         width:"100%"
     });
     Indeko.Morphsearch.elemType.chosen({
         inherit_select_classes: true,
         allow_single_deselect: true,
+        display_selected_options: false,
         width:"100%"
     });
 

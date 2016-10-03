@@ -16,10 +16,19 @@
 }
 
 /*
- * Fix cut chosen placeholder text
+ * Fix cut off chosen placeholder text and search field (caused if element is hidden on load)
  */
-.chosen-container .chosen-choices .search-field:only-child input {
+.chosen-container .chosen-choices .search-field {
     width: 100% !important;
+}
+
+/*
+ *  Chosen placeholder text as label
+ */
+.chosen-container-single .chosen-default, .chosen-container-multi .chosen-choices li.search-field input[type="text"] {
+    color: #444!important;
+    width: 100% !important;
+    font-family: sans-serif;
 }
 
 /*

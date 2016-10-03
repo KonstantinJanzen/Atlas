@@ -154,9 +154,10 @@ function buildSearchHtml() {
 
   $html = '';
 
-  // Drupal translatable placeholder text if no element is selected
-  $placeholderSingle = t("Choose an option");
-  $placeholderMulti = t("Choose some options");
+// Removed: as per concept display label as placeholder text if dropdown element is not selected
+//  // Drupal translatable placeholder text if no element is selected
+//  $placeholderSingle = t("Choose an option");
+//  $placeholderMulti = t("Choose some options");
 
   $currentLabel = '';
   foreach ($result as $row) {
@@ -165,17 +166,17 @@ function buildSearchHtml() {
     if ($currentLabel !== $row->vocabulary_name) {
       if ($currentLabel !== '') {
         $html .= "</select>";
-        $html .= "</label>";
+        //$html .= "</label>";
       }
 
       // create label for new select box
-      $html .= "<label>$row->vocabulary_name";
+      //$html .= "<label>$row->vocabulary_name";
 
       // Check for multivalued morphological item
       if (strpos($row->vocabulary_machinename, 'tax_morph_m_') === false) { // singleselect
-        $html .= "<select class='morphsearch-select' data-placeholder='$placeholderSingle'>";
+        $html .= "<select class='morphsearch-select' data-placeholder='$row->vocabulary_name'>";
       } else { // multiselect
-        $html .= "<select multiple='multiple' class='morphsearch-select' size='1' data-placeholder='$placeholderMulti'>";
+        $html .= "<select multiple='multiple' class='morphsearch-select' size='1' data-placeholder='$row->vocabulary_name'>";
       }
 
       // add an empty select option for every select box
@@ -190,7 +191,7 @@ function buildSearchHtml() {
 
   // close tags after last element
   $html .= "</select>";
-  $html .= "</label>";
+  //$html .= "</label>";
   return $html;
 }
 
