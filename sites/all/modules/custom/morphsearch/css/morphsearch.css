@@ -148,3 +148,10 @@
 .morphsearch-type-block .type.selected{
     background-color: #666;
 }
+
+/*
+ * Publication search elements initially hidden
+ */
+#morphsearch-publication-filter-block, #morphsearch-publication-block {
+    display: none;
+}

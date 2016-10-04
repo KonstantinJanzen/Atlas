@@ -111,12 +111,14 @@ function createMorphsearchContent() {
     '#suffix' => '</div>',
   );
 
-//  // all publication related elements
-//  $content['typesearch'] = array(
-//    '#markup' => buildPublicationSearchHtml(),
-//    '#prefix' => '<div class="morphsearch-publication-block">',
-//    '#suffix' => '</div>',
-//  );
+  // all publication related elements
+  $content['typesearchpublication'] = array(
+    '#markup' => buildPublicationSearchHtml(),
+    '#prefix' => '<div id="morphsearch-publication-block">' .
+          '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Filter (Dummy)') . '</a>' .
+          '<div id="morphsearch-publication-filter-block">',
+    '#suffix' => '</div></div>',
+  );
 
   // reset search filter link
   $content['reset'] = array(
@@ -228,6 +230,25 @@ function buildTypeSearchHtml($staticFilter = []) {
       }
     }
   }
+
+  return $html;
+}
+
+/**
+ * Creates the HTML for the publication filter search block.
+ * TODO only a static dummy
+ *
+ * @return string Contains the HTML code for the publication filter search block.
+ */
+function buildPublicationSearchHtml() {
+  $html = '';
+
+  $html .= '<select class="morphsearch-select" data-placeholder=Erscheinungsjahr multiple="multiple"></select>';
+  $html .= '<select class="morphsearch-select" data-placeholder=Autor multiple="multiple"></select>';
+  $html .= '<select class="morphsearch-select" data-placeholder=Schlagwörter multiple="multiple"></select>';
+  $html .= '<select class="morphsearch-select" data-placeholder=Verlag multiple="multiple"></select>';
+  $html .= '<select class="morphsearch-select" data-placeholder=Ort multiple="multiple"></select>';
+  $html .= '<select class="morphsearch-select" data-placeholder=Publikationstyp multiple="multiple"></select>';
 
   return $html;
 }
