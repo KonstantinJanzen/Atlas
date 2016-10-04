@@ -146,6 +146,8 @@ Indeko.Morphsearch.reset = function() {
     this.elemFulltext.val('');
     this.elemsMorph.val(-1).trigger("chosen:updated");
     this.elemsType.removeClass('selected');
+    Indeko.Morphsearch.elemPublicationBlock.hide();
+    $('#morphsearch-publication-filter-block').hide();
 };
 
 /**
