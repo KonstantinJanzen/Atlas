@@ -87,16 +87,20 @@ function createMorphsearchContent() {
     '#markup' => buildSearchSyntax(),
   );
 
+  // hidden empty select. Sometime Chosen would not load if there were no other select elements on the page
+  $content['loadchosen'] = array(
+    '#type' => 'select',
+    '#options' => array(0 => ''),
+    '#attributes' => array(
+      'class' => array('element-hidden'),
+    )
+  );
+
   // all type search elements
   $content['typesearch'] = array(
-    '#type' => 'select',
-    '#title' => t('Inhaltstypensuche (POC, no functionality):'),
-    '#options' => node_type_get_names(), // drupal function, returns all content type names
-    '#attributes' => array(
-      'class' => array('morphsearch-type'),
-      'id' => 'typesearch',
-      'style' => 'width: 100%;',
-    )
+    '#markup' => buildTypeSearchHtml(array('analysereport', 'publikation', 'forschungsergebnis', 'projekt', 'wissenskarte')),
+    '#prefix' => '<div class="morphsearch-type-block">',
+    '#suffix' => '</div>',
   );
 
   // all morphological search elements
@@ -106,6 +110,13 @@ function createMorphsearchContent() {
       '<div id="morphsearch-select-block">',
     '#suffix' => '</div>',
   );
+
+//  // all publication related elements
+//  $content['typesearch'] = array(
+//    '#markup' => buildPublicationSearchHtml(),
+//    '#prefix' => '<div class="morphsearch-publication-block">',
+//    '#suffix' => '</div>',
+//  );
 
   // reset search filter link
   $content['reset'] = array(
@@ -192,6 +203,32 @@ function buildSearchHtml() {
   // close tags after last element
   $html .= "</select>";
   //$html .= "</label>";
+  return $html;
+}
+
+/**
+ * Creates the HTML for the dynamic type search block.
+ *
+ * @param $staticFilter array of content type machine names that should be displayed (make dynamic function static)
+ * @return string Contains the HTML code for the dynamic type search block.
+ */
+function buildTypeSearchHtml($staticFilter = []) {
+  $html = '<div>Typensuche Dummy (Interaktion / Erzeugung, noch keine Suche)</div>';
+
+  foreach (node_type_get_names() as $typeMachineName => $typeDescription) {
+
+    // if no $staticFilter is set, add all content types
+    if (empty($staticFilter)) {
+      $html .= '<div class="type">' . $typeDescription . '</div>';
+
+    // otherwise add only content type defined in $staticFilter
+    } else {
+      if (in_array($typeMachineName, $staticFilter, true)) {
+        $html .= '<div class="type">' . $typeDescription . '</div>';
+      }
+    }
+  }
+
   return $html;
 }
 

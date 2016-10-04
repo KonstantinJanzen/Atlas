@@ -121,3 +121,30 @@
 .actions .delete:hover {
     cursor: pointer;
 }
+
+/*
+ * Style block containing the different content types
+ */
+.morphsearch-type-block {
+    width: 100%;
+    margin-bottom: 1em;
+    text-decoration: none;
+    -webkit-user-select: none;  /* Chrome all / Safari all */
+    -moz-user-select: none;     /* Firefox all */
+    -ms-user-select: none;      /* IE 10+ */
+    user-select: none;          /* Likely future */
+}
+
+.morphsearch-type-block .type {
+    width: auto;
+    display: inline-block;
+    margin: 0 0.5em 0.5em 0; /* top, right, bottom, left */
+    padding: 0.5em;
+    background-color: DarkGray;
+    color: #fff;
+    cursor: pointer;
+}
+
+.morphsearch-type-block .type.selected{
+    background-color: #666;
+}

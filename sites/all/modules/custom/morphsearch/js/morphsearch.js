@@ -8,9 +8,11 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
         elemFulltext: $('#fulltextsearch'),                     // fulltext search element
         elemFulltextInfo: $('#fulltextsearchinfo'),             // fulltext search info element
         elemSearchSyntax: $('#searchSyntax'),                   // element with search syntax representaion
-        elemType: $('.morphsearch-type'),                       // type search element
-        elemMorph: $('.morphsearch-select'),                    // all morphological box select elements
+        elemsType: $('.morphsearch-type-block .type'),           // all type search select elements
+        elemTypeBlock: $('.morphsearch-type-block'),            // type search element
+        elemsMorph: $('.morphsearch-select'),                    // all morphological box select elements
         elemMorphBlock: $('#morphsearch-select-block'),         // element containing all morphological box select elements
+        elemPublicationBlock: $('#morphsearch-publication-block'), // all publication search elements
         elemBlock: $('#block-morphsearch-morphsearch-block'),   // whole search block
         buttonSearch: $('#searchbutton'),                       // search button
         buttonReset: $('#morphsearch-reset'),                   // reset button
@@ -95,6 +97,19 @@ Indeko.Morphsearch.hookSaveButton = function() {
 };
 
 /**
+ * Toggles type search element selection on click.
+ */
+Indeko.Morphsearch.hookTypeSearchButton = function() {
+    Indeko.Morphsearch.elemsType.click( function() {
+        if ($(this).hasClass('selected')) {
+            $(this).removeClass('selected');
+        } else {
+            $(this).addClass('selected');
+        }
+    });
+};
+
+/**
  * Toggles visibility of morphological search on click.
  */
 Indeko.Morphsearch.hookMorphologicalSearchToggle = function() {
@@ -109,14 +124,14 @@ Indeko.Morphsearch.hookMorphologicalSearchToggle = function() {
  */
 Indeko.Morphsearch.reset = function() {
     this.elemFulltext.val('');
-    this.elemType.val(-1).trigger("chosen:updated");
-    this.elemMorph.val(-1).trigger("chosen:updated");
+    this.elemsMorph.val(-1).trigger("chosen:updated");
+    this.elemsType.removeClass('selected');
 };
 
 /**
  * Converts selected search items to array.
  * First element is fulltext string, followed by taxonomy IDs -> ["fulltext search","38","40"].
- * TODO: extend for type search (2nd element in searchArray?)
+ * TODO: extend for type search (2nd element in searchArray?) Indeko.Morphsearch.elemsType + Publikationsdaten
  *
  * @returns {Array} of all search items.
  */
@@ -131,7 +146,7 @@ Indeko.Morphsearch.toArray = function() {
     searchArray.push(inputFulltextSearch);
 
     // iterate over all select elements and save selected items
-    Indeko.Morphsearch.elemMorph.each(function() {
+    Indeko.Morphsearch.elemsMorph.each(function() {
         var tid = $(this).val();
 
         // if user selected an element, add it's taxonomy ID to the searchArray
@@ -175,7 +190,7 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
     }
 
     // make chosen adopt the changes
-    Indeko.Morphsearch.elemMorph.trigger("chosen:updated");
+    Indeko.Morphsearch.elemsMorph.trigger("chosen:updated");
 };
 
 /**
@@ -183,13 +198,7 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
  */
 Indeko.Morphsearch.init = function() {
     // transform select to chosen boxes
-    Indeko.Morphsearch.elemMorph.chosen({
-        inherit_select_classes: true,
-        allow_single_deselect: true,
-        display_selected_options: false,
-        width:"100%"
-    });
-    Indeko.Morphsearch.elemType.chosen({
+    Indeko.Morphsearch.elemsMorph.chosen({
         inherit_select_classes: true,
         allow_single_deselect: true,
         display_selected_options: false,
@@ -199,6 +208,7 @@ Indeko.Morphsearch.init = function() {
     Indeko.Morphsearch.hookResetButton();
     Indeko.Morphsearch.hookSearchButton();
     Indeko.Morphsearch.hookFulltextInput();
+    Indeko.Morphsearch.hookTypeSearchButton();
     Indeko.Morphsearch.hookMorphologicalSearchToggle();
     Indeko.Morphsearch.hookSaveButton();
     Indeko.Morphsearch.addSearchInfo();
