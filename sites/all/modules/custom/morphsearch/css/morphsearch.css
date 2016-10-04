@@ -80,8 +80,9 @@
  * Search button positioning
  */
 #searchbutton {
-    text-align: right;
+    float: right;
     display: table-cell;
+    margin-right: 0;
 }
 
 #morphsearch-reset {
@@ -93,7 +94,8 @@
 }
 
 .morphblocktable {
-    display: table
+    display: table;
+    width: 100%;
 }
 
 .morphblockcell {

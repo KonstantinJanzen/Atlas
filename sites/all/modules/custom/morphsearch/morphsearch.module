@@ -98,7 +98,7 @@ function createMorphsearchContent() {
 
   // all type search elements
   $content['typesearch'] = array(
-    '#markup' => buildTypeSearchHtml(array('analysereport', 'publikation', 'forschungsergebnis', 'projekt', 'wissenskarte')),
+    '#markup' => buildTypeSearchHtml(),
     '#prefix' => '<div class="morphsearch-type-block">',
     '#suffix' => '</div>',
   );
