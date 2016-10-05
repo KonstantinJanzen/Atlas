@@ -41,7 +41,9 @@ Indeko.ImageMap = Indeko.ImageMap || {
  */
 Indeko.MorphBox = {
 	// DOM element that contains the representation of the morphological box.
-	element : $('#morphological-box'),
+	//element : $('#morphological-box'),
+	element : $('#morphsearch-select-block'),
+	selects : $('#morphsearch-select-block').find('select'),
 
 	// array represention of the selected morphological box items (first element fulltext string, following items taxonomy IDs)
 	dataArray : [] // e.g. ["Kompetenz", "38", "40"]
@@ -77,12 +79,13 @@ function  initView(ViewMode) {
 			myimgmap = {};
 			var loadedValue = $('#edit-field-markierte-bereiche-und-0-value').val();
 
-			instanciate_maschek_image(l_oImageEdit[0]);		// instantiate image map object
-			instanciateAreaDescription();					// load GUI
-            myimgmap.setMapHTML(loadedValue);				// load image map areas
-            Indeko.ImageMap.hookSaveButton(); 				// attach client side validation to save button
-			Indeko.MorphBox.loadDummy();					// load morphological box table dummy
-			Indeko.MorphBox.update(myimgmap.currentid);		// show selected morphological box items of current map area
+			instanciate_maschek_image(l_oImageEdit[0]);										// instantiate image map object
+			instanciateAreaDescription();													// load GUI
+            myimgmap.setMapHTML(loadedValue);												// load image map areas
+            Indeko.ImageMap.hookSaveButton(); 												// attach client side validation to save button
+			//Indeko.MorphBox.loadDummy();													// load morphological box table dummy
+			Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox)	// changelistener for comboboxes in MorpBox
+			Indeko.MorphBox.update(myimgmap.currentid);										// show selected morphological box items of current map area
         } else if (l_oImageView.length > 0) {
 			// ViewMode
 			var parent = $('.image-style-none').parent();
@@ -679,8 +682,9 @@ Indeko.MorphBox.toData = function() {
 	}
 	Indeko.MorphBox.dataArray.push(inputFulltextSearch);
 
-	jQuery("td.selected").each(function() {
-		Indeko.MorphBox.dataArray.push($(this).attr("tid"));
+	var allSelectedOptions = Indeko.MorphBox.selects.find('OPTION:selected');
+	$.each(allSelectedOptions, function( index, item ) {
+		Indeko.MorphBox.dataArray.push(item.value);
 	});
 };
 
@@ -694,9 +698,15 @@ Indeko.MorphBox.selectItems = function() {
 		if (index === 0) {
 			$("#input_fulltext_search").val(value);
 		} else {
-			Indeko.MorphBox.element.find("[tid=" + value + "]").removeClass("unselected").addClass("selected");
+			// load selected values in hidden selects
+			if (value || value == 0) {
+				Indeko.MorphBox.selects.find('option[value=' + value + ']').attr('selected', 'selected');
+			}
 		}
 	});
+
+	// update chosen controls
+	Indeko.MorphBox.selects.trigger('chosen:updated');
 };
 
 /*
@@ -704,7 +714,11 @@ Indeko.MorphBox.selectItems = function() {
  * !!! Has to be changed depending on the representation of the morphological box !!!
  */
 Indeko.MorphBox.clear = function() {
-	jQuery("td.selected").removeClass("selected").addClass("unselected");
+	// unselect all hidden selects
+	$(Indeko.MorphBox.selects).find('option:selected').removeAttr('selected');
+	// unselect all chosen dropdowns
+	$(Indeko.MorphBox.selects).trigger('chosen:updated');
+
 	jQuery("#input_fulltext_search").val('');
     Indeko.MorphBox.dataArray = [];
 };
@@ -807,6 +821,13 @@ Indeko.MorphBox.loadDummy = function () {
         myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 	});
 };
+
+Indeko.MorphBox.getSelectedValuesFromMorphBox = function(e){
+	Indeko.MorphBox.toData();
+	myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
+	Indeko.MorphBox.element.removeClass('addAreaError');
+	myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+}
 
 /*
  * Scales image map area coordinates in add and edit mode to the current displayed width in the browser if the image
