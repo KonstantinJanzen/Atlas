@@ -13,6 +13,8 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
         elemsMorph: $('.morphsearch-select'),                    // all morphological box select elements
         elemMorphBlock: $('#morphsearch-select-block'),         // element containing all morphological box select elements
         elemPublicationBlock: $('#morphsearch-publication-block'), // publication toggle link and all publication search elements
+        elemPublicationFilterBlock: $('#morphsearch-publication-filter-block'),
+        elemsPublication: $('.publication-select'),                    // all publication box select elements
         elemBlock: $('#block-morphsearch-morphsearch-block'),   // whole search block
         buttonSearch: $('#searchbutton'),                       // search button
         buttonReset: $('#morphsearch-reset'),                   // reset button
@@ -115,7 +117,7 @@ Indeko.Morphsearch.hookTypeSearchButton = function() {
 Indeko.Morphsearch.hookTypeSearchPublicationButton = function() {
     $('.morphsearch-type-block .type:contains("Publikation")').click(function() {
         Indeko.Morphsearch.elemPublicationBlock.toggle();
-        $('#morphsearch-publication-filter-block').hide();
+        Indeko.Morphsearch.elemPublicationFilterBlock.hide();
     });
 };
 
@@ -125,7 +127,7 @@ Indeko.Morphsearch.hookTypeSearchPublicationButton = function() {
  */
 Indeko.Morphsearch.hookTypeSearchToggle = function() {
     $('#morphsearch-publication-block-toggle').click( function() {
-        $('#morphsearch-publication-filter-block').toggle();
+        Indeko.Morphsearch.elemPublicationFilterBlock.toggle();
     });
 };
 
@@ -145,9 +147,11 @@ Indeko.Morphsearch.hookMorphologicalSearchToggle = function() {
 Indeko.Morphsearch.reset = function() {
     this.elemFulltext.val('');
     this.elemsMorph.val(-1).trigger("chosen:updated");
+    this.elemsPublication.val(-1).trigger("chosen:updated");
+
     this.elemsType.removeClass('selected');
     Indeko.Morphsearch.elemPublicationBlock.hide();
-    $('#morphsearch-publication-filter-block').hide();
+    Indeko.Morphsearch.elemPublicationFilterBlock.hide();
 };
 
 /**
@@ -158,14 +162,30 @@ Indeko.Morphsearch.reset = function() {
  * @returns {Array} of all search items.
  */
 Indeko.Morphsearch.toArray = function() {
-    var searchArray = [];
+    var searchArray = {
+        fulltext: '',
+        morphological: [],
+        type: [],
+        publication: {
+            year: [],
+            author: [],
+            tags: [],
+            publisher: [],
+            location: [],
+            type: []
+        }
+    };
+
+    var isPublicationSelected = false;
+
 
     var inputFulltextSearch = this.elemFulltext.val();
     // replace empty fulltext search field with "*" search
     if (!inputFulltextSearch) {
         inputFulltextSearch = "*";
     }
-    searchArray.push(inputFulltextSearch);
+    searchArray.fulltext = inputFulltextSearch;
+
 
     // iterate over all select elements and save selected items
     Indeko.Morphsearch.elemsMorph.each(function() {
@@ -175,12 +195,49 @@ Indeko.Morphsearch.toArray = function() {
         if (!$.isEmptyObject(tid)) {
             // multiselect will return an array of selected items. Add single values to the final searchArray.
             if(Array.isArray(tid)) {
-                searchArray.push.apply(searchArray, tid);
+                searchArray['morphological'].push.apply(searchArray['morphological'], tid);
             } else {
-                searchArray.push(tid);
+                searchArray['morphological'].push(tid);
             }
         }
     });
+
+    // iterate over all type elements and save selected items
+    Indeko.Morphsearch.elemsType.each(function() {
+        if ($(this).hasClass('selected')) {
+            var machineName = $(this).attr('data-name');
+            searchArray.type.push(machineName);
+
+            if (machineName === 'biblio') {
+                isPublicationSelected = true;
+            }
+        }
+    });
+
+    //TODO comments
+    // iterate over all publication elements if publication is selected and save values
+    if (isPublicationSelected) {
+        Indeko.Morphsearch.elemsPublication.each(function (index) {
+            var id = $(this).val();
+            var type = $(this).attr('data-type');
+
+         // if user selected an element, add it's taxonomy ID to the searchArray TODO comments
+            if (!$.isEmptyObject(id)) {
+                // multiselect will return an array of selected items. Add single values to the final searchArray.
+                if(Array.isArray(id)) {
+                    searchArray.publication[type].push.apply(searchArray.publication[type], id);
+                } else {
+                    searchArray.publication[type].push(id);
+                }
+            }
+        });
+    }
+
+
+
+
+
+
 
     return searchArray;
 };
@@ -189,30 +246,55 @@ Indeko.Morphsearch.toArray = function() {
  * Fill search block with values from the searchArray.
  * TODO: extend for type search (2nd element in searchArray?)
  *
- * @param searchArray Array of search values ["fulltext search","38","40"].
+ * @param searchArray Array of search values ["fulltext search","38","40"]. TODO
  */
-Indeko.Morphsearch.toSearchblock = function(searchArray) {
-    $.each(searchArray, function(index, value) {
-        // first element of data array is the fulltext search string
-        if (index === 0) {
-            if (value === '*') {
-                Indeko.Morphsearch.elemFulltext.val('');
-            } else {
-                Indeko.Morphsearch.elemFulltext.val(value);
-            }
-        // following items are taxonomy IDs
-        } else {
-            Indeko.Morphsearch.elemBlock.find('option[value=' + value +']').attr('selected','selected');
-        }
+Indeko.Morphsearch.toSearchblock = function (searchArray) {
+
+    if (searchArray.fulltext === '*') {
+        Indeko.Morphsearch.elemFulltext.val('');
+    } else {
+        Indeko.Morphsearch.elemFulltext.val(searchArray.fulltext);
+    }
+
+    // fill morphological search elements
+    $.each(searchArray.morphological, function (index, value) {
+        Indeko.Morphsearch.elemMorphBlock.find('option[value=' + value + ']').attr('selected', 'selected');
     });
 
     // display morphological box, if morphological box elements were selected
-    if(searchArray.length > 1) {
+    if (searchArray.morphological.length > 1) {
         Indeko.Morphsearch.elemMorphBlock.show();
     }
 
-    // make chosen adopt the changes
+    // make chosen adopt the morphological search changes
     Indeko.Morphsearch.elemsMorph.trigger("chosen:updated");
+
+
+    // select type search elements
+    $.each(searchArray.type, function (index, value) {
+        Indeko.Morphsearch.elemTypeBlock.find('div[data-name=' + value + ']').addClass('selected');
+    });
+
+    var hasValues = false;
+    $.each(searchArray.publication, function (index, value) {
+        if (!$.isEmptyObject(value)) {
+            var elemSelect = Indeko.Morphsearch.elemPublicationBlock.find('select[data-type="' + index + '"]');
+            elemSelect.find('option[value=' + value + ']').attr('selected', 'selected');
+
+            hasValues = true;
+        }
+    });
+
+    // make chosen adopt the publication search changes
+    Indeko.Morphsearch.elemsPublication.trigger("chosen:updated");
+
+    // display publication box, if publication elements were selected
+    if (hasValues) {
+        Indeko.Morphsearch.elemPublicationBlock.show();
+        Indeko.Morphsearch.elemPublicationFilterBlock.show();
+    }
+
+
 };
 
 /**
@@ -221,6 +303,13 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
 Indeko.Morphsearch.init = function() {
     // transform select to chosen boxes
     Indeko.Morphsearch.elemsMorph.chosen({
+        inherit_select_classes: true,
+        allow_single_deselect: true,
+        display_selected_options: false,
+        width:"100%"
+    });
+
+    Indeko.Morphsearch.elemsPublication.chosen({
         inherit_select_classes: true,
         allow_single_deselect: true,
         display_selected_options: false,

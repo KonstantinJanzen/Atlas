@@ -221,12 +221,12 @@ function buildTypeSearchHtml($staticFilter = []) {
 
     // if no $staticFilter is set, add all content types
     if (empty($staticFilter)) {
-      $html .= '<div class="type">' . $typeDescription . '</div>';
+      $html .= '<div class="type" data-name="'.$typeMachineName.'">' . $typeDescription . '</div>';
 
     // otherwise add only content type defined in $staticFilter
     } else {
       if (in_array($typeMachineName, $staticFilter, true)) {
-        $html .= '<div class="type">' . $typeDescription . '</div>';
+        $html .= '<div class="type" data-name="'.$typeMachineName.'">' . $typeDescription . '</div>';
       }
     }
   }
@@ -243,12 +243,12 @@ function buildTypeSearchHtml($staticFilter = []) {
 function buildPublicationSearchHtml() {
   $html = '';
 
-  $html .= '<select class="morphsearch-select" data-placeholder=Erscheinungsjahr multiple="multiple"></select>';
-  $html .= '<select class="morphsearch-select" data-placeholder=Autor multiple="multiple"></select>';
-  $html .= '<select class="morphsearch-select" data-placeholder=Schlagwörter multiple="multiple"></select>';
-  $html .= '<select class="morphsearch-select" data-placeholder=Verlag multiple="multiple"></select>';
-  $html .= '<select class="morphsearch-select" data-placeholder=Ort multiple="multiple"></select>';
-  $html .= '<select class="morphsearch-select" data-placeholder=Publikationstyp multiple="multiple"></select>';
+  $html .= '<select class="publication-select" data-type="year" data-placeholder="Erscheinungsjahr" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
+  $html .= '<select class="publication-select" data-type="author" data-placeholder="Autor" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
+  $html .= '<select class="publication-select" data-type="tags" data-placeholder="Schlagwörter" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
+  $html .= '<select class="publication-select" data-type="publisher" data-placeholder="Verlag" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
+  $html .= '<select class="publication-select" data-type="location" data-placeholder="Ort" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
+  $html .= '<select class="publication-select" data-type="type" data-placeholder="Publikationstyp" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
 
   return $html;
 }
