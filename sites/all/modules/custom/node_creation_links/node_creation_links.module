@@ -2,7 +2,7 @@
 /**
  * Implements hook_block_view_MODULE_DELTA_alter().
  * Dynamically adds node creation links to the user menu block depending on the users permissions.
- *
+ * (with an option to filter content types that should not be displayed by machine name)
  *
  * @param $data The data as returned from the hook_block_view() implementation of the module that defined the block.
  * @param $block The block object, as loaded from the database.
@@ -10,29 +10,40 @@
 function morphsearch_block_view_system_user_menu_alter(&$data, $block) {
   global $user;
 
+  // Array of content type machine names that will be removed from the created links.
+  //$staticFilter = []; // empty array = no filter applied
+  $staticFilter = ['allgemein', 'forum'];
+
   // Only logged in users can add new content
   if (user_is_logged_in()) {
 
     // Add "create element" link that will toggle the specific content type links
     $data['content']['createnewelement'] = array(
       '#markup' => '<li id="newelement">
-                    <a href="#blank">Element anlegen</a>
+                    <a href="javascript:void(0)">Element anlegen</a>
                     </li>',
     );
+
+    // new element link style
+    drupal_add_css('#newelement.selected a {background-color: DarkGray;}', 'inline');
 
     // Loop over all content types
     foreach (node_type_get_names() as $typeMachineName => $typeDescription) {
 
-      // If the current user has permission to create the content type...
-      if (node_access('create', $typeMachineName, $user)) {
+      // Only add content types that are not in the filter array.
+      if (!in_array($typeMachineName, $staticFilter, true)) {
 
-        //... add a hidden create link to the block
-        $addLink = base_path() . 'node/add/' . $typeMachineName;
-        $data['content'][$typeMachineName] = array(
-          '#markup' => '<li class="nodeAddLink" style="display: none;">
+        // If the current user has permission to create the content type...
+        if (node_access('create', $typeMachineName, $user)) {
+
+          //... add a hidden create link to the block
+          $addLink = base_path() . 'node/add/' . $typeMachineName;
+          $data['content'][$typeMachineName] = array(
+            '#markup' => '<li class="nodeAddLink" style="display: none;">
                         <a href=' . $addLink . '>' . $typeDescription . ' anlegen</a>
                         </li>',
-        );
+          );
+        }
       }
     }
   }
