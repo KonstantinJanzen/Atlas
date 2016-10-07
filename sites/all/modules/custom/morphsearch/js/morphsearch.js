@@ -19,7 +19,8 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
         buttonSearch: $('#searchbutton'),                       // search button
         buttonReset: $('#morphsearch-reset'),                   // reset button
         buttonMorphbox: $('#morphsearch-select-block-toggle'),  // "button" to toggle morphological box search
-        buttonSave: $('#morphsearch-save')                      // link to save the selected search values
+        buttonSave: $('#morphsearch-save'),                     // link to save the selected search values
+        buttonsSearchResults: $('.searchResultLink')            // all saved search result links on the user profile
 };
 
 /**
@@ -138,6 +139,15 @@ Indeko.Morphsearch.hookTypeSearchToggle = function() {
 Indeko.Morphsearch.hookMorphologicalSearchToggle = function() {
     this.buttonMorphbox.click( function() {
         Indeko.Morphsearch.elemMorphBlock.toggle();
+    });
+};
+
+/**
+ * Load search parameters to update the search block once user clicks links to see saved search results.
+ */
+Indeko.Morphsearch.hookSearchResultsButtons = function() {
+    Indeko.Morphsearch.buttonsSearchResults.click(function() {
+        localStorage["searchValues"] = $(this).attr('data-input');
     });
 };
 
@@ -335,6 +345,7 @@ Indeko.Morphsearch.init = function() {
     Indeko.Morphsearch.hookTypeSearchPublicationButton();
     Indeko.Morphsearch.hookMorphologicalSearchToggle();
     Indeko.Morphsearch.hookSaveButton();
+    Indeko.Morphsearch.hookSearchResultsButtons();
     Indeko.Morphsearch.addSearchInfo();
 
 

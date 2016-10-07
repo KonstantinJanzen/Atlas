@@ -462,7 +462,7 @@ function morphsearch_user_post_render($element, $form_state) {
   global $user;
   $uid = $user->uid;
 
-  $query = "SELECT id, timestamp FROM {morphsearch_saved_input}
+  $query = "SELECT id, timestamp, input, url FROM {morphsearch_saved_input}
             WHERE user_id = :uid;";
   $result = db_query($query, array(":uid" => $uid));
   $result = $result->fetchAll();
@@ -485,7 +485,8 @@ function morphsearch_user_post_render($element, $form_state) {
     $html .= "<tr>";
     $html .= "<td>" . "Unternehmensgröße:" . "</td>";
     $html .= "<td>" . "Kleinunternehmen" . "</td>";
-    $html .= "<td>" . "<a href='url'>>> Zu den Ergebnissen</a>" . "</td>";
+    $html .= "<td>" . "<a href='$currentresult->url' data-input='$currentresult->input' class='searchResultLink'" .
+             ">>> Zu den Ergebnissen</a>" . "</td>";
     $html .= "</tr>";
     $html .= "</tr>";
     $html .= "<tr>";
