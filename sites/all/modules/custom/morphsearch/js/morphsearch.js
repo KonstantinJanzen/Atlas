@@ -155,13 +155,13 @@ Indeko.Morphsearch.reset = function() {
 };
 
 /**
- * Converts selected search items to array.
- * First element is fulltext string, followed by taxonomy IDs -> ["fulltext search","38","40"].
- * TODO: extend for type search (2nd element in searchArray?) Indeko.Morphsearch.elemsType + Publikationsdaten
+ * Converts selected search items to an object.
  *
- * @returns {Array} of all search items.
+ * @returns searchArray Associative array like object that contains all search items.
  */
 Indeko.Morphsearch.toArray = function() {
+
+    // search object structure (imitating an assiciative array) that can be easily converted to and from JSON
     var searchArray = {
         fulltext: '',
         morphological: [],
@@ -179,6 +179,7 @@ Indeko.Morphsearch.toArray = function() {
     var isPublicationSelected = false;
 
 
+    // save and parse fulltext search string
     var inputFulltextSearch = this.elemFulltext.val();
     // replace empty fulltext search field with "*" search
     if (!inputFulltextSearch) {
@@ -187,7 +188,7 @@ Indeko.Morphsearch.toArray = function() {
     searchArray.fulltext = inputFulltextSearch;
 
 
-    // iterate over all select elements and save selected items
+    // save morphological search by iterating over all select elements in the morphological block
     Indeko.Morphsearch.elemsMorph.each(function() {
         var tid = $(this).val();
 
@@ -195,106 +196,115 @@ Indeko.Morphsearch.toArray = function() {
         if (!$.isEmptyObject(tid)) {
             // multiselect will return an array of selected items. Add single values to the final searchArray.
             if(Array.isArray(tid)) {
-                searchArray['morphological'].push.apply(searchArray['morphological'], tid);
+                searchArray.morphological.push.apply(searchArray.morphological, tid);   // multi-select
             } else {
-                searchArray['morphological'].push(tid);
+                searchArray.morphological.push(tid);                                    // single-select
             }
         }
     });
 
-    // iterate over all type elements and save selected items
+
+    // save type search by iterating over all type elements in the type block and save selected items
     Indeko.Morphsearch.elemsType.each(function() {
         if ($(this).hasClass('selected')) {
             var machineName = $(this).attr('data-name');
             searchArray.type.push(machineName);
 
+            // special case: if publication is selected publication search should be displayed and saved, too.
             if (machineName === 'biblio') {
                 isPublicationSelected = true;
             }
         }
     });
 
-    //TODO comments
-    // iterate over all publication elements if publication is selected and save values
+
+    // if publication is selected iterate over all publication elements  and save their values
     if (isPublicationSelected) {
         Indeko.Morphsearch.elemsPublication.each(function (index) {
             var id = $(this).val();
             var type = $(this).attr('data-type');
 
-         // if user selected an element, add it's taxonomy ID to the searchArray TODO comments
+            // if user selected an element, add it's ID to the searchArray
             if (!$.isEmptyObject(id)) {
                 // multiselect will return an array of selected items. Add single values to the final searchArray.
                 if(Array.isArray(id)) {
-                    searchArray.publication[type].push.apply(searchArray.publication[type], id);
+                    searchArray.publication[type].push.apply(searchArray.publication[type], id);    // multi-select
                 } else {
-                    searchArray.publication[type].push(id);
+                    searchArray.publication[type].push(id);                                         // single-select
                 }
             }
         });
     }
 
 
-
-
-
-
-
     return searchArray;
 };
 
 /**
- * Fill search block with values from the searchArray.
- * TODO: extend for type search (2nd element in searchArray?)
+ * Load search block with values from the searchArray.
  *
- * @param searchArray Array of search values ["fulltext search","38","40"]. TODO
+ * @param searchArray Associative array like object that contains all search items.
+ * @see toArray for searchArray structure definition.
  */
-Indeko.Morphsearch.toSearchblock = function (searchArray) {
+Indeko.Morphsearch.toSearchblock = function(searchArray) {
 
+    // fill fulltext field
     if (searchArray.fulltext === '*') {
         Indeko.Morphsearch.elemFulltext.val('');
     } else {
         Indeko.Morphsearch.elemFulltext.val(searchArray.fulltext);
     }
 
-    // fill morphological search elements
+
+    // fill morphological search elements, ...
     $.each(searchArray.morphological, function (index, value) {
         Indeko.Morphsearch.elemMorphBlock.find('option[value=' + value + ']').attr('selected', 'selected');
     });
 
-    // display morphological box, if morphological box elements were selected
-    if (searchArray.morphological.length > 1) {
+    // ...display the morphological block, if morphological elements were selected ...
+    if (searchArray.morphological.length > 0) {
         Indeko.Morphsearch.elemMorphBlock.show();
-    }
 
-    // make chosen adopt the morphological search changes
-    Indeko.Morphsearch.elemsMorph.trigger("chosen:updated");
+        // ...and update chosen to adopt the changes
+        Indeko.Morphsearch.elemsMorph.trigger("chosen:updated");
+    }
 
 
     // select type search elements
+    var isPublicationSelected = false;
     $.each(searchArray.type, function (index, value) {
         Indeko.Morphsearch.elemTypeBlock.find('div[data-name=' + value + ']').addClass('selected');
+
+        if(value === 'biblio') {
+            isPublicationSelected = true;
+        }
     });
 
     var hasValues = false;
-    $.each(searchArray.publication, function (index, value) {
-        if (!$.isEmptyObject(value)) {
-            var elemSelect = Indeko.Morphsearch.elemPublicationBlock.find('select[data-type="' + index + '"]');
-            elemSelect.find('option[value=' + value + ']').attr('selected', 'selected');
+    // iterate over the 6 publication related data types (year, author,... @see toArray) and fill in selected values...
+    $.each(searchArray.publication, function (type, values) {
+        if (!$.isEmptyObject(values)) { // ...if the array of IDs is not empty ...
+            var elemSelect = Indeko.Morphsearch.elemPublicationBlock.find('select[data-type="' + type + '"]');
+            $.each(values, function (index, value) {
+                elemSelect.find('option[value=' + value + ']').attr('selected', 'selected');
+            });
 
             hasValues = true;
         }
     });
 
-    // make chosen adopt the publication search changes
-    Indeko.Morphsearch.elemsPublication.trigger("chosen:updated");
-
-    // display publication box, if publication elements were selected
-    if (hasValues) {
+    // if publication is selected, display publication link
+    if (isPublicationSelected) {
         Indeko.Morphsearch.elemPublicationBlock.show();
-        Indeko.Morphsearch.elemPublicationFilterBlock.show();
+
+        // if publication search values are selected, display publication search block ...
+        if (hasValues) {
+            Indeko.Morphsearch.elemPublicationFilterBlock.show();
+
+            // ...and make chosen adopt the publication search changes
+            Indeko.Morphsearch.elemsPublication.trigger("chosen:updated");
+        }
     }
-
-
 };
 
 /**
