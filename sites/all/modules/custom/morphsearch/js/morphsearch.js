@@ -90,10 +90,10 @@ Indeko.Morphsearch.hookSaveButton = function() {
 
             // display notifications on main content block
             success: function (data, textStatus, jqXHR) {
-                Indeko.createNotification(data.message, $('#main-content'));
+                Indeko.createNotification('Hinweis!',data.message, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                Indeko.createNotification(textStatus, $('#main-content'));
+                Indeko.createNotification('Fehler!',textStatus, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
             }
         });
     });
@@ -396,53 +396,57 @@ Indeko.Morphsearch.addSearchInfo = function() {
 /**
  * Displays a notification on a selected DOM target.
  *
- * @param message String text to be displayed in the notification.
- * @param target DOM element that will be th target position of the notification.
+ * @param title String to be displayed as the notification title.
+ * @param text String to be displayed as the notification message.
+ * @param my String position of the notification...
+ * @param at String ... that will point to this location at the target
+ * @param location DOM element as target for the notification
  */
-Indeko.createNotification = function(message, target) {
-    $('<div/>').qtip({
+Indeko.createNotification = function(title, text, my, at, location) {
+    $(document.body).qtip({
         content: {
-            text: message,
+            text: text,
             title: {
-                text: 'Hinweis!',
-                button: false
+                text: title
             }
         },
         position: {
             viewport: $(window) ,
-            my: 'top right',
-            at: 'top right',
-            target: target
+            my: my,
+            at: at,
+            target: location
         },
         show: {
             event: false,
             ready: true,
             effect: function() {
-                $(this).stop(0, 1).animate({ height: 'toggle' }, 400, 'swing');
+                $(this).stop(0, 1).fadeIn(400);
             },
             delay: 0
         },
         hide: {
+            event: false,
             effect: function(api) {
-                $(this).stop(0, 1).animate({ height: 'toggle' }, 400, 'swing');
+                $(this).stop(0, 1).fadeOut(400).queue(function() {
+                    api.destroy(true);
+                })
             }
         },
         style: {
-            width: 400,
-            classes: 'searchNotification',
-            tip: false
+            classes: 'searchNotification jgrowl ui-tooltip-dark ui-tooltip-rounded',
+            tip: true
         },
         events: {
             render: function(event, api) {
+                var lifespan = 4000;
+
                 clearTimeout(api.timer);
                 if (event.type !== 'mouseover') {
-                    api.timer = setTimeout(function() {
-                        api.destroy();
-                    }, 4000);
+                    api.timer = setTimeout(function() {api.hide();}, lifespan);
                 }
             }
         }
-    });
+    }).removeData('qtip');
 };
 
 
