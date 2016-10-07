@@ -34,13 +34,14 @@ Indeko.Morphsearch.hookSearchButton = function() {
 /**
  * Execute search. Save selected values and redirect to search results.
  */
-Indeko.Morphsearch.doSearch = function() {
-    // save selected search values
+Indeko.Morphsearch.doSearch = function () {
     var searchArray = Indeko.Morphsearch.toArray();
+    var searchUrl = Indeko.Morphsearch.toUrl(searchArray);
+
+    // save selected search values locally to restore the search block on page reload
     localStorage["searchValues"] = JSON.stringify(searchArray);
 
     // redirect to search results
-    var searchUrl = Indeko.Morphsearch.toUrl(searchArray);
     window.location.replace(searchUrl);
 };
 
@@ -351,25 +352,25 @@ Indeko.Morphsearch.init = function() {
 };
 
 /**
- * Converts the data array to an Apache Solr search URL.
- * ["Kompetenz", "38", "40"] -> /indeko/search/site/Kompetenz AND tid:38 AND tid:40
+ * Converts the search object (@see toArray) to an Apache Solr search URL.
+ * -> /indeko/search/site/Kompetenz AND tid:38 AND tid:40
  * TODO: duplicate function in morphmapping.js
  *
- * @param searchArray {Array} containing all user-selected search values.
+ * @param searchArray Object containing all user-selected search values.
  * @return {string} Complete search URL in string format.
  */
-Indeko.Morphsearch.toUrl = function(searchArray) {
+Indeko.Morphsearch.toUrl = function (searchArray) {
     var baseSolrSearchUrl = Drupal.settings.basePath + "search/site/";
     var solrSearchQuery = "";
 
-    $.each(searchArray, function(index, value) {
-        // first element of data array is the fulltext search string
-        if (index === 0) {
-            solrSearchQuery += value;
-        } else {
-            solrSearchQuery += " AND tid:" + value
-        }
+    solrSearchQuery += searchArray.fulltext;
+
+    $.each(searchArray.morphological, function (index, tid) {
+        solrSearchQuery += " AND tid:" + tid;
     });
+
+
+    // TODO type and publication search
 
     var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
     return solrSearchUrl;
