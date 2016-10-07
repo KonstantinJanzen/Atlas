@@ -511,6 +511,19 @@ $(document).ready(function() {
     $(".actions .no").click(function(){
         Indeko.Morphsearch.hideConfirmation($(this).parent());
     });
+
+    /* Open and close saved search fieldset. */
+    $('#content legend').click(function() {
+        var i = $('i', this);
+        $('table', $(this).parent()).fadeToggle();
+
+        if(i.hasClass('fa-chevron-down')) {
+            i.switchClass('fa-chevron-down', 'fa-chevron-left');
+        }
+        else {
+            i.switchClass('fa-chevron-left', 'fa-chevron-down');
+        }
+    });
 });
 
 
