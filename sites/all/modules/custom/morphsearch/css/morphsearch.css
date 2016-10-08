@@ -118,9 +118,9 @@
 }
 
 /*
- * Delete link for saved search.
+ * Delete link for saved search, filter link.
  */
-.actions .delete:hover {
+.actions .delete:hover, .toggleFilter:hover {
     cursor: pointer;
 }
 
