@@ -512,7 +512,8 @@ $(document).ready(function() {
         Indeko.Morphsearch.hideConfirmation($(this).parent());
     });
 
-    /* Open and close saved search fieldset. */
+    /* Currently no longer required.
+    /* Open and close saved search fieldset.
     $('#content legend').click(function() {
         var i = $('i', this);
         $('table', $(this).parent()).fadeToggle();
@@ -524,7 +525,7 @@ $(document).ready(function() {
             i.removeClass('fa-chevron-left');
             i.addClass('fa-chevron-down');
         }
-    });
+    }); */
 });
 
 

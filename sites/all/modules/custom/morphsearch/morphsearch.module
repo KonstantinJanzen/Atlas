@@ -41,6 +41,7 @@ function morphsearch_block_view($delta = '') {
       // Attach morphsearch CSS and font-awesome CSS to block.
       $block['content']['#attached']['css'] = array(
           drupal_get_path('module', 'morphsearch') . "/css/morphsearch.css",
+          /* Please note: Font-awesome is currently no longer required. */
           drupal_get_path('module', 'morphsearch') . "/css/font-awesome.min.css");
       $block['content']['#attached']['js'][] = array(
         'data' => drupal_get_path('module', 'morphsearch') . "/js/morphsearch.js",
@@ -475,7 +476,7 @@ function morphsearch_user_post_render($element, $form_state) {
 
     $html .= "<fieldset id='" . $currentresult->id . "'>";
     /* Format date to fit the mockup. */
-    $html .= "<legend><i class=\"fa fa-chevron-down\" aria-hidden=\"true\"></i>" . "Suche vom " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
+    $html .= "<legend>" . "Suche vom " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
     $html .= "<table>";
     $html .= "<tr>";
     $html .= "<td>" . "Kompetenzentwicklung:" . "</td>";
