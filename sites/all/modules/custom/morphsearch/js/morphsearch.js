@@ -519,8 +519,7 @@ $(document).ready(function() {
 
         if(i.hasClass('fa-chevron-down')) {
             i.switchClass('fa-chevron-down', 'fa-chevron-left');
-        }
-        else {
+        } else {
             i.switchClass('fa-chevron-left', 'fa-chevron-down');
         }
     });

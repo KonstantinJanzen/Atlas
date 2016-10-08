@@ -500,6 +500,17 @@ function morphsearch_user_post_render($element, $form_state) {
     $html .= "<td>" . "Projektstart:" . "</td>";
     $html .= "<td>" . "März 2015" . "</td>";
     $html .= "</tr>";
+    $html .= "<tr>";
+    $html .= "<td>" . "<a>Restliche Filter einblenden</a>" . "</td>";
+    $html .= "</tr>";
+    $html .= "<tr>";
+    $html .= "<td>" . "Branche:" . "</td>";
+    $html .= "<td>" . "Baugewerbe" . "</td>";
+    $html .= "</tr>";
+    $html .= "<tr>";
+    $html .= "<td>" . "Arbeitsform:" . "</td>";
+    $html .= "<td>" . "offen" . "</td>";
+    $html .= "</tr>";
     $html .= "</table>";
     $html .= "</fieldset>";
   }
