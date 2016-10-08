@@ -341,8 +341,7 @@ function morphsearch_enable() {
   db_query('
       ALTER TABLE {morphsearch_saved_input}
       MODIFY timestamp TIMESTAMP NOT NULL
-      DEFAULT CURRENT_TIMESTAMP
-      ON UPDATE CURRENT_TIMESTAMP'
+      DEFAULT CURRENT_TIMESTAMP'
   );
 }
 
