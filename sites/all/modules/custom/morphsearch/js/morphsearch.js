@@ -518,9 +518,11 @@ $(document).ready(function() {
         $('table', $(this).parent()).fadeToggle();
 
         if(i.hasClass('fa-chevron-down')) {
-            i.switchClass('fa-chevron-down', 'fa-chevron-left');
+            i.removeClass('fa-chevron-down');
+            i.addClass('fa-chevron-left');
         } else {
-            i.switchClass('fa-chevron-left', 'fa-chevron-down');
+            i.removeClass('fa-chevron-left');
+            i.addClass('fa-chevron-down');
         }
     });
 });
