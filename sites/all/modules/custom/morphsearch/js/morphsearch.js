@@ -502,7 +502,7 @@ Indeko.Morphsearch.init();
  */
 $(document).ready(function() {
 
-    /* Delete Link: */
+    /* Delete Link. */
     $(".actions .delete").click(function(){
         Indeko.Morphsearch.showConfirmation($(this).parent());
     });
@@ -512,7 +512,30 @@ $(document).ready(function() {
         Indeko.Morphsearch.hideConfirmation($(this).parent());
     });
 
+    /*
+     * Show only the first 4 features (rows) for every fieldset.
+     */
+    $("#content fieldset").each(function(index, element) {
+
+        if($("table tr", element).length > 4) {
+            $("table tr:gt(3)", element).hide();
+        }
+    });
+
+    /* Toggle the filter link. */
+    $(".toggleFilter").click(function() {
+
+        if($("table tr:nth-last-child(1):visible", this.parentElement).length > 0) {
+            $("table tr:gt(3)", this.parentElement).hide();
+            $(".toggleFilter", this.parentElement).text("Restliche Filter einblenden");
+        } else {
+            $("table tr:gt(3)", this.parentElement).show();
+            $(".toggleFilter", this.parentElement).text("Weniger Filter anzeigen");
+        }
+    });
+
     /* Currently no longer required.
+     */
     /* Open and close saved search fieldset.
     $('#content legend').click(function() {
         var i = $('i', this);

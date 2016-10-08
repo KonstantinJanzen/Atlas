@@ -158,3 +158,10 @@
 #morphsearch-publication-filter-block, #morphsearch-publication-block {
     display: none;
 }
+
+/*
+ * Show more/show less filter link.
+ */
+.toggleFilter {
+    padding: 10px;
+}
