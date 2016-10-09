@@ -96,6 +96,7 @@
 .morphblocktable {
     display: table;
     width: 100%;
+    margin-top: 1em;
 }
 
 .morphblockcell {
@@ -103,7 +104,7 @@
     vertical-align: middle;
 }
 #morphsearch-select-block-toggle {
-    margin-bottom: 1em;
+    margin-bottom: 0;
     display: block;
 }
 
@@ -157,6 +158,15 @@
  */
 #morphsearch-publication-filter-block, #morphsearch-publication-block {
     display: none;
+    margin-top: 1em;
+}
+
+/*
+ * overwrite drupal .form-item style
+ */
+#morphsearch-publication-filter-block > div {
+    margin-top: 0;
+    margin-bottom: 0;
 }
 
 /*

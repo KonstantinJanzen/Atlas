@@ -116,11 +116,82 @@ function createMorphsearchContent() {
 
   // all publication related elements
   $content['typesearchpublication'] = array(
-    '#markup' => buildPublicationSearchHtml(),
     '#prefix' => '<div id="morphsearch-publication-block">' .
-          '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Filter (Dummy)') . '</a>' .
+          '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Filter') . '</a>' .
           '<div id="morphsearch-publication-filter-block">',
     '#suffix' => '</div></div>',
+  );
+
+  // publication years select
+  $content['typesearchpublication']['years'] = array(
+    '#type' => 'select',
+    '#options' => biblio_get_years(),
+    '#attributes' => array(
+      'class' => array('publication-select'),
+      'data-type' => 'year',
+      'data-placeholder' => t('Erscheinungsjahr'),
+      'multiple' => 'multiple'
+    )
+  );
+
+  // publication authors select
+  $content['typesearchpublication']['authors'] = array(
+    '#type' => 'select',
+    '#options' => biblio_get_authors(),
+    '#attributes' => array(
+      'class' => array('publication-select'),
+      'data-type' => 'author',
+      'data-placeholder' => t('Autor'),
+      'multiple' => 'multiple'
+    )
+  );
+
+  // publication tags select
+  $content['typesearchpublication']['tags'] = array(
+    '#type' => 'select',
+    '#options' => biblio_get_keywords(),
+    '#attributes' => array(
+      'class' => array('publication-select'),
+      'data-type' => 'tags',
+      'data-placeholder' => t('Schlagwort'),
+      'multiple' => 'multiple'
+    )
+  );
+
+  // publication publishers select
+  $content['typesearchpublication']['publishers'] = array(
+    '#type' => 'select',
+    '#options' => biblio_get_publishers(),
+    '#attributes' => array(
+      'class' => array('publication-select'),
+      'data-type' => 'publisher',
+      'data-placeholder' => t('Verlag'),
+      'multiple' => 'multiple'
+    )
+  );
+
+  // publication locations select
+  $content['typesearchpublication']['locations'] = array(
+    '#type' => 'select',
+    '#options' => biblio_get_locations(),
+    '#attributes' => array(
+      'class' => array('publication-select'),
+      'data-type' => 'location',
+      'data-placeholder' => t('Ort'),
+      'multiple' => 'multiple'
+    )
+  );
+
+  // publication types select
+  $content['typesearchpublication']['types'] = array(
+    '#type' => 'select',
+    '#options' => biblio_get_types(),
+    '#attributes' => array(
+      'class' => array('publication-select'),
+      'data-type' => 'type',
+      'data-placeholder' => t('Publikationstyp'),
+      'multiple' => 'multiple'
+    )
   );
 
   // reset search filter link
@@ -252,6 +323,7 @@ function buildPublicationSearchHtml() {
   $html .= '<select class="publication-select" data-type="publisher" data-placeholder="Verlag" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
   $html .= '<select class="publication-select" data-type="location" data-placeholder="Ort" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
   $html .= '<select class="publication-select" data-type="type" data-placeholder="Publikationstyp" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
+
 
   return $html;
 }
@@ -514,4 +586,79 @@ function morphsearch_user_post_render($element, $form_state) {
   }
 
   return $element . $html;
+}
+
+/**
+ * Returns an array of all available biblio authors.
+ *
+ * @return {Array} author ID -> first and last name
+ */
+function biblio_get_authors() {
+  $query = "SELECT c.cid, c.name FROM {biblio_contributor_data} c";
+  $result = db_query($query);
+
+  return $result->fetchAllKeyed(0,1);
+}
+
+/**
+ * Returns an array of all available biblio keywords.
+ *
+ * @return {Array} keyword ID -> keyword
+ */
+function biblio_get_keywords() {
+  $query = "SELECT k.kid, k.word FROM {biblio_keyword_data} k";
+  $result = db_query($query);
+
+  return $result->fetchAllKeyed(0,1);
+}
+
+/**
+ * Returns an array of all visible (configure in biblio module settings) biblio publication types.
+ *
+ * @return {Array} publication type ID -> publication type name
+ */
+function biblio_get_types() {
+  $query = "SELECT t.tid, t.name FROM {biblio_types} t
+            WHERE t.visible = 1";
+  $result = db_query($query);
+
+  return $result->fetchAllKeyed(0,1);
+}
+
+/**
+ * Returns an array of all distinct years of available publications.
+ *
+ * @return {Array} year -> year
+ */
+function biblio_get_years() {
+  $query = "SELECT DISTINCT b.biblio_year FROM {biblio} b";
+  $result = db_query($query);
+
+  return $result->fetchAllKeyed(0,0);
+}
+
+/**
+ * Returns an array of all distinct publishers of available publications.
+ *
+ * @return {Array} publisher -> publisher
+ */
+function biblio_get_publishers() {
+  $query = "SELECT DISTINCT b.biblio_publisher FROM {biblio} b";
+  $result = db_query($query);
+
+  return $result->fetchAllKeyed(0,0);
+}
+
+/**
+ * Returns an array of all distinct publishers of available publications.
+ *
+ * @return {Array} location -> location
+ */
+function biblio_get_locations() {
+  $query = "SELECT DISTINCT b.biblio_place_published FROM {biblio} b";
+  $result = db_query($query);
+
+  $stringArray = [];
+
+  return $result->fetchAllKeyed(0,0);
 }

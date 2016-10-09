@@ -295,7 +295,7 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
         if (!$.isEmptyObject(values)) { // ...if the array of IDs is not empty ...
             var elemSelect = Indeko.Morphsearch.elemPublicationBlock.find('select[data-type="' + type + '"]');
             $.each(values, function (index, value) {
-                elemSelect.find('option[value=' + value + ']').attr('selected', 'selected');
+                elemSelect.find('option[value="' + value + '"]').attr('selected', 'selected');
             });
 
             hasValues = true;
@@ -328,6 +328,7 @@ Indeko.Morphsearch.init = function() {
         width:"100%"
     });
 
+    Indeko.Morphsearch.elemsPublication.removeClass('form-select'); // remove standard form API select class?
     Indeko.Morphsearch.elemsPublication.chosen({
         inherit_select_classes: true,
         allow_single_deselect: true,
