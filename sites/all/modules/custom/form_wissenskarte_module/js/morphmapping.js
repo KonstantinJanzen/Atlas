@@ -742,9 +742,10 @@ Indeko.MorphBox.hide = function() {
  * Converts the standard portal search block to be used to link content to knowledge maps.
  */
 Indeko.MorphBox.convertMorphsearch = function() {
+    Indeko.Morphsearch.reset();
 	Indeko.ImageMap.contentBlockLabel.text("Inhalte Wissenskarte");					// change label of the search block
     $('.morphblocktable').remove();                                                 // remove standard search block search / reset / save elements
-	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  // changelistener for comboboxes in MorpBox
+    Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  // changelistener for comboboxes in MorpBox
     Indeko.Morphsearch.elemFulltext.unbind().change(Indeko.MorphBox.getSelectedValuesFromMorphBox); // changelistener for fulltext field
     Indeko.MorphBox.update(myimgmap.currentid);										// show selected morphological box items of current map area
 };
