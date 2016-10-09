@@ -64,9 +64,6 @@ Indeko.Morphsearch.hookResetButton = function() {
     Indeko.Morphsearch.buttonReset.click( function() {
         Indeko.Morphsearch.reset();
         localStorage.removeItem("searchValues");
-
-        // close morphological search and return to the top of the page
-        Indeko.Morphsearch.elemMorphBlock.hide();
         $(window).scrollTop(0);
     });
 };
@@ -161,6 +158,7 @@ Indeko.Morphsearch.reset = function() {
     this.elemsPublication.val(-1).trigger("chosen:updated");
 
     this.elemsType.removeClass('selected');
+    Indeko.Morphsearch.elemMorphBlock.hide();
     Indeko.Morphsearch.elemPublicationBlock.hide();
     Indeko.Morphsearch.elemPublicationFilterBlock.hide();
 };

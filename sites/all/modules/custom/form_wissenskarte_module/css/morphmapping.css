@@ -63,3 +63,8 @@
 .field-name-field-markierte-bereiche, #edit-field-markierte-bereiche {
     display: none;
 }
+
+/* TODO remove once unused taxonomy term are removed from content type */
+#morphological-box {
+    display: none;
+}

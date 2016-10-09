@@ -15,6 +15,7 @@ function form_wissenskarte_module_preprocess_page(&$vars)
     // add for knowledge map edit and clone modes
     if ($isPathEdit || $isPathClone) {
       drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_edit.js", array('scope' => 'footer', 'weight' => 6));
+      drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/lang_de.js", array('scope' => 'footer', 'weight' => 1));
     } else { // add for for knowledge map view mode
       drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_view.js", array('scope' => 'footer', 'weight' => 6));
     }
@@ -30,6 +31,7 @@ function form_wissenskarte_module_field_widget_image_image_form_alter(&$element,
   if ($isPathAddWissenskarte) {
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping.js", array('scope' => 'footer', 'weight' => 5));
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping_add.js", array('scope' => 'footer', 'weight' => 5));
+    drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/lang_de.js", array('scope' => 'footer', 'weight' => 1));
 
     drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/morphmapping.css");
   }

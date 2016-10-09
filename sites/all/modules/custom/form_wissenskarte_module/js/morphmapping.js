@@ -34,6 +34,7 @@ var ValidationResult = function() {
  */
 Indeko.ImageMap = Indeko.ImageMap || {
 	scalingFactor: 1,
+	contentBlockLabel:	$('#fulltextsearchrow').find('label'),
 };
 
 /**
@@ -83,10 +84,9 @@ function  initView(ViewMode) {
 			instanciateAreaDescription();													// load GUI
             myimgmap.setMapHTML(loadedValue);												// load image map areas
             Indeko.ImageMap.hookSaveButton(); 												// attach client side validation to save button
-			//Indeko.MorphBox.loadDummy();													// load morphological box table dummy
-			Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox)	// changelistener for comboboxes in MorpBox
-			Indeko.MorphBox.update(myimgmap.currentid);										// show selected morphological box items of current map area
-        } else if (l_oImageView.length > 0) {
+            Indeko.MorphBox.convertMorphsearch();                                           // converts the standard protal search block to be usable to link content to knowledge maps
+			myimgmap.loadStrings(imgmapStrings);											// load status messages
+		} else if (l_oImageView.length > 0) {
 			// ViewMode
 			var parent = $('.image-style-none').parent();
 			var div = $(parent[0]).parent();
@@ -675,7 +675,7 @@ Indeko.MorphBox.update = function(id) {
 Indeko.MorphBox.toData = function() {
 	Indeko.MorphBox.dataArray = [];
 
-	var inputFulltextSearch = jQuery("#input_fulltext_search").val();
+	var inputFulltextSearch = Indeko.Morphsearch.elemFulltext.val();
 	// replace empty fulltext search field with "*" search
 	if (!inputFulltextSearch) {
 		inputFulltextSearch = "*";
@@ -696,10 +696,11 @@ Indeko.MorphBox.selectItems = function() {
 	$.each(Indeko.MorphBox.dataArray, function(index, value) {
 		// first element of data array is the fulltext search string
 		if (index === 0) {
-			$("#input_fulltext_search").val(value);
+			Indeko.Morphsearch.elemFulltext.val(value);
 		} else {
 			// load selected values in hidden selects
 			if (value || value == 0) {
+			    Indeko.Morphsearch.elemMorphBlock.show();
 				Indeko.MorphBox.selects.find('option[value=' + value + ']').attr('selected', 'selected');
 			}
 		}
@@ -719,7 +720,7 @@ Indeko.MorphBox.clear = function() {
 	// unselect all chosen dropdowns
 	$(Indeko.MorphBox.selects).trigger('chosen:updated');
 
-	jQuery("#input_fulltext_search").val('');
+    Indeko.Morphsearch.reset();
     Indeko.MorphBox.dataArray = [];
 };
 
@@ -736,6 +737,17 @@ Indeko.MorphBox.show = function() {
 Indeko.MorphBox.hide = function() {
     Indeko.MorphBox.element.hide();
 }
+
+/**
+ * Converts the standard portal search block to be used to link content to knowledge maps.
+ */
+Indeko.MorphBox.convertMorphsearch = function() {
+	Indeko.ImageMap.contentBlockLabel.text("Inhalte Wissenskarte");					// change label of the search block
+    $('.morphblocktable').remove();                                                 // remove standard search block search / reset / save elements
+	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  // changelistener for comboboxes in MorpBox
+    Indeko.Morphsearch.elemFulltext.unbind().change(Indeko.MorphBox.getSelectedValuesFromMorphBox); // changelistener for fulltext field
+    Indeko.MorphBox.update(myimgmap.currentid);										// show selected morphological box items of current map area
+};
 
 /*
  * Inserts morphbox dummy into the DOM. Dirty copy and paste from search morphbox dummy.
