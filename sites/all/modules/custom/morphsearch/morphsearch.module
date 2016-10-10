@@ -310,7 +310,7 @@ function buildTypeSearchHtml($staticFilter = []) {
 
 /**
  * Creates the HTML for the publication filter search block.
- * TODO only a static dummy
+ * TODO only a static dummy, remove
  *
  * @return string Contains the HTML code for the publication filter search block.
  */
@@ -661,4 +661,41 @@ function biblio_get_locations() {
   $stringArray = [];
 
   return $result->fetchAllKeyed(0,0);
+}
+
+
+/**
+ * Implements hook_apachesolr_index_document_build().
+ * Extend the publication document before sending them to Solr to expose additional fields to Solr search.
+ *
+ * (For field type definiton see solr configuration schema.xml; e.g. is_ = integer single-valued, sm_ = string multi-valued)
+ */
+function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity) {
+    if ($entity->type === 'biblio') {
+      // make fields available for field search (is_year: 2015)
+      $document->addField('is_year', $entity->biblio_year);
+      $document->addField('ss_publisher', $entity->biblio_publisher);
+      $document->addField('ss_location', $entity->biblio_place_published);
+      $document->addField('ss_type', $entity->biblio_type_name);
+
+      // make fields available for fulltext search ts_ (single-valued) and tm_ (multi-valued)
+      $document->addField('ts_year', strtolower($entity->biblio_year));
+      $document->addField('ts_publisher', strtolower($entity->biblio_publisher));
+      $document->addField('ts_location', strtolower($entity->biblio_place_published));
+      $document->addField('ts_type', strtolower($entity->biblio_type_name));
+
+      foreach ($entity->biblio_contributors as $contributor) {
+        if (!empty($contributor['name'])) {
+          $document->addField('sm_author', $contributor['name']);
+          $document->addField('tm_author', strtolower($contributor['name']));
+        }
+      }
+
+      foreach ($entity->biblio_keywords as $keyword) {
+        if (!empty($keyword)) {
+          $document->addField('sm_tag', $keyword);
+          $document->addField('tm_tag', strtolower($keyword));
+        }
+      }
+    }
 }
