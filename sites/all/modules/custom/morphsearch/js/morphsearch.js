@@ -363,8 +363,7 @@ Indeko.Morphsearch.init = function() {
 
 /**
  * Converts the search object (@see toArray) to an Apache Solr search URL.
- * -> /indeko/search/site/Kompetenz AND tid:38 AND tid:40
- * TODO: duplicate function in morphmapping.js
+ * -> /indeko/search/site/Kompetenz AND tid:(38 AND 40) AND bundle:(wissenskarte OR analysereport)
  *
  * @param searchArray Object containing all user-selected search values.
  * @return {string} Complete search URL in string format.
@@ -373,18 +372,99 @@ Indeko.Morphsearch.toUrl = function (searchArray) {
     var baseSolrSearchUrl = Drupal.settings.basePath + "search/site/";
     var solrSearchQuery = "";
 
+    // fulltext search (just carry over)
     solrSearchQuery += searchArray.fulltext;
 
-    $.each(searchArray.morphological, function (index, tid) {
-        solrSearchQuery += " AND tid:" + tid;
-    });
+    // morphological search: convert to "AND tid:(40 AND 41 AND 42)"
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.morphological, "tid", "AND", false);
+
+    // content type search: convert to "AND bundle:(wissenskarte OR analysereport)"
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.type, "bundle", "OR", false);
 
 
-    // TODO type and publication search
+
+    /* publication search: convert to "AND (bundle:(biblio) AND is_year:(2015) AND sm_author:()... )
+     * (see morphsearch.module morphsearch_apachesolr_index_document_build_node() for field names and mapping) */
+    solrSearchQuery += " AND (bundle:(biblio)";
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.year, "is_year", "OR", false);
+
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.publisher, "ss_publisher", "OR", true);
+
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.location, "ss_location", "OR", true);
+
+    // TODO submit only IDs for authors, content types and keywords to Solr index instead of strings?
+    // TODO (fields would not be able for fulltext sercht!)
+    var stringArray = Indeko.Morphsearch.getValue(searchArray.publication.type, "type");
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(stringArray, "ss_type", "OR", true);
+
+    stringArray = Indeko.Morphsearch.getValue(searchArray.publication.author, "author");
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_author", "AND", true);
+
+    stringArray = Indeko.Morphsearch.getValue(searchArray.publication.tags, "tags");
+    solrSearchQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_tag", "AND", true);
+
+    solrSearchQuery += ")"; // publication search done
+
 
     var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
     return solrSearchUrl;
 };
+
+
+/**
+ * Builds solr search string from given parameters.
+ *
+ * @param values {array} of items to search for
+ * @param field {string} Solr field identifier to search in
+ * @param operator {string} operator to connect search items with
+ * @param isString {boolean} to indicate if values should be handled as a single string
+ * @returns {string}
+ */
+Indeko.Morphsearch.buildSearchString = function(values, field, operator, isString) {
+
+    var solrString = "";
+
+    $.each(values, function (index, value) {
+        // surround strings with quotes to handle possible several words as one string
+        if (isString) {
+            value = "\"" + value + "\"";
+        }
+
+        if (index === 0) {
+            solrString += " AND " + field + ":(";  // open section with field identifier ...
+            solrString += value;                   // ...and add first search item
+        } else {
+            solrString += " " + operator + " ";    // connect remaining search items with operator
+            solrString += value;
+        }
+
+        // close section after the last taxonomy term has been added
+        if (index === values.length - 1) {
+            solrString += ")";
+        }
+    });
+
+    return solrString;
+
+};
+
+/**
+ * Converts publication search IDs to their corresponding string values.
+ *
+ * @param values {Array} of selected IDs in publication search block.
+ * @param type {String} data-type attribute of the relevant select element
+ * @returns {Array} of strings.
+ */
+Indeko.Morphsearch.getValue = function (values, type) {
+    var stringArray = [];
+    $.each(values, function (index, value) {
+        stringArray.push($('#morphsearch-publication-filter-block').find('[data-type=' + type + ']')
+            .find('[value=' + value + ']').text());
+    });
+
+    return stringArray;
+};
+
 
 /**
  * Adds tooltip with information about the search syntax to the search info element.
