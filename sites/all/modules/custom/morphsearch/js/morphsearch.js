@@ -20,7 +20,7 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
         buttonReset: $('#morphsearch-reset'),                   // reset button
         buttonMorphbox: $('#morphsearch-select-block-toggle'),  // "button" to toggle morphological box search
         buttonSave: $('#morphsearch-save'),                     // link to save the selected search values
-        buttonsSearchResults: $('.searchResultLink')            // all saved search result links on the user profile
+        buttonsSearchResults: $('.searchResultLink'),           // all saved search result links on the user profile
 };
 
 /**
@@ -382,29 +382,39 @@ Indeko.Morphsearch.toUrl = function (searchArray) {
     solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.type, "bundle", "OR", false);
 
 
-
-    /* publication search: convert to "AND (bundle:(biblio) AND is_year:(2015) AND sm_author:()... )
+    /* publication search: convert to "AND (bundle:(biblio) AND is_year:(2015) AND sm_author:()... ) if publication
+     * type was selected.
      * (see morphsearch.module morphsearch_apachesolr_index_document_build_node() for field names and mapping) */
-    solrSearchQuery += " AND (bundle:(biblio)";
-    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.year, "is_year", "OR", false);
+    if ($.inArray('biblio', searchArray.type) > -1) {
+        //solrSearchQuery = solrSearchQuery.replace(' OR biblio','');
+        //solrSearchQuery = solrSearchQuery.replace(' AND bundle:(biblio)','');
+        //solrSearchQuery += " AND (bundle:(biblio)";
 
-    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.publisher, "ss_publisher", "OR", true);
+        var pubQuery = '';
+        pubQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.year, "is_year", "OR", false);
 
-    solrSearchQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.location, "ss_location", "OR", true);
+        pubQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.publisher, "ss_publisher", "OR", true);
 
-    // TODO submit only IDs for authors, content types and keywords to Solr index instead of strings?
-    // TODO (fields would not be able for fulltext sercht!)
-    var stringArray = Indeko.Morphsearch.getValue(searchArray.publication.type, "type");
-    solrSearchQuery += Indeko.Morphsearch.buildSearchString(stringArray, "ss_type", "OR", true);
+        pubQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.location, "ss_location", "OR", true);
 
-    stringArray = Indeko.Morphsearch.getValue(searchArray.publication.author, "author");
-    solrSearchQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_author", "AND", true);
+        // TODO submit only IDs for authors, content types and keywords to Solr index instead of strings?
+        // TODO (fields would not be able for fulltext sercht!)
+        var stringArray = Indeko.Morphsearch.getValue(searchArray.publication.type, "type");
+        pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "ss_type", "OR", true);
 
-    stringArray = Indeko.Morphsearch.getValue(searchArray.publication.tags, "tags");
-    solrSearchQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_tag", "AND", true);
+        stringArray = Indeko.Morphsearch.getValue(searchArray.publication.author, "author");
+        pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_author", "AND", true);
 
-    solrSearchQuery += ")"; // publication search done
+        stringArray = Indeko.Morphsearch.getValue(searchArray.publication.tags, "tags");
+        pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_tag", "AND", true);
 
+        //pubQuery += ")"; // publication search done
+
+        // if publication filters were set, update biblio restrictions in search
+        if(pubQuery !== '') {
+            solrSearchQuery = solrSearchQuery.replace('biblio','(biblio ' + pubQuery + ')');
+        }
+    }
 
     var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
     return solrSearchUrl;
