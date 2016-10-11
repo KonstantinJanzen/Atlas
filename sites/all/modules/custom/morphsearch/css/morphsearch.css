@@ -11,8 +11,8 @@
 
 #morphsearch-select-block {
     display: none;
-    //overflow-y: auto;
-    //height: 500px;
+//overflow-y: auto;
+//height: 500px;
 }
 
 /*
@@ -109,23 +109,6 @@
 }
 
 /*
- * Pop-up window for saved search delete confirmation.
- */
-.confirmation {
-    position: absolute;
-    background-color: white;
-    border: 1px solid;
-    padding: 5px;
-}
-
-/*
- * Delete link for saved search, filter link.
- */
-.actions .delete:hover, .toggleFilter:hover {
-    cursor: pointer;
-}
-
-/*
  * Style block containing the different content types
  */
 .morphsearch-type-block {
@@ -170,8 +153,50 @@
 }
 
 /*
+ * Pop-up window for saved search delete confirmation.
+ */
+.confirmation {
+    position: absolute; /* absolute */
+    background-color: white;
+    border: 1px solid;
+    padding: 5px;
+    text-align: center;
+    z-index: 10000;
+}
+
+/*
+ * Delete link for saved search, filter link.
+ */
+.actions .delete:hover, .toggleFilter:hover {
+    cursor: pointer;
+}
+
+/*
  * Show more/show less filter link.
  */
 .toggleFilter {
     padding: 10px;
+}
+
+/*
+ * Delete link, search results link.
+ */
+.actions .delete, .searchResultLink {
+    padding: 10px;
+}
+
+/*
+ * Actions Div.
+ */
+.actions {
+    display: inline-block;
+    float: right;
+    position: relative;
+}
+
+/*
+ * First column of the table of saved search.
+ */
+.firstColumn {
+    width: 30%;
 }

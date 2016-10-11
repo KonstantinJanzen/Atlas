@@ -546,46 +546,152 @@ function morphsearch_user_post_render($element, $form_state) {
   $html = "<h3>Gespeicherte Suchen</h3>";
   foreach($result as $currentresult) {
 
+    // JSON representation of the saved search
+    $json = drupal_json_decode($currentresult->input);
+
     $html .= "<fieldset id='" . $currentresult->id . "'>";
     /* Format date to fit the mockup. */
     $html .= "<legend>" . "Suche vom " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
-    $html .= "<table>";
-    $html .= "<tr>";
-    $html .= "<td>" . "Kompetenzentwicklung:" . "</td>";
-    $html .= "<td>" . "Individuell, Führungskräfte" . "</td>";
-    $html .= "<td>" . "<div class='actions' id='". $currentresult->id . "'><a class='delete'>Löschen</a><div class='confirmation' 
-                      style='display:none;'><h4>Diese Suche wirklich löschen?</h4><button class='no'>Nein</button><button 
-                      class='yes' onclick='javascript:Indeko.Morphsearch.deleteSavedSearch(" . $currentresult->id . ");'>Ja</button></div></div>" . "</td>";
-    $html .= "</tr>";
-    $html .= "<tr>";
-    $html .= "<td>" . "Unternehmensgröße:" . "</td>";
-    $html .= "<td>" . "Kleinunternehmen" . "</td>";
-    $html .= "<td>" . "<a href='$currentresult->url' data-input='$currentresult->input' class='searchResultLink'" .
-             ">>> Zu den Ergebnissen</a>" . "</td>";
-    $html .= "</tr>";
-    $html .= "</tr>";
-    $html .= "<tr>";
-    $html .= "<td>" . "Forschungsergebnistyp:" . "</td>";
-    $html .= "<td>" . "Theorie" . "</td>";
-    $html .= "</tr>";
-    $html .= "<tr>";
-    $html .= "<td>" . "Projektstart:" . "</td>";
-    $html .= "<td>" . "März 2015" . "</td>";
-    $html .= "</tr>";
-    $html .= "<tr>";
-    $html .= "<td>" . "Branche:" . "</td>";
-    $html .= "<td>" . "Baugewerbe" . "</td>";
-    $html .= "</tr>";
-    $html .= "<tr>";
-    $html .= "<td>" . "Arbeitsform:" . "</td>";
-    $html .= "<td>" . "offen" . "</td>";
-    $html .= "</tr>";
+    $html .= "<table class='searchResultTable'>";
+
+    // saved fulltext search
+    $fulltext = $json['fulltext'];
+    if (!empty($fulltext)) {
+      if ($fulltext !== '*') {
+        $html .= get_html_table_row("Freitextsuche:", $fulltext);
+      }
+    }
+
+    // saved type search
+    $type = $json['type'];
+    if (!empty($type)) {
+      $html .= get_html_table_row("Inhaltstyp:", get_search_type_string($type));
+    }
+
+    // saved morphological search
+    $morph = $json['morphological'];
+    if (!empty($morph)) {
+      $vocabulary = []; // array of vocabulary machine names and associated taxonomy term names
+
+      // get taxonomy term names and assign them to their parent vocabulary terms
+      foreach ($morph as $tid) {
+        $term = taxonomy_term_load($tid);
+        $vocabulary[$term->vocabulary_machine_name][] = $term->name;
+      }
+
+      // create one row for each morphological feature and all it's values
+      foreach ($vocabulary as $voc => $terms) {
+        $vocName = taxonomy_vocabulary_machine_name_load($voc)->name;
+        $termNames = implode(", ", $terms);
+
+        $html .= get_html_table_row($vocName . ":", $termNames);
+      }
+    }
+
+    // saved publication search
+    $pub = $json['publication'];
+
+    // static publication filter array key:data-type value:headline
+    $pubFilter = ['year' => 'Erscheinungsjahr', 'author' => 'Autor', 'tags' => 'Schlagwort',
+        'publisher' => 'Verlag', 'location' => 'Ort', 'type' => 'Publikationstyp'];
+
+    foreach($pubFilter as $type => $headline) {
+      if (!empty($pub[$type])) {
+
+        $result = [];
+        switch($type) {
+          case 'author':
+            $query = "SELECT c.name FROM {biblio_contributor_data} c
+                      WHERE cid IN (:cid)";
+            $result = db_query($query, array(":cid" => $pub[$type]));
+            $result = $result->fetchAll();
+
+            // map array of objects to array of author names
+            $result = array_map(function($array) {
+              return $array->name; }, $result);
+            break;
+
+          case 'tags':
+            $query = "SELECT k.word FROM {biblio_keyword_data} k
+                      WHERE kid IN (:kid)";
+            $result = db_query($query, array(":kid" => $pub[$type]));
+            $result = $result->fetchAll();
+
+            // map array of objects to array of author names
+            $result = array_map(function($array) {
+              return $array->word; }, $result);
+            break;
+
+          case 'type':
+            $query = "SELECT t.name FROM {biblio_types} t
+                      WHERE tid IN (:tid)";
+            $result = db_query($query, array(":tid" => $pub[$type]));
+            $result = $result->fetchAll();
+
+            // map array of objects to array of author names
+            $result = array_map(function($array) {
+              return $array->name; }, $result);
+            break;
+          default:
+            $result = $pub[$type];
+        }
+
+        // add html row
+        $html .= get_html_table_row($headline . ":", implode(", ", $result));
+      }
+    }
+
     $html .= "</table>";
     $html .= "<a class='toggleFilter'>Restliche Filter einblenden</a>";
+    $html .= "<div class='actions' id='". $currentresult->id . "'>
+                <a href='$currentresult->url' data-input='$currentresult->input' class='searchResultLink'" . ">>> Zu den Ergebnissen</a>
+                <a class='delete'>Löschen</a>
+                <div class='confirmation' style='display:none;'>
+                  <h4>Diese Suche wirklich löschen?</h4>
+                  <button class='no'>Nein</button>
+                  <button class='yes' onclick='javascript:Indeko.Morphsearch.deleteSavedSearch(" . $currentresult->id . ");'>Ja</button>
+                </div>
+              </div>";
+    $html .= "";
     $html .= "</fieldset>";
   }
 
   return $element . $html;
+}
+
+/**
+ * Converts features and corresponding values to an HTML table structure.
+ *
+ * @param $feature {String} First column of table row.
+ * @param $values {String} Second column of table row.
+ * @return {String} HTML table row.
+ */
+function get_html_table_row($feature, $values) {
+  $html = "<tr>";
+  $html .= "<td class='firstColumn'>" . $feature . "</td>";
+  $html .= "<td>" . $values . "</td>";
+  $html .= "</tr>";
+
+  return $html;
+
+};
+
+/**
+ * Converts array of node type machine names to a comma separated string of node type names.
+ *
+ * @param $array {Array} of node type machine names.
+ * @return {String} of node type names, separated by comma.
+ */
+function get_search_type_string($array) {
+  $string = '';
+
+  foreach ($array as $machineName) {
+    $string .= node_type_get_name(node_type_load($machineName)) . ', ';
+  }
+
+  $string = rtrim($string, ", ");
+
+  return $string;
 }
 
 /**

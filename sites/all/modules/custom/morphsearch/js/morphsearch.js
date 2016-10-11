@@ -595,11 +595,14 @@ $(document).ready(function() {
      * Show only the first 4 features (rows) for every fieldset.
      */
     $("#content fieldset").each(function(index, element) {
-
+        
         if($("table tr", element).length > 4) {
             $("table tr:gt(3)", element).hide();
+        } else {
+            $(".toggleFilter", element).hide();
         }
     });
+
 
     /* Toggle the filter link. */
     $(".toggleFilter").click(function() {
