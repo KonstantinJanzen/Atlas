@@ -93,9 +93,11 @@ Indeko.Morphsearch.hookSaveButton = function() {
             success: function (data, textStatus, jqXHR) {
                 Indeko.createNotification('Hinweis!',data.message, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
 
-                // reload page if user is on profile page to show new saved search
-                if ($('.user-profile')) {
-                    location.reload();
+                // reload page if save has been saved and user is on profile page to show new saved search
+                if(data.success === 'true') {
+                    if ($('.user-profile')) {
+                        location.reload();
+                    }
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
