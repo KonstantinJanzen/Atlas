@@ -95,7 +95,7 @@ Indeko.Morphsearch.hookSaveButton = function() {
 
                 // reload page if save has been saved and user is on profile page to show new saved search
                 if(data.success === 'true') {
-                    if ($('.user-profile')) {
+                    if ($('.user-profile').length) {
                         location.reload();
                     }
                 }
