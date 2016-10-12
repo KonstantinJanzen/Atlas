@@ -76,6 +76,9 @@ Indeko.Morphsearch.hookSaveButton = function() {
         var searchArray = Indeko.Morphsearch.toArray();
         var search = JSON.stringify(searchArray);
 
+        // save search-block values
+        localStorage["searchValues"] = search;
+
         // AJAX POST request to send data to Drupal
         $.ajax({
             url: Drupal.settings.basePath + 'user/savesearch/ajax',   // in module defined URL to process the request
@@ -89,6 +92,11 @@ Indeko.Morphsearch.hookSaveButton = function() {
             // display notifications on main content block
             success: function (data, textStatus, jqXHR) {
                 Indeko.createNotification('Hinweis!',data.message, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
+
+                // reload page if user is on profile page to show new saved search
+                if ($('.user-profile')) {
+                    location.reload();
+                }
             },
             error: function (jqXHR, textStatus, errorThrown) {
                 Indeko.createNotification('Fehler!',textStatus, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
@@ -145,6 +153,16 @@ Indeko.Morphsearch.hookMorphologicalSearchToggle = function() {
 Indeko.Morphsearch.hookSearchResultsButtons = function() {
     Indeko.Morphsearch.buttonsSearchResults.click(function() {
         localStorage["searchValues"] = $(this).attr('data-input');
+    });
+};
+
+/**
+ * Immediately save all changes in search block without doing a search.
+ */
+Indeko.Morphsearch.hookSearchBlock = function() {
+    $(Indeko.Morphsearch.elemBlock).mouseout(function() {
+        var searchArray = Indeko.Morphsearch.toArray();
+        localStorage["searchValues"] = JSON.stringify(searchArray);
     });
 };
 
@@ -345,6 +363,7 @@ Indeko.Morphsearch.init = function() {
     Indeko.Morphsearch.hookMorphologicalSearchToggle();
     Indeko.Morphsearch.hookSaveButton();
     Indeko.Morphsearch.hookSearchResultsButtons();
+    Indeko.Morphsearch.hookSearchBlock();
     Indeko.Morphsearch.addSearchInfo();
 
 
