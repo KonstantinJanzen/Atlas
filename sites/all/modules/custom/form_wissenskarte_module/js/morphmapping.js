@@ -729,14 +729,14 @@ Indeko.MorphBox.clear = function() {
  */
 Indeko.MorphBox.show = function() {
     Indeko.MorphBox.element.show();
-}
+};
 
 /**
  * Hide the Morphological Box
  */
 Indeko.MorphBox.hide = function() {
     Indeko.MorphBox.element.hide();
-}
+};
 
 /**
  * Converts the standard portal search block to be used to link content to knowledge maps.
@@ -840,7 +840,7 @@ Indeko.MorphBox.getSelectedValuesFromMorphBox = function(e){
 	myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
 	Indeko.MorphBox.element.removeClass('addAreaError');
 	myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
-}
+};
 
 /*
  * Scales image map area coordinates in add and edit mode to the current displayed width in the browser if the image
@@ -925,29 +925,48 @@ Indeko.ImageMap.hookSaveButton = function () {
         return l_bIsValid;
 
     });
-}
+};
 
 /**
  * Adds a new area to the image map.
  */
 Indeko.ImageMap.addNewArea = function () {
 	myimgmap.addNewArea();
-}
+};
 
 /**
- * Hide image map text section (marked areas text field)
+ * Hide image map text section (marked areas text field).
  */
 Indeko.ImageMap.hideElements = function() {
     $("#edit-field-markierte-bereiche").hide();
-}
+};
 
 /**
  * Adds the tooltip to knowledge map areas.
  */
 Indeko.ImageMap.addTooltip = function() {
-    $('area').qtip({
-        show: {
-            delay: 1
-        }
-    });
-}
+	/*$('area').qtip({
+	 show: {
+	 delay: 1
+	 }
+	 });
+	 } */
+	$('area').qtip({
+		content: {
+			show: {
+				delay: 1
+			}
+		},
+		my: 'left',
+		position: {
+			target: 'mouse',
+			adjust: {
+				x: 30, y: 0
+			}
+		},
+
+		style: {
+			tip: false
+		}
+	});
+};
