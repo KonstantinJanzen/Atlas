@@ -139,7 +139,7 @@
 /*
  * Publication search elements initially hidden
  */
-#morphsearch-publication-filter-block, #morphsearch-publication-block {
+#morphsearch-publication-block {
     display: none;
     margin-top: 1em;
 }
@@ -147,9 +147,13 @@
 /*
  * overwrite drupal .form-item style
  */
-#morphsearch-publication-filter-block > div {
+#morphsearch-publication-filter-block, #morphsearch-publication-filter-block > div {
     margin-top: 0;
     margin-bottom: 0;
+}
+
+#morphsearch-publication-block-toggle {
+    margin-bottom: 0!important;
 }
 
 /*

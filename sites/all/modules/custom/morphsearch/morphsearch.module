@@ -109,7 +109,8 @@ function createMorphsearchContent() {
   // all morphological search elements
   $content['morphsearch'] = array(
     '#markup' => buildSearchHtml(),
-    '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">' . t('Morphologische Suche') . '</a>' .
+    '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">' . t('Morphologische Suche') .
+      '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
       '<div id="morphsearch-select-block">',
     '#suffix' => '</div>',
   );
@@ -117,8 +118,9 @@ function createMorphsearchContent() {
   // all publication related elements
   $content['typesearchpublication'] = array(
     '#prefix' => '<div id="morphsearch-publication-block">' .
-          '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Filter') . '</a>' .
-          '<div id="morphsearch-publication-filter-block">',
+      '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Suche') .
+      '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
+      '<div id="morphsearch-publication-filter-block">',
     '#suffix' => '</div></div>',
   );
 
@@ -289,7 +291,7 @@ function buildSearchHtml() {
  * @return string Contains the HTML code for the dynamic type search block.
  */
 function buildTypeSearchHtml($staticFilter = []) {
-  $html = '<div>Typensuche Dummy (Interaktion / Erzeugung, noch keine Suche)</div>';
+  $html = '';
 
   foreach (node_type_get_names() as $typeMachineName => $typeDescription) {
 
@@ -304,26 +306,6 @@ function buildTypeSearchHtml($staticFilter = []) {
       }
     }
   }
-
-  return $html;
-}
-
-/**
- * Creates the HTML for the publication filter search block.
- * TODO only a static dummy, remove
- *
- * @return string Contains the HTML code for the publication filter search block.
- */
-function buildPublicationSearchHtml() {
-  $html = '';
-
-  $html .= '<select class="publication-select" data-type="year" data-placeholder="Erscheinungsjahr" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
-  $html .= '<select class="publication-select" data-type="author" data-placeholder="Autor" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
-  $html .= '<select class="publication-select" data-type="tags" data-placeholder="Schlagwörter" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
-  $html .= '<select class="publication-select" data-type="publisher" data-placeholder="Verlag" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
-  $html .= '<select class="publication-select" data-type="location" data-placeholder="Ort" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
-  $html .= '<select class="publication-select" data-type="type" data-placeholder="Publikationstyp" multiple="multiple"><option value="1">Dummy 1</option><option value="2">Dummy 2</option></select>';
-
 
   return $html;
 }
