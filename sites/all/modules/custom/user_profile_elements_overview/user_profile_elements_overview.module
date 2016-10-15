@@ -6,25 +6,21 @@
  * @param $build
  */
 function user_profile_elements_overview_user_view_alter(&$build) {
-    // Add a #post_render callback to act on the rendered HTML of the user.
-    $build['#post_render'][] = 'user_profile_elements_overview_user_post_render';
+    $build['elementsoverviewhtml'] = array(
+        '#markup' => elements_overview_html(array('biblio', 'wissenskarte', 'projekt', 'analysereport', 'forschungsergebnis')),
+        '#weight' => '6',
+        '#attached' => array('css' => array(drupal_get_path('module', 'user_profile_elements_overview') . "/css/user_profile_elements_overview.css"))
+    );
 }
 
-/**
-* Implements Hook_views_post_render.
-*
-* @param $element
-* @param $form_state
-* @return string
-*/
-function user_profile_elements_overview_user_post_render($element, $form_state) {
+function elements_overview_html($staticFilter = []) {
     global $user;
     $uid = $user->uid;
     $html = "";
 
     $query = "SELECT nid, type, title FROM {node}
-            WHERE uid = :uid and type in ('publikation', 'wissenskarte', 'projekt', 'analysereport', 'forschungsergebnis')";
-    $results = db_query($query, array(":uid" => $uid));
+            WHERE uid = :uid and type in (:staticFilter);";
+    $results = db_query($query, array(":uid" => $uid, ":staticFilter" => $staticFilter));
     $results = $results->fetchAll();
 
     $html .= "<h3>Selbst angelegte Elemente</h3>";
@@ -37,7 +33,7 @@ function user_profile_elements_overview_user_post_render($element, $form_state) 
         //dummy icons
         $html .= "<li>";
         switch($result->type) {
-            case "publikation":
+            case "biblio":
                 $html .= "<i class='fa fa-file-text-o pub' aria-hidden='true'></i>";
                 break;
             case "wissenskarte":
@@ -58,10 +54,11 @@ function user_profile_elements_overview_user_post_render($element, $form_state) 
         /* Links to the View of the created element. */
         $url = url('node/'. $result->nid);
         $html .= "<a href='$url'>$result->title</a>";
+        //$html .= l($result->title, $url . '/edit', array('query' => drupal_get_destination()));
         $html .= "</li>";
     }
 
     $html .= "</ol>";
 
-    return $element . $html;
+    return $html;
 }

@@ -2,6 +2,6 @@
     list-style-type:none;
 }
 
-.elementsoverview li a:before {
-    content:'&nbsp';
+.elementsoverview li i:after {
+    content: '\00a0';
 }
