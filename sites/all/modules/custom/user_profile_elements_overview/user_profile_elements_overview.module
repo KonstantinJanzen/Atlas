@@ -1,0 +1,67 @@
+<?php
+
+/**
+ * Implements Hook_user_view_alter.
+ *
+ * @param $build
+ */
+function user_profile_elements_overview_user_view_alter(&$build) {
+    // Add a #post_render callback to act on the rendered HTML of the user.
+    $build['#post_render'][] = 'user_profile_elements_overview_user_post_render';
+}
+
+/**
+* Implements Hook_views_post_render.
+*
+* @param $element
+* @param $form_state
+* @return string
+*/
+function user_profile_elements_overview_user_post_render($element, $form_state) {
+    global $user;
+    $uid = $user->uid;
+    $html = "";
+
+    $query = "SELECT nid, type, title FROM {node}
+            WHERE uid = :uid and type in ('publikation', 'wissenskarte', 'projekt', 'analysereport', 'forschungsergebnis')";
+    $results = db_query($query, array(":uid" => $uid));
+    $results = $results->fetchAll();
+
+    $html .= "<h3>Selbst angelegte Elemente</h3>";
+    $html .= "<ol class='elementsoverview' style='list-style-type:none;'>";
+
+    /*
+     * Display different icons for various content types of created elements.
+     */
+    foreach($results as $result) {
+        //dummy icons
+        $html .= "<li>";
+        switch($result->type) {
+            case "publikation":
+                $html .= "<i class='fa fa-file-text-o pub' aria-hidden='true'></i>";
+                break;
+            case "wissenskarte":
+                $html .= "<i class='fa fa-file-word-o wk' aria-hidden='true'></i>";
+                break;
+            case "projekt":
+                $html .= "<i class='fa fa-file-o projekt' aria-hidden='true'></i>";
+                break;
+            case "analysereport":
+                $html .= "<i class='fa fa-file-pdf-o areport' aria-hidden='true'></i>";
+                break;
+            case "forschungsergebnis":
+                $html .= "<i class='fa fa-files-o fergebnis' aria-hidden='true'></i>";
+                break;
+            default:
+                $html .= "<i class='fa fa-file default' aria-hidden='true'></i>";
+        }
+        /* Links to the View of the created element. */
+        $url = url('node/'. $result->nid);
+        $html .= "<a href='$url'>$result->title</a>";
+        $html .= "</li>";
+    }
+
+    $html .= "</ol>";
+
+    return $element . $html;
+}

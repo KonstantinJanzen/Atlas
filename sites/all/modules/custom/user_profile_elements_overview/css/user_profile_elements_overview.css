@@ -1,0 +1,7 @@
+.elementsoverview {
+    list-style-type:none;
+}
+
+.elementsoverview li a:before {
+    content:'&nbsp';
+}
