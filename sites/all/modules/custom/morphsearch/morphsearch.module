@@ -503,18 +503,13 @@ function is_duplicate_search($uid, $data) {
  * @param $build
  */
 function morphsearch_user_view_alter(&$build) {
-  // Add a #post_render callback to act on the rendered HTML of the user.
-  $build['#post_render'][] = 'morphsearch_user_post_render';
+  $build['savedsearchhtml'] = array(
+      '#markup' => saved_search_html(),
+      '#weight' => '10'
+  );
 }
 
-/**
- * Implements Hook_views_post_render.
- *
- * @param $element
- * @param $form_state
- * @return string
- */
-function morphsearch_user_post_render($element, $form_state) {
+function saved_search_html() {
   global $user;
   $uid = $user->uid;
 
@@ -638,7 +633,7 @@ function morphsearch_user_post_render($element, $form_state) {
     $html .= "</fieldset>";
   }
 
-  return $element . $html;
+  return $html;
 }
 
 /**
