@@ -945,12 +945,7 @@ Indeko.ImageMap.hideElements = function() {
  * Adds the tooltip to knowledge map areas.
  */
 Indeko.ImageMap.addTooltip = function() {
-	/*$('area').qtip({
-	 show: {
-	 delay: 1
-	 }
-	 });
-	 } */
+	
 	$('area').qtip({
 		content: {
 			show: {
