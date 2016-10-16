@@ -769,7 +769,7 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
 
       foreach ($entity->biblio_contributors as $contributor) {
         if (!empty($contributor['name'])) {
-          $document->addField('sm_author', $contributor['name']);
+          $document->addField('tm_author', $contributor['name']);
           $document->addField('tm_author', strtolower($contributor['name']));
         }
       }
