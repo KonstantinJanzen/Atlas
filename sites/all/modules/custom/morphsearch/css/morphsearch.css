@@ -38,19 +38,29 @@
     margin-bottom: 0;
 }
 
+/*
+ * Position info icon within input field
+ */
 #fulltextsearch {
-    width: 90%;
-    float: left;
+    background-image: url("images/info.png");
+    background-position: right center;
+    background-repeat: no-repeat;
+    background-size: 21px 21px;
+    padding-right: 23px;
+    width: 13%;
+    position: absolute;
     margin-bottom: 1em!important;
 }
 
+/*
+ * Position invisible div element above info icon to display mouseover tooltip
+ */
 #fulltextsearchinfo {
-    background: url("images/info.png") no-repeat right;
-    background-size: 21px 21px;
-    width: 21px;
-    height: 23px;
+    width: 10%;
+    height: 26.5px;
     float: right;
-    position: absolute;
+    position: relative;
+    z-index: 10;
 }
 
 /*

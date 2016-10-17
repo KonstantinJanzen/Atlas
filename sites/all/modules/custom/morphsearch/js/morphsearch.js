@@ -458,13 +458,17 @@ Indeko.Morphsearch.convertToSolrString = function (fulltext) {
     // replace "Autor:" or "Author:" by Solr author field
     solrString = solrString.replace(/(Autor:|Author:)/gi, 'tm_author:');
 
-    // TODO URL
+    // replace "URL:" by Solr url field
+    solrString = solrString.replace(/(URL:)/gi, 'ss_url:');
 
-    // TODO DOI
+    // replace "DOI:" by Solr doi field
+    solrString = solrString.replace(/(DOI:)/gi, 'ss_doi:');
 
-    // TODO ISBN
+    // replace "ISBN:" by Solr isbn field
+    solrString = solrString.replace(/(ISBN:)/gi, 'ss_isbn:');
 
-    // TODO filetype
+    // replace "ISBN:" by Solr isbn field
+    solrString = solrString.replace(/(Filetype:)/gi, 'ss_filetype:');
 
     return solrString;
 };

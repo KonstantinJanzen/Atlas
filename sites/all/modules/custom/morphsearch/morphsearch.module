@@ -754,31 +754,44 @@ function biblio_get_locations() {
  * (For field type definiton see solr configuration schema.xml; e.g. is_ = integer single-valued, sm_ = string multi-valued)
  */
 function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity) {
-    if ($entity->type === 'biblio') {
-      // make fields available for field search (is_year: 2015)
-      $document->addField('is_year', $entity->biblio_year);
-      $document->addField('ss_publisher', $entity->biblio_publisher);
-      $document->addField('ss_location', $entity->biblio_place_published);
-      $document->addField('ss_type', $entity->biblio_type_name);
+  if ($entity->type === 'biblio') {
+    // make fields available for field search (is_year: 2015)
+    $document->addField('is_year', $entity->biblio_year);
+    $document->addField('ss_publisher', $entity->biblio_publisher);
+    $document->addField('ss_location', $entity->biblio_place_published);
+    $document->addField('ss_type', $entity->biblio_type_name);
+    $document->addField('ss_doi', $entity->biblio_doi);
+    $document->addField('ss_url', $entity->biblio_url);
+    $document->addField('ss_isbn', $entity->biblio_isbn);
 
-      // make fields available for fulltext search ts_ (single-valued) and tm_ (multi-valued)
-      $document->addField('ts_year', strtolower($entity->biblio_year));
-      $document->addField('ts_publisher', strtolower($entity->biblio_publisher));
-      $document->addField('ts_location', strtolower($entity->biblio_place_published));
-      $document->addField('ts_type', strtolower($entity->biblio_type_name));
+    // add file extension to Solr index
+    $fileExtension = pathinfo($entity->field_attached_file['und'][0]['filename'])['extension'];
+    $document->addField('ss_filetype', $fileExtension);
 
-      foreach ($entity->biblio_contributors as $contributor) {
-        if (!empty($contributor['name'])) {
-          $document->addField('tm_author', $contributor['name']);
-          $document->addField('tm_author', strtolower($contributor['name']));
-        }
-      }
 
-      foreach ($entity->biblio_keywords as $keyword) {
-        if (!empty($keyword)) {
-          $document->addField('sm_tag', $keyword);
-          $document->addField('tm_tag', strtolower($keyword));
-        }
+    // make fields available for fulltext search ts_ (single-valued) and tm_ (multi-valued)
+    $document->addField('ts_year', strtolower($entity->biblio_year));
+    $document->addField('ts_publisher', strtolower($entity->biblio_publisher));
+    $document->addField('ts_location', strtolower($entity->biblio_place_published));
+    $document->addField('ts_type', strtolower($entity->biblio_type_name));
+
+    foreach ($entity->biblio_contributors as $contributor) {
+      if (!empty($contributor['name'])) {
+        $document->addField('tm_author', $contributor['name']);
+        $document->addField('tm_author', strtolower($contributor['name']));
       }
     }
+
+    foreach ($entity->biblio_keywords as $keyword) {
+      if (!empty($keyword)) {
+        $document->addField('sm_tag', $keyword);
+        $document->addField('tm_tag', strtolower($keyword));
+      }
+    }
+  }
+
+  // add image type extension to Solr index
+  if($entity->type === 'wissenskarte') {
+    $document->addField('ss_filetype', pathinfo($entity->field_wk_bild['und'][0]['filename'])['extension']);
+  }
 }
