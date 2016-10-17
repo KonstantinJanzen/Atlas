@@ -36,6 +36,7 @@
  */
 #fulltextsearchrow * {
     margin-bottom: 0;
+    position: relative;
 }
 
 /*
@@ -47,7 +48,7 @@
     background-repeat: no-repeat;
     background-size: 21px 21px;
     padding-right: 23px;
-    width: 13%;
+    width: 90%;
     position: absolute;
     margin-bottom: 1em!important;
 }
