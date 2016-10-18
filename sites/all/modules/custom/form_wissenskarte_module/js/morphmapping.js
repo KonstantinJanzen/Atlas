@@ -33,9 +33,9 @@ var ValidationResult = function() {
  * Variables and functions namespace of the image map.
  */
 Indeko.ImageMap = Indeko.ImageMap || {
-	scalingFactor: 1,
-	contentBlockLabel:	$('#fulltextsearchrow').find('label'),
-};
+		scalingFactor: 1,
+		contentBlockLabel:	$('#fulltextsearchrow').find('label'),
+	};
 
 /**
  * Variables and functions namespace of the morphological box.
@@ -43,11 +43,10 @@ Indeko.ImageMap = Indeko.ImageMap || {
 Indeko.MorphBox = {
 	// DOM element that contains the representation of the morphological box.
 	//element : $('#morphological-box'),
+	wholeSearchBox : $('#block-morphsearch-morphsearch-block'),
+	searchTypeBlock : $('.morphsearch-type-block'),
 	element : $('#morphsearch-select-block'),
-	selects : $('#morphsearch-select-block').find('select'),
-
-	// array represention of the selected morphological box items (first element fulltext string, following items taxonomy IDs)
-	dataArray : [] // e.g. ["Kompetenz", "38", "40"]
+	selects : $('#morphsearch-select-block').find('select')
 };
 
 /**
@@ -82,9 +81,9 @@ function  initView(ViewMode) {
 
 			instanciate_maschek_image(l_oImageEdit[0]);										// instantiate image map object
 			instanciateAreaDescription();													// load GUI
-            myimgmap.setMapHTML(loadedValue);												// load image map areas
-            Indeko.ImageMap.hookSaveButton(); 												// attach client side validation to save button
-            Indeko.MorphBox.convertMorphsearch();                                           // converts the standard protal search block to be usable to link content to knowledge maps
+			myimgmap.setMapHTML(loadedValue);												// load image map areas
+			Indeko.ImageMap.hookSaveButton(); 												// attach client side validation to save button
+			Indeko.MorphBox.convertMorphsearch();                                           // converts the standard protal search block to be usable to link content to knowledge maps
 			myimgmap.loadStrings(imgmapStrings);											// load status messages
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
@@ -97,7 +96,7 @@ function  initView(ViewMode) {
 			var l_oPicContainer = $('.field-type-image').find('div');
 			if (loadedValue != "" && l_oPicContainer.length === 1) $(loadedValue).appendTo(l_oPicContainer);
 
-            Indeko.ImageMap.addTooltip();
+			Indeko.ImageMap.addTooltip();
 
 			// read map id and attach to image
 			if (l_oPicContainer.find('map').length === 1) {
@@ -105,8 +104,8 @@ function  initView(ViewMode) {
 				l_oPicContainer.find('img').attr('USEMAP', l_sId);
 			}
 		}
-    }
-	
+	}
+
 	return result;
 }
 
@@ -124,19 +123,19 @@ function instanciate_maschek_image(p_oPic){
 			'onAreaChanged'   : function(obj) {gui_areaChanged(obj);},// update form elements with selected area values
 			'onSelectArea'    : function(obj) {gui_selectArea(obj);},//to select form element when an area is clicked
 			'onHtmlChanged'   : function(str) {gui_htmlChanged(str);},// to update "markierte Bereiche"
-            'onDrawArea'      : function(id)  {gui_updateArea(id);}, // to update drawn area
-            'onStatusMessage' : function(str) {gui_statusMessage(str);},// to display status messages on gui
-            'onLoadImage'     : function(pic) {Indeko.ImageMap.scale(pic);} // scale image map areas to current image display size
+			'onDrawArea'      : function(id)  {gui_updateArea(id);}, // to update drawn area
+			'onStatusMessage' : function(str) {gui_statusMessage(str);},// to display status messages on gui
+			'onLoadImage'     : function(pic) {Indeko.ImageMap.scale(pic);} // scale image map areas to current image display size
 		},
 		pic_container: p_oPic, // element containing the image
 		bounding_box : false,
 		label : "%t",
-        hint: "%t %h",
-        label_style: 'font-family: sans-serif; font-size: 87.5%; color: #444',
-        draw_opacity: '50',
-        CL_NORM_SHAPE: '#0000FF',
-        CL_DRAW_SHAPE: '#0000FF',
-        CL_HIGHLIGHT_SHAPE: '#0000FF'
+		hint: "%t %h",
+		label_style: 'font-family: sans-serif; font-size: 87.5%; color: #444',
+		draw_opacity: '50',
+		CL_NORM_SHAPE: '#0000FF',
+		CL_DRAW_SHAPE: '#0000FF',
+		CL_HIGHLIGHT_SHAPE: '#0000FF'
 	});
 
 	myimgmap.useImage(p_oPic);
@@ -156,11 +155,11 @@ function instanciateAreaDescription(){
 
 
 		var l_oResult = validateLastArea();
-        validateHighlight(l_oResult);
+		validateHighlight(l_oResult);
 
 		if (l_oResult.isValid()) {
 			Indeko.ImageMap.addNewArea();      // add new area on validation success...
-            Indeko.MorphBox.clear();    // ... and clear the morphological box
+			Indeko.Morphsearch.reset();
 		}
 	});
 }
@@ -170,28 +169,28 @@ function instanciateAreaDescription(){
  * @param l_oResult validation result object
  */
 function validateHighlight(l_oResult) {
-    $('#addAreaError').text("");
+	$('#addAreaError').text("");
 
-    if (l_oResult.isAreaValid === false){
-        $('#addAreaError').append("<br>").append(l_oResult.messageArea);
-        $('.image-style-wissenkarte').addClass('addAreaError');
-    } else {
-        $('.image-style-wissenkarte').removeClass('addAreaError');
-    }
+	if (l_oResult.isAreaValid === false){
+		$('#addAreaError').append("<br>").append(l_oResult.messageArea);
+		$('.image-style-wissenkarte').addClass('addAreaError');
+	} else {
+		$('.image-style-wissenkarte').removeClass('addAreaError');
+	}
 
-    if (l_oResult.isTitelValid === false){
-        $('#addAreaError').append("<br>").append(l_oResult.messageTitel);
-        $(l_oResult.l_oInputTitel).addClass('addAreaError');
-    } else {
-        $('input').removeClass('addAreaError');
-    }
+	if (l_oResult.isTitelValid === false){
+		$('#addAreaError').append("<br>").append(l_oResult.messageTitel);
+		$(l_oResult.l_oInputTitel).addClass('addAreaError');
+	} else {
+		$('input').removeClass('addAreaError');
+	}
 
-    if (l_oResult.isMorphboxValid === false) {
-        $('#addAreaError').append("<br>").append(l_oResult.messageMorphbox);
-        Indeko.MorphBox.element.addClass('addAreaError');
-    } else {
-        Indeko.MorphBox.element.removeClass('addAreaError');
-    }
+	if (l_oResult.isMorphboxValid === false) {
+		$('#addAreaError').append("<br>").append(l_oResult.messageMorphbox);
+		Indeko.MorphBox.element.addClass('addAreaError');
+	} else {
+		Indeko.MorphBox.element.removeClass('addAreaError');
+	}
 }
 
 function validateLastArea(){
@@ -220,8 +219,8 @@ function validateLastArea(){
 	}
 
 	/* Check if the drawn area is linked to content on the website. */
-
-	if ($.isEmptyObject(Indeko.MorphBox.dataArray) && myimgmap.areas[0] !== null) {
+	var searchObject = Indeko.Morphsearch.toArray();
+	if ($.isEmptyObject(searchObject) && myimgmap.areas[0] !== null) {
 		l_oValidationResult.isMorphboxValid = false;
 	} else {
 		l_oValidationResult.isMorphboxValid = true;
@@ -250,18 +249,18 @@ function validateAllAreas(){
 	}
 
 	/* Validate linked content.	Shouldn't be possible to fail after validateLastArea() check since a user cannot
-	* empty the morphological box through the GUI (always at least '*' search returned) */
+	 * empty the morphological box through the GUI (always at least '*' search returned) */
 	var allAreas = myimgmap.areas;
 	$.each(allAreas, function(index, area) {
-	    if(area == null) {
-	        return;
-        }
+		if(area == null) {
+			return;
+		}
 		if (area.ahref === '' || area.ahref === 'undefined') {
-            $($(myimgmap.pic_container).find('canvas')[index]).addClass('canvasError');
+			$($(myimgmap.pic_container).find('canvas')[index]).addClass('canvasError');
 			l_bIsValid = false;
 		} else {
-            $($(myimgmap.pic_container).find('canvas')[index]).removeClass('canvasError');
-        }
+			$($(myimgmap.pic_container).find('canvas')[index]).removeClass('canvasError');
+		}
 	});
 
 	if (l_bIsValid === true){
@@ -274,13 +273,13 @@ function validateAllAreas(){
 	}
 
 	/* validate gui areas */
-	if (getValidAreaCount() == $('input[name=img_alt]').length){
-		return true; // TODO ???
+	if (getValidAreaCount() !== $('input[name=img_alt]').length){
+		var l_oValidationResult = new ValidationResult();
+		$('#addAreaError').text(l_oValidationResult.messageArea);
+		return false;
 	}
 
-	var l_oValidationResult = new ValidationResult();
-	$('#addAreaError').text(l_oValidationResult.messageArea);
-	return false;
+	return true;
 }
 
 /* returns the valid/real count of areas */
@@ -313,7 +312,7 @@ function gui_addArea(id) {
 
 	$('<input type="text"  name="img_id" class="img_id" value="' + id + '" readonly="1"/>').appendTo(props[id]);
 	$('<input type="radio" name="img_active" class="img_active" id="img_active_'+id+'" value="'+id+'" >').appendTo(props[id]);
-    $('.img_active').hide();
+	$('.img_active').hide();
 
 	var l_oSelect = $('<select name="img_shape" class="img_shape">').appendTo(props[id]);
 	$('<option value="rect">Rechteck</option>').appendTo(l_oSelect);
@@ -340,9 +339,9 @@ function gui_addArea(id) {
 	myimgmap.addEvent($(props[id]).find('input[name=img_alt]')[0],  'change', gui_input_change);
 	l_oSelect.change(function(event) {gui_input_change(event)});
 	/*if (myimgmap.isSafari) {
-		//need these for safari
-		myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
-	}*/
+	 //need these for safari
+	 myimgmap.addEvent(props[id].getElementsByTagName('select')[0], 'change', gui_row_click);
+	 }*/
 
 	//set shape as nextshape if set
 	if (myimgmap.nextShape) {
@@ -366,10 +365,10 @@ function gui_removeArea(id) {
 			pprops.removeChild(props[id]);
 			props[id] = null;
 			try {
-                var lastid = pprops.lastChild.aid;
-                gui_row_select(lastid, true);
+				var lastid = pprops.lastChild.aid;
+				gui_row_select(lastid, true);
 				myimgmap.currentid = lastid;
-                Indeko.MorphBox.update(myimgmap.currentid); // update values of morphological box
+				Indeko.MorphBox.update(myimgmap.currentid); // update values of morphological box
 			}
 			catch (err) {
 				//alert('noparent');
@@ -473,21 +472,21 @@ function gui_cb_unselect_all() {
  */
 function gui_input_change(e) {
 	// validation first if title field changes
-    if (e.target.name === "img_alt") {
-        var l_oId = myimgmap.currentid;
-        var l_oResult = validateLastArea();
+	if (e.target.name === "img_alt") {
+		var l_oId = myimgmap.currentid;
+		var l_oResult = validateLastArea();
 
-        //validateHighlight(l_oResult); // TODO validate only title field otherwise there will be always an error
-        if (l_oResult.isTitelValid === false){
-            $('#addAreaError').append("<br>").append(l_oResult.messageTitel);
-            $(l_oResult.l_oInputTitel).addClass('addAreaError');
-        } else {
-            //$('input').removeClass('addAreaError');
-            $('#img_area_'+myimgmap.currentid).find('input[name=img_alt]').removeClass('addAreaError');
-            $(myimgmap.pic_container).find('canvas[id*="area' + myimgmap.currentid +'"]').removeClass('canvasError');
-            $('#addAreaError').text("");
-        }
-    }
+		//validateHighlight(l_oResult); // TODO validate only title field otherwise there will be always an error
+		if (l_oResult.isTitelValid === false){
+			$('#addAreaError').append("<br>").append(l_oResult.messageTitel);
+			$(l_oResult.l_oInputTitel).addClass('addAreaError');
+		} else {
+			//$('input').removeClass('addAreaError');
+			$('#img_area_'+myimgmap.currentid).find('input[name=img_alt]').removeClass('addAreaError');
+			$(myimgmap.pic_container).find('canvas[id*="area' + myimgmap.currentid +'"]').removeClass('canvasError');
+			$('#addAreaError').text("");
+		}
+	}
 
 
 	if (myimgmap.viewmode === 1) {return;}//exit if preview mode
@@ -565,26 +564,24 @@ function gui_htmlChanged(str) {
  *
  * @param id    ID of the area being drawn by user.
  */
+// todo testing janzen 18.10
 function gui_updateArea(id) {
-    // add href to area if user already selected values from the morphological box
-    if (!$.isEmptyObject(Indeko.MorphBox.dataArray)) {
-        Indeko.MorphBox.toData();
-        myimgmap.areas[id].ahref = Indeko.MorphBox.dataToUrl();
-    }
+	// add href and json to area if user already selected values from the morphological box
+	Indeko.MorphBox.getSelectedValuesFromMorphBox();
 
-    // add title to area if the user already entered a title prior to drawing an area
-    if (props[id]) {
-        var areaTitle = $(props[id]).find('input[name=img_alt]').val();
+	// add title to area if the user already entered a title prior to drawing an area
+	if (props[id]) {
+		var areaTitle = $(props[id]).find('input[name=img_alt]').val();
 
-        if (!$.isEmptyObject(areaTitle)) {
-            myimgmap.areas[id].aalt    = areaTitle;
-            myimgmap.areas[id].atitle  = areaTitle;
-        }
-    }
+		if (!$.isEmptyObject(areaTitle)) {
+			myimgmap.areas[id].aalt    = areaTitle;
+			myimgmap.areas[id].atitle  = areaTitle;
+		}
+	}
 
-    $('.image-style-wissenkarte').removeClass('addAreaError');
+	$('.image-style-wissenkarte').removeClass('addAreaError');
 
-    myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+	myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 }
 
 /**
@@ -594,20 +591,20 @@ function gui_updateArea(id) {
  * @param str	Status message in string format.
  */
 function gui_statusMessage(str) {
-    var statusArea = $('.form-item-field-wk-bild-und-0').find('label');
+	var statusArea = $('.form-item-field-wk-bild-und-0').find('label');
 
 	// status strings not loaded properly
 	if (typeof str == 'undefined') {
 		myimgmap.loadStrings(imgmapStrings);
 		return;
-    }
+	}
 
 	$('.knowledgemapStatusMessage').remove();
-    if (str.toLowerCase().indexOf("shift") >= 0) {
-        if (statusArea) {
-            statusArea.append('<span class="knowledgemapStatusMessage"> ' + str + '</span>');
-        }
-    }
+	if (str.toLowerCase().indexOf("shift") >= 0) {
+		if (statusArea) {
+			statusArea.append('<span class="knowledgemapStatusMessage"> ' + str + '</span>');
+		}
+	}
 }
 
 /*
@@ -617,20 +614,9 @@ function gui_statusMessage(str) {
  * @return Complete search URL in string format.
  */
 Indeko.MorphBox.dataToUrl = function() {
-	var baseSolrSearchUrl = Drupal.settings.basePath + "search/site/";
-	var solrSearchQuery = "";
-
-	$.each(Indeko.MorphBox.dataArray, function(index, value) {
-		// first element of data array is the fulltext search string
-		if (index === 0) {
-			solrSearchQuery += value;
-		} else {
-			solrSearchQuery += " AND tid:" + value
-		}
-	});
-
-	var solrSearchUrl = baseSolrSearchUrl + solrSearchQuery;
-	return solrSearchUrl;
+	var searchObject = Indeko.Morphsearch.toArray();
+	var url = Indeko.Morpsearch.toUrl(searchObject);
+	return url;
 };
 
 /*
@@ -639,32 +625,40 @@ Indeko.MorphBox.dataToUrl = function() {
  *
  * @param searchURL Search URL in string format.
  */
-Indeko.MorphBox.urlToData = function(searchURL) {
-	if (typeof searchURL === 'undefined' || searchURL === '') {
-		return;
-	}
+/*
+ // todo not needed
+ Indeko.MorphBox.urlToData = function(searchURL) {
+ if (typeof searchURL === 'undefined' || searchURL === '') {
+ return;
+ }
 
-	// if (typeof dataArray === 'undefined' || searchURL === '') { // TODO for old "handmade" knowledgemap prototypes
-	// 	return;
-	// }
+ // if (typeof dataArray === 'undefined' || searchURL === '') { // TODO for old "handmade" knowledgemap prototypes
+ // 	return;
+ // }
 
-	dataArray = searchURL.split("search/site/")[1]; // search query
-	dataArray = dataArray.split(" AND tid:");		// search items
+ dataArray = searchURL.split("search/site/")[1]; // search query
+ dataArray = dataArray.split(" AND tid:");		// search items
 
-	Indeko.MorphBox.dataArray = dataArray;
-};
+ Indeko.MorphBox.dataArray = dataArray;
+ };*/
 
 /*
  * Updates morphological box display after selecting a new knowledge map area.
  *
  * @paran id 	ID of the selected area.
  */
+// todo testing janzen 18.10
 Indeko.MorphBox.update = function(id) {
-	if (myimgmap.areas[id] == null) { // TODO
-		return;
+	if (myimgmap.areas[id] === null || typeof myimgmap.areas[id].json === "undefined") { // TODO
+		// areas is not valid
+		return false;
 	}
-	Indeko.MorphBox.clear();
-	Indeko.MorphBox.urlToData(myimgmap.areas[id].ahref);
+	Indeko.Morphsearch.reset();
+
+	var jsonString = myimgmap.areas[id].json;
+	jsonString = decodeURI(jsonString);
+	var searchObject = JSON.parse(jsonString);
+	Indeko.Morphsearch.toSearchblock(searchObject);
 	Indeko.MorphBox.selectItems();
 };
 
@@ -672,82 +666,78 @@ Indeko.MorphBox.update = function(id) {
  * Extract selected items from the morphological box and save them in the data array.
  * !!! Has to be changed depending on the representation of the morphological box !!!
  */
-Indeko.MorphBox.toData = function() {
-	Indeko.MorphBox.dataArray = [];
+// todo not needed
+/*Indeko.MorphBox.toData = function() {
+ Indeko.MorphBox.dataArray = [];
 
-	var inputFulltextSearch = Indeko.Morphsearch.elemFulltext.val();
-	// replace empty fulltext search field with "*" search
-	if (!inputFulltextSearch) {
-		inputFulltextSearch = "*";
-	}
-	Indeko.MorphBox.dataArray.push(inputFulltextSearch);
+ var inputFulltextSearch = Indeko.Morphsearch.elemFulltext.val();
+ // replace empty fulltext search field with "*" search
+ if (!inputFulltextSearch) {
+ inputFulltextSearch = "*";
+ }
+ Indeko.MorphBox.dataArray.push(inputFulltextSearch);
 
-	var allSelectedOptions = Indeko.MorphBox.selects.find('OPTION:selected');
-	$.each(allSelectedOptions, function( index, item ) {
-		Indeko.MorphBox.dataArray.push(item.value);
-	});
-};
+ var allSelectedOptions = Indeko.MorphBox.selects.find('OPTION:selected');
+ $.each(allSelectedOptions, function( index, item ) {
+ Indeko.MorphBox.dataArray.push(item.value);
+ });
+ };*/
 
 /*
  * Select items in the morphologocal box that match the data array.
  * !!! Has to be changed depending on the representation of the morphological box !!!
  */
 Indeko.MorphBox.selectItems = function() {
-	$.each(Indeko.MorphBox.dataArray, function(index, value) {
-		// first element of data array is the fulltext search string
-		if (index === 0) {
-			Indeko.Morphsearch.elemFulltext.val(value);
-		} else {
-			// load selected values in hidden selects
-			if (value || value == 0) {
-			    Indeko.Morphsearch.elemMorphBlock.show();
-				Indeko.MorphBox.selects.find('option[value=' + value + ']').attr('selected', 'selected');
-			}
-		}
-	});
+	/*$.each(Indeko.MorphBox.dataArray, function(index, value) {
+	 // first element of data array is the fulltext search string
+	 if (index === 0) {
+	 Indeko.Morphsearch.elemFulltext.val(value);
+	 } else {
+	 // load selected values in hidden selects
+	 if (value || value == 0) {
+	 Indeko.Morphsearch.elemMorphBlock.show();
+	 Indeko.MorphBox.selects.find('option[value=' + value + ']').attr('selected', 'selected');
+	 }
+	 }
+	 });
 
-	// update chosen controls
-	Indeko.MorphBox.selects.trigger('chosen:updated');
-};
+	 // update chosen controls
+	 Indeko.MorphBox.selects.trigger('chosen:updated');
+	 */
 
-/*
- * Clear the selected values of the morphological box.
- * !!! Has to be changed depending on the representation of the morphological box !!!
- */
-Indeko.MorphBox.clear = function() {
-	// unselect all hidden selects
-	$(Indeko.MorphBox.selects).find('option:selected').removeAttr('selected');
-	// unselect all chosen dropdowns
-	$(Indeko.MorphBox.selects).trigger('chosen:updated');
+	// todo testing 18.10
+	var jsonString = myimgmap.areas[myimgmap.currentid].json;
+	jsonString = decodeURI(jsonString);
+	var searchObject = JSON.parse(jsonString);
+	Indeko.Morphsearch.toSearchblock(searchObject);
 
-    Indeko.Morphsearch.reset();
-    Indeko.MorphBox.dataArray = [];
 };
 
 /**
  * Show the Morphological Box
  */
 Indeko.MorphBox.show = function() {
-    Indeko.MorphBox.element.show();
+	Indeko.MorphBox.element.show();
 };
 
 /**
  * Hide the Morphological Box
  */
 Indeko.MorphBox.hide = function() {
-    Indeko.MorphBox.element.hide();
+	Indeko.MorphBox.element.hide();
 };
 
 /**
  * Converts the standard portal search block to be used to link content to knowledge maps.
  */
 Indeko.MorphBox.convertMorphsearch = function() {
-    Indeko.Morphsearch.reset();
-	Indeko.ImageMap.contentBlockLabel.text("Inhalte Wissenskarte");					// change label of the search block
-    $('.morphblocktable').remove();                                                 // remove standard search block search / reset / save elements
-    Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  // changelistener for comboboxes in MorpBox
-    Indeko.Morphsearch.elemFulltext.unbind().change(Indeko.MorphBox.getSelectedValuesFromMorphBox); // changelistener for fulltext field
-    Indeko.MorphBox.update(myimgmap.currentid);										// show selected morphological box items of current map area
+	Indeko.Morphsearch.reset();
+	Indeko.ImageMap.contentBlockLabel.text("Inhalte Wissenskarte");									// change label of the search block
+	$('.morphblocktable').remove();                                                 				// remove standard search block search / reset / save elements
+	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  				// changelistener for comboboxes in MorpBox
+	Indeko.MorphBox.searchTypeBlock.click(Indeko.MorphBox.getSelectedValuesFromMorphBox);			// clickevent for Inhaltstypen
+	Indeko.Morphsearch.elemFulltext.unbind().change(Indeko.MorphBox.getSelectedValuesFromMorphBox); // changelistener for fulltext field
+	Indeko.MorphBox.update(myimgmap.currentid);														// show selected morphological box items of current map area
 };
 
 /*
@@ -827,19 +817,29 @@ Indeko.MorphBox.loadDummy = function () {
 
 
 	// save selected values once mouse leaves the morphbox
-	Indeko.MorphBox.element.mouseleave(function () {
-		Indeko.MorphBox.toData();
-		myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
-        Indeko.MorphBox.element.removeClass('addAreaError');
-        myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
-	});
+	// todo not needed, done by getSelectedValuesFromMorphBox
+	/*Indeko.MorphBox.wholeSearchBox.change(function () {
+		//Indeko.MorphBox.toData();
+		var searchObject = Indeko.Morphsearch.toArray();
+		myimgmap.areas[myimgmap.currentid].ahref = Indeko.Morphsearch.toUrl(searchObject);
+		Indeko.MorphBox.element.removeClass('addAreaError');
+		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+	});*/
 };
 
-Indeko.MorphBox.getSelectedValuesFromMorphBox = function(e){
-	Indeko.MorphBox.toData();
-	myimgmap.areas[myimgmap.currentid].ahref = Indeko.MorphBox.dataToUrl();
-	Indeko.MorphBox.element.removeClass('addAreaError');
-	myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+// todo testing janzen 18.10
+Indeko.MorphBox.getSelectedValuesFromMorphBox = function(){
+	var searchObject = Indeko.Morphsearch.toArray();
+	if (!$.isEmptyObject(searchObject)) {
+		var jsonString = JSON.stringify(searchObject);
+		jsonString = encodeURI(jsonString);
+
+		//Indeko.MorphBox.toData();
+		myimgmap.areas[myimgmap.currentid].ahref = Indeko.Morphsearch.toUrl(searchObject);
+		myimgmap.areas[myimgmap.currentid].json = jsonString;
+		Indeko.MorphBox.element.removeClass('addAreaError');
+		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+	}
 };
 
 /*
@@ -871,60 +871,61 @@ Indeko.ImageMap.scale = function (domImage) {
  * Adds client side validation to save / submit button.
  */
 Indeko.ImageMap.hookSaveButton = function () {
-    $('#edit-submit').click(function () {
-        var l_bIsValid = true;
-        // Error if title is empty
-        var titleElement = $("#edit-title");
-        if ($.isEmptyObject(titleElement.val())) {
-            titleElement.addClass('error');
-            titleElement.focus();
-            l_bIsValid = false;
-        } else {
-            titleElement.removeClass('error');
-        }
+	$('#edit-submit').click(function () {
+		var l_bIsValid = true;
+		// Error if title is empty
+		var titleElement = $("#edit-title");
+		if ($.isEmptyObject(titleElement.val())) {
+			titleElement.addClass('error');
+			titleElement.focus();
+			l_bIsValid = false;
+		} else {
+			titleElement.removeClass('error');
+		}
 
-        // guarantee that last drawn area was saved properly
-        gui_updateArea(myimgmap.currentid);
+		// guarantee that last drawn area was saved properly
+		gui_updateArea(myimgmap.currentid);
 
 
-        var l_oResult = validateLastArea();
-        if (!l_oResult.isValid()) {
-            validateHighlight(l_oResult);
-            l_bIsValid = false;
-        }
+		var l_oResult = validateLastArea();
+		if (!l_oResult.isValid()) {
+			validateHighlight(l_oResult);
+			l_bIsValid = false;
+		}
 
-        // Validate all drawn areas
-        var allAreas = myimgmap.areas;
-        var allCanvasAreas = $(myimgmap.pic_container).find('canvas');
-        $.each(allAreas, function (index, area) {
-            var currentCanvasArea = $(allCanvasAreas[index]);
-            if (area == null) {
-                return;
-            }
+		// Validate all drawn areas
+		var allAreas = myimgmap.areas;
+		var allCanvasAreas = $(myimgmap.pic_container).find('canvas');
+		$.each(allAreas, function (index, area) {
+			var currentCanvasArea = $(allCanvasAreas[index]);
+			if (area == null) {
+				return;
+			}
 
-            // validate linked content
-            if ($.isEmptyObject(area.ahref)) {
-                currentCanvasArea.addClass('canvasError');
-                Indeko.MorphBox.element.addClass('addAreaError');
-                l_bIsValid = false;
-            }
+			// validate linked content
+			if ($.isEmptyObject(area.ahref)) {
+				currentCanvasArea.addClass('canvasError');
+				Indeko.MorphBox.element.addClass('addAreaError');
+				l_bIsValid = false;
+			}
 
-            // validate area titles
-            if ($.isEmptyObject(area.atitle)) {
-                currentCanvasArea.addClass('canvasError');
-                $('#img_area_' + index).find("input[name=img_alt]").addClass("addAreaError");
-                l_bIsValid = false;
-            }
-        });
+			// validate area titles
+			if ($.isEmptyObject(area.atitle)) {
+				currentCanvasArea.addClass('canvasError');
+				$('#img_area_' + index).find("input[name=img_alt]").addClass("addAreaError");
+				l_bIsValid = false;
+			}
+		});
 
-        // update map areas before saving
-        if (l_bIsValid) {
-            myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
-        }
+		// update map areas before saving
+		if (l_bIsValid) {
+			myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
+			Indeko.Morphsearch.reset();
+		}
 
-        return l_bIsValid;
+		return l_bIsValid;
 
-    });
+	});
 };
 
 /**
@@ -938,7 +939,7 @@ Indeko.ImageMap.addNewArea = function () {
  * Hide image map text section (marked areas text field).
  */
 Indeko.ImageMap.hideElements = function() {
-    $("#edit-field-markierte-bereiche").hide();
+	$("#edit-field-markierte-bereiche").hide();
 };
 
 /**
@@ -964,4 +965,124 @@ Indeko.ImageMap.addTooltip = function() {
 			tip: false
 		}
 	});
+};
+
+/* todo com, function copied from imgmap */
+imgmap.prototype.getMapInnerHTML = function(flags) {
+	var html, coords;
+	html = '';
+	//foreach area properties
+	for (var i=0, le = this.areas.length; i<le; i++) {
+		if (this.areas[i]) {
+			if (this.areas[i].shape && this.areas[i].shape != 'undefined') {
+				coords = this.areas[i].lastInput;
+				if (flags && flags.match(/noscale/)) {
+					//for preview use real coordinates, not scaled
+					var cs = coords.split(',');
+					for (var j=0, le2 = cs.length; j<le2; j++) {
+						cs[j] = Math.round(cs[j] * this.globalscale);
+					}
+					coords = cs.join(',');
+				}
+				html+= '<area shape="' + this.areas[i].shape + '"' +
+					' alt="' + this.areas[i].aalt + '"' +
+					' title="' + this.areas[i].atitle + '"' +
+					' id="' + this.areas[i].id + '"' +
+					' coords="' + coords + '"' +
+					' href="' +	this.areas[i].ahref + '"' +
+					'data-json="' + this.areas[i].json + '"' +
+					' target="' + this.areas[i].atarget + '" />';
+			}
+		}
+	}
+	//alert(html);
+	return html;
+};
+
+// todo check comment
+/**
+ *	Sets the coordinates according to the given HTML map code or DOM object.
+ *	@author	Adam Maschek (adam.maschek(at)gmail.com)
+ *	@date	2006-06-07 11:47:16
+ *	@param	map	DOM object or string of a map you want to apply.
+ *	@return	True on success
+ */
+imgmap.prototype.setMapHTML = function(map) {
+	if (this.viewmode === 1) {return;}//exit if preview mode
+
+	this.fireEvent('onSetMap', map);
+	//this.log(map);
+	//remove all areas
+	this.removeAllAreas();
+	//console.log(this.areas);
+
+	var oMap;
+	if (typeof map == 'string') {
+		var oHolder = document.createElement('DIV');
+		oHolder.innerHTML = map;
+		oMap = oHolder.firstChild;
+	}
+	else if (typeof map == 'object') {
+		oMap = map;
+	}
+	if (!oMap || oMap.nodeName.toLowerCase() !== 'map') {return false;}
+	this.mapname = oMap.name;
+	this.mapid   = oMap.id;
+	var newareas = oMap.getElementsByTagName('area');
+	var shape, coords, href, alt, title, target, id, json;
+	for (var i=0, le = newareas.length; i<le; i++) {
+		shape = coords = href = alt = title = target = '';
+
+		id = this.addNewArea();//btw id == this.currentid, just this form is a bit clearer
+
+		shape = this._normShape(newareas[i].getAttribute('shape', 2));
+
+		this.initArea(id, shape);
+
+		if (newareas[i].getAttribute('coords', 2)) {
+			//normalize coords
+			coords = this._normCoords(newareas[i].getAttribute('coords', 2), shape);
+			this.areas[id].lastInput = coords;
+			//for area this one will be set in recalculate
+		}
+
+		href = newareas[i].getAttribute('href', 2);
+		// FCKeditor stored url to prevent mangling from the browser.
+		var sSavedUrl = newareas[i].getAttribute( '_fcksavedurl' );
+		if (sSavedUrl) {
+			href = sSavedUrl;
+		}
+		if (href) {
+			this.areas[id].ahref = href;
+		}
+
+		alt = newareas[i].getAttribute('alt');
+		if (alt) {
+			this.areas[id].aalt = alt;
+		}
+
+		title = newareas[i].getAttribute('title');
+		if (!title) {title = alt;}
+		if (title) {
+			this.areas[id].atitle = title;
+		}
+
+		json = newareas[i].getAttribute('data-json');
+		if (json) {
+			this.areas[id].json = json;
+		}
+
+		target = newareas[i].getAttribute('target');
+		if (target) {target = target.toLowerCase();}
+//		if (target == '') target = '_self';
+		this.areas[id].atarget = target;
+
+		this._recalculate(id, coords);//contains repaint
+		this.relaxArea(id);
+
+		this.fireEvent('onAreaChanged', this.areas[id]);
+
+	}//end for areas
+	this.fireEvent('onHtmlChanged', this.getMapHTML());
+	return true;
 };
