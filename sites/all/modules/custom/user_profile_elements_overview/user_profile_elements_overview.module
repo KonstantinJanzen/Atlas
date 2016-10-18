@@ -19,7 +19,8 @@ function elements_overview_html($staticFilter = []) {
     $html = "";
 
     $query = "SELECT nid, type, title FROM {node}
-            WHERE uid = :uid and type in (:staticFilter);";
+            WHERE uid = :uid and type in (:staticFilter)
+            ORDER BY changed DESC;";
     $results = db_query($query, array(":uid" => $uid, ":staticFilter" => $staticFilter));
     $results = $results->fetchAll();
 
@@ -32,6 +33,7 @@ function elements_overview_html($staticFilter = []) {
     foreach($results as $result) {
         //dummy icons
         $html .= "<li>";
+
         switch($result->type) {
             case "biblio":
                 $html .= "<i class='fa fa-file-text-o pub' aria-hidden='true'></i>";
