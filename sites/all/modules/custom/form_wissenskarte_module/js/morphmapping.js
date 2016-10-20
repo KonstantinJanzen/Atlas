@@ -835,7 +835,7 @@ Indeko.MorphBox.getSelectedValuesFromMorphBox = function(){
 		jsonString = encodeURI(jsonString);
 
 		//Indeko.MorphBox.toData();
-		myimgmap.areas[myimgmap.currentid].ahref = Indeko.Morphsearch.toUrl(searchObject);
+		myimgmap.areas[myimgmap.currentid].ahref = encodeURI(Indeko.Morphsearch.toUrl(searchObject));
 		myimgmap.areas[myimgmap.currentid].json = jsonString;
 		Indeko.MorphBox.element.removeClass('addAreaError');
 		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
