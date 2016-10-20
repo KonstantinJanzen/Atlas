@@ -46,7 +46,8 @@ Indeko.MorphBox = {
 	wholeSearchBox : $('#block-morphsearch-morphsearch-block'),
 	searchTypeBlock : $('.morphsearch-type-block'),
 	element : $('#morphsearch-select-block'),
-	selects : $('#morphsearch-select-block').find('select')
+	selects : $('#morphsearch-select-block').find('select'),
+    searchJson : ''       // search blocks values before editing knowledge map
 };
 
 /**
@@ -731,7 +732,8 @@ Indeko.MorphBox.hide = function() {
  * Converts the standard portal search block to be used to link content to knowledge maps.
  */
 Indeko.MorphBox.convertMorphsearch = function() {
-	Indeko.Morphsearch.reset();
+    Indeko.MorphBox.searchJson = JSON.stringify(Indeko.Morphsearch.toArray());                      // save search block state to restore it later
+    Indeko.Morphsearch.reset();
 	Indeko.ImageMap.contentBlockLabel.text("Inhalte Wissenskarte");									// change label of the search block
 	$('.morphblocktable').remove();                                                 				// remove standard search block search / reset / save elements
 	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  				// changelistener for comboboxes in MorpBox
@@ -922,6 +924,11 @@ Indeko.ImageMap.hookSaveButton = function () {
 			myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 			Indeko.Morphsearch.reset();
 		}
+
+		// if all values are valid restore the search block to the state prior to editing / creating the knowledge map
+		if (l_bIsValid) {
+            localStorage["searchValues"] = Indeko.MorphBox.searchJson;
+        }
 
 		return l_bIsValid;
 
