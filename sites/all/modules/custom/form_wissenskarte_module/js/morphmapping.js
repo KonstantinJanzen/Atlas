@@ -45,8 +45,8 @@ Indeko.MorphBox = {
 	//element : $('#morphological-box'),
 	wholeSearchBox : $('#block-morphsearch-morphsearch-block'),
 	searchTypeBlock : $('.morphsearch-type-block'),
-	element : $('#morphsearch-select-block'),
-	selects : $('#morphsearch-select-block').find('select'),
+	element : $('#block-morphsearch-morphsearch-block'),
+	selects : $('#block-morphsearch-morphsearch-block').find('select'),
     searchJson : ''       // search blocks values before editing knowledge map
 };
 
@@ -477,7 +477,6 @@ function gui_input_change(e) {
 		var l_oId = myimgmap.currentid;
 		var l_oResult = validateLastArea();
 
-		//validateHighlight(l_oResult); // TODO validate only title field otherwise there will be always an error
 		if (l_oResult.isTitelValid === false){
 			$('#addAreaError').append("<br>").append(l_oResult.messageTitel);
 			$(l_oResult.l_oInputTitel).addClass('addAreaError');
@@ -609,41 +608,6 @@ function gui_statusMessage(str) {
 }
 
 /*
- * Converts the data array to an Apache Solr search URL.
- * ["Kompetenz", "38", "40"] -> /indeko/search/site/Kompetenz AND tid:38 AND tid:40
- *
- * @return Complete search URL in string format.
- */
-Indeko.MorphBox.dataToUrl = function() {
-	var searchObject = Indeko.Morphsearch.toArray();
-	var url = Indeko.Morpsearch.toUrl(searchObject);
-	return url;
-};
-
-/*
- * Converts a search URL to data array.
- * /indeko/search/site/Kompetenz AND tid:38 AND tid:40 -> ["Kompetenz", "38", "40"]
- *
- * @param searchURL Search URL in string format.
- */
-/*
- // todo not needed
- Indeko.MorphBox.urlToData = function(searchURL) {
- if (typeof searchURL === 'undefined' || searchURL === '') {
- return;
- }
-
- // if (typeof dataArray === 'undefined' || searchURL === '') { // TODO for old "handmade" knowledgemap prototypes
- // 	return;
- // }
-
- dataArray = searchURL.split("search/site/")[1]; // search query
- dataArray = dataArray.split(" AND tid:");		// search items
-
- Indeko.MorphBox.dataArray = dataArray;
- };*/
-
-/*
  * Updates morphological box display after selecting a new knowledge map area.
  *
  * @paran id 	ID of the selected area.
@@ -664,54 +628,16 @@ Indeko.MorphBox.update = function(id) {
 };
 
 /*
- * Extract selected items from the morphological box and save them in the data array.
- * !!! Has to be changed depending on the representation of the morphological box !!!
- */
-// todo not needed
-/*Indeko.MorphBox.toData = function() {
- Indeko.MorphBox.dataArray = [];
-
- var inputFulltextSearch = Indeko.Morphsearch.elemFulltext.val();
- // replace empty fulltext search field with "*" search
- if (!inputFulltextSearch) {
- inputFulltextSearch = "*";
- }
- Indeko.MorphBox.dataArray.push(inputFulltextSearch);
-
- var allSelectedOptions = Indeko.MorphBox.selects.find('OPTION:selected');
- $.each(allSelectedOptions, function( index, item ) {
- Indeko.MorphBox.dataArray.push(item.value);
- });
- };*/
-
-/*
  * Select items in the morphologocal box that match the data array.
  * !!! Has to be changed depending on the representation of the morphological box !!!
  */
 Indeko.MorphBox.selectItems = function() {
-	/*$.each(Indeko.MorphBox.dataArray, function(index, value) {
-	 // first element of data array is the fulltext search string
-	 if (index === 0) {
-	 Indeko.Morphsearch.elemFulltext.val(value);
-	 } else {
-	 // load selected values in hidden selects
-	 if (value || value == 0) {
-	 Indeko.Morphsearch.elemMorphBlock.show();
-	 Indeko.MorphBox.selects.find('option[value=' + value + ']').attr('selected', 'selected');
-	 }
-	 }
-	 });
-
-	 // update chosen controls
-	 Indeko.MorphBox.selects.trigger('chosen:updated');
-	 */
 
 	// todo testing 18.10
 	var jsonString = myimgmap.areas[myimgmap.currentid].json;
 	jsonString = decodeURI(jsonString);
 	var searchObject = JSON.parse(jsonString);
 	Indeko.Morphsearch.toSearchblock(searchObject);
-
 };
 
 /**
@@ -734,99 +660,12 @@ Indeko.MorphBox.hide = function() {
 Indeko.MorphBox.convertMorphsearch = function() {
     Indeko.MorphBox.searchJson = JSON.stringify(Indeko.Morphsearch.toArray());                      // save search block state to restore it later
     Indeko.Morphsearch.reset();
-	Indeko.ImageMap.contentBlockLabel.text("Inhalte Wissenskarte");									// change label of the search block
+	Indeko.ImageMap.contentBlockLabel.text("Inhalte der Wissenskarte");									// change label of the search block
 	$('.morphblocktable').remove();                                                 				// remove standard search block search / reset / save elements
 	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  				// changelistener for comboboxes in MorpBox
 	Indeko.MorphBox.searchTypeBlock.click(Indeko.MorphBox.getSelectedValuesFromMorphBox);			// clickevent for Inhaltstypen
 	Indeko.Morphsearch.elemFulltext.unbind().change(Indeko.MorphBox.getSelectedValuesFromMorphBox); // changelistener for fulltext field
 	Indeko.MorphBox.update(myimgmap.currentid);														// show selected morphological box items of current map area
-};
-
-/*
- * Inserts morphbox dummy into the DOM. Dirty copy and paste from search morphbox dummy.
- */
-Indeko.MorphBox.loadDummy = function () {
-	// Delete all child elements from existing morphbox representation to replace it with this dummy.
-	Indeko.MorphBox.element.empty();
-
-	// Dummy MorphBox add table.
-	Indeko.MorphBox.element.append('<div class="morphbox">\
-		<input id="input_fulltext_search" title="Geben Sie die Begriffe ein, nach denen Sie suchen." class="form-text" size="46" maxlength="128" value=""> Volltextsuchfeld\
-		<table id="morphbox">\
-		<tr>\
-		<td class="taxonomyname">Unternehmensgröße</td>\
-		<td class="unselected" tid="36">Kleinstunternehmen (weniger als 10 Beschäftigte)</td>\
-		<td class="unselected" tid="37">Kleinunternehmen (10 bis 49 Beschäftigte)</td>\
-		<td class="unselected" tid="38">Mittlere Unternehmen (50 bis 249 Beschäftigte)</td>\
-		<td class="unselected" tid="39">Großunternehmen (250 oder mehr Beschäftigte)</td>\
-		<td class="unselected" tid="40">Virtuelle Netzwerke</td>\
-		</tr>\
-		<tr>\
-		<td class="taxonomyname">Branche</td>\
-		<td class="unselected" tid="41">Baugewerbe</td>\
-		<td class="unselected" tid="42">Energieversorgung</td>\
-		<td class="unselected" tid="43">Finanz- und Versicherungsdienstleistung</td>\
-		<td class="unselected" tid="44">Gastgewerbe</td>\
-		<td class="unselected" tid="45">Gesundheit und Sozialwesen</td>\
-		<td class="unselected" tid="46">Grundstücks- und Wohnungswesen</td>\
-		<td class="unselected" tid="47">Handel</td>\
-		<td class="unselected" tid="48">Information und Kommunikation</td>\
-		<td class="unselected" tid="49">Land- und Forstwirtschaft</td>\
-		<td class="unselected" tid="50">Öffentliche Verwaltung</td>\
-		<td class="unselected" tid="51">Sonstiges</td>\
-		<td class="unselected" tid="52">Verarbeitendes Gewerbe</td>\
-		<td class="unselected" tid="53">Verkehr und Lagerei</td>\
-		<td class="unselected" tid="54">Wasserversorgung</td>\
-		</tr>\
-		</table>\
-		</div>\
-		<div id="result"></div>'
-	);
-
-
-	// Dummy MorphBox add CSS
-	Indeko.MorphBox.element.append('<style>\
-		.selected { background-color: #2da046; color: white; }\
-		.unselected { background-color: white; color: #444; }\
-		.taxonomyname {font-weight: bold; color: #444; }\
-		.morphbox  { width: 100%;	overflow-y: hidden; overflow: auto; -ms-user-select: none; /* IE 10+ */\
-		-moz-user-select: -moz-none;\
-		-khtml-user-select: none;\
-		-webkit-user-select: none;\
-		user-select: none;}\
-		td { border: 1px solid gray; text-align:center; }\
-		</style>'
-	);
-
-
-	// Dummy MorphBox logic
-	jQuery("td.unselected").click(function () {
-		//<!-- if clicked cell is selected, just deselect it and stop -->
-		if (jQuery(this).hasClass("selected")) {
-			this.className = (this.className == 'unselected' ? 'selected' : 'unselected');
-			return;
-		}
-
-		//<!-- if taxonomy is singleselect only, deselect all cells in this row -->
-		var parentRow = jQuery(this).parent();
-		if (parentRow.hasClass("single")) {
-			parentRow.find(".selected").removeClass("selected").addClass("unselected");
-		}
-
-		//<!-- change class (color) of cell on click -->
-		this.className = (this.className == 'unselected' ? 'selected' : 'unselected');
-	});
-
-
-	// save selected values once mouse leaves the morphbox
-	// todo not needed, done by getSelectedValuesFromMorphBox
-	/*Indeko.MorphBox.wholeSearchBox.change(function () {
-		//Indeko.MorphBox.toData();
-		var searchObject = Indeko.Morphsearch.toArray();
-		myimgmap.areas[myimgmap.currentid].ahref = Indeko.Morphsearch.toUrl(searchObject);
-		Indeko.MorphBox.element.removeClass('addAreaError');
-		myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
-	});*/
 };
 
 // todo testing janzen 18.10
@@ -836,7 +675,6 @@ Indeko.MorphBox.getSelectedValuesFromMorphBox = function(){
 		var jsonString = JSON.stringify(searchObject);
 		jsonString = encodeURI(jsonString);
 
-		//Indeko.MorphBox.toData();
 		myimgmap.areas[myimgmap.currentid].ahref = encodeURI(Indeko.Morphsearch.toUrl(searchObject));
 		myimgmap.areas[myimgmap.currentid].json = jsonString;
 		Indeko.MorphBox.element.removeClass('addAreaError');
