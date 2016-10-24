@@ -217,3 +217,10 @@
 .firstColumn {
     width: 30%;
 }
+
+/*
+ * CSV export of search results icon. TODO eigenes Modul?
+ */
+#exportcsv {
+    float: right;
+}

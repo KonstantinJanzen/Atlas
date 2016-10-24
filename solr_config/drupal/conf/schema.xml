@@ -512,7 +512,9 @@
       Lucene store title, body, type, etc., is that we retrieve them with the search
       result set and don't need to go to the database with a node_load. -->
     <field name="tid"  type="long" indexed="true" stored="true" multiValued="true"/>
-    <field name="taxonomy_names" type="text" indexed="true" stored="false" termVectors="true" multiValued="true" omitNorms="true"/>
+
+    <!-- Set stored="true" to be able to return taxonomy names for csv export -->
+    <field name="taxonomy_names" type="text" indexed="true" stored="true" termVectors="true" multiValued="true" omitNorms="true"/>
     <!-- Copy terms to a single field that contains all taxonomy term names -->
     <copyField source="tm_vid_*" dest="taxonomy_names"/>
 
@@ -531,6 +533,9 @@
 
     <copyField source="ts_*" dest="spell"/>
     <copyField source="tm_*" dest="spell"/>
+
+    <!-- Additional InDeKo.Navi Atlas fields. -->
+    <field name="description" type="text" indexed="true" stored="true" termVectors="true"/>
 
     <!-- Dynamic field definitions.  If a field name is not found, dynamicFields
          will be used if the name matches any of the patterns.

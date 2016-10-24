@@ -778,7 +778,6 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
     foreach ($entity->biblio_contributors as $contributor) {
       if (!empty($contributor['name'])) {
         $document->addField('tm_author', $contributor['name']);
-        $document->addField('tm_author', strtolower($contributor['name']));
       }
     }
 
@@ -794,4 +793,41 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
   if($entity->type === 'wissenskarte') {
     $document->addField('ss_filetype', pathinfo($entity->field_wk_bild['und'][0]['filename'])['extension']);
   }
+}
+
+/**
+ * Add link to search results page to download all search results as a csv file
+ * .
+ * TODO eigenes Modul?
+ * search-results.tpl.php added to theme to include 'title_suffix' sites/all/themes/adaptivetheme/indeko7/templates
+ * @param $vars
+ */
+function morphsearch_preprocess_search_results(&$vars) {
+
+  $solrUri = 'http://147.172.96.42/solr/drupal/'; // TODO?!
+
+  // get the Solr query and extract the portion the user entered through the search block
+  $solrQuery  = apachesolr_current_query($vars['search_page']['env_id']);
+  $solrParams = $solrQuery->getParams();
+  $userSearch = drupal_encode_path($solrParams['q']);
+
+  // build solr csv download link
+  $title = t("Ergebnisse exportieren");
+  $downloadLink = $solrUri . 'select?q=(' . $userSearch . ')' .
+    '&rows=9999' .      // maximum number of search results to return
+    '&qf=content&qf=label&qf=tags_inline&qf=taxonomy_names&qf=tos_content_extra&qf=tos_name&qf=ts_comments' .   // fields to search in
+    '&fl=Typ:bundle_name,Titel:+label,Autoren:+tm_author,Jahr:+is_year,Beschreibung:+description' .             // fields to return with alias
+    ',Anfangsdatum:+dm_field_anfangsdatum,Enddatum:+dm_field_enddatum,Link:+url,Schlagworte:+taxonomy_names' .
+    '&wt=csv';          // return format
+
+  // add link to search result page
+  $vars['title_prefix']['#markup'] =
+    '<a id="exportcsv" href="' . $downloadLink . '" download="searchresults.csv">' .
+    '<i title="'.$title.'" class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>' .
+    '</a>';
+
+  dpm($vars);
+  dpm($vars['response']->request);
+  dpm($solrParams);
+  dpm($userSearch);
 }
