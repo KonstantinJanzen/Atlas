@@ -789,9 +789,23 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
     }
   }
 
-  // add image type extension to Solr index
-  if($entity->type === 'wissenskarte') {
+
+  if ($entity->type === 'wissenskarte') {
+
+    // add image type extension to Solr index
     $document->addField('ss_filetype', pathinfo($entity->field_wk_bild['und'][0]['filename'])['extension']);
+
+    // add taxonomy ids and names of the entity reference tags field to solr index
+    foreach ($entity->field_tag_combined['und'] as $value) {
+      if (!empty($value)) {
+        $tid = $value['target_id'];
+        $term = taxonomy_term_load($tid);
+        $name = $term->name;
+
+        $document->addField('tid', $tid);
+        $document->addField('tm_vid_knowledgemaptags', $name);
+      }
+    }
   }
 }
 
