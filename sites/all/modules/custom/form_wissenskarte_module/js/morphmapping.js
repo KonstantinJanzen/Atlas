@@ -35,6 +35,7 @@ var ValidationResult = function() {
 Indeko.ImageMap = Indeko.ImageMap || {
 		scalingFactor: 1,
 		contentBlockLabel:	$('#fulltextsearchrow').find('label'),
+		elemTags: $('#edit-field-tag-combined-und')
 	};
 
 /**
@@ -757,16 +758,31 @@ Indeko.ImageMap.hookSaveButton = function () {
 			}
 		});
 
-		// update map areas before saving
+		// if all knowledge map values are valid
 		if (l_bIsValid) {
+
+			// update map areas before saving
 			myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
 			Indeko.Morphsearch.reset();
-		}
 
-		// if all values are valid restore the search block to the state prior to editing / creating the knowledge map
-		if (l_bIsValid) {
-            localStorage["searchValues"] = Indeko.MorphBox.searchJson;
-        }
+			// restore the search block to the state prior to editing / creating the knowledge map
+			localStorage["searchValues"] = Indeko.MorphBox.searchJson;
+
+			// add selected morphological elements of each drawn knowledge map area as tags
+			var jsonString = '';
+			Indeko.ImageMap.elemTags.val(-1); // clear tags field
+			$.each(allAreas, function (index, area) {
+				if (!$.isEmptyObject(area.json)) {
+					jsonString = decodeURI(area.json);
+					var searchObject = JSON.parse(jsonString);
+
+					// add tags to select field
+					$.each(searchObject.morphological, function (index, value) {
+						Indeko.ImageMap.elemTags.find('option[value=' + value + ']').attr('selected', 'selected');
+					});
+				}
+			});
+		}
 
 		return l_bIsValid;
 

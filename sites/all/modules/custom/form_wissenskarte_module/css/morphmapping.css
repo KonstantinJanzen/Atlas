@@ -64,7 +64,9 @@
     display: none;
 }
 
-/* TODO remove once unused taxonomy term are removed from content type */
-#morphological-box {
+/*
+ * Hide tags on knowledge map.
+ */
+#edit-field-tag-combined {
     display: none;
 }
