@@ -765,8 +765,10 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
     $document->addField('ss_isbn', $entity->biblio_isbn);
 
     // add file extension to Solr index
-    $fileExtension = pathinfo($entity->field_attached_file['und'][0]['filename'])['extension'];
-    $document->addField('ss_filetype', $fileExtension);
+    if (isset($entity->field_attached_file['und'][0]['filename'])) {
+      $fileExtension = pathinfo($entity->field_attached_file['und'][0]['filename'])['extension'];
+      $document->addField('ss_filetype', $fileExtension);
+    }
 
 
     // make fields available for fulltext search ts_ (single-valued) and tm_ (multi-valued)
