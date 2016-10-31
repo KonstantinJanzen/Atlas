@@ -224,3 +224,7 @@
 #exportcsv {
     float: right;
 }
+
+.inline > * {
+    display: inline;
+}
