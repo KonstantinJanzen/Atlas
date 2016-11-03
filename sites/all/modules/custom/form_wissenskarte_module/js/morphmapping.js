@@ -35,7 +35,10 @@ var ValidationResult = function() {
 Indeko.ImageMap = Indeko.ImageMap || {
 		scalingFactor: 1,
 		contentBlockLabel:	$('#fulltextsearchrow').find('label'),
-		elemTags: $('#edit-field-tag-combined-und')
+		elemTags: $('#edit-field-tag-combined-und'),
+		buttonSave: $('#edit-submit'),
+		elemTitle: $("#edit-title"),
+		elemDescription: $("#edit-field-beschreibung-und-0-value")
 	};
 
 /**
@@ -712,16 +715,35 @@ Indeko.ImageMap.scale = function (domImage) {
  * Adds client side validation to save / submit button.
  */
 Indeko.ImageMap.hookSaveButton = function () {
-	$('#edit-submit').click(function () {
+	Indeko.ImageMap.buttonSave.click(function () {
 		var l_bIsValid = true;
+
 		// Error if title is empty
-		var titleElement = $("#edit-title");
+		var titleElement = Indeko.ImageMap.elemTitle;
 		if ($.isEmptyObject(titleElement.val())) {
 			titleElement.addClass('error');
+			if ($('.errorTitle').length === 0) {
+				titleElement.after('<p class="errorTitle labelAreaErrorText"><label>Das Feld „Titel” ist erforderlich.</label></p>');
+			}
 			titleElement.focus();
 			l_bIsValid = false;
 		} else {
 			titleElement.removeClass('error');
+			$('.errorTitle').remove();
+		}
+
+		// Error if description is empty
+		var descriptionElement = Indeko.ImageMap.elemDescription;
+		if ($.isEmptyObject(descriptionElement.val())) {
+			descriptionElement.addClass('error');
+			if ($('.errorDescription').length === 0) {
+				descriptionElement.after('<p class="errorDescription labelAreaErrorText"><label>Das Feld „Beschreibung” ist erforderlich.</label></p>');
+			}
+			descriptionElement.focus();
+			l_bIsValid = false;
+		} else {
+			descriptionElement.removeClass('error');
+			$('.errorDescription').remove();
 		}
 
 		// guarantee that last drawn area was saved properly
