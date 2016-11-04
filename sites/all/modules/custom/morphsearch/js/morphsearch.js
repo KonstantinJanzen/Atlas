@@ -9,6 +9,7 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
         elemFulltextInfo: $('#fulltextsearchinfo'),             // fulltext search info element
         elemSearchSyntax: $('#searchSyntax'),                   // element with search syntax representaion
         elemsType: $('.morphsearch-type-block .type'),           // all type search select elements
+        elemTypePublication: $('.morphsearch-type-block .type[data-name="biblio"]'), // publication link in type search block
         elemTypeBlock: $('.morphsearch-type-block'),            // type search element
         elemsMorph: $('.morphsearch-select'),                    // all morphological box select elements
         elemMorphBlock: $('#morphsearch-select-block'),         // element containing all morphological box select elements
@@ -124,7 +125,7 @@ Indeko.Morphsearch.hookTypeSearchButton = function() {
  * Toggles publication filter link if publication is selected on type search block.
  */
 Indeko.Morphsearch.hookTypeSearchPublicationButton = function() {
-    $('.morphsearch-type-block .type:contains("Publikation")').click(function() {
+    Indeko.Morphsearch.elemTypePublication.click(function() {
         Indeko.Morphsearch.elemPublicationBlock.toggle();
         Indeko.Morphsearch.elemPublicationFilterBlock.hide();
     });
