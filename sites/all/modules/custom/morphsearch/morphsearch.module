@@ -1,5 +1,11 @@
 <?php
 /**
+ * @file
+ * Provides a dynamic search block using containing fulltext search, content type search, morphological search by taxonomy terms
+ * and publication search.
+ */
+
+/**
  * Implements hook_block_info(). Declares that the 'morphsearch-block' is provided by this module.
  *
  * @return array Each component of the which is an array of block information.
@@ -80,7 +86,8 @@ function createMorphsearchContent() {
 
   // search info icon
   $content['fulltextsearchimage'] = array(
-    '#markup' => '<span title="Use tooltip to display search syntax? See qtip^2 plugin already used by morphmapping module." ' .
+    // fallback pure text tooltip if qtip2 plugin is not used to display full search syntax as html tooltip
+    '#markup' => '<span title="Pure text search syntax or point to location of full syntax description." ' .
       'id="fulltextsearchinfo"></span>',
     '#suffix' => '</div>',
   );
@@ -115,86 +122,95 @@ function createMorphsearchContent() {
     '#suffix' => '</div>',
   );
 
-  // all publication related elements
-  $content['typesearchpublication'] = array(
-    '#prefix' => '<div id="morphsearch-publication-block">' .
-      '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Suche') .
-      '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
-      '<div id="morphsearch-publication-filter-block">',
-    '#suffix' => '</div></div>',
-  );
+  // remove morphological search if no morphological box taxonomy terms were found
+  if ($content['morphsearch']['#markup'] === '') {
+    unset($content['morphsearch']);
+  }
 
-  // publication years select
-  $content['typesearchpublication']['years'] = array(
-    '#type' => 'select',
-    '#options' => biblio_get_years(),
-    '#attributes' => array(
-      'class' => array('publication-select'),
-      'data-type' => 'year',
-      'data-placeholder' => t('Erscheinungsjahr'),
-      'multiple' => 'multiple'
-    )
-  );
+  // Create publication search filters only if biblio module is installed
+  if (module_exists('biblio')) {
 
-  // publication authors select
-  $content['typesearchpublication']['authors'] = array(
-    '#type' => 'select',
-    '#options' => biblio_get_authors(),
-    '#attributes' => array(
-      'class' => array('publication-select'),
-      'data-type' => 'author',
-      'data-placeholder' => t('Autor'),
-      'multiple' => 'multiple'
-    )
-  );
+    // all publication related elements
+    $content['typesearchpublication'] = array(
+      '#prefix' => '<div id="morphsearch-publication-block">' .
+        '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Suche') .
+        '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
+        '<div id="morphsearch-publication-filter-block">',
+      '#suffix' => '</div></div>',
+    );
 
-  // publication tags select
-  $content['typesearchpublication']['tags'] = array(
-    '#type' => 'select',
-    '#options' => biblio_get_keywords(),
-    '#attributes' => array(
-      'class' => array('publication-select'),
-      'data-type' => 'tags',
-      'data-placeholder' => t('Schlagwort'),
-      'multiple' => 'multiple'
-    )
-  );
+    // publication years select
+    $content['typesearchpublication']['years'] = array(
+      '#type' => 'select',
+      '#options' => biblio_get_years(),
+      '#attributes' => array(
+        'class' => array('publication-select'),
+        'data-type' => 'year',
+        'data-placeholder' => t('Erscheinungsjahr'),
+        'multiple' => 'multiple'
+      )
+    );
 
-  // publication publishers select
-  $content['typesearchpublication']['publishers'] = array(
-    '#type' => 'select',
-    '#options' => biblio_get_publishers(),
-    '#attributes' => array(
-      'class' => array('publication-select'),
-      'data-type' => 'publisher',
-      'data-placeholder' => t('Verlag'),
-      'multiple' => 'multiple'
-    )
-  );
+    // publication authors select
+    $content['typesearchpublication']['authors'] = array(
+      '#type' => 'select',
+      '#options' => biblio_get_authors(),
+      '#attributes' => array(
+        'class' => array('publication-select'),
+        'data-type' => 'author',
+        'data-placeholder' => t('Autor'),
+        'multiple' => 'multiple'
+      )
+    );
 
-  // publication locations select
-  $content['typesearchpublication']['locations'] = array(
-    '#type' => 'select',
-    '#options' => biblio_get_locations(),
-    '#attributes' => array(
-      'class' => array('publication-select'),
-      'data-type' => 'location',
-      'data-placeholder' => t('Ort'),
-      'multiple' => 'multiple'
-    )
-  );
+    // publication tags select
+    $content['typesearchpublication']['tags'] = array(
+      '#type' => 'select',
+      '#options' => biblio_get_keywords(),
+      '#attributes' => array(
+        'class' => array('publication-select'),
+        'data-type' => 'tags',
+        'data-placeholder' => t('Schlagwort'),
+        'multiple' => 'multiple'
+      )
+    );
 
-  // publication types select
-  $content['typesearchpublication']['types'] = array(
-    '#type' => 'select',
-    '#options' => biblio_get_types(),
-    '#attributes' => array(
-      'class' => array('publication-select'),
-      'data-type' => 'type',
-      'data-placeholder' => t('Publikationstyp'),
-      'multiple' => 'multiple'
-    )
-  );
+    // publication publishers select
+    $content['typesearchpublication']['publishers'] = array(
+      '#type' => 'select',
+      '#options' => biblio_get_publishers(),
+      '#attributes' => array(
+        'class' => array('publication-select'),
+        'data-type' => 'publisher',
+        'data-placeholder' => t('Verlag'),
+        'multiple' => 'multiple'
+      )
+    );
+
+    // publication locations select
+    $content['typesearchpublication']['locations'] = array(
+      '#type' => 'select',
+      '#options' => biblio_get_locations(),
+      '#attributes' => array(
+        'class' => array('publication-select'),
+        'data-type' => 'location',
+        'data-placeholder' => t('Ort'),
+        'multiple' => 'multiple'
+      )
+    );
+
+    // publication types select
+    $content['typesearchpublication']['types'] = array(
+      '#type' => 'select',
+      '#options' => biblio_get_types(),
+      '#attributes' => array(
+        'class' => array('publication-select'),
+        'data-type' => 'type',
+        'data-placeholder' => t('Publikationstyp'),
+        'multiple' => 'multiple'
+      )
+    );
+  }
 
   // reset search filter link
   $content['reset'] = array(
@@ -279,7 +295,9 @@ function buildSearchHtml() {
   }
 
   // close tags after last element
-  $html .= "</select>";
+  if ($html !== '') {
+    $html .= "</select>";
+  }
   //$html .= "</label>";
   return $html;
 }

@@ -340,21 +340,23 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
  * Initialize morphsearch block.
  */
 Indeko.Morphsearch.init = function() {
-    // transform select to chosen boxes
-    Indeko.Morphsearch.elemsMorph.chosen({
-        inherit_select_classes: true,
-        allow_single_deselect: true,
-        display_selected_options: false,
-        width:"100%"
-    });
+    // transform select to chosen elements if chosen plugin is available
+    if ($.fn.chosen) {
+        Indeko.Morphsearch.elemsMorph.chosen({
+            inherit_select_classes: true,
+            allow_single_deselect: true,
+            display_selected_options: false,
+            width:"100%"
+        });
 
-    Indeko.Morphsearch.elemsPublication.removeClass('form-select'); // remove standard form API select class?
-    Indeko.Morphsearch.elemsPublication.chosen({
-        inherit_select_classes: true,
-        allow_single_deselect: true,
-        display_selected_options: false,
-        width:"100%"
-    });
+        Indeko.Morphsearch.elemsPublication.removeClass('form-select'); // remove standard form API select class?
+        Indeko.Morphsearch.elemsPublication.chosen({
+            inherit_select_classes: true,
+            allow_single_deselect: true,
+            display_selected_options: false,
+            width:"100%"
+        });
+    }
 
     Indeko.Morphsearch.hookResetButton();
     Indeko.Morphsearch.hookSearchButton();
@@ -533,16 +535,18 @@ Indeko.Morphsearch.getValue = function (values, type) {
  */
 Indeko.Morphsearch.addSearchInfo = function() {
     // TODO fallback option if no qtip2?
-    Indeko.Morphsearch.elemFulltextInfo.qtip({
-        content: {
-            // use hidden element (created in morphsearch.module -> createMorphsearchContent) as tooltip
-            text: Indeko.Morphsearch.elemSearchSyntax,
-            title:{ text: "Such-Syntax"}
-        },
-        position: {
-            viewport: $(window)
-        }
-    })
+    if ($.fn.qtip) {
+        Indeko.Morphsearch.elemFulltextInfo.qtip({
+            content: {
+                // use hidden element (created in morphsearch.module -> createMorphsearchContent) as tooltip
+                text: Indeko.Morphsearch.elemSearchSyntax,
+                title: {text: "Such-Syntax"}
+            },
+            position: {
+                viewport: $(window)
+            }
+        })
+    }
 };
 
 /**
@@ -555,50 +559,54 @@ Indeko.Morphsearch.addSearchInfo = function() {
  * @param location DOM element as target for the notification
  */
 Indeko.createNotification = function(title, text, my, at, location) {
-    $(document.body).qtip({
-        content: {
-            text: text,
-            title: {
-                text: title
-            }
-        },
-        position: {
-            viewport: $(window) ,
-            my: my,
-            at: at,
-            target: location
-        },
-        show: {
-            event: false,
-            ready: true,
-            effect: function() {
-                $(this).stop(0, 1).fadeIn(400);
+    if ($.fn.qtip) {
+        $(document.body).qtip({
+            content: {
+                text: text,
+                title: {
+                    text: title
+                }
             },
-            delay: 0
-        },
-        hide: {
-            event: false,
-            effect: function(api) {
-                $(this).stop(0, 1).fadeOut(400).queue(function() {
-                    api.destroy(true);
-                })
-            }
-        },
-        style: {
-            classes: 'searchNotification jgrowl ui-tooltip-dark ui-tooltip-rounded',
-            tip: true
-        },
-        events: {
-            render: function(event, api) {
-                var lifespan = 4000;
+            position: {
+                viewport: $(window),
+                my: my,
+                at: at,
+                target: location
+            },
+            show: {
+                event: false,
+                ready: true,
+                effect: function () {
+                    $(this).stop(0, 1).fadeIn(400);
+                },
+                delay: 0
+            },
+            hide: {
+                event: false,
+                effect: function (api) {
+                    $(this).stop(0, 1).fadeOut(400).queue(function () {
+                        api.destroy(true);
+                    })
+                }
+            },
+            style: {
+                classes: 'searchNotification jgrowl ui-tooltip-dark ui-tooltip-rounded',
+                tip: true
+            },
+            events: {
+                render: function (event, api) {
+                    var lifespan = 4000;
 
-                clearTimeout(api.timer);
-                if (event.type !== 'mouseover') {
-                    api.timer = setTimeout(function() {api.hide();}, lifespan);
+                    clearTimeout(api.timer);
+                    if (event.type !== 'mouseover') {
+                        api.timer = setTimeout(function () {
+                            api.hide();
+                        }, lifespan);
+                    }
                 }
             }
-        }
-    }).removeData('qtip');
+        }).removeData('qtip');
+    }
 };
 
 
