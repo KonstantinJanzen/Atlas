@@ -233,16 +233,21 @@
 }
 
 /*
+ * TODO hat hier nichts zu suchen
  * Styling of content type project (primary method of bkm).
  */
-.display_table > div > section {
+.display_table.bkm section {
     display: inline-table;
 }
-.display_table > div > section > *{
+.display_table.bkm section > *{
     margin-top: 0;
     margin-bottom: 0;
 }
-.display_table > div > section:nth-child(2n) {
+.display_table.bkm section:nth-child(2n) {
     margin-left: 2em;
     margin-right: 2em;
+}
+.display_table.bkm ul {
+    list-style-type: none;
+    padding: 0;
 }

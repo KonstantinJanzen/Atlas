@@ -68,13 +68,25 @@ function indeko7_preprocess_node(&$vars) {
   // Hide comment title and marked areas field on write comment page of knowledge maps.
   $pathWriteComment = 'comment/reply/*';
   $isPathWriteComment = drupal_match_path(current_path(), $pathWriteComment);
-  if (isset($vars['type']) && $vars['type'] == 'wissenskarte' && $isPathWriteComment) {
+  if (isset($vars['type']) && $vars['type'] === 'wissenskarte' && $isPathWriteComment) {
     $vars['title'] = '';
     hide($vars['content']['field_markierte_bereiche']);
   }
 }
-/* -- Delete this line if you want to use these functions
+
 function indeko7_process_node(&$vars) {
+  // change project node  design
+  if (isset($vars['type']) && $vars['type'] === 'projekt') {
+
+    // combine two bkm related fields into one
+    if (isset($vars['content']['group_methode_bkm']['field_weiterentwicklung_von'])) {
+      $fieldgroup_bkm = $vars['content']['group_methode_bkm'];
+      $method_name =  t(' von ') . $fieldgroup_bkm['field_weiterentwicklung_von'][0]['#markup'];
+
+      $vars['content']['group_methode_bkm']['field_weiter_oder_neuentwicklung'][0]['#markup'] .= $method_name;
+      unset($vars['content']['group_methode_bkm']['field_weiterentwicklung_von']);
+    }
+  }
 }
 // */
 
