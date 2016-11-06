@@ -108,6 +108,8 @@ function  initView(ViewMode) {
 				var l_sId = '#' + l_oPicContainer.find('map').attr('id');
 				l_oPicContainer.find('img').attr('USEMAP', l_sId);
 			}
+
+			Indeko.ImageMap.hookMapAreas();
 		}
 	}
 
@@ -618,11 +620,11 @@ function gui_statusMessage(str) {
  */
 // todo testing janzen 18.10
 Indeko.MorphBox.update = function(id) {
+	Indeko.Morphsearch.reset();
 	if (myimgmap.areas[id] === null || typeof myimgmap.areas[id].json === "undefined") { // TODO
 		// areas is not valid
 		return false;
 	}
-	Indeko.Morphsearch.reset();
 
 	var jsonString = myimgmap.areas[id].json;
 	jsonString = decodeURI(jsonString);
@@ -809,6 +811,18 @@ Indeko.ImageMap.hookSaveButton = function () {
 		return l_bIsValid;
 
 	});
+};
+
+
+/**
+ * Updates search block on click on map areas.
+ */
+Indeko.ImageMap.hookMapAreas = function () {
+	$("map area").click(function () {
+			jsonString = decodeURI($(this).attr('data-json'));
+			localStorage["searchValues"] = jsonString;
+		}
+	)
 };
 
 /**
