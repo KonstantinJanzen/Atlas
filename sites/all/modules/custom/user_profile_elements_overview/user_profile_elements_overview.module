@@ -55,7 +55,7 @@ function elements_overview_html($staticFilter = []) {
         }
         /* Links to the View of the created element. */
         $url = url('node/'. $result->nid);
-        $html .= "<a href='$url'>$result->title</a>";
+        $html .= "<a href='$url'>" . htmlspecialchars(urldecode($result->title)) . "</a>";
         //$html .= l($result->title, $url . '/edit', array('query' => drupal_get_destination()));
         $html .= "</li>";
     }

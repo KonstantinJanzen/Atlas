@@ -864,6 +864,21 @@ Indeko.ImageMap.addTooltip = function() {
 	});
 };
 
+var entityMap = {
+	"&": "&amp;",
+	"<": "&lt;",
+	">": "&gt;",
+	'"': '&quot;',
+	"'": '&#39;',
+	"/": '&#x2F;'
+};
+
+function escapeHtml(string) {
+	return String(string).replace(/[&<>"'\/]/g, function (s) {
+		return entityMap[s];
+	});
+}
+
 /* todo com, function copied from imgmap */
 imgmap.prototype.getMapInnerHTML = function(flags) {
 	var html, coords;
@@ -882,8 +897,8 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 					coords = cs.join(',');
 				}
 				html+= '<area shape="' + this.areas[i].shape + '"' +
-					' alt="' + this.areas[i].aalt + '"' +
-					' title="' + this.areas[i].atitle + '"' +
+					' alt="' + encodeURI(this.areas[i].aalt) + '"' +
+					' title="' + encodeURI(this.areas[i].atitle) + '"' +
 					' id="' + this.areas[i].id + '"' +
 					' coords="' + coords + '"' +
 					' href="' +	this.areas[i].ahref + '"' +

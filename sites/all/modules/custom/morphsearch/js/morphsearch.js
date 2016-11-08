@@ -210,7 +210,7 @@ Indeko.Morphsearch.toArray = function() {
 
 
     // save and parse fulltext search string
-    var inputFulltextSearch = this.elemFulltext.val();
+    var inputFulltextSearch = encodeURI(this.elemFulltext.val());
     // replace empty fulltext search field with "*" search
     if (!inputFulltextSearch) {
         inputFulltextSearch = "*";
@@ -282,7 +282,7 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
     if (searchArray.fulltext === '*') {
         Indeko.Morphsearch.elemFulltext.val('');
     } else {
-        Indeko.Morphsearch.elemFulltext.val(searchArray.fulltext);
+        Indeko.Morphsearch.elemFulltext.val(decodeURI(searchArray.fulltext));
     }
 
 

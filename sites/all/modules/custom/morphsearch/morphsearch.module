@@ -553,7 +553,7 @@ function saved_search_html() {
     $fulltext = $json['fulltext'];
     if (!empty($fulltext)) {
       if ($fulltext !== '*') {
-        $html .= get_html_table_row("Freitextsuche:", $fulltext);
+        $html .= get_html_table_row("Freitextsuche:", htmlspecialchars(urldecode($fulltext)));
       }
     }
 
