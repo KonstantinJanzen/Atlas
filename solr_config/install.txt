@@ -1,6 +1,10 @@
 - download and unpack solr 5.5. http://archive.apache.org/dist/lucene/solr/5.5.2/
-- copy the "drupal" config folder to solr-5.5.2\server\solr\drupal
+- move the "drupal" config folder to solr-5.5.2\server\solr\drupal
 - start solr "solr-5.5.2\bin\solr start"
 - done http://localhost:8983/solr
 
-- in Drupal - configuration - Apache Solr search - index all content to make it available for searching
+- in Drupal:
+Modul "Apache Solr Search" installieren und aktivieren.
+configuration -> Apache Solr search -> settings -> localhost server edit -> add "/drupal" to Solr Server URL (e.g. http://localhost:8983/solr/drupal)
+configuration -> Apache Solr search -> Index all queued content
+(optional) add apachesolr_realtime module to commit all changes immediately.

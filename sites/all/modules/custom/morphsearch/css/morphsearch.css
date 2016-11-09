@@ -48,20 +48,28 @@
     background-repeat: no-repeat;
     background-size: 21px 21px;
     padding-right: 23px;
-    width: 90%;
+    width: 100%;
     position: absolute;
     margin-bottom: 1em!important;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /*
  * Position invisible div element above info icon to display mouseover tooltip
  */
 #fulltextsearchinfo {
-    width: 10%;
+    width: 23px;
     height: 26.5px;
     float: right;
     position: relative;
     z-index: 10;
+    margin-top: 2px;
+    margin-bottom: 2px;
+    -webkit-box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    box-sizing: border-box;
 }
 
 /*
