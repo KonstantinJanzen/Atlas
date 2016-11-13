@@ -174,7 +174,7 @@ Indeko.Morphsearch.hookSearchBlock = function() {
  * TODO: make independent from chosen
  */
 Indeko.Morphsearch.reset = function() {
-    this.elemFulltext.val('');
+    // this.elemFulltext.val(''); // ID 34 do not reset fulltext field on reset
     this.elemsMorph.val(-1).trigger("chosen:updated");
     this.elemsPublication.val(-1).trigger("chosen:updated");
 

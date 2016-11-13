@@ -166,7 +166,7 @@ function instanciateAreaDescription(){
 
 		if (l_oResult.isValid()) {
 			Indeko.ImageMap.addNewArea();      // add new area on validation success...
-			Indeko.Morphsearch.reset();
+			Indeko.MorphBox.reset();
 		}
 	});
 }
@@ -620,7 +620,7 @@ function gui_statusMessage(str) {
  */
 // todo testing janzen 18.10
 Indeko.MorphBox.update = function(id) {
-	Indeko.Morphsearch.reset();
+	Indeko.MorphBox.reset();
 	if (myimgmap.areas[id] === null || typeof myimgmap.areas[id].json === "undefined") { // TODO
 		// areas is not valid
 		return false;
@@ -646,6 +646,15 @@ Indeko.MorphBox.selectItems = function() {
 	Indeko.Morphsearch.toSearchblock(searchObject);
 };
 
+/*
+ * Reset the morphologocal box to initial display state.
+ * !!! Has to be changed depending on the representation of the morphological box !!!
+ */
+Indeko.MorphBox.reset = function() {
+	Indeko.Morphsearch.reset();
+	Indeko.Morphsearch.elemFulltext.val(''); // ID 34 do not reset fulltext field on reset, so have to do it here
+};
+
 /**
  * Show the Morphological Box
  */
@@ -665,7 +674,7 @@ Indeko.MorphBox.hide = function() {
  */
 Indeko.MorphBox.convertMorphsearch = function() {
     Indeko.MorphBox.searchJson = JSON.stringify(Indeko.Morphsearch.toArray());                      // save search block state to restore it later
-    Indeko.Morphsearch.reset();
+    Indeko.MorphBox.reset();
 	Indeko.ImageMap.contentBlockLabel.text("Inhalte der Wissenskarte");									// change label of the search block
 	$('.morphblocktable').remove();                                                 				// remove standard search block search / reset / save elements
 	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  				// changelistener for comboboxes in MorpBox
@@ -787,7 +796,7 @@ Indeko.ImageMap.hookSaveButton = function () {
 
 			// update map areas before saving
 			myimgmap.fireEvent('onHtmlChanged', myimgmap.getMapHTML());
-			Indeko.Morphsearch.reset();
+			Indeko.MorphBox.reset();
 
 			// restore the search block to the state prior to editing / creating the knowledge map
 			localStorage["searchValues"] = Indeko.MorphBox.searchJson;
