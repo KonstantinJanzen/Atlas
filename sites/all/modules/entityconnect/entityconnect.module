@@ -1,0 +1,224 @@
+<?php
+/**
+ * @file
+ * Handles the main hooks used by entityconnect.
+ *
+ * One will find most of the meet in the form and menu includes.
+ */
+
+define('ENTITYCONNECT_CACHE_TABLE', 'cache_entityconnect');
+
+/**
+ * Includes.
+ */
+require_once 'includes/entityconnect.fields.inc';
+require_once 'includes/entityconnect.utils.inc';
+
+/**
+ * Implements hook_permission().
+ *
+ * @return Assoc
+ *   permission items
+ */
+function entityconnect_permission() {
+  return array(
+    'entityconnect add button' => array(
+      'title' => t('Allows users to see add button'),
+      'description' => t('Display the add button for user'),
+    ),
+    'entityconnect edit button' => array(
+      'title' => t('Allows users to see edit button'),
+      'description' => t('Display the edit button for user'),
+    ),
+  );
+}
+
+/**
+ * Implements hook_menu().
+ */
+function entityconnect_menu() {
+  $items = array();
+  $items['admin/entityconnect/return/%'] = array(
+    'description' => 'Return item for original entity.',
+    'page callback' => 'entityconnect_return',
+    'page arguments' => array(3),
+    'access callback' => 'entityconnect_check_access',
+    'file' => 'includes/entityconnect.menu.inc',
+  );
+
+  $items['admin/entityconnect/edit/%'] = array(
+    'description' => 'Edit item for entity referenced.',
+    'page callback' => 'entityconnect_edit',
+    'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('entityconnect edit button'),
+    'file' => 'includes/entityconnect.menu.inc',
+  );
+
+  $items['admin/entityconnect/add/%'] = array(
+    'title' => "Choose type to create and add",
+    'description' => 'Add item for entity referenced.',
+    'page callback' => 'entityconnect_add',
+    'page arguments' => array(3),
+    'access callback' => 'user_access',
+    'access arguments' => array('entityconnect add button'),
+    'file' => 'includes/entityconnect.menu.inc',
+  );
+
+  $items['admin/config/content/entityconnect'] = array(
+    'title' => 'Entity Connect',
+    'description' => 'Configure default values for Entity Reference fields using Entity Connect',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('_entityconnect_admin_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'includes/entityconnect.admin.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Access callback: Used in return menu.
+ */
+function entityconnect_check_access() {
+  if (user_access('entityconnect add button') || user_access('entityconnect edit button')) {
+    return TRUE;
+  }
+  else {
+    return FALSE;
+  }
+}
+
+/**
+ * Implements hook_field_attach_form().
+ */
+function entityconnect_field_attach_form($entity_type, $entity, &$form, &$form_state, $langcode) {
+  entityconnect_include_form();
+  foreach (_entityconnect_get_ref_fields() as $field_name => $field) {
+    if (isset($form[$field_name])) {
+      _entityconnect_field_attach_form($entity_type, $entity, $form,
+        $form_state, $field_name, $field, $langcode);
+    }
+  }
+}
+
+/**
+ * Implements hook_theme().
+ */
+function entityconnect_theme() {
+  $items = array();
+
+  $items['entityconnect_taxonomy_term_add_list'] = array(
+    'arguments' => array('items' => NULL),
+    'file' => 'includes/entityconnect.pages.inc',
+  );
+
+  $items['entityconnect_entity_add_list'] = array(
+    'arguments' => array('items' => NULL, 'cache id' => NULL),
+    'file' => 'includes/entityconnect.pages.inc',
+  );
+
+  return $items;
+}
+
+/**
+ * Include the form inc file.
+ *
+ * This can be used in #submit array before the sumbit functions which are
+ * located in the inc file.
+ */
+function entityconnect_include_form() {
+  module_load_include("inc", "entityconnect", "includes/entityconnect.form");
+}
+
+/**
+ * Wraps cache set.
+ *
+ * We can set the expire easily if needed.
+ */
+function entityconnect_cache_set($cid, $data) {
+  // Get cache_lifetime variable.
+  $cache_lifetime = variable_get('entityconnect_cache_lifetime', CACHE_PERMANENT);
+
+  if ($cache_lifetime !== CACHE_PERMANENT) {
+    $cache_lifetime = REQUEST_TIME + $cache_lifetime;
+  }
+
+  return cache_set($cid, $data, ENTITYCONNECT_CACHE_TABLE, $cache_lifetime);
+}
+
+/**
+ * Wraps cache get.
+ */
+function entityconnect_cache_get($cid) {
+  return cache_get($cid, ENTITYCONNECT_CACHE_TABLE);
+}
+
+/**
+ * Implements hook_flush_caches().
+ */
+function entityconnect_flush_caches() {
+  return array('cache_entityconnect');
+}
+
+/**
+ * Implements hook_form_alter().
+ *
+ * If we are adding a new entity we pass of to entityconnect_add_form_alter
+ * if we are returning to the parent form we hand off to
+ * entityconnect_return_form_alter.
+ */
+function entityconnect_form_alter(&$form, &$form_state, $form_id) {
+  $child = isset($_REQUEST['child']);
+
+  // We can get the cid two different ways
+  // first we try the $_REQUEST param.  if we do not getting it from there we
+  // try the arg(3) if we are on a add form.  Also if we are on an add form we
+  // know that we are a child page.
+  foreach(arg() as $key => $value) {
+    if (stripos($value, 'entityconnect-form-', 0) == 0) {
+      $cid = $value;
+    }
+  }
+
+  if ((isset($_REQUEST['build_cache_id']) && ($cid = $_REQUEST['build_cache_id']))
+      || ((isset($cid)) && $child = TRUE)) {
+    $cache = entityconnect_cache_get($cid);
+    entityconnect_include_form();
+    if ($child) {
+      $form_state['#entityconnect_child_form'] = $cache;
+    }
+    if (isset($_REQUEST['return']) && isset($cache->data) && $cache->data['form']['#form_id'] == $form_id) {
+      unset($_REQUEST['build_cache_id']);
+      entityconnect_return_form_alter($form, $form_state, $form_id, $cid, $cache);
+    }
+  }
+
+  // If this form is a child form let's add alter for that purpose
+  // Note that we are doing this here becuase when we retrun to a form it gets
+  // rebuilt so this will get caught in the rebuilt.
+  if (isset($form_state['#entityconnect_child_form']) && $form_state['#entityconnect_child_form']) {
+    $cache = $form_state['#entityconnect_child_form'];
+    module_load_include('inc', 'entityconnect', 'includes/entityconnect.form');
+    entityconnect_child_form_alter($form, $form_state, $form_id, $cache->cid, $cache);
+  }
+}
+
+/**
+ * Implements hook_module_implements_alter().
+ *
+ * Ensure entityconnect gets called after workbench_moderation when altering the node form
+ *
+ * @param array $module_list
+ * @param string $context
+ */
+function entityconnect_module_implements_alter(&$module_list, $context) {
+  // Need to override both to get correct sort order.
+  // @see: https://api.drupal.org/api/drupal/modules%21system%21system.api.php/function/hook_module_implements_alter/7
+  if($context == 'form_node_form_alter' || $context == 'form_alter') {
+    // Move entityconnect implementation to the end of the list to ensure it gets called last.
+    $group = isset($module_list['entityconnect']) ? $module_list['entityconnect'] : FALSE;
+    unset($module_list['entityconnect']);
+    $module_list['entityconnect'] = $group;
+  }
+}
