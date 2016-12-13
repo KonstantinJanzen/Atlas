@@ -32,7 +32,7 @@ function jquery_autosize_libraries_info() {
     'download url' => 'http://www.jacklmoore.com/autosize/',
     'version arguments' => array(
       'file' => 'jquery.autosize.min.js',
-      'pattern' => '/Autosize *([0-9\.]+)/',
+      'pattern' => '/Autosize ([0-9\.]+)/',
       'lines' => 5,
     ),
     'files' => array(
