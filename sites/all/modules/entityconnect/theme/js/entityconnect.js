@@ -26,8 +26,10 @@
       $(".entityconnect-add.select", context).each(function() {
         var $form_type_select = $(this).siblings(".form-type-select");
         if ($(this).hasClass('multiple-selection')) {
-          $(this).insertAfter($form_type_select.find("label").first());
-          $('<div class="clearfix"></div>').insertAfter(this);
+          // todo entityconnect elements not positioned after chosen select elements
+          $(this).insertAfter($form_type_select.children("select"));
+          //$(this).insertAfter($form_type_select.find("label").first());
+          //$('<div class="clearfix"></div>').insertAfter(this);
         }
         else {
           $(this).insertAfter($form_type_select.children("select"));
