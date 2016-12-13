@@ -259,3 +259,11 @@
     list-style-type: none;
     padding: 0;
 }
+
+/*
+ * Display drupal messages below the navigation bar.
+ * Change in indeko7 theme global.styles.css
+ */
+div.messages {
+    margin-top: 70px!important;
+}
