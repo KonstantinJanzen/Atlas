@@ -1,0 +1,17 @@
+name = jQuery Autosize
+description = Textarea elements will automatically add rows as more lines of text are added inside.
+package = User interface
+
+dependencies[] = libraries (>=2.x)
+dependencies[] = jquery_update (>=2.3)
+
+configure = admin/config/user-interface/jquery_autosize
+
+core = 7.x
+
+; Information added by Drupal.org packaging script on 2015-02-10
+version = "7.x-1.x-dev"
+core = "7.x"
+project = "jquery_autosize"
+datestamp = "1423608782"
+

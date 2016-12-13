@@ -1,0 +1,71 @@
+<?php
+
+/**
+ * @file
+ * JQuery Autosize.
+ *
+ * @see http://www.jacklmoore.com/autosize/
+ */
+
+/**
+ * Implements hook_menu().
+ */
+function jquery_autosize_menu() {
+  $items['admin/config/user-interface/jquery_autosize'] = array(
+    'title' => 'jQuery Autosize',
+    'description' => 'Configure settings related to the jQuery Autosize library.',
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('jquery_autosize_settings_form'),
+    'access arguments' => array('administer site configuration'),
+    'file' => 'jquery_autosize.admin.inc',
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_libraries_info().
+ */
+function jquery_autosize_libraries_info() {
+  $libraries['autosize'] = array(
+    'name' => 'jQuery Autosize',
+    'vendor url' => 'http://www.jacklmoore.com/autosize/',
+    'download url' => 'http://www.jacklmoore.com/autosize/',
+    'version arguments' => array(
+      'file' => 'jquery.autosize.min.js',
+      'pattern' => '/Autosize *([0-9\.]+)/',
+      'lines' => 5,
+    ),
+    'files' => array(
+      'js' => array('jquery.autosize.min.js'),
+    ),
+    'variants' => array(
+      'uncompressed' => array(
+        'files' => array(
+          'js' => array('jquery.autosize.js'),
+        ),
+        'variant arguments' => array(
+          'variant' => 'uncompressed',
+        ),
+      ),
+    ),
+  );
+  return $libraries;
+}
+
+/**
+ * Implements hook_init().
+ */
+function jquery_autosize_init() {
+  // Load the libraries module.
+  drupal_load('module', 'libraries');
+  // Check what variant is selected in the settings.
+  $variant = (variable_get('jquery_autosize_variant', 'minified') == 'minified') ? NULL : variable_get('jquery_autosize_variant', 'minified');
+  // Add the autosize library.
+  if (($library = libraries_load('autosize', $variant)) && !empty($library['loaded'])) {
+    // Add the js that will apply autosize to the textarea elements.
+    drupal_add_js(drupal_get_path('module', 'jquery_autosize') . '/js/jquery_autosize.js');
+  }
+  else {
+    drupal_set_message(t('Error loading the Autosize library. Please check README.txt for instructions.'), 'error');
+  }
+}
