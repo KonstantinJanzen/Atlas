@@ -239,31 +239,3 @@
 .inline > * {
     display: inline;
 }
-
-/*
- * TODO hat hier nichts zu suchen
- * Styling of content type project (primary method of bkm).
- */
-.display_table.bkm section {
-    display: inline-table;
-}
-.display_table.bkm section > *{
-    margin-top: 0;
-    margin-bottom: 0;
-}
-.display_table.bkm section:nth-child(2n) {
-    margin-left: 2em;
-    margin-right: 2em;
-}
-.display_table.bkm ul {
-    list-style-type: none;
-    padding: 0;
-}
-
-/*
- * Display drupal messages below the navigation bar.
- * Change in indeko7 theme global.styles.css
- */
-div.messages {
-    margin-top: 70px!important;
-}

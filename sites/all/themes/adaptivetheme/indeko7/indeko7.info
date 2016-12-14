@@ -16,6 +16,9 @@
   stylesheets[screen][] = css/global.base.css
   stylesheets[screen][] = css/global.styles.css
 
+  ; global css added by Atlas project
+  stylesheets[screen][] = css/global.atlas.css
+
   ; Print - uncomment to load basic print styles.
   ; stylesheets[print][] = css/print.css
 
