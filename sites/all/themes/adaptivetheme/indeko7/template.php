@@ -122,3 +122,13 @@ function indeko7_preprocess_block(&$vars) {
 function indeko7_process_block(&$vars) {
 }
 // */
+
+/**
+ * Implementation of hook_form_FORM_ID_alter().
+ * Change forschungsergebnis title to textarea (ID: 95)
+ */
+function morphsearch_form_forschungsergebnis_node_form_alter(&$form, &$form_state) {
+  $form['title']['#type'] = 'textarea';
+  $form['title']['#rows'] = '1';
+  return $form;
+}
