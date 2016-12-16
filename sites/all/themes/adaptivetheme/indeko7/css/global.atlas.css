@@ -35,3 +35,57 @@ div.messages {
     list-style-type: none;
     padding: 0;
 }
+
+
+/*
+ * Display content type icons on search result page.
+ */
+.title.wissenskarte::before {
+    content: '';
+    background-image: url("../images/atlas/type_wissenskarte3.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 30px;
+}
+.title.biblio::before {
+    content: '';
+    background-image: url("../images/atlas/type_publikation.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 30px;
+}
+.title.analysereport::before {
+    content: '';
+    background-image: url("../images/atlas/type_analysenreport.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 30px;
+}
+.title.forschungsergebnis::before {
+    content: '';
+    background-image: url("../images/atlas/type_forschungsergebnis.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 30px;
+}
+.title.projekt::before {
+    content: '';
+    background-image: url("../images/atlas/type_projekt.svg");
+    background-repeat: no-repeat;
+    background-position: left center;
+    padding-left: 30px;
+}
+
+/*
+ * Style search result box.
+ */
+.search-result {
+    background-color: #e7e7e7;
+    border-radius: 14px;
+}
+.search-result .title {
+    background-color: lightgray;
+    border-top-right-radius: 14px;
+    border-top-left-radius: 14px;
+    padding-bottom: 1px;
+}

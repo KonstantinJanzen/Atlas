@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!DOCTYPE svg PUBLIC "-//W3C//DTD SVG 1.1//EN" "http://www.w3.org/Graphics/SVG/1.1/DTD/svg11.dtd">
+<svg width="100%" height="100%" viewBox="0 0 119 119" version="1.1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" xml:space="preserve" style="fill-rule:evenodd;clip-rule:evenodd;stroke-linejoin:round;stroke-miterlimit:1.41421;">
+    <g transform="matrix(1,0,0,1,0,-271)">
+        <g transform="matrix(2.07241,0,0,2.07241,-1767.51,-1033.22)">
+            <g id="analysenreport">
+                <g>
+                    <circle id="circle4996" cx="881.372" cy="658.138" r="28.496" style="fill:rgb(90,175,108);"/>
+                    <rect id="rect4998" x="867.215" y="638.575" width="28.314" height="39.125" style="fill:white;"/>
+                    <g id="g5000" transform="matrix(0.783831,0,0,0.783831,636.571,143.338)">
+                        <rect id="rect5002" x="299.775" y="650.592" width="6.032" height="18.097" style="fill:rgb(90,175,108);"/>
+                        <rect id="rect5004" x="309.298" y="659.037" width="6.032" height="9.652" style="fill:rgb(90,175,108);"/>
+                        <rect id="rect5006" x="318.82" y="644.861" width="6.032" height="23.827" style="fill:rgb(90,175,108);"/>
+                    </g>
+                </g>
+            </g>
+        </g>
+    </g>
+</svg>
