@@ -16,26 +16,9 @@ div.messages {
     margin-top: 70px!important;
 }
 
-/*
- * Styling of content type project (primary method of bkm).
- * TODO absolete cause project got restructured?
- */
-.display_table.bkm section {
-    display: inline-table;
-}
-.display_table.bkm section > *{
-    margin-top: 0;
-    margin-bottom: 0;
-}
-.display_table.bkm section:nth-child(2n) {
-    margin-left: 2em;
-    margin-right: 2em;
-}
-.display_table.bkm ul {
-    list-style-type: none;
-    padding: 0;
-}
-
+/* =============================================================================
+    Search results
+   ========================================================================== */
 
 /*
  * Display content type icons on search result page.
@@ -83,9 +66,64 @@ div.messages {
     background-color: #e7e7e7;
     border-radius: 14px;
 }
+
+/*
+ * Style search result title row.
+ */
 .search-result .title {
     background-color: lightgray;
     border-top-right-radius: 14px;
     border-top-left-radius: 14px;
     padding-bottom: 1px;
+}
+
+/*
+ * Add user icon (+space) in front of user
+ */
+.search-result .search-info .username::before {
+    font-family: FontAwesome;
+    display: inline-block;
+    content: "\f007 \00a0";
+}
+
+/*
+ * Add preview icon to title row.
+ */
+.search-result .title a::after {
+    font-family: FontAwesome;
+    content: "\f002";
+    float: right;
+    padding-right: 1em;
+    display: inline-block;
+    vertical-align: middle;
+}
+
+/* =============================================================================
+    Content type Projekt
+   ========================================================================== */
+/*
+ * Format project plain text description line breaks.
+ */
+.node-projekt .field-name-field-kurzbeschreibung .field-item {
+    white-space: pre-line;
+}
+
+/*
+ * Styling of content type project (primary method of bkm).
+ * TODO absolete cause project got restructured?
+ */
+.display_table.bkm section {
+    display: inline-table;
+}
+.display_table.bkm section > *{
+    margin-top: 0;
+    margin-bottom: 0;
+}
+.display_table.bkm section:nth-child(2n) {
+    margin-left: 2em;
+    margin-right: 2em;
+}
+.display_table.bkm ul {
+    list-style-type: none;
+    padding: 0;
 }
