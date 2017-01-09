@@ -437,10 +437,10 @@ Indeko.Morphsearch.toUrl = function (searchArray) {
         pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "ss_type", "OR", true);
 
         stringArray = Indeko.Morphsearch.getValue(searchArray.publication.author, "author");
-        pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "tm_author", "AND", true);
+        pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "tm_author", "OR", true);
 
         stringArray = Indeko.Morphsearch.getValue(searchArray.publication.tags, "tags");
-        pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_tag", "AND", true);
+        pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_tag", "OR", true);
 
         //pubQuery += ")"; // publication search done
 
