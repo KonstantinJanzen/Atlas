@@ -517,14 +517,21 @@ function is_duplicate_search($uid, $data) {
 
 /**
  * Implements Hook_user_view_alter.
+ * Displays the current user's saved searches on his own user profile page.
+
  *
  * @param $build
  */
 function morphsearch_user_view_alter(&$build) {
-  $build['savedsearchhtml'] = array(
+  global $user;
+
+  // display saved searches only on the user's own profile page
+  if ($build['#account']->uid === $user->uid) {
+    $build['savedsearchhtml'] = array(
       '#markup' => saved_search_html(),
       '#weight' => '10'
-  );
+    );
+  }
 }
 
 function saved_search_html() {

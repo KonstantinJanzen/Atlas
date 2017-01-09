@@ -2,15 +2,21 @@
 
 /**
  * Implements Hook_user_view_alter.
+ * Displays a list of content the current user created on his own user profile page.
  *
  * @param $build
  */
 function user_profile_elements_overview_user_view_alter(&$build) {
+  global $user;
+
+  // display list of created content only on the user's own profile page
+  if ($build['#account']->uid === $user->uid) {
     $build['elementsoverviewhtml'] = array(
-        '#markup' => elements_overview_html(array('biblio', 'wissenskarte', 'projekt', 'analysereport', 'forschungsergebnis')),
-        '#weight' => '6',
-        '#attached' => array('css' => array(drupal_get_path('module', 'user_profile_elements_overview') . "/css/user_profile_elements_overview.css"))
+      '#markup' => elements_overview_html(array('biblio', 'wissenskarte', 'projekt', 'analysereport', 'forschungsergebnis')),
+      '#weight' => '6',
+      '#attached' => array('css' => array(drupal_get_path('module', 'user_profile_elements_overview') . "/css/user_profile_elements_overview.css"))
     );
+  }
 }
 
 function elements_overview_html($staticFilter = []) {
