@@ -126,8 +126,11 @@ Indeko.Morphsearch.hookTypeSearchButton = function() {
  */
 Indeko.Morphsearch.hookTypeSearchPublicationButton = function() {
     Indeko.Morphsearch.elemTypePublication.click(function() {
+        /* CR ID 67-1 always display publication search block */
+        /*
         Indeko.Morphsearch.elemPublicationBlock.toggle();
         Indeko.Morphsearch.elemPublicationFilterBlock.hide();
+        */
     });
 };
 
@@ -180,7 +183,7 @@ Indeko.Morphsearch.reset = function() {
 
     this.elemsType.removeClass('selected');
     Indeko.Morphsearch.elemMorphBlock.hide();
-    Indeko.Morphsearch.elemPublicationBlock.hide();
+    // Indeko.Morphsearch.elemPublicationBlock.hide();  /* CR ID 67-1 always display publication search block */
     Indeko.Morphsearch.elemPublicationFilterBlock.hide();
 };
 
@@ -247,9 +250,15 @@ Indeko.Morphsearch.toArray = function() {
         }
     });
 
+    /* CR ID 67-1 always display publication search block */
+    if (isPublicationSelected === false && Indeko.Morphsearch.elemPublicationFilterBlock.is(":visible")) {
+        isPublicationSelected = true;
+        searchArray.type.push('biblio');
+    }
+
 
     // if publication is selected iterate over all publication elements  and save their values
-    if (isPublicationSelected) {
+    if (isPublicationSelected && Indeko.Morphsearch.elemPublicationFilterBlock.is(":visible")) {
         Indeko.Morphsearch.elemsPublication.each(function (index) {
             var id = $(this).val();
             var type = $(this).attr('data-type');

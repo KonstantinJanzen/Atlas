@@ -160,7 +160,7 @@
  * Publication search elements initially hidden
  */
 #morphsearch-publication-block {
-    display: none;
+    /* display: none; */ /* CR ID 67-1 always display publication search block */
     margin-top: 1em;
 }
 
