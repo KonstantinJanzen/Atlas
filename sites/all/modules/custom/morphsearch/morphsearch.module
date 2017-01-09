@@ -773,12 +773,42 @@ function biblio_get_locations() {
 
 
 /**
+ * Returns an array of all taxonomy IDs associated with the given node ID.
+ *
+ * @param $nid INT Node ID
+ * @return {Array} of taxonomy IDs
+ */
+function get_taxonomy_ids($nid) {
+  $query = "SELECT tid FROM {taxonomy_index} WHERE nid = :nid";
+  $results = db_query($query, array(':nid' => $nid));
+
+  return $results->fetchCol();
+}
+
+/**
+ * Returns an array of research result node IDs that reference on the given $nid.
+ *
+ * @param $nid INT Node ID
+ * @param $field STRING machine name of the reference field
+ * @return {Array} of node IDs
+ */
+function get_associated_search_result_ids($nid, $field) {
+  $query = 'SELECT DISTINCT entity_id AS reference 
+            FROM {field_data_field_' . $field . '} 
+            WHERE field_' . $field . '_target_id = :nid';
+  $results = db_query($query, array(':nid' => $nid));
+
+  return $results->fetchCol();
+}
+
+/**
  * Implements hook_apachesolr_index_document_build().
  * Extend the publication document before sending them to Solr to expose additional fields to Solr search.
  *
  * (For field type definiton see solr configuration schema.xml; e.g. is_ = integer single-valued, sm_ = string multi-valued)
  */
-function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity) {
+function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity)
+{
   if ($entity->type === 'biblio') {
     // make fields available for field search (is_year: 2015)
     $document->addField('is_year', $entity->biblio_year);
@@ -814,6 +844,23 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
         $document->addField('tm_tag', strtolower($keyword));
       }
     }
+
+
+    // add taxonomy IDs of associated research results to publications
+    // (publications can be found by morphological terms of associated research results)
+    $array_tids = array();
+
+    // get IDs of all associated research results
+    $reference_node_ids = get_associated_search_result_ids($entity->nid, 'publication');
+
+    // get all taxonomy IDs of associated research results
+    foreach ($reference_node_ids as $ref) {
+      $array_tids = array_merge($array_tids, get_taxonomy_ids($ref));
+    }
+
+    // add taxonomy IDs to solr document index
+    $array_tids = array_unique($array_tids);
+    $document->setField('tid', $array_tids);
   }
 
 
@@ -836,7 +883,28 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
       }
     }
   }
+
+  // TODO duplicate code
+  // add taxonomy IDs of associated research results to projects
+  // (projects can be found by morphological terms of associated research results)
+  if ($entity->type === 'projekt') {
+    $array_tids = array();
+
+    // get IDs of all associated research results
+    $reference_node_ids = get_associated_search_result_ids($entity->nid, 'project');
+
+    // get all taxonomy IDs of associated research results
+    foreach ($reference_node_ids as $ref) {
+      $array_tids = array_merge($array_tids, get_taxonomy_ids($ref));
+    }
+
+    // add taxonomy IDs to solr document index
+    $array_tids = array_unique($array_tids);
+    $document->setField('tid', $array_tids);
+  }
 }
+
+
 
 /**
  * Add link to search results page to download all search results as a csv file
