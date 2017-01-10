@@ -127,3 +127,14 @@ div.messages {
     list-style-type: none;
     padding: 0;
 }
+
+/* =============================================================================
+    Content type publication (biblio)
+   ========================================================================== */
+/* Hide author category and category table header */
+.biblio-contributor-category {
+    display: none;
+}
+table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(3) {
+    display: none;
+}
