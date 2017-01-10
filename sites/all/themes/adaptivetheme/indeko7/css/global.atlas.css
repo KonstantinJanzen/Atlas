@@ -138,3 +138,74 @@ div.messages {
 table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(3) {
     display: none;
 }
+
+
+/* =============================================================================
+    Responsive Design
+    TODO Merge into responsive.custom.css
+   ========================================================================== */
+/* Blöcke in der Sidebar als überlagernde slide-in menu */
+@media screen and (min-width: 980px) {
+
+    .region-sidebar-second .block {
+        padding: 10px;
+        background-color: #e7e7e7;
+        box-shadow: 1px 2px 2px -3px #444;
+    }
+
+    #block-views-news-block:before,
+    #block-user-login:before {
+        color: #fff;
+        font-size: .75rem;
+        font-weight: bold;
+        padding: .5rem;
+        background-color: #52b166;
+        float: left;
+        position: absolute;
+        right: 100%;
+        border-top-left-radius: 3px;
+        border-bottom-left-radius: 3px;
+    }
+
+    #block-views-news-block:before {
+        content:'News';
+    }
+
+    #block-user-login:before {
+        content:'Login';
+    }
+
+    #block-views-news-block,
+    #block-user-login {
+        float: none;
+        position: fixed;
+        width:22%;
+        right: -22%;
+        margin: 0;
+        transition: right;
+        transition-duration: .5s;
+        z-index: 99999;
+    }
+
+    #block-user-login {
+        margin-top: 3rem;
+        z-index: 99998;
+        background-color: #cdcdcd;
+    }
+    #block-user-login:before {
+        background-color: #444;
+    }
+
+    #block-views-news-block:hover,
+    #block-user-login:hover {
+        right:0;
+        transition: right;
+        transition-duration: 1s;
+    }
+
+    /* Main content Bereich vergrößern */
+    #content-column .content-inner {
+        margin-right:0;
+    }
+
+}
