@@ -66,7 +66,8 @@
 ?>
 <li class="<?php print $classes; ?>"<?php print $attributes; ?>>
   <?php print render($title_prefix); ?>
-  <h3 class="title <?php print $result['bundle']; ?>"<?php print $title_attributes; ?>>
+    <h3 class="title <?php print $result['bundle']; ?>"<?php print $title_attributes; ?>>
+        <i class="icon <?php print $result['bundle']; ?>" aria-hidden="true" title="<?php print $result['type']; ?>"></i>
     <a href="<?php print $url; ?>"><?php print $title; ?></a>
   </h3>
   <?php print render($title_suffix); ?>

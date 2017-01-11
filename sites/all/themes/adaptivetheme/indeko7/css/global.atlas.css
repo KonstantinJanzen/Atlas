@@ -5,14 +5,8 @@
     white-space: pre-line;
 }
 
-/*
- * Chosen module sets absolute width depending on length of select options.
- * Limit chosen max width to encircling element width.
- */
-.chosen-container {
-    max-width: 100%;
-    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
-    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+#edit-title, #edit-field-aufgabe-und-0-value {
+    width: 100%;
     box-sizing: border-box;
 }
 
@@ -24,56 +18,51 @@ div.messages {
 }
 
 /* =============================================================================
-    Search results
+    Custom content type icons for search results and user menu created content list
    ========================================================================== */
 
 /*
- * Display content type icons on search result page.
+ * Display content type icons.
  */
-.title.wissenskarte::before {
+.icon.wissenskarte {
     content: '';
     background-image: url("../images/atlas/type_wissenskarte3.svg");
     background-repeat: no-repeat;
     background-position: left center;
-    padding-left: 30px;
 }
-.title.biblio::before {
+.icon.biblio {
     content: '';
     background-image: url("../images/atlas/type_publikation.svg");
     background-repeat: no-repeat;
     background-position: left center;
-    padding-left: 30px;
 }
-.title.analysereport::before {
+.icon.analysereport {
     content: '';
     background-image: url("../images/atlas/type_analysenreport.svg");
     background-repeat: no-repeat;
     background-position: left center;
-    padding-left: 30px;
 }
-.title.forschungsergebnis::before {
+.icon.forschungsergebnis {
     content: '';
     background-image: url("../images/atlas/type_forschungsergebnis.svg");
     background-repeat: no-repeat;
     background-position: left center;
-    padding-left: 30px;
 }
-.title.projekt::before {
+.icon.projekt {
     content: '';
     background-image: url("../images/atlas/type_projekt.svg");
     background-repeat: no-repeat;
     background-position: left center;
+}
+
+/* Icon size on search results page */
+.search-result .icon {
     padding-left: 30px;
 }
 
-.title.forschungsergebnis::before:hover {
-    content: 'asd';
-    border: 1px solid #fc0;
-    padding: 3px 6px;
-    background: #fffea1;
-    position: absolute;
-    right: -40px;
-    top: -26px;
+/* Icon size on user menu */
+.user-profile .elementsoverview .icon {
+    padding-left: 20px;
 }
 
 
@@ -154,15 +143,42 @@ div.messages {
 }
 
 
-    /* =============================================================================
-        Content type publication (biblio)
-       ========================================================================== */
+/* =============================================================================
+   Content type publication (biblio)
+   ========================================================================== */
 /* Hide author category and category table header */
 .biblio-contributor-category {
     display: none;
 }
 table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > th:nth-child(3) {
     display: none;
+}
+
+
+/* =============================================================================
+    Chosen
+   ========================================================================== */
+/*
+ * Chosen module sets absolute width depending on length of select options.
+ * Limit chosen max width to encircling element width.
+ */
+.chosen-container {
+    max-width: 100%;
+    -webkit-box-sizing: border-box; /* Safari/Chrome, other WebKit */
+    -moz-box-sizing: border-box;    /* Firefox, other Gecko */
+    box-sizing: border-box;
+}
+
+/* Autosize chosen fields depending on content */
+#content .chosen-container {
+    min-width: 50%;
+    width: auto !important;
+}
+
+/* Save space for inline new content button */
+#edit_field_umsetzungspartner_und_chosen, #edit_field_publication_und_chosen, #edit_field_project_und_chosen,
+#edit_field_projektpartner_und_chosen, #edit_field_umpartner_und_chosen, #edit_field_institutionen_und_chosen{
+    max-width: 80%;
 }
 
 

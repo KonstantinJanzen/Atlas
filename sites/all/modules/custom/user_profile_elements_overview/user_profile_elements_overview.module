@@ -42,19 +42,19 @@ function elements_overview_html($staticFilter = []) {
 
         switch($result->type) {
             case "biblio":
-                $html .= "<i class='fa fa-file-text-o pub' aria-hidden='true'></i>";
+                $html .= "<i class='icon biblio' aria-hidden='true' title='Publikation'></i>";
                 break;
             case "wissenskarte":
-                $html .= "<i class='fa fa-file-word-o wk' aria-hidden='true'></i>";
+                $html .= "<i class='icon wissenskarte' aria-hidden='true' title='Wissenskarte'></i>";
                 break;
             case "projekt":
-                $html .= "<i class='fa fa-file-o projekt' aria-hidden='true'></i>";
+                $html .= "<i class='icon projekt' aria-hidden='true' title='Projekt'></i>";
                 break;
             case "analysereport":
-                $html .= "<i class='fa fa-file-pdf-o areport' aria-hidden='true'></i>";
+                $html .= "<i class='icon analysereport' aria-hidden='true' title='Analysereport'></i>";
                 break;
             case "forschungsergebnis":
-                $html .= "<i class='fa fa-files-o fergebnis' aria-hidden='true'></i>";
+                $html .= "<i class='icon forschungsergebnis' aria-hidden='true' title='Forschungsergebnis'></i>";
                 break;
             default:
                 $html .= "<i class='fa fa-file default' aria-hidden='true'></i>";

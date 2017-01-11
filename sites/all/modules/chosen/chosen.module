@@ -123,6 +123,7 @@ function chosen_library() {
     'placeholder_text_single' => variable_get('chosen_placeholder_text_single', t('Choose an option')),
     'no_results_text' => variable_get('chosen_no_results_text', t('No results match')),
     'inherit_select_classes' => TRUE,
+    'display_selected_options' => FALSE,
   );
 
   $module_path = drupal_get_path('module', 'chosen');
