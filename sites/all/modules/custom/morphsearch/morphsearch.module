@@ -945,3 +945,15 @@ function morphsearch_preprocess_search_results(&$vars) {
     dpm($userSearch);*/
   }
 }
+
+/**
+ * Alter the query object and its parameters after it's prepared and cached.
+ * (Use hook_apachesolr_query_prepare if parameters added during this hook should be visible to end users.)
+ * Set Solr eDisMax query handler.
+ *
+ * @param DrupalSolrQueryInterface $query Search query to be sent to the Solr server.
+ */
+function morphsearch_apachesolr_query_alter(DrupalSolrQueryInterface $query) {
+  $query->addParam('defType', 'edismax');
+
+}

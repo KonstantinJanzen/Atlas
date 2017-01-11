@@ -1,4 +1,11 @@
 /*
+ * Fix line breaks for text areas.
+ */
+.node-forschungsergebnis .field-type-text-with-summary, .field-name-field-beschreibung {
+    white-space: pre-line;
+}
+
+/*
  * Chosen module sets absolute width depending on length of select options.
  * Limit chosen max width to encircling element width.
  */
@@ -59,6 +66,17 @@ div.messages {
     padding-left: 30px;
 }
 
+.title.forschungsergebnis::before:hover {
+    content: 'asd';
+    border: 1px solid #fc0;
+    padding: 3px 6px;
+    background: #fffea1;
+    position: absolute;
+    right: -40px;
+    top: -26px;
+}
+
+
 /*
  * Style search result box.
  */
@@ -101,12 +119,6 @@ div.messages {
 /* =============================================================================
     Content type Projekt
    ========================================================================== */
-/*
- * Format project plain text description line breaks.
- */
-.node-projekt .field-name-field-kurzbeschreibung .field-item {
-    white-space: pre-line;
-}
 
 /*
  * Styling of content type project (primary method of bkm).
@@ -128,9 +140,23 @@ div.messages {
     padding: 0;
 }
 
+
 /* =============================================================================
-    Content type publication (biblio)
+    Content type Forschungsergebnis
    ========================================================================== */
+.field-type-taxonomy-term-reference.field-label-inline {
+    margin-top: 0.83em;
+    margin-bottom: 0;
+}
+
+.group-attribute-bkm.field-group-fieldset {
+    margin-top: 1.5em;
+}
+
+
+    /* =============================================================================
+        Content type publication (biblio)
+       ========================================================================== */
 /* Hide author category and category table header */
 .biblio-contributor-category {
     display: none;
