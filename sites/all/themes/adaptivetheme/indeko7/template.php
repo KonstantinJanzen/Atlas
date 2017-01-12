@@ -132,3 +132,9 @@ function morphsearch_form_forschungsergebnis_node_form_alter(&$form, &$form_stat
   $form['title']['#rows'] = '1';
   return $form;
 }
+
+/*function indeko7_preprocess_search_results(&$variables)
+{
+  dpm($variables);
+
+}*/
