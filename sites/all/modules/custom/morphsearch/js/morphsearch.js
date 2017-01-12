@@ -345,8 +345,8 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
         }
     });
 
-    // if publication is selected, display publication link
-    if (isPublicationSelected) {
+    // if publication or no type is selected, display publication link
+    if (isPublicationSelected || !Indeko.Morphsearch.elemsType.hasClass('selected')) {
         Indeko.Morphsearch.elemPublicationBlock.show();
 
         // if publication search values are selected, display publication search block ...
@@ -356,6 +356,8 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
             // ...and make chosen adopt the publication search changes
             Indeko.Morphsearch.elemsPublication.trigger("chosen:updated");
         }
+    } else {
+        Indeko.Morphsearch.elemPublicationBlock.hide();
     }
 };
 
