@@ -21,7 +21,7 @@ Indeko.Morphsearch = Indeko.Morphsearch || {
         buttonReset: $('#morphsearch-reset'),                   // reset button
         buttonMorphbox: $('#morphsearch-select-block-toggle'),  // "button" to toggle morphological box search
         buttonSave: $('#morphsearch-save'),                     // link to save the selected search values
-        buttonsSearchResults: $('.searchResultLink'),           // all saved search result links on the user profile
+        buttonsSearchResults: $('.searchResultLink')            // all saved search result links on the user profile
 };
 
 /**
@@ -115,8 +115,18 @@ Indeko.Morphsearch.hookTypeSearchButton = function() {
     Indeko.Morphsearch.elemsType.click( function() {
         if ($(this).hasClass('selected')) {
             $(this).removeClass('selected');
+
+            /* CR ID 67-1 display publication search block if no type is selected */
+            if (!Indeko.Morphsearch.elemsType.hasClass('selected')) {
+                Indeko.Morphsearch.elemPublicationBlock.show();
+            }
         } else {
             $(this).addClass('selected');
+
+            /* CR ID 67-1 hide publication search block if publication is not selected while another type is selected */
+            if (!Indeko.Morphsearch.elemTypePublication.hasClass('selected')) {
+                Indeko.Morphsearch.elemPublicationBlock.hide();
+            }
         }
     });
 };
@@ -126,11 +136,14 @@ Indeko.Morphsearch.hookTypeSearchButton = function() {
  */
 Indeko.Morphsearch.hookTypeSearchPublicationButton = function() {
     Indeko.Morphsearch.elemTypePublication.click(function() {
-        /* CR ID 67-1 always display publication search block */
-        /*
-        Indeko.Morphsearch.elemPublicationBlock.toggle();
-        Indeko.Morphsearch.elemPublicationFilterBlock.hide();
-        */
+        /* CR ID 67-1 only hide publication search block if publication type gets deselected
+        and at least one other content type is still selected */
+        if (!Indeko.Morphsearch.elemTypePublication.hasClass("selected") && $(".morphsearch-type-block .selected").length >= 1) {
+            Indeko.Morphsearch.elemPublicationBlock.hide();
+            Indeko.Morphsearch.elemPublicationFilterBlock.hide();
+        } else if (Indeko.Morphsearch.elemTypePublication.hasClass("selected")) {
+            Indeko.Morphsearch.elemPublicationBlock.show();
+        }
     });
 };
 
@@ -183,7 +196,7 @@ Indeko.Morphsearch.reset = function() {
 
     this.elemsType.removeClass('selected');
     Indeko.Morphsearch.elemMorphBlock.hide();
-    // Indeko.Morphsearch.elemPublicationBlock.hide();  /* CR ID 67-1 always display publication search block */
+    Indeko.Morphsearch.elemPublicationBlock.show();  /* CR ID 67-1 display publication search block if nothing is selected */
     Indeko.Morphsearch.elemPublicationFilterBlock.hide();
 };
 
@@ -250,10 +263,10 @@ Indeko.Morphsearch.toArray = function() {
         }
     });
 
-    /* CR ID 67-1 always display publication search block */
+    /* CR ID 67-1 possible to filter publications even it publication is not selected */
     if (isPublicationSelected === false && Indeko.Morphsearch.elemPublicationFilterBlock.is(":visible")) {
         isPublicationSelected = true;
-        searchArray.type.push('biblio');
+        searchArray.type.push('biblionotselected');
     }
 
 
@@ -314,7 +327,7 @@ Indeko.Morphsearch.toSearchblock = function(searchArray) {
     $.each(searchArray.type, function (index, value) {
         Indeko.Morphsearch.elemTypeBlock.find('div[data-name=' + value + ']').addClass('selected');
 
-        if(value === 'biblio') {
+        if(value === 'biblio' || value === 'biblionotselected') {
             isPublicationSelected = true;
         }
     });
@@ -419,7 +432,9 @@ Indeko.Morphsearch.toUrl = function (searchArray) {
     /* publication search: convert to "AND (bundle:(biblio) AND is_year:(2015) AND tm_author:()... ) if publication
      * type was selected.
      * (see morphsearch.module morphsearch_apachesolr_index_document_build_node() for field names and mapping) */
-    if ($.inArray('biblio', searchArray.type) > -1) {
+    // CR ID 67-1 biblionotselected search for publication even if it is not selected
+    var biblionotselected = ($.inArray('biblionotselected', searchArray.type) > -1);
+    if ($.inArray('biblio', searchArray.type) > -1 || biblionotselected) {
         //solrSearchQuery = solrSearchQuery.replace(' OR biblio','');
         //solrSearchQuery = solrSearchQuery.replace(' AND bundle:(biblio)','');
         //solrSearchQuery += " AND (bundle:(biblio)";
@@ -446,7 +461,14 @@ Indeko.Morphsearch.toUrl = function (searchArray) {
 
         // if publication filters were set, update biblio restrictions in search
         if(pubQuery !== '') {
-            solrSearchQuery = solrSearchQuery.replace('biblio','(biblio ' + pubQuery + ')');
+            /* CR ID 67-1 If publication was not selected but publication filters were set, search for all content types
+            and filtered publications. TODO Has to be updated once more types are added to search ... */
+            if (biblionotselected) {
+                solrSearchQuery = solrSearchQuery.replace('biblionotselected',
+                    'analysereport OR forschungsergebnis OR projekt OR wissenskarte OR (biblio ' + pubQuery + ')');
+            } else {
+                solrSearchQuery = solrSearchQuery.replace('biblio','(biblio ' + pubQuery + ')');
+            }
         }
     }
 
