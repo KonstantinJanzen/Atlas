@@ -57,7 +57,8 @@ div.messages {
 
 /* Icon size on search results page */
 .search-result .icon {
-    padding-left: 30px;
+    padding-left: 35px;
+    font-size: 21px;
 }
 
 /* Icon size on user menu */
@@ -74,28 +75,78 @@ div.messages {
     border-radius: 14px;
 }
 
+.search-result .title {
+    margin: 0;
+}
+
+.search-result .field-name-field-webseite-projekt {
+    display: inline-block;
+    float: right;
+    padding-right: 1em;
+    margin-left: auto;
+}
+
+.search-result .group-left, .search-result .group-right {
+    padding: 0.5em;
+    box-sizing: border-box
+}
+
+.ds-2col-stacked-fluid.node-wissenskarte .group-right {
+    width:auto;
+}
+.ds-2col-stacked-fluid.node-wissenskarte .group-left {
+    width:auto;
+}
+
+/*.field-name-field-webseite-projekt a {
+    line-height: 0;
+    font-size: 0;
+    color: transparent;
+}*/
+
+/*.field-name-field-webseite-projekt a:after {
+    content: "";
+    font-size: 21px;
+    padding-right: 30px;
+    background-image: url("../images/atlas/type_projekt.svg");
+    background-repeat: no-repeat;
+    background-position: right center;
+}*/
+
 /*
  * Style search result title row.
  */
-.search-result .title {
+.group-header {
     background-color: lightgray;
     border-top-right-radius: 14px;
     border-top-left-radius: 14px;
     padding-bottom: 1px;
+    display: flex;
 }
+
+.group-header > * {
+    display: inline-block;
+}
+
+.group-header a {
+    vertical-align: sub;
+}
+
 
 /*
  * Add user icon (+space) in front of user
  */
-.search-result .search-info .username::before {
+.search-result .field-name-field-projektleiter::before,
+.search-result .field-name-author::before{
     font-family: FontAwesome;
     display: inline-block;
     content: "\f007 \00a0";
+    float: left;
 }
 
 /*
  * Add preview icon to title row.
- */
+ *
 .search-result .title a::after {
     font-family: FontAwesome;
     content: "\f002";
@@ -104,7 +155,7 @@ div.messages {
     display: inline-block;
     vertical-align: middle;
 }
-
+*/
 /* =============================================================================
     Content type Projekt
    ========================================================================== */
@@ -249,5 +300,9 @@ table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > t
     #content-column .content-inner {
         margin-right:0;
     }
+}
 
+/* Footer logo */
+.contextual-links-region img[src*="Logo_PT_DLR_deutsch_neu.jpg"] {
+    margin-top: 0 !important;
 }
