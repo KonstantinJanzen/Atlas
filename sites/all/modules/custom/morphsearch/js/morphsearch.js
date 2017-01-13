@@ -426,6 +426,8 @@ Indeko.Morphsearch.styleSearchResults = function() {
     $(".search-result .title a").attr('title','Detailseite');
     $(".search-result .field-name-field-projektleiter a").attr('title','Projektleiter');
 
+    $(".node-wissenskarte.search-result .username").attr('title','Ersteller');
+
     // Hide search results page title
     if($(".node-search-result.view-mode-search_result.search-result").length !== 0) {
         $('#page-title').hide();
