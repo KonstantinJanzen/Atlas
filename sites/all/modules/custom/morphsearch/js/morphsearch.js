@@ -407,6 +407,29 @@ Indeko.Morphsearch.init = function() {
         Indeko.Morphsearch.reset();
         Indeko.Morphsearch.toSearchblock(searchArray);
     }
+
+    Indeko.Morphsearch.styleSearchResults();
+};
+
+/**
+ * Makes adjustments to search results page (tooltips, hide content / labels for icon only display) [ID 68]
+ */
+Indeko.Morphsearch.styleSearchResults = function() {
+    var linkPdf = $(".search-result .field-name-field-attached-file a");
+    var linkProjectwebsite = $(".search-result .field-name-field-webseite-projekt a");
+
+    linkPdf.text('');
+    linkPdf.attr('title','Publikationsdatei');
+    linkProjectwebsite.text('');
+    linkProjectwebsite.attr('title','Projekthomepage');
+    linkProjectwebsite.css('background-size','20px');
+    $(".search-result .title a").attr('title','Detailseite');
+    $(".search-result .field-name-field-projektleiter a").attr('title','Projektleiter');
+
+    // Hide search results page title
+    if($(".node-search-result.view-mode-search_result.search-result").length !== 0) {
+        $('#page-title').hide();
+    }
 };
 
 /**

@@ -74,23 +74,16 @@ div.messages {
     background-color: #e7e7e7;
     border-radius: 14px;
 }
-
 .search-result .title {
     margin: 0;
 }
-
-.search-result .field-name-field-webseite-projekt {
-    display: inline-block;
-    float: right;
-    padding-right: 1em;
-    margin-left: auto;
+.search-result .field-name-title {
+    width: 93%;
 }
-
 .search-result .group-left, .search-result .group-right {
     padding: 0.5em;
     box-sizing: border-box
 }
-
 .ds-2col-stacked-fluid.node-wissenskarte .group-right {
     width:auto;
 }
@@ -98,20 +91,47 @@ div.messages {
     width:auto;
 }
 
-/*.field-name-field-webseite-projekt a {
-    line-height: 0;
-    font-size: 0;
-    color: transparent;
-}*/
 
-/*.field-name-field-webseite-projekt a:after {
-    content: "";
-    font-size: 21px;
-    padding-right: 30px;
-    background-image: url("../images/atlas/type_projekt.svg");
-    background-repeat: no-repeat;
-    background-position: right center;
-}*/
+/*
+ * Style search result user
+ */
+.search-result .username,
+.search-result .field-name-field-projektleiter a {
+    background-color: #969696;
+    color: white;
+    -webkit-border-radius: 10px;
+    -moz-border-radius: 10px;
+    border-radius: 10px;
+    padding: 4px 5px;
+}
+
+.search-result .field-name-author,
+.search-result .field-name-field-projektleiter {
+    margin-bottom: 10px;
+}
+/*
+ * Search result file download and external project website icons
+ */
+.search-result .field-name-field-webseite-projekt,
+.search-result .field-name-field-attached-file {
+    display: inline-block;
+    float: right;
+    padding-right: 0.5em;
+    margin-left: auto;
+    line-height: 30px;
+}
+.search-result .field-name-field-attached-file .file-icon,
+.search-result .field-name-field-attached-file .file-size {
+    display: none;
+}
+.search-result .field-name-field-attached-file .file a:before {
+    font-family: FontAwesome;
+    content: "\f1c1";
+    font-size: x-large;
+}
+.search-result .field-name-field-webseite-projekt a {
+    padding-right: 25px !important;
+}
 
 /*
  * Style search result title row.
@@ -136,26 +156,25 @@ div.messages {
 /*
  * Add user icon (+space) in front of user
  */
-.search-result .field-name-field-projektleiter::before,
-.search-result .field-name-author::before{
+.search-result .field-name-field-projektleiter a::before,
+.search-result .username::before{
     font-family: FontAwesome;
     display: inline-block;
     content: "\f007 \00a0";
-    float: left;
 }
 
 /*
  * Add preview icon to title row.
- *
-.search-result .title a::after {
+ */
+.search-result .field-name-title .title a::after {
     font-family: FontAwesome;
     content: "\f002";
     float: right;
-    padding-right: 1em;
-    display: inline-block;
-    vertical-align: middle;
+    padding-right: 0.5em;
+    padding-top: 3px;
+    font-size: large;
 }
-*/
+
 /* =============================================================================
     Content type Projekt
    ========================================================================== */
