@@ -556,10 +556,13 @@ function saved_search_html() {
     $html .= "<legend>" . "Suche vom " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
     $html .= "<table class='searchResultTable'>";
 
+    $hasContent = false;
+
     // saved fulltext search
     $fulltext = $json['fulltext'];
     if (!empty($fulltext)) {
       if ($fulltext !== '*') {
+        $hasContent = true;
         $html .= get_html_table_row("Freitextsuche:", htmlspecialchars(urldecode($fulltext)));
       }
     }
@@ -567,12 +570,17 @@ function saved_search_html() {
     // saved type search
     $type = $json['type'];
     if (!empty($type)) {
-      $html .= get_html_table_row("Inhaltstyp:", get_search_type_string($type));
+      $humanReadableType = get_search_type_string($type);
+      if (!empty($humanReadableType)) {
+        $hasContent = true;
+        $html .= get_html_table_row("Inhaltstyp:", $humanReadableType);
+      }
     }
 
     // saved morphological search
     $morph = $json['morphological'];
     if (!empty($morph)) {
+      $hasContent = true;
       $vocabulary = []; // array of vocabulary machine names and associated taxonomy term names
 
       // get taxonomy term names and assign them to their parent vocabulary terms
@@ -594,11 +602,13 @@ function saved_search_html() {
     $pub = $json['publication'];
 
     // static publication filter array key:data-type value:headline
+    // TODO has to be extended if more types are added
     $pubFilter = ['year' => 'Erscheinungsjahr', 'author' => 'Autor', 'tags' => 'Schlagwort',
         'publisher' => 'Verlag', 'location' => 'Ort', 'type' => 'Publikationstyp'];
 
     foreach($pubFilter as $type => $headline) {
       if (!empty($pub[$type])) {
+        $hasContent = true;
 
         $result = [];
         switch($type) {
@@ -641,6 +651,12 @@ function saved_search_html() {
         // add html row
         $html .= get_html_table_row($headline . ":", implode(", ", $result));
       }
+    }
+
+    if (!$hasContent) {
+      $html .= "<tr>";
+      $html .= "<td>Es wurden keine Filter gesetzt.</td>";
+      $html .= "</tr>";
     }
 
     $html .= "</table>";
