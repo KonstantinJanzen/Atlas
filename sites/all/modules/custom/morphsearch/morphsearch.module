@@ -963,6 +963,7 @@ function morphsearch_preprocess_search_results(&$vars) {
 }
 
 /**
+ * Implements hook_apachesolr_query_alter().
  * Alter the query object and its parameters after it's prepared and cached.
  * (Use hook_apachesolr_query_prepare if parameters added during this hook should be visible to end users.)
  * Set Solr eDisMax query handler.
@@ -972,4 +973,13 @@ function morphsearch_preprocess_search_results(&$vars) {
 function morphsearch_apachesolr_query_alter(DrupalSolrQueryInterface $query) {
   $query->addParam('defType', 'edismax');
 
+}
+
+/**
+ * Implements hook_apachesolr_query_prepare().
+ * Removes unwanted sort options [ID 76]. The sort block will only display available sorts.
+ */
+function morphsearch_apachesolr_query_prepare($query) {
+  $query->removeAvailableSort('sort_name'); // node author name
+  $query->removeAvailableSort('bundle');    // content type name
 }
