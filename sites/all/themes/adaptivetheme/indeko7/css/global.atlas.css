@@ -5,7 +5,8 @@
     white-space: pre-line;
 }
 
-#edit-title, #edit-field-aufgabe-und-0-value {
+#edit-title, #edit-field-aufgabe-und-0-value,
+#edit-field-f-rderprogramm-und-0-value, #edit-field-webseite-projekt-und-0-url {
     width: 100%;
     box-sizing: border-box;
 }
@@ -327,4 +328,12 @@ table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > t
 /* Footer logo */
 .contextual-links-region img[src*="Logo_PT_DLR_deutsch_neu.jpg"] {
     margin-top: 0 !important;
+}
+
+/* Remove unnecessary margins from node create forms */
+.node-form .form-select, .form-item-field-webseite-projekt-und-0-url {
+    margin: 0;
+}
+.node-form input[id*="-add-entityconnect-"] {
+    margin: 0;
 }
