@@ -9,10 +9,8 @@
     width: 100%;
 }
 
-#morphsearch-select-block {
+#morphsearch-select-block, #morphsearch-publication-filter-block {
     display: none;
-//overflow-y: auto;
-//height: 500px;
 }
 
 /*

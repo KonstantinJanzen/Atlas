@@ -966,22 +966,27 @@ function morphsearch_preprocess_search_results(&$vars) {
  * Implements hook_apachesolr_query_alter().
  * Alter the query object and its parameters after it's prepared and cached.
  * (Use hook_apachesolr_query_prepare if parameters added during this hook should be visible to end users.)
- * Set Solr DisMax query handler.
+ * Set Solr eDisMax query handler.
  *
  * @param DrupalSolrQueryInterface $query Search query to be sent to the Solr server.
  */
 function morphsearch_apachesolr_query_alter(DrupalSolrQueryInterface $query) {
-  //$query->addParam('defType', 'edismax'); // problem with wildcards in the solr version we are using?
-  $query->addParam('defType', 'dismax');
-  $query->replaceParam('q.op', 'AND');
-  $query->removeParam('mm');
+  $query->addParam('defType', 'edismax'); // problem with wildcards in the solr version we are using?
+  /* Same behaviour for all query handlers. Solr does not support wildcards as the first element (or comes with heavy
+  performace loss if enabled) */
+
+  //$query->addParam('defType', 'dismax');
+  /*$query->replaceParam('q.op', 'AND');
+  $query->addParam('q.alt', '*:*');
+  $query->addParam('fl', '*');
+  $query->removeParam('mm');*/
 }
 
 /**
  * Implements hook_apachesolr_query_prepare().
  * Removes unwanted sort options [ID 76]. The sort block will only display available sorts.
  */
-function morphsearch_apachesolr_query_prepare($query) {
+function morphsearch_apachesolr_query_prepare(DrupalSolrQueryInterface $query) {
   $query->removeAvailableSort('sort_name'); // node author name
   $query->removeAvailableSort('bundle');    // content type name
 }

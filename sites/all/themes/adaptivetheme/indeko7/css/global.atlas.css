@@ -1,10 +1,17 @@
 /*
- * Fix line breaks for text areas.
+ * Fix line breaks for plain text text areas.
  */
-.node-forschungsergebnis .field-type-text-with-summary, .field-name-field-beschreibung {
+.node-forschungsergebnis .field-type-text-with-summary,
+.node-analysereport .field-type-text-with-summary,
+.node-projekt .field-type-text-with-summary,
+.node-wissenskarte .field-type-text-with-summary,
+.field-name-field-beschreibung {
     white-space: pre-line;
 }
 
+/*
+ * Full width input fields.
+ */
 #edit-title, #edit-field-aufgabe-und-0-value,
 #edit-field-f-rderprogramm-und-0-value, #edit-field-webseite-projekt-und-0-url {
     width: 100%;
@@ -16,6 +23,20 @@
  */
 div.messages {
     margin-top: 70px!important;
+}
+
+
+/* Footer logo */
+.contextual-links-region img[src*="Logo_PT_DLR_deutsch_neu.jpg"] {
+    margin-top: 0 !important;
+}
+
+/* Remove unnecessary margins from node create forms */
+.node-form .form-select, .form-item-field-webseite-projekt-und-0-url {
+    margin: 0;
+}
+.node-form input[id*="-add-entityconnect-"] {
+    margin: 0;
 }
 
 /* =============================================================================
@@ -68,6 +89,9 @@ div.messages {
 }
 
 
+/* =============================================================================
+    Search results
+   ========================================================================== */
 /*
  * Style search result box.
  */
@@ -91,7 +115,6 @@ div.messages {
 .ds-2col-stacked-fluid.node-wissenskarte .group-left {
     width:auto;
 }
-
 
 /*
  * Style search result user
@@ -146,15 +169,12 @@ div.messages {
     padding-bottom: 1px;
     display: flex;
 }
-
 .group-header > * {
     display: inline-block;
 }
-
 .group-header a {
     vertical-align: sub;
 }
-
 
 /*
  * Add user icon (+space) in front of user
@@ -177,6 +197,14 @@ div.messages {
     padding-top: 3px;
     font-size: large;
     text-decoration: none;
+}
+
+/*
+ * Search result highlighting.
+ */
+.ds-search-highlight {
+    background-color: transparent;
+    font-weight: bold;
 }
 
 /* =============================================================================
@@ -323,17 +351,4 @@ table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > t
     #content-column .content-inner {
         margin-right:0;
     }
-}
-
-/* Footer logo */
-.contextual-links-region img[src*="Logo_PT_DLR_deutsch_neu.jpg"] {
-    margin-top: 0 !important;
-}
-
-/* Remove unnecessary margins from node create forms */
-.node-form .form-select, .form-item-field-webseite-projekt-und-0-url {
-    margin: 0;
-}
-.node-form input[id*="-add-entityconnect-"] {
-    margin: 0;
 }

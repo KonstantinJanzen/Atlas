@@ -514,7 +514,7 @@ Indeko.Morphsearch.convertToSolrString = function (fulltext) {
     solrString = fulltext;
 
     // replace "|" by Solr or "||"
-    solrString = solrString.replace(/( \| )/gi, ' || ');
+    solrString = solrString.replace(/\||%7C/gi, '||');
 
     // replace "Autor:" or "Author:" by Solr author field
     solrString = solrString.replace(/(Autor:|Author:)/gi, 'tm_author:');
