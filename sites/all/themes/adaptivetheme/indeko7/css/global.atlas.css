@@ -256,6 +256,12 @@ table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > t
     display: none;
 }
 
+/* Show all authors during publication creation.
+   Despite setting of 4 initial authors, only 2 are displayed on form. The other two are hidden. */
+#edit-biblio-contributors > tbody tr.draggable {
+    display: table-row !important;
+}
+
 
 /* =============================================================================
     Chosen
@@ -283,6 +289,11 @@ table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > t
     max-width: 80%;
 }
 
+
+/* Sponsor logo position quick fix */
+img[src*="Logo_PT_DLR_deutsch_neu.jpg"] {
+    margin-top: 0 !important;
+}
 
 /* =============================================================================
     Responsive Design
