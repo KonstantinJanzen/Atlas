@@ -244,6 +244,24 @@ div.messages {
     margin-top: 1.5em;
 }
 
+/* =============================================================================
+    Content type Wissenskarte
+   ========================================================================== */
+
+/* span element to show / hide areas on click [ID 103] */
+#button_hightlight {
+    background-color: #444;
+    padding: 0.3em;
+    color: #fff;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+#button_hightlight:hover {
+    background-color: #666;
+    cursor: pointer;
+}
 
 /* =============================================================================
    Content type publication (biblio)

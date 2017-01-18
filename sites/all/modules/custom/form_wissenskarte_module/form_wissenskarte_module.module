@@ -1,4 +1,11 @@
 <?php
+
+/**
+ * Implements hook_preprocess_HOOK.
+ * Adds necessary js and css to edit / clone content type "Wissenskarte" pages.
+ *
+ * @param $vars: The variables array (modify in place).
+ */
 function form_wissenskarte_module_preprocess_page(&$vars)
 {
   if (isset($vars['node']) && $vars['node']->type == 'wissenskarte') {
@@ -22,6 +29,14 @@ function form_wissenskarte_module_preprocess_page(&$vars)
   }
 }
 
+/**
+ * Implements hook_field_widget_WIDGET_TYPE_form_alter.
+ *  Adds necessary js and css to add content type "Wissenskarte" pages.
+ *
+ * @param $element:    The field widget form element as constructed by hook_field_widget_form().
+ * @param $form_state: An associative array containing the current state of the form.
+ * @param $context:    An associative array containing the following key-value pairs, matching the arguments received by
+ */
 function form_wissenskarte_module_field_widget_image_image_form_alter(&$element, &$form_state, $context)
 {
   // load only for type = "wissenskarte"
@@ -34,6 +49,39 @@ function form_wissenskarte_module_field_widget_image_image_form_alter(&$element,
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/lang_de.js", array('scope' => 'footer', 'weight' => 1));
 
     drupal_add_css(drupal_get_path('module', 'form_wissenskarte_module') . "/css/morphmapping.css");
+  }
+}
+
+/**
+ * Implements hook_node_view_alter().
+ * Adds an html element (to be used as a "button") to knowledge maps to show / hide image map areas
+ * if the jq_maphilight module is installed. [ID 103]
+ *
+ * @param $build: A renderable array representing the node content.
+ */
+function form_wissenskarte_module_node_view_alter(&$build) {
+  if(module_exists('jq_maphilight')) {
+
+    if ($build['#node']->type === 'wissenskarte' && $build['#view_mode'] === 'full') {
+
+      // Set "button" text that can be accessed in js and translated in Drupal.
+      $stringAreaShow = t("Show areas");
+      $stringAreaHide = t("Hide areas");
+
+      // can be accessed in js through Drupal.setting.form_wissenskarte_module
+      drupal_add_js(array(
+        'form_wissenskarte_module' => array(
+          'stringAreaShow' => $stringAreaShow,
+          'stringAreaHide' => $stringAreaHide,
+        )
+      ), array('type' => 'setting', 'scope' => 'footer', 'weight' => 99));
+
+
+      $build['#node']->content['button_highlight'] = array(
+        '#markup' => '<div><span id="button_hightlight" class="areashow">' . $stringAreaShow . '</span></div>',
+        '#weight' => 0,
+      );
+    }
   }
 }
 

@@ -38,7 +38,8 @@ Indeko.ImageMap = Indeko.ImageMap || {
 		elemTags: $('#edit-field-tag-combined-und'),
 		buttonSave: $('#edit-submit'),
 		elemTitle: $("#edit-title"),
-		elemDescription: $("#edit-field-beschreibung-und-0-value")
+		elemDescription: $("#edit-field-beschreibung-und-0-value"),
+		elemButtonHighlight: $("#button_hightlight")
 	};
 
 /**
@@ -84,12 +85,12 @@ function  initView(ViewMode) {
 			myimgmap = {};
 			var loadedValue = $('#edit-field-markierte-bereiche-und-0-value').val();
 
-			instanciate_maschek_image(l_oImageEdit[0]);										// instantiate image map object
-			instanciateAreaDescription();													// load GUI
-			myimgmap.setMapHTML(loadedValue);												// load image map areas
-			Indeko.ImageMap.hookSaveButton(); 												// attach client side validation to save button
-			Indeko.MorphBox.convertMorphsearch();                                           // converts the standard protal search block to be usable to link content to knowledge maps
-			myimgmap.loadStrings(imgmapStrings);											// load status messages
+			instanciate_maschek_image(l_oImageEdit[0]);				// instantiate image map object
+			instanciateAreaDescription();							// load GUI
+			myimgmap.setMapHTML(loadedValue);						// load image map areas
+			Indeko.ImageMap.hookSaveButton(); 						// attach client side validation to save button
+			Indeko.MorphBox.convertMorphsearch();                   // converts the standard protal search block to be usable to link content to knowledge maps
+			myimgmap.loadStrings(imgmapStrings);					// load status messages
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
 			var parent = $('.image-style-none').parent();
@@ -110,6 +111,11 @@ function  initView(ViewMode) {
 			}
 
 			Indeko.ImageMap.hookMapAreas();
+
+            // hook button to show hide map areas, if enabled [ID 103]
+            if(Indeko.ImageMap.elemButtonHighlight.length) {
+                Indeko.ImageMap.hookButtonHighlighting();
+            }
 		}
 	}
 
@@ -870,6 +876,56 @@ Indeko.ImageMap.addTooltip = function() {
 		style: {
 			tip: false
 		}
+	});
+};
+
+
+/**
+ * Toggles knowledge map areas highlighting.
+ * Style of highlighting is set in module  jq_maphilight (ATLAS version). [ID 103]
+ */
+Indeko.ImageMap.hookButtonHighlighting = function() {
+
+	var btn = Indeko.ImageMap.elemButtonHighlight;
+    var mapAreas = $('map area');
+    var options = mapAreas.data('maphilight') || {};
+
+
+
+
+    // Toggles button text and class
+    function buttonToggle() {
+        if(btn.hasClass("areashow")) {
+            btn.removeClass("areashow").addClass("areahide");
+            btn.text(Drupal.settings.form_wissenskarte_module.stringAreaHide);
+        } else if(btn.hasClass("areahide")) {
+            btn.removeClass("areahide").addClass("areashow");
+            btn.text(Drupal.settings.form_wissenskarte_module.stringAreaShow);
+        }
+    }
+
+    // Adjust the button if jq_maphilight (ATLAS version) module is set to always display map areas
+    if (Drupal.settings.jq_maphilight.alwaysOn === "true") {
+        buttonToggle();
+	}
+
+	btn.click(function() {
+		if(btn.hasClass("areashow")) {
+            buttonToggle();
+            // enable highlighting
+            options.alwaysOn = !options.alwaysOn;
+            options.fill = true;
+            options.stroke = true;
+            mapAreas.data('maphilight', options).trigger('alwaysOn.maphilight');
+
+        } else if(btn.hasClass("areahide")) {
+            buttonToggle();
+            // disable highlighting
+            options.alwaysOn = !options.alwaysOn;
+            options.fill = !options.fill;
+            options.stroke = !options.stroke;
+            mapAreas.data('maphilight', options).trigger('alwaysOn.maphilight');
+        }
 	});
 };
 
