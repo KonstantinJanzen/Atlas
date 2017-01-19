@@ -882,16 +882,13 @@ Indeko.ImageMap.addTooltip = function() {
 
 /**
  * Toggles knowledge map areas highlighting.
- * Style of highlighting is set in module  jq_maphilight (ATLAS version). [ID 103]
+ * Styling of highlighting is set in module jq_maphilight (ATLAS version). [ID 103]
+ * TODO admin menu to set button highlighting options. Current settings: areas get filled and outlined.
  */
 Indeko.ImageMap.hookButtonHighlighting = function() {
-
 	var btn = Indeko.ImageMap.elemButtonHighlight;
     var mapAreas = $('map area');
     var options = mapAreas.data('maphilight') || {};
-
-
-
 
     // Toggles button text and class
     function buttonToggle() {
@@ -909,22 +906,31 @@ Indeko.ImageMap.hookButtonHighlighting = function() {
         buttonToggle();
 	}
 
-	btn.click(function() {
+    btn.click(function() {
+
+        // enable highlighting
 		if(btn.hasClass("areashow")) {
             buttonToggle();
-            // enable highlighting
-            options.alwaysOn = !options.alwaysOn;
+            Drupal.settings.jq_maphilight.alwaysOn = "true";
+            options.alwaysOn = true;
             options.fill = true;
             options.stroke = true;
+
             mapAreas.data('maphilight', options).trigger('alwaysOn.maphilight');
 
+            // attach additonal hover effect to map areas
+            //Drupal.behaviors.jq_maphilight.attachHover(mapAreas);
+
+        // disable highlighting
         } else if(btn.hasClass("areahide")) {
             buttonToggle();
-            // disable highlighting
-            options.alwaysOn = !options.alwaysOn;
-            options.fill = !options.fill;
-            options.stroke = !options.stroke;
+            Drupal.settings.jq_maphilight.alwaysOn = "false";
+            options.alwaysOn = false;
+            options.stroke = false;
+            options.fill = false;
             mapAreas.data('maphilight', options).trigger('alwaysOn.maphilight');
+
+            mapAreas.unbind(".maphilight");
         }
 	});
 };
