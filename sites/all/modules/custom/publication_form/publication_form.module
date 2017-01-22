@@ -11,27 +11,43 @@ function publication_form_node_validate($node, $form, &$form_state) {
     if(module_exists('biblio_bibtex')) {
         if ($form['#form_id'] === "biblio_node_form") {
 
-            $year = $form_state['values']['biblio_year'];
-            if (isset($year)) {
-                if (!is_numeric($year)) {
-                    form_set_error('biblio_year', t('You have added an invalid date. Enter a year.'));
-                } elseif ($year < '1800' ||  $year > '2200') {
-                    form_set_error('biblio_year', t('You have added an invalid date. Enter a year between 1800 and 2200.'));
-                }
-            }
+            $year = array_key_exists('biblio_year', $form_state['values']) ? $form_state['values']['biblio_year'] : null;
 
-            $authors = $form_state['values']['biblio_contributors'];
+            validateYear($year);
 
-            $hasValue = FALSE;
-            foreach ($authors as $author) {
-                if (!empty($author['name'])) {
-                    $hasValue = TRUE;
-                }
-            }
-            if (!$hasValue) {
-                form_set_error('biblio_contributors', t('You must enter at least one author.'));
-            }
+
+            $authors = array_key_exists('biblio_contributors', $form_state['values']) ? $form_state['values']['biblio_contributors'] : null;
+
+            validateAuthors($authors);
+
         }
     }
+}
+
+function validateAuthors($authors) {
+
+    if(!isset($authors)) { return; }
+
+    $hasValue = FALSE;
+    foreach ($authors as $author) {
+        if (!empty($author['name'])) {
+            $hasValue = TRUE;
+        }
+    }
+    if (!$hasValue) {
+        form_set_error('biblio_contributors', t('You must enter at least one author.'));
+    }
+}
+
+function validateYear($year) {
+
+    if (!isset($year)) { return; }
+
+    if (!is_numeric($year)) {
+        form_set_error('biblio_year', t('You have added an invalid date. Enter a year.'));
+    } elseif ($year < '1800' ||  $year > '2200') {
+        form_set_error('biblio_year', t('You have added an invalid date. Enter a year between 1800 and 2200.'));
+    }
+
 }
 
