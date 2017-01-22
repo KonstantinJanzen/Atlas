@@ -1,0 +1,25 @@
+<?php
+
+/**
+ * Implements hook_node_validate().
+ *
+ * $node: The node being validated.
+ * $form: The form being used to edit the node.
+ * $form_state: The form state array.
+ */
+function publication_form_node_validate($node, $form, &$form_state) {
+    if(module_exists('biblio_bibtex')) {
+        if ($form['#form_id'] === "biblio_node_form") {
+
+            $year = $form_state['values']['biblio_year'];
+            if (isset($year)) {
+                if (!is_numeric($year)) {
+                    form_set_error('biblio_year', t('You have added an invalid date. Enter a year.'));
+                } elseif ($year < '1800' ||  $year > '2200') {
+                    form_set_error('biblio_year', t('You have added an invalid date. Enter a year between 1800 and 2200.'));
+                }
+            }
+        }
+    }
+}
+
