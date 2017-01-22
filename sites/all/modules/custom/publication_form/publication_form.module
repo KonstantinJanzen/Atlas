@@ -19,6 +19,18 @@ function publication_form_node_validate($node, $form, &$form_state) {
                     form_set_error('biblio_year', t('You have added an invalid date. Enter a year between 1800 and 2200.'));
                 }
             }
+
+            $authors = $form_state['values']['biblio_contributors'];
+
+            $hasValue = FALSE;
+            foreach ($authors as $author) {
+                if (!empty($author['name'])) {
+                    $hasValue = TRUE;
+                }
+            }
+            if (!$hasValue) {
+                form_set_error('biblio_contributors', t('You must enter at least one author.'));
+            }
         }
     }
 }
