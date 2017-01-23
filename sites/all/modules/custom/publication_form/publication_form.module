@@ -11,7 +11,12 @@ function publication_form_preprocess_page(&$vars) {
 
     drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
 
-
+    /**
+     * TODO: Auf Biblio Formularseite einschränken!
+     * Vorläufige Lösung. Wird nicht ausgeführt, da node = null ist. CSS wird daher auf jeder Seite ausgeführt.
+     * Als Admin werden die * in den Biblio Einstellungen angezeigt.
+     * CSS suboptimal per n-th child.
+     */
     if (isset($vars['node']) && $vars['node']->type == 'biblio_bibtex') {
         drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
     }
