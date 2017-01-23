@@ -1,6 +1,23 @@
 <?php
 
 /**
+ * Implements hook_preprocess_HOOK.
+ * Adds necessary css for form of content type publication.
+ *
+ * @param $vars: The variables array (modify in place).
+ */
+function publication_form_preprocess_page(&$vars) {
+
+
+    drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
+
+
+    if (isset($vars['node']) && $vars['node']->type == 'biblio_bibtex') {
+        drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
+    }
+}
+
+/**
  * Implements hook_node_validate().
  *
  * $node: The node being validated.
