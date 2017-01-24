@@ -1,9 +1,8 @@
-.vertical-tabs-list .first strong:after,
-label[for='edit-biblio-year']:after,
-label[for='edit-biblio-keywords']:after,
-.vertical-tabs-list .vertical-tab-button:nth-child(4) strong:after,
-.vertical-tabs-list .vertical-tab-button:nth-child(8) strong:after {
+#biblio-node-form .vertical-tabs-list .first strong:after,
+#biblio-node-form label[for='edit-biblio-year']:after,
+#biblio-node-form label[for='edit-biblio-keywords']:after,
+#biblio-node-form .vertical-tabs-list .vertical-tab-button:nth-child(4) strong:after,
+#biblio-node-form .vertical-tabs-list .vertical-tab-button:nth-child(8) strong:after {
     content: " *";
     color: #e32;
 }
-

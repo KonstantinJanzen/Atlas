@@ -1,23 +1,12 @@
 <?php
 
 /**
- * Implements hook_preprocess_HOOK.
+ * Implements hook
  * Adds necessary css for form of content type publication.
- *
- * @param $vars: The variables array (modify in place).
  */
-function publication_form_preprocess_page(&$vars) {
+function publication_form_form_alter(&$form, &$form_state, $form_id) {
 
-
-    drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
-
-    /**
-     * TODO: Auf Biblio Formularseite einschränken!
-     * Vorläufige Lösung. Wird nicht ausgeführt, da node = null ist. CSS wird daher auf jeder Seite ausgeführt.
-     * Als Admin werden die * in den Biblio Einstellungen angezeigt.
-     * CSS suboptimal per n-th child.
-     */
-    if (isset($vars['node']) && $vars['node']->type == 'biblio_bibtex') {
+    if (isset($vars['node']) && $vars['node']->type == 'biblio_fields') {
         drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
     }
 }
