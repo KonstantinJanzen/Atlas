@@ -6,7 +6,7 @@
  */
 function publication_form_form_alter(&$form, &$form_state, $form_id) {
 
-    if (isset($vars['node']) && $vars['node']->type == 'biblio_fields') {
+    if (isset($form['#form_id']) && $form['#form_id'] === 'biblio_node_form') {
         drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
     }
 }
@@ -20,7 +20,7 @@ function publication_form_form_alter(&$form, &$form_state, $form_id) {
  */
 function publication_form_node_validate($node, $form, &$form_state) {
     if(module_exists('biblio_bibtex')) {
-        if ($form['#form_id'] === "biblio_node_form") {
+        if ($form['#form_id'] === 'biblio_node_form') {
 
             $year = array_key_exists('biblio_year', $form_state['values']) ? $form_state['values']['biblio_year'] : null;
 
