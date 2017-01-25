@@ -2729,9 +2729,8 @@ nav#block-system-main-menu ul.menu ul ul {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg2/akip.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/alfa-agrar"] {
+.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/alfa-agrar"]:after {
     background-image: url(../images/fokusgruppen_redesign/logos/fg2/alfaagrar.jpg);
-	font-size: 1em;
 	}
 	
 .field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/bepeso"]:after {
@@ -2784,8 +2783,8 @@ nav#block-system-main-menu ul.menu ul ul {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg4/arkoh.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/km3"]:after {
-	background-image: url(../images/fokusgruppen_redesign/logos/fg4/webutatio.png);
+.field-name-field-projekte-der-fokusgruppe a[href^="/indeko/content/km"] {
+    font-size: 1em;
 	}
 	
 /* FOKUSGRUPPE 5 */

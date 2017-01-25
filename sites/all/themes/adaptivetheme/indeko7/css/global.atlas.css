@@ -244,6 +244,15 @@ div.messages {
     margin-top: 1.5em;
 }
 
+/* list style publications */
+.field-name-field-publication.field-type-entityreference.view-mode-full .field-item,
+.field-name-projekt-fe.view-mode-full .views-field-field-publication > .field-content {
+    box-sizing: border-box;
+    display:list-item;
+    list-style-type: square;
+    list-style-position: inside;
+}
+
 /* =============================================================================
     Content type Wissenskarte
    ========================================================================== */
