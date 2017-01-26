@@ -272,6 +272,15 @@ div.messages {
     cursor: pointer;
 }
 
+/* Area title width */
+.img_alt {
+    width: 70%;
+}
+
+.img_area .chosen-container-single {
+    width: 20%;
+}
+
 /* =============================================================================
    Content type publication (biblio)
    ========================================================================== */
@@ -304,8 +313,10 @@ table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > t
     box-sizing: border-box;
 }
 
-/* Autosize chosen fields depending on content */
-#content .chosen-container {
+/* Set chosen width for content types */
+#forschungsergebnis-node-form .chosen-container,
+#projekt-node-form .chosen-container,
+#biblio-node-form .chosen-container {
     min-width: 50%;
     width: auto !important;
 }
@@ -315,7 +326,6 @@ table[id^="edit-biblio-contributors"] > thead:nth-child(1) > tr:nth-child(1) > t
 #edit_field_projektpartner_und_chosen, #edit_field_umpartner_und_chosen, #edit_field_institutionen_und_chosen{
     max-width: 80%;
 }
-
 
 /* Sponsor logo position quick fix */
 img[src*="Logo_PT_DLR_deutsch_neu.jpg"] {
