@@ -825,6 +825,11 @@ function get_associated_search_result_ids($nid, $field) {
  */
 function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity)
 {
+  // ID 76 $document, $entity
+  // standard date search field is date of creation of the content
+  //$document->setField('ds_customdate', $document->ds_created);
+  $document->setField('ds_customdate', apachesolr_date_iso($entity->created));
+
   if ($entity->type === 'biblio') {
     // make fields available for field search (is_year: 2015)
     $document->addField('is_year', $entity->biblio_year);
@@ -877,6 +882,16 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
     // add taxonomy IDs to solr document index
     $array_tids = array_unique($array_tids);
     $document->setField('tid', $array_tids);
+
+
+    // ID 76 use publishing year instead of creation date as date sort criterion (set 1.02 for month and day 1:01 o'clock)
+    if (isset($entity->biblio_year) && !empty($entity->biblio_year)) {
+      $date = new DateTime();
+      $date->setDate($entity->biblio_year,2,1);
+      $date->setTime(1,1);
+
+      $document->setField('ds_customdate', apachesolr_date_iso($date->getTimestamp()));
+    }
   }
 
 
@@ -917,6 +932,11 @@ function morphsearch_apachesolr_index_document_build_node(ApacheSolrDocument $do
     // add taxonomy IDs to solr document index
     $array_tids = array_unique($array_tids);
     $document->setField('tid', $array_tids);
+
+    // ID 76 use project start date instead of creation date as date sort criterion
+    if (isset($document->dm_field_projektzeitraum) && !empty($document->dm_field_projektzeitraum)) {
+      $document->setField('ds_customdate', $document->dm_field_projektzeitraum[0]);
+    }
   }
 }
 
@@ -982,6 +1002,11 @@ function morphsearch_apachesolr_query_alter(DrupalSolrQueryInterface $query) {
   $query->removeParam('mm');*/
 }
 
+
+/**
+ * TODO ID 76 Sortierblock als eigenes Modul?
+ */
+
 /**
  * Implements hook_apachesolr_query_prepare().
  * Removes unwanted sort options [ID 76]. The sort block will only display available sorts.
@@ -989,4 +1014,11 @@ function morphsearch_apachesolr_query_alter(DrupalSolrQueryInterface $query) {
 function morphsearch_apachesolr_query_prepare(DrupalSolrQueryInterface $query) {
   $query->removeAvailableSort('sort_name'); // node author name
   $query->removeAvailableSort('bundle');    // content type name
+
+  // replace the standard date search
+  $query->removeAvailableSort('ds_created');
+  $query->setAvailableSort('ds_customdate', array(
+    'title' => t('Date'),
+    'default' => 'asc',
+  ));
 }
