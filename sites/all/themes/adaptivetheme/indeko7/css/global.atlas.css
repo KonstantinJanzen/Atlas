@@ -281,6 +281,25 @@ div.messages {
     width: 20%;
 }
 
+
+/* =============================================================================
+    FlexSlider (Slideshow for Content Type 'Wissenskarte')
+   ========================================================================== */
+
+/* Fix cut off navigation arrows. */
+.flex-direction-nav {
+    line-height: 1;
+}
+
+/* Display (scaled) image in the middle of the slider.
+   This minimizes big images. */
+#slider_wk .slides img {
+    width: auto;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+
 /* =============================================================================
    Content type publication (biblio)
    ========================================================================== */
