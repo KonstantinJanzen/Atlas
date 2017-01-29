@@ -351,6 +351,53 @@ img[src*="Logo_PT_DLR_deutsch_neu.jpg"] {
     margin-top: 0 !important;
 }
 
+
+/* =============================================================================
+    Morphsearch Sort Block
+   ========================================================================== */
+/* Style title */
+#block-morphsearch-sort-morphsearch-sort .block-title {
+    text-transform: none;
+    letter-spacing: normal;
+}
+
+/* Remove list marker and margins */
+#block-morphsearch-sort-morphsearch-sort .item-list > ul {
+    list-style: none;
+    padding: 0;
+    margin-right: 0.5em;
+    margin-left: 0.5em;
+    margin-bottom: 0.25em;
+}
+
+/* Display sort filters in two columns */
+#block-morphsearch-sort-morphsearch-sort .item-list > ul > li {
+    margin: 0;
+    margin-bottom: 0.25em;
+    float: left;
+    width: 50%;
+}
+
+/* Display first sort filter (relevancy) in one row */
+#block-morphsearch-sort-morphsearch-sort .item-list > ul > li:first-of-type {
+    width: 100%;
+}
+
+/* Style sort filter as radio button */
+.searchlink:before {
+    display: inline-block;
+    text-decoration: none;
+    font-family: FontAwesome;
+    padding-right: 0.25em;
+    content: "\f10c";
+}
+
+/* Style selected sort filter as selected radio button */
+.searchlink.active:before {
+    content: "\f111";
+}
+
+
 /* =============================================================================
     Responsive Design
     TODO Merge into responsive.custom.css
