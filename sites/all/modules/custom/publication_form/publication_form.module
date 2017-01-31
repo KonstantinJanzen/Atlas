@@ -7,8 +7,16 @@
 function publication_form_form_alter(&$form, &$form_state, $form_id) {
 
     if (isset($form['#form_id']) && $form['#form_id'] === 'biblio_node_form') {
+
+        $form['#after_build'][] = 'publication_form_after_build';
         drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
     }
+}
+
+function publication_form_after_build($form, &$form_state) {
+
+    drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
+    return $form;
 }
 
 /**
