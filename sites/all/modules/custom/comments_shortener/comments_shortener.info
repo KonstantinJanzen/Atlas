@@ -1,3 +1,7 @@
 name = Comments Shortener
 description = Allows trimmed comments to be displayed. New Comments will be displayed on top.
 core = 7.x
+
+stylesheets[] = css/comments_shortener.css
+scripts[] = js/comments_shortener.js
+configure = admin/config/content/comments_shortener
