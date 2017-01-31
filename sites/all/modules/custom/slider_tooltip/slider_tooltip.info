@@ -1,3 +1,3 @@
 name = Slider Tooltip
-description = Adds an image title to the tooltip and displays it in the slider.
+description = Adds an image title to the tooltip and displays it on the slider.
 core = 7.x

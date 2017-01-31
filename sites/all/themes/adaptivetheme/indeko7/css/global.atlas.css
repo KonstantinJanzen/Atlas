@@ -291,29 +291,31 @@ div.messages {
     line-height: 1;
 }
 
+/* Remove margin on header for image title.
 #slider_wk .flex-active-slide h1 {
     margin-top: 0;
-}
+} */
 
+/* Reduce bottom margin of the image. */
 #slider_wk.flexslider {
     margin-bottom: 10px;
 }
 
-.flex-caption {
-    background-color: rgba(195, 188, 188, 0.52);
-}
-
-/* Display (scaled) image in the middle of the slider.
-   This minimizes big images. */
+/*
+ * Display (scaled) image in the center of the slider.
+ * This minimizes big images.
+ */
 #slider_wk .slides img {
     width: auto;
     margin-left: auto;
     margin-right: auto;
 }
 
+/* Show pointer on mouse over for slider carousel. */
 #carousel_wk img:hover {
     cursor: pointer;
 }
+
 
 /* =============================================================================
    Content type publication (biblio)
