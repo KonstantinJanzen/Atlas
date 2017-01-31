@@ -1,0 +1,141 @@
+<?php
+/**
+ * Implements hook_block_info().
+ * Adds that the 'morphsearch_sort' is provided by this module.
+ *
+ * @return array $blocks Each component of the which is an array of block information.
+ *                       The array keys (e.g. 'morphsearch_sort') are the 'delta' values used in other block hooks.
+ */
+function morphsearch_sort_block_info() {
+  $blocks['morphsearch_sort'] = array(
+    'info' => t('Apache Solr Atlas Sort Block'),
+    'cache' => DRUPAL_NO_CACHE,
+  );
+
+  return $blocks;
+}
+
+/**
+ * Implements hook_block_view().
+ * Add available sort options to the content of the 'morphsearch_sort' block.
+ *
+ * @param string $delta : Which block to render. This is a unique identifier for the block within the module,
+ *                        defined in hook_block_info().
+ * @return array Either an empty array so the block will not be shown or an array containing the following elements:
+ *              subject: The default localized title of the block. If the block does not have a default title,
+ *                       this should be set to NULL.
+ *              content: The content of the block's body. This may be a renderable array (preferable) or a string
+ *                       containing rendered HTML content. If the content is empty the block will not be shown.
+ */
+function morphsearch_sort_block_view($delta = '') {
+  if ($delta === 'morphsearch_sort') {
+    $environments = apachesolr_load_all_environments();
+    foreach ($environments as $env_id => $environment) {
+      if (apachesolr_has_searched($env_id) && !apachesolr_suppress_blocks($env_id)) {
+
+        // Get the search query and response.
+        $response = NULL;
+        $query = apachesolr_current_query($env_id);
+        if ($query) {
+          $response = apachesolr_static_response_cache($query->getSearcher());
+        }
+
+        // Don't display the sort block if there are less than 2 search results (nothing to sort).
+        if (empty($response) || ($response->response->numFound < 2)) {
+          return NULL;
+        }
+
+        // Get all avaiable sorts.
+        $sorts = $query->getAvailableSorts();
+
+        // Get the current sort.
+        $solrsort = $query->getSolrsort();
+        $sort_links = array();
+        $path = $query->getPath();
+        $new_query = clone $query;
+
+        // Generate an ascending and a descending sort link for every available sort (except for "relevancy").
+        foreach ($sorts as $name => $sort) {
+          if ($name === 'score') {
+            $directions = array('desc');
+          } else {
+            $directions = array('asc', 'desc');
+          }
+
+          foreach ($directions as $direction) {
+            $isActive = $solrsort['#name'].$solrsort['#direction'] === $name.$direction; // to mark active sort filter
+            $new_query->setSolrsort($name, $direction);
+            $sort_links[$name.$direction] = array(
+              'text' => t($sort['title'] . ' ' . $direction),
+              'path' => $path,
+              'options' => array('query' => $new_query->getSolrsortUrlQuery(),
+                'attributes' => array('class' => $isActive == 1 ? 'searchlink active' : 'searchlink')),
+              'direction' => $direction,
+            );
+          }
+        }
+
+        // Convert to html a href links.
+        foreach ($sort_links as $name => $link) {
+          $themed_links[$name] = apachesolr_l($link['text'], $link['path'], $link['options']);;
+        }
+
+        // Build drupal block structure.
+        $block = array(
+          'subject' => t('Sort results by ...'),
+          'content' => theme('apachesolr_sort_list', array('items' => $themed_links))
+        );
+
+        return $block;
+      }
+    }
+  }
+}
+
+/**
+ * Implements hook_apachesolr_index_document_build().
+ * Extend content documents before sending them to Solr to expose additional custom date field to Solr search [ID 76].
+ * (For field type definiton see solr configuration schema.xml; e.g. ds_ = date single-valued)
+ *
+ * @param ApacheSolrDocument $document Array of key / value pairs that represent a Solr Document as it will be sent to the Solr Server.
+ * @param Object $entity Drupal representation of the node and it#s content.
+ */
+function morphsearch_sort_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity) {
+  // Use content date of creation as the standard for the custom date field.
+  $document->setField('ds_customdate', $document->ds_created);
+
+  // Use publishing year instead of creation date as date sort criterion (set day.month 1.06 and 6:00 o'clock)
+  if ($entity->type === 'biblio') {
+    if (isset($entity->biblio_year) && !empty($entity->biblio_year)) {
+      $date = new DateTime();
+      $date->setDate($entity->biblio_year,6,1);
+      $date->setTime(6,0);
+
+      $document->setField('ds_customdate', apachesolr_date_iso($date->getTimestamp()));
+    }
+
+    // Use project start date instead of creation date as date sort criterion.
+  } else if ($entity->type === 'projekt') {
+    if (isset($document->dm_field_projektzeitraum) && !empty($document->dm_field_projektzeitraum)) {
+      $document->setField('ds_customdate', $document->dm_field_projektzeitraum[0]);
+    }
+  }
+}
+
+/**
+ * Implements hook_apachesolr_query_prepare().
+ * Sets provided sort options according to [ID 76]. The sort block will only display available sorts.
+ *
+ * @param DrupalSolrQueryInterface $query The Apache Solr Search query object.
+ */
+function morphsearch_sort_apachesolr_query_prepare(DrupalSolrQueryInterface $query) {
+  $query->removeAvailableSort('sort_name'); // node author name
+  $query->removeAvailableSort('bundle');    // content type name
+
+  // replace the standard date sort by our custom one
+  $query->removeAvailableSort('ds_created');
+  $query->setAvailableSort('ds_customdate', array(
+    'title' => t('Date'),
+    'default' => 'asc',
+  ));
+}
