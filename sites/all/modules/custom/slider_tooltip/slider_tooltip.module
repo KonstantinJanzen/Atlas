@@ -1,16 +1,18 @@
 <?php
+
 /**
  * Implements function hook_views_pre_render().
  *
- * @param $view The view object about to be processed.
- *
  * This function is used for rendering the image title, so that a tooltip can display the
  * title on the slider carousel.
+ *
+ * @param $view The view object about to be processed.
  */
 function slider_tooltip_views_pre_render(&$view) {
 
     if ($view->name === 'wissenskarten') {
         if ($view->style_options['id'] === 'carousel_wk') {
+
             /* Iterates over all thumbnail images. */
             foreach($view->result as $image) {
 

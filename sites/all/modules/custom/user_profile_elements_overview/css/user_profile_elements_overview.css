@@ -2,6 +2,7 @@
     list-style-type:none;
 }
 
+/* Add a blank space after each icon in the elements overview list. */
 .elementsoverview li i:after {
     content: '\00a0';
 }

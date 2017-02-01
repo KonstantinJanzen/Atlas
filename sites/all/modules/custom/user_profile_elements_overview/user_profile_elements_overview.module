@@ -1,10 +1,11 @@
 <?php
 
 /**
- * Implements Hook_user_view_alter.
+ * Implements hook_user_view_alter().
+ *
  * Displays a list of content the current user created on his own user profile page.
  *
- * @param $build
+ * @param $build A renderable array representing the user.
  */
 function user_profile_elements_overview_user_view_alter(&$build) {
   global $user;
@@ -19,6 +20,12 @@ function user_profile_elements_overview_user_view_alter(&$build) {
   }
 }
 
+/**
+ * Creates HTML to filter various Indeko content types.
+ *
+ * @param array $staticFilter Indeko content types like Wissenskarte, Forschungsergebnis etc.
+ * @return string Returns the HTML
+ */
 function elements_overview_html($staticFilter = []) {
     global $user;
     $uid = $user->uid;
@@ -34,12 +41,16 @@ function elements_overview_html($staticFilter = []) {
     $html .= "<ol class='elementsoverview' style='list-style-type:none;'>";
 
     /*
-     * Display different icons for various content types of created elements.
+     * Displays different icons for various content types of created elements.
      */
     foreach($results as $result) {
-        //dummy icons
+
         $html .= "<li>";
 
+        /*
+         * The icons, which are used, were created for the Indeko project.
+         * Only the default icon is from fontawesome.io (MIT, SIL OFL 1.1).
+         */
         switch($result->type) {
             case "biblio":
                 $html .= "<i class='icon biblio' aria-hidden='true' title='Publikation'></i>";
@@ -59,10 +70,10 @@ function elements_overview_html($staticFilter = []) {
             default:
                 $html .= "<i class='fa fa-file default' aria-hidden='true'></i>";
         }
+
         /* Links to the View of the created element. */
         $url = url('node/'. $result->nid);
         $html .= "<a href='$url'>" . htmlspecialchars(urldecode($result->title)) . "</a>";
-        //$html .= l($result->title, $url . '/edit', array('query' => drupal_get_destination()));
         $html .= "</li>";
     }
 
