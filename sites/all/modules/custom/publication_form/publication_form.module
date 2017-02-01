@@ -12,7 +12,7 @@ function publication_form_form_alter(&$form, &$form_state, $form_id) {
         drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
     }
 }
-
+// https://www.appnovation.com/blog/drupal-tip-using-formafter-build
 function publication_form_after_build($form, &$form_state) {
 
     drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
