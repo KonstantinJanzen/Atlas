@@ -1,6 +1,3 @@
 name = Publication Form
 description = Allows to make adjustments in the publication form (e.g. customised validation, mandatory fields).
 core = 7.x
-
-stylesheets[] = css/publication_form.css
-configure = admin/config/content/publication_form

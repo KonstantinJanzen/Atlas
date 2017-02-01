@@ -1,5 +1,3 @@
 name = Slider Tooltip
 description = Adds an image title to the tooltip and displays it on the slider.
 core = 7.x
-
-configure = admin/config/content/slider_tooltip
