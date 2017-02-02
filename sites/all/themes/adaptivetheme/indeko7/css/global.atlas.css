@@ -207,6 +207,21 @@ div.messages {
     font-weight: bold;
 }
 
+/*
+ * Search results csv export link in line with title
+ */
+.search_results_header * {
+    display: inline-block;
+    margin-top: auto;
+}
+
+/*
+ * CSV export icon float right of title.
+ */
+#exportcsv {
+    float: right;
+}
+
 /* =============================================================================
     Content type Projekt
    ========================================================================== */

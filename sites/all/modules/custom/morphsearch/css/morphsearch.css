@@ -225,13 +225,6 @@
 }
 
 /*
- * CSV export of search results icon. TODO eigenes Modul?
- */
-#exportcsv {
-    float: right;
-}
-
-/*
  * Display immediate child elements inline.
  */
 .inline > * {
