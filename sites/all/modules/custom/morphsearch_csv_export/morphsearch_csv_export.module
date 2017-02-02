@@ -17,6 +17,8 @@ function morphsearch_csv_export_apachesolr_search_page_alter(array &$build, arra
     }
 
     $solrUrl = apachesolr_get_solr($env_id)->getUrl(); // e.g. http://localhost:8983/solr/drupal/
+    $solrUri = 'http://147.172.96.42/solr/drupal/'; // TODO?!
+
 
     if(isset($solrQuery)) {
       $solrParams = $solrQuery->getParams();
@@ -24,7 +26,7 @@ function morphsearch_csv_export_apachesolr_search_page_alter(array &$build, arra
 
       // build solr csv download link
       $export_title = t("Export search results");
-      $downloadLink = $solrUrl . 'select?q=(' . $userSearch . ')' .
+      $downloadLink = $solrUri . 'select?q=(' . $userSearch . ')' .
         '&rows=9999' .      // maximum number of search results to return
         '&qf=content&qf=label&qf=tags_inline&qf=taxonomy_names&qf=tos_content_extra&qf=tos_name&qf=ts_comments' .   // fields to search in
         '&fl=Typ:bundle_name,Titel:+label,Autoren:+tm_author,Jahr:+is_year,Beschreibung:+description' .             // fields to return with alias
