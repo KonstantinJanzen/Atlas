@@ -87,3 +87,16 @@ function form_wissenskarte_module_node_view_alter(&$build) {
   }
 }
 
+/**
+ * Implements hook_node_presave().
+ *
+ * Strips all tags from "field_markierte_bereiche" which contains the html code representation of the created knowledgemap
+ * (e.g. to prevent javascript injection).
+ *
+ * @param $node The node that is being inserted or updated.
+ */
+function form_wissenskarte_module_node_presave($node) {
+  // Strip all tags except those relevant to knowledge maps: "map" and "area".
+  $knowledgemap_html = $node->field_markierte_bereiche['und']['0']['value'];
+  $node->field_markierte_bereiche['und']['0']['value'] = strip_tags($knowledgemap_html,'<map><area>');
+}

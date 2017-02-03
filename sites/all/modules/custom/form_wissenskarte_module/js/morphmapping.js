@@ -968,8 +968,8 @@ imgmap.prototype.getMapInnerHTML = function(flags) {
 					coords = cs.join(',');
 				}
 				html+= '<area shape="' + this.areas[i].shape + '"' +
-					' alt="' + encodeURI(this.areas[i].aalt) + '"' +
-					' title="' + encodeURI(this.areas[i].atitle) + '"' +
+					' alt="' + this.areas[i].aalt + '"' +
+					' title="' + this.areas[i].atitle + '"' +
 					' id="' + this.areas[i].id + '"' +
 					' coords="' + coords + '"' +
 					' href="' +	this.areas[i].ahref + '"' +
