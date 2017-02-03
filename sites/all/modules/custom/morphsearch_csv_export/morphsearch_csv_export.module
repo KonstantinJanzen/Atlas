@@ -1,14 +1,14 @@
 <?php
 /**
  * Implements hook_apachesolr_search_page_alter().
- * Adds a link to the search results page to export the search results as a csv file.
+ * Adds a link to the search results page to export the search results as a csv file for logged in users.
  *
- * @param array $build
+ * @param array $build Holds html markup of the
  * @param array $search_page
  */
 function morphsearch_csv_export_apachesolr_search_page_alter(array &$build, array $search_page) {
   $env_id = $search_page['env_id'];
-  if (apachesolr_has_searched($env_id)) {
+  if (apachesolr_has_searched($env_id) && user_is_logged_in()) {
     // get the Solr query and extract the portion the user entered through the search block
     $solrQuery  = apachesolr_current_query($env_id);
 
@@ -16,38 +16,56 @@ function morphsearch_csv_export_apachesolr_search_page_alter(array &$build, arra
       $response = apachesolr_static_response_cache($solrQuery->getSearcher());
     }
 
-    $solrUrl = apachesolr_get_solr($env_id)->getUrl(); // e.g. http://localhost:8983/solr/drupal/
-    $solrUri = 'http://147.172.96.42/solr/drupal/'; // TODO?!
-
+    // TODO configuration menu to set Solr uri that can be accessed by the outside. Fallback option local address $solrUrl.
+    //$solrUrl = 'http://147.172.96.42/solr/drupal/';
+    $solrUrl = apachesolr_get_solr($env_id)->getUrl(); // local only, e.g. http://localhost:8983/solr/drupal/
 
     if(isset($solrQuery)) {
       $solrParams = $solrQuery->getParams();
-      $userSearch = drupal_encode_path($solrParams['q']);
+      $userFulltextSearch = drupal_encode_path($solrParams['q']);
 
       // build solr csv download link
-      $export_title = t("Export search results");
-      $downloadLink = $solrUri . 'select?q=(' . $userSearch . ')' .
+      $downloadLink = $solrUrl . 'select?q=(' . $userFulltextSearch . ')' .
         '&rows=9999' .      // maximum number of search results to return
         '&qf=content&qf=label&qf=tags_inline&qf=taxonomy_names&qf=tos_content_extra&qf=tos_name&qf=ts_comments' .   // fields to search in
         '&fl=Typ:bundle_name,Titel:+label,Autoren:+tm_author,Jahr:+is_year,Beschreibung:+description' .             // fields to return with alias
-        ',Anfangsdatum:+dm_field_anfangsdatum,Enddatum:+dm_field_enddatum,Link:+url,Schlagworte:+taxonomy_names' .
-        '&wt=csv';          // return format
+        ',Anfangsdatum:+dm_field_projektzeitraum,Enddatum:+dm_field_projektzeitraum_end,Link:+url,Schlagworte:+taxonomy_names' .
+        '&wt=csv';          // return format csv
     }
 
-
     // Build a new header for the search results page that contains the CSV export link.
-
     if (isset($build['search_results']['search_title'])) {
       $title = $build['search_results']['search_title']['#markup'];
+      $export_tooltip = t("Export search results");
       $search_results_header = '<div class="search_results_header">' . $title .
-        '<a id="exportcsv" href="' . $downloadLink . '" download="searchresults.csv">' .        // download file on click
-        '<i title="' . $export_title . '" class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>' .   // download icon (CSS)
+        '<a id="exportcsv" href="' . $downloadLink . '" download="searchresults.csv">' .                // download file on click
+        '<i title="' . $export_tooltip . '" class="fa fa-file-text-o fa-2x" aria-hidden="true"></i>' .  // download icon (CSS)
         '</a></div>';
       $build['search_results']['search_title']['#markup'] = $search_results_header;
     }
+  }
+}
 
-    //check_url(url($path, $options))
-    //dpm($build);
-    //dpm($search_page);
+/**
+ * Implements hook_apachesolr_index_document_build().
+ * Consolidate the necessary fields for the csv export, description [ID 37].
+ *
+ * @param ApacheSolrDocument $document Array of key / value pairs that represent a Solr Document as it will be sent to the Solr Server.
+ * @param Object $entity Drupal representation of the node and it#s content.
+ */
+function morphsearch_csv_export_apachesolr_index_document_build_node(ApacheSolrDocument $document, $entity) {
+
+  // Set the body field as the default csv export "description" field for all content types.
+  if (isset($entity->body) && !empty($entity->body)) {
+    $document->setField('description', $entity->body['und']['0']['value']);
+  }
+
+  // Set content type specific fields used as description.
+  if ($entity->type === 'biblio') {
+    $document->setField('description', $entity->biblio_abst_e);
+  } else if ($entity->type === 'projekt') {
+    $document->setField('description', $entity->field_kurzbeschreibung['und']['0']['value']);
+  } else if ($entity->type === 'wissenskarte') {
+    $document->setField('description', $entity->field_beschreibung['und']['0']['value']);
   }
 }

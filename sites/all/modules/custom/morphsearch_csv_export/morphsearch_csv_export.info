@@ -3,5 +3,4 @@ description = Creates a link to export Apache Solr search results as CSV and add
 core = 7.x
 package = Search
 
-dependencies[] = libraries
 dependencies[] = apachesolr
