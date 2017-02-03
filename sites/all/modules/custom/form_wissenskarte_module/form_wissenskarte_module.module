@@ -96,7 +96,10 @@ function form_wissenskarte_module_node_view_alter(&$build) {
  * @param $node The node that is being inserted or updated.
  */
 function form_wissenskarte_module_node_presave($node) {
+
   // Strip all tags except those relevant to knowledge maps: "map" and "area".
-  $knowledgemap_html = $node->field_markierte_bereiche['und']['0']['value'];
-  $node->field_markierte_bereiche['und']['0']['value'] = strip_tags($knowledgemap_html,'<map><area>');
+  if ($node->type === 'wissenskarte') {
+    $knowledgemap_html = $node->field_markierte_bereiche['und']['0']['value'];
+    $node->field_markierte_bereiche['und']['0']['value'] = strip_tags($knowledgemap_html,'<map><area>');
+  }
 }
