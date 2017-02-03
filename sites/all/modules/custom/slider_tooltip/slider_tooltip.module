@@ -10,7 +10,7 @@
  */
 function slider_tooltip_views_pre_render(&$view) {
 
-    if ($view->name === 'wissenskarten') {
+    if ($view->name === 'wissenskarten' && isset($view->style_options['id'])) {
         if ($view->style_options['id'] === 'carousel_wk') {
 
             /* Iterates over all thumbnail images. */

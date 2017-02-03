@@ -685,7 +685,7 @@ Indeko.MorphBox.convertMorphsearch = function() {
 	$('.morphblocktable').remove();                                                 				// remove standard search block search / reset / save elements
 	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  				// changelistener for comboboxes in MorpBox
 	Indeko.MorphBox.searchTypeBlock.click(Indeko.MorphBox.getSelectedValuesFromMorphBox);			// clickevent for Inhaltstypen
-	Indeko.Morphsearch.elemFulltext.unbind().change(Indeko.MorphBox.getSelectedValuesFromMorphBox); // changelistener for fulltext field
+	Indeko.Morphsearch.elemFulltext.unbind().keyup(Indeko.MorphBox.getSelectedValuesFromMorphBox);  // keyuplistener for fulltext field
 	Indeko.MorphBox.update(myimgmap.currentid);														// show selected morphological box items of current map area
 };
 
