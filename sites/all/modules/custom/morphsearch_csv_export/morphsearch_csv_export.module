@@ -1,4 +1,54 @@
 <?php
+
+/**
+ * Implements hook_menu(). (EDITED)
+ *
+ * @return array of menu items
+ */
+function morphsearch_csv_export_menu()
+{
+  $items = array();
+  $items['admin/config/morphsearch_csv_export'] = array(
+    'title' => t('Morphsearch CSV export settings'),
+    'description' => t('Set the path to access your Apache Sol server from anywhere.'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('morphsearch_csv_export_admin'),
+    'access callback' => 'user_access',
+    'access arguments' => array('administer site configuration'),
+    'type' => MENU_NORMAL_ITEM,
+  );
+  return $items;
+}
+
+/**
+ * Implements hook_menu().
+ * Build an admin settings menu for the morphsearch_csv_export module.
+ * TODO check for valid_url(), validate?!
+ *
+ * @return array An array of menu items.
+ */
+function morphsearch_csv_export_admin() {
+  $form = array();
+
+  $env_id = variable_get('apachesolr_default_environment');
+  $solrUrlLocal = apachesolr_get_solr($env_id)->getUrl(); // local only, e.g. http://localhost:8983/solr/drupal/
+
+  $form['morphsearch_csv_export_solr_path'] = array(
+    '#type' => 'textfield',
+    '#title' => t('Solr server URL for network access'),
+    '#default_value' => variable_get('morphsearch_csv_export_solr_path'),
+    '#size' => 100,
+    '#maxlength' => 300,
+    '#description' => t('Specify the Solr Server URL anyone can access from an outside network including your Solr core
+     used for csv export (include http:// and trailing /, example: http://mysite/solr/mySolrCore/). Default value for local development: @solrurl.
+     Live test server environment: http://147.172.96.42/solr/drupal/',
+      array('@solrurl' => $solrUrlLocal)),
+    '#required' => TRUE,
+  );
+
+  return system_settings_form($form);
+}
+
 /**
  * Implements hook_apachesolr_search_page_alter().
  * Adds a link to the search results page to export the search results as a csv file for logged in users.
@@ -16,9 +66,9 @@ function morphsearch_csv_export_apachesolr_search_page_alter(array &$build, arra
       $response = apachesolr_static_response_cache($solrQuery->getSearcher());
     }
 
-    // TODO configuration menu to set Solr uri that can be accessed by the outside. Fallback option local address $solrUrl.
-    //$solrUrl = 'http://147.172.96.42/solr/drupal/';
-    $solrUrl = apachesolr_get_solr($env_id)->getUrl(); // local only, e.g. http://localhost:8983/solr/drupal/
+    //$solrUrl = 'http://147.172.96.42/solr/drupal/'; // live server environment
+    //$solrUrl = apachesolr_get_solr($env_id)->getUrl(); // local only, e.g. http://localhost:8983/solr/drupal/
+    $solrUrl = variable_get('morphsearch_csv_export_solr_path');
 
     if(isset($solrQuery)) {
       $solrParams = $solrQuery->getParams();

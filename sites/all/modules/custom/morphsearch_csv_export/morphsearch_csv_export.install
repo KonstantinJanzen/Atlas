@@ -1,0 +1,26 @@
+<?php
+/**
+ * @file
+ * Install and uninstall functions for morphsearch_csv_export.
+ *
+ * @ingroup morphsearch_csv_export
+ */
+
+/**
+ * Implements hook_install().
+ * Set default local Solr variable necessary for the module to perform.
+ */
+function morphsearch_csv_export_install() {
+  $env_id = variable_get('apachesolr_default_environment');
+  $solrUrlLocal = apachesolr_get_solr($env_id)->getUrl(); // local only, e.g. http://localhost:8983/solr/drupal/
+
+  variable_set('morphsearch_csv_export_solr_path', $solrUrlLocal);
+}
+
+/**
+ * Implements hook_uninstall().
+ * Delete the module's variables.
+ */
+function morphsearch_csv_export_uninstall() {
+  variable_del('morphsearch_csv_export_solr_path');
+}
