@@ -2706,60 +2706,60 @@ nav#block-system-main-menu ul.menu ul ul {
 	
 /* FOKUSGRUPPE 1 */
 
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/engage"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/engage"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg1/engage.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/lernda"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/lernda"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg1/lernda.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/pm-kompare"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/pm-kompare"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg1/pmkompare.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/resilire"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/resilire"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg1/resilire.png);
 	}
 	
 	
 /* FOKUSGRUPPE 2 */
 
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/akip"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/akip"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg2/akip.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/alfa-agrar"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/alfa-agrar"]:after {
     background-image: url(../images/fokusgruppen_redesign/logos/fg2/alfaagrar.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/bepeso"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/bepeso"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg2/bepeso.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/k-ha"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/k-ha"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg2/inkha.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/webutatio"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/webutatio"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg2/webutatio.png);
 	}
 	
 /* FOKUSGRUPPE 3 */
 
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/epo-kad"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/epo-kad"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg3/epokad.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/facharzt-plus"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/facharzt-plus"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg3/facharztplus.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/flip"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/flip"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg3/flip.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/rebeko"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/rebeko"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg3/rebeko.jpg);
 	}
 
@@ -2767,45 +2767,45 @@ nav#block-system-main-menu ul.menu ul ul {
 /* FOKUSGRUPPE 4 */
 
 
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/abeko"] {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/abeko"] {
 	font-size: 1em;
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/4c4-learn"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/4c4-learn"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg4/4c4learn.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/alfaclu"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/alfaclu"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg4/alfaclu.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/arkoh"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/arkoh"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg4/arkoh.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href^="/indeko/content/km"] {
+.field-name-field-projekte-der-fokusgruppe a[href*="/content/km"] {
     font-size: 1em;
 	}
 	
 /* FOKUSGRUPPE 5 */
 
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/pikoma"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/pikoma"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg5/pikoma.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/pluglearn"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/pluglearn"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg5/plugnlearn.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/prokom-40"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/prokom-40"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg5/prokom.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/rakoon"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/rakoon"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg5/rakoon.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/transdemo"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/transdemo"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg5/transdemo.png);
 	}
 	
@@ -2813,38 +2813,38 @@ nav#block-system-main-menu ul.menu ul ul {
 /* FOKUSGRUPPE 6 */
 
 
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/champnet"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/champnet"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg6/champnet.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/brofessio"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/brofessio"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg6/brofessio.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/handel-kompetent"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/handel-kompetent"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg6/handelkompetent.png);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/staysmart"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/staysmart"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg6/staysmart.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/zielkom"] {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/zielkom"] {
 	font-size: 1em;
 	}
 
 /* FOKUSGRUPPE 7 */
 
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/ilinno"] {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/ilinno"] {
 	font-size: 1em;
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/refo"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/refo"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg7/refo.jpg);
 	}
 	
-.field-name-field-projekte-der-fokusgruppe a[href="/indeko/content/strakosphere"]:after {
+.field-name-field-projekte-der-fokusgruppe a[href$="/content/strakosphere"]:after {
 	background-image: url(../images/fokusgruppen_redesign/logos/fg7/strakosphere.png);
 	}
 

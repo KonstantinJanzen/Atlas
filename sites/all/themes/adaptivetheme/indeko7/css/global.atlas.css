@@ -39,6 +39,15 @@ div.messages {
     margin: 0;
 }
 
+/* Add shopping card to menu bar (teaser for future functionality) */
+#block-system-main-menu > .menu:before {
+    font-family: FontAwesome;
+    display: inline-block;
+    padding: 1rem;
+    content: "\f07a";
+    font-size: x-large;
+}
+
 /* =============================================================================
     Custom content type icons for search results and user menu created content list
    ========================================================================== */
