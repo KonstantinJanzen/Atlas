@@ -76,7 +76,7 @@ function createMorphsearchContent() {
   // fulltext search element
   $content['fulltextsearch'] = array(
     '#type' => 'textfield',
-    '#title' => t('Portalsuche'),
+    '#title' => t('Portal Search'),
     '#attributes' => array(
       'class' => array('morphsearch-fulltext'),
       'id' => 'fulltextsearch',
@@ -116,7 +116,7 @@ function createMorphsearchContent() {
   // all morphological search elements
   $content['morphsearch'] = array(
     '#markup' => buildSearchHtml(),
-    '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">' . t('Morphologische Suche') .
+    '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">' . t('Morphological Search') .
       '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
       '<div id="morphsearch-select-block">',
     '#suffix' => '</div>',
@@ -133,7 +133,7 @@ function createMorphsearchContent() {
     // all publication related elements
     $content['typesearchpublication'] = array(
       '#prefix' => '<div id="morphsearch-publication-block">' .
-        '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publikationsbezogene Suche') .
+        '<a href="javascript:void(0)" id="morphsearch-publication-block-toggle">' . t('Publication Search') .
         '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
         '<div id="morphsearch-publication-filter-block">',
       '#suffix' => '</div></div>',
@@ -146,7 +146,7 @@ function createMorphsearchContent() {
       '#attributes' => array(
         'class' => array('publication-select'),
         'data-type' => 'year',
-        'data-placeholder' => t('Erscheinungsjahr'),
+        'data-placeholder' => t('Year of Publication'),
         'multiple' => 'multiple'
       )
     );
@@ -158,7 +158,7 @@ function createMorphsearchContent() {
       '#attributes' => array(
         'class' => array('publication-select'),
         'data-type' => 'author',
-        'data-placeholder' => t('Autor'),
+        'data-placeholder' => t('Author'),
         'multiple' => 'multiple'
       )
     );
@@ -170,7 +170,7 @@ function createMorphsearchContent() {
       '#attributes' => array(
         'class' => array('publication-select'),
         'data-type' => 'tags',
-        'data-placeholder' => t('Schlagwort'),
+        'data-placeholder' => t('Keyword'),
         'multiple' => 'multiple'
       )
     );
@@ -182,7 +182,7 @@ function createMorphsearchContent() {
       '#attributes' => array(
         'class' => array('publication-select'),
         'data-type' => 'publisher',
-        'data-placeholder' => t('Verlag'),
+        'data-placeholder' => t('Publisher'),
         'multiple' => 'multiple'
       )
     );
@@ -194,7 +194,7 @@ function createMorphsearchContent() {
       '#attributes' => array(
         'class' => array('publication-select'),
         'data-type' => 'location',
-        'data-placeholder' => t('Ort'),
+        'data-placeholder' => t('Location'),
         'multiple' => 'multiple'
       )
     );
@@ -206,7 +206,7 @@ function createMorphsearchContent() {
       '#attributes' => array(
         'class' => array('publication-select'),
         'data-type' => 'type',
-        'data-placeholder' => t('Publikationstyp'),
+        'data-placeholder' => t('Type of Publication'),
         'multiple' => 'multiple'
       )
     );
@@ -214,14 +214,14 @@ function createMorphsearchContent() {
 
   // reset search filter link
   $content['reset'] = array(
-    '#markup' => '<a href="javascript:void(0)" id="morphsearch-reset">' . t('Filter zurücksetzen') . '</a>',
+    '#markup' => '<a href="javascript:void(0)" id="morphsearch-reset">' . t('Reset Filter') . '</a>',
     '#prefix' => '<div class="morphblocktable"><div class="morphblockcell">'
   );
 
   // save selected search block elements link (only for logged in users)
   if (user_is_logged_in()) {
     $content['savesearch'] = array(
-      '#markup' => '<a href="javascript:void(0)" id="morphsearch-save">' . t('Suche speichern') . '</a>',
+      '#markup' => '<a href="javascript:void(0)" id="morphsearch-save">' . t('Save Search') . '</a>',
       '#suffix' => '</div>'
     );
   } else {
@@ -233,7 +233,7 @@ function createMorphsearchContent() {
   // execute search button
   $content['submit'] = array(
     '#type' => 'submit',
-    '#value' => t('Suche'),
+    '#value' => t('Search'),
     '#id' => 'searchbutton',
     '#suffix' => '</div>',
   );
@@ -315,12 +315,12 @@ function buildTypeSearchHtml($staticFilter = []) {
 
     // if no $staticFilter is set, add all content types
     if (empty($staticFilter)) {
-      $html .= '<div class="type" data-name="'.$typeMachineName.'">' . $typeDescription . '</div>';
+      $html .= '<div class="type" data-name="'.$typeMachineName.'">' . t($typeDescription) . '</div>';
 
     // otherwise add only content type defined in $staticFilter
     } else {
       if (in_array($typeMachineName, $staticFilter, true)) {
-        $html .= '<div class="type" data-name="'.$typeMachineName.'">' . $typeDescription . '</div>';
+        $html .= '<div class="type" data-name="'.$typeMachineName.'">' . t($typeDescription) . '</div>';
       }
     }
   }
@@ -330,6 +330,7 @@ function buildTypeSearchHtml($staticFilter = []) {
 
 /**
  * Creates the HTML for the search syntax tooltip.
+ * TODO internationalization
  *
  * @return string Contains the HTML code for the search syntax tooltip.
  */
@@ -470,7 +471,7 @@ function save_search() {
 
   // don't save duplicate search
   if (is_duplicate_search($uid, $data)) {
-    $output = array('success' => 'false', 'message' => t('Die Suche wurde bereits gespeichert.'));
+    $output = array('success' => 'false', 'message' => t('Search has already been saved.'));
     return drupal_json_output($output);
 
   } else {
@@ -483,11 +484,11 @@ function save_search() {
         ))
         ->execute();
 
-      $output = array('success' => 'true', 'message' => t('Die Suche wurde erfolgreich unter Mein Konto gespeichert.'));
+      $output = array('success' => 'true', 'message' => t('Search has been saved.'));
       return drupal_json_output($output);
 
     } catch (Exception $e) {
-      $output = array('success' => 'false', 'message' => t('Die Suche wurde nicht gespeichert.'));
+      $output = array('success' => 'false', 'message' => t('Search has not been saved.'));
       return drupal_json_output($output);
     }
   }
