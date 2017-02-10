@@ -91,6 +91,7 @@ function  initView(ViewMode) {
 			Indeko.ImageMap.hookSaveButton(); 						// attach client side validation to save button
 			Indeko.MorphBox.convertMorphsearch();                   // converts the standard protal search block to be usable to link content to knowledge maps
 			myimgmap.loadStrings(imgmapStrings);					// load status messages
+            makeUnselectable($('#edit-field-wk-bild').find('img'));
 		} else if (l_oImageView.length > 0) {
 			// ViewMode
 			var parent = $('.image-style-none').parent();
@@ -948,6 +949,25 @@ function escapeHtml(string) {
 	return String(string).replace(/[&<>"'\/]/g, function (s) {
 		return entityMap[s];
 	});
+}
+
+/**
+ * Prevents an element from being (accidentially) selected or dragged.
+ * (http://stackoverflow.com/questions/12906789/preventing-an-image-from-being-draggable-or-selectable-without-using-js)
+ *
+ * @param $target DOM target to make unselectable.
+ */
+function makeUnselectable($target) {
+    $target
+        .addClass( 'unselectable' ) // All these attributes are inheritable
+        .attr( 'unselectable', 'on' ) // For IE9 - This property is not inherited, needs to be placed onto everything
+        .attr( 'draggable', 'false' ) // For moz and webkit, although Firefox 16 ignores this when -moz-user-select: none; is set, it's like these properties are mutually exclusive, seems to be a bug.
+        .on( 'dragstart', function() { return false; } );  // Needed since Firefox 16 seems to ingore the 'draggable' attribute we just applied above when '-moz-user-select: none' is applied to the CSS
+
+    $target // Apply non-inheritable properties to the child elements
+        .find( '*' )
+        .attr( 'draggable', 'false' )
+        .attr( 'unselectable', 'on' );
 }
 
 /* todo com, function copied from imgmap */
