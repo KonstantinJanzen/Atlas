@@ -442,7 +442,7 @@ Indeko.Morphsearch.styleSearchResults = function() {
  * @return {string} Complete search URL in string format.
  */
 Indeko.Morphsearch.toUrl = function (searchArray) {
-    var baseSolrSearchUrl = Drupal.settings.basePath + "search/site/";
+    var baseSolrSearchUrl = Drupal.settings.basePath + Drupal.settings.morphsearch.searchPath + "/";
     var solrSearchQuery = "";
 
     // fulltext search (just carry over)

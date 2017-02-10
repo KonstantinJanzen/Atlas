@@ -44,7 +44,7 @@ function _wissenskarte_settings_comments() {
   variable_set('comment_default_per_page_wissenskarte', 10);
   variable_set('comment_form_location_wissenskarte', 0);
   variable_set('comment_preview_wissenskarte', '0');
-  variable_set('comment_wissenskarte', 0);
+  variable_set('comment_subject_field_wissenskarte', 0);
   variable_set('comment_wissenskarte', 2);
 }
 
@@ -522,7 +522,17 @@ function form_wissenskarte_module_uninstall() {
   node_type_delete($ournewtype);
   field_purge_batch(500);
 
+  // Delete image style.
   image_style_delete(image_style_load('wissenkarte'));
+
+  // Delete persistent variables.
+  variable_del('comment_anonymous_wissenskarte');
+  variable_del('comment_default_mode_wissenskarte');
+  variable_del('comment_default_per_page_wissenskarte');
+  variable_del('comment_form_location_wissenskarte');
+  variable_del('comment_preview_wissenskarte');
+  variable_del('comment_subject_field_wissenskarte');
+  variable_del('comment_wissenskarte');
 }
 
 /**

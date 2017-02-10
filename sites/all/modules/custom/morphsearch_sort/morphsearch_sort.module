@@ -1,5 +1,10 @@
 <?php
 /**
+ * @file
+ * Create a block to sort Apache Solr search results and set Atlas specific custom search parameters [ID 76].
+ */
+
+/**
  * Implements hook_block_info().
  * Adds that the 'morphsearch_sort' is provided by this module.
  *
@@ -138,4 +143,16 @@ function morphsearch_sort_apachesolr_query_prepare(DrupalSolrQueryInterface $que
     'title' => t('Date'),
     'default' => 'asc',
   ));
+}
+
+/**
+ * Implements hook_help().
+ * Display help link to README.txt in module overview (admin/modules).
+ */
+function morphsearch_sort_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#morphsearch_sort':
+      $readme = file_get_contents(drupal_get_path('module', 'morphsearch_sort') . '/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
+  }
 }

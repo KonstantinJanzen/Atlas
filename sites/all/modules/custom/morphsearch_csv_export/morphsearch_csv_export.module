@@ -1,12 +1,15 @@
 <?php
+/**
+ * @file
+ * Create a link to export Apache Solr search results as a CSV file. Add an export link to the search results page.
+ */
 
 /**
  * Implements hook_menu(). (EDITED)
  *
  * @return array of menu items
  */
-function morphsearch_csv_export_menu()
-{
+function morphsearch_csv_export_menu() {
   $items = array();
   $items['admin/config/morphsearch_csv_export'] = array(
     'title' => t('Morphsearch CSV export settings'),
@@ -70,7 +73,7 @@ function morphsearch_csv_export_apachesolr_search_page_alter(array &$build, arra
     //$solrUrl = apachesolr_get_solr($env_id)->getUrl(); // local only, e.g. http://localhost:8983/solr/drupal/
     $solrUrl = variable_get('morphsearch_csv_export_solr_path');
 
-    if(isset($solrQuery)) {
+    if (isset($solrQuery)) {
       $solrParams = $solrQuery->getParams();
       $userFulltextSearch = drupal_encode_path($solrParams['q']);
 
@@ -117,5 +120,17 @@ function morphsearch_csv_export_apachesolr_index_document_build_node(ApacheSolrD
     $document->setField('description', $entity->field_kurzbeschreibung['und']['0']['value']);
   } else if ($entity->type === 'wissenskarte') {
     $document->setField('description', $entity->field_beschreibung['und']['0']['value']);
+  }
+}
+
+/**
+ * Implements hook_help().
+ * Display help link to README.txt in module overview (admin/modules).
+ */
+function morphsearch_csv_export_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#morphsearch_csv_export':
+      $readme = file_get_contents(drupal_get_path('module', 'morphsearch_csv_export') . '/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
   }
 }

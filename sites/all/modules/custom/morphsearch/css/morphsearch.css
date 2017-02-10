@@ -1,14 +1,15 @@
+/*
+ * Style the morphological search block.
+ */
 .morphsearch-select, .publication-select {
     margin-bottom: 0.5rem;
     width: 100%;
 }
-
 .morphsearch-type {
     margin: 0!important;
     padding: 0!important;
     width: 100%;
 }
-
 #morphsearch-select-block, #morphsearch-publication-filter-block {
     display: none;
 }
@@ -80,11 +81,13 @@
     line-height: 21px;
     color: #444;
 }
-
 #searchSyntax tr td:first-child {
     text-align: right;
 }
 
+/*
+ * Style notifications.
+ */
 .qtip { max-width: none !important; }
 
 .searchNotification {

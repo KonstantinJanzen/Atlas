@@ -1,7 +1,7 @@
 <?php
 /**
  * @file
- * Provides a dynamic search block using containing fulltext search, content type search, morphological search by taxonomy terms
+ * Provides a dynamic search block containing fulltext search, content type search, morphological search by taxonomy terms
  * and publication search.
  */
 
@@ -48,11 +48,22 @@ function morphsearch_block_view($delta = '') {
       $block['content']['#attached']['css'] = array(
           drupal_get_path('module', 'morphsearch') . "/css/morphsearch.css",
           /* Please note: Font-awesome is currently no longer required. */
-          drupal_get_path('module', 'morphsearch') . "/css/font-awesome.min.css");
+          drupal_get_path('module', 'morphsearch') . "/css/font-awesome.min.css"
+      );
+
+      // Attach search path to make it available in js (Drupal.settings.morphsearch.searchPath).
+      $search_page = apachesolr_search_page_load('core_search');
+      $block['content']['#attached']['js'][] = array(
+        'type' => 'setting',
+        'data' => array('morphsearch' => array('searchPath' => $search_page['search_path'])),
+      );
+
+      // Attach morphsearch javascript to block.
       $block['content']['#attached']['js'][] = array(
         'data' => drupal_get_path('module', 'morphsearch') . "/js/morphsearch.js",
         'scope' => 'footer',
       );
+
       break;
   }
   // add qtip2 library to display search syntax as a tooltip
@@ -271,11 +282,7 @@ function buildSearchHtml() {
     if ($currentLabel !== $row->vocabulary_name) {
       if ($currentLabel !== '') {
         $html .= "</select>";
-        //$html .= "</label>";
       }
-
-      // create label for new select box
-      //$html .= "<label>$row->vocabulary_name";
 
       // Check for multivalued morphological item
       if (strpos($row->vocabulary_machinename, 'tax_morph_m_') === false) { // singleselect
@@ -298,14 +305,14 @@ function buildSearchHtml() {
   if ($html !== '') {
     $html .= "</select>";
   }
-  //$html .= "</label>";
+
   return $html;
 }
 
 /**
  * Creates the HTML for the dynamic type search block.
  *
- * @param $staticFilter array of content type machine names that should be displayed (make dynamic function static)
+ * @param array $staticFilter  Array of content type machine names that should be displayed (make dynamic function static).
  * @return string Contains the HTML code for the dynamic type search block.
  */
 function buildTypeSearchHtml($staticFilter = []) {
@@ -383,6 +390,8 @@ function buildSearchSyntax() {
 /**
  * Implements hook_libraries_info().
  * Register qtip2 library to conviniently load it with libraries_load('qtip'); in any module.
+ *
+ * @return array An associative array whose keys are internal names of libraries and whose values are describing each library.
  */
 function morphsearch_libraries_info() {
   $libraries['qtip'] = array(
@@ -420,8 +429,10 @@ function morphsearch_enable() {
 }
 
 /**
- * Implementation of hook_menu.
- * Used to receive data from AJAX equest.
+ * Implements hook_menu().
+ * Used to receive data from AJAX request.
+ *
+ * @return array An array of menu items.
  */
 function morphsearch_menu() {
   $items['user/savesearch/ajax'] = array(
@@ -442,7 +453,7 @@ function morphsearch_menu() {
 /**
  * Function to delete the saved search data from the database.
  *
- * @return JSON object containing the deleted search of the user.
+ * @return object (json) containing the deleted search of the user.
  */
 function delete_search() {
   global $user;
@@ -460,9 +471,8 @@ function delete_search() {
 /**
  * Save search data from JS AJAX request to database.
  *
- * @return JSON object containing the save result and result message for the user.
+ * @return object (json) containing the save result and result message for the user.
  */
-
 function save_search() {
   global $user;
   $data = $_POST['saveData'];
@@ -497,9 +507,9 @@ function save_search() {
 /**
  * Checks if the same search is already in the database.
  *
- * @param $uid ID of the user
- * @param $data search parameter array to be saved
- * @return bool TRUE if user already saved the an identical search, FALSE otherwise
+ * @param int $uid The ID of the user.
+ * @param string $data The search parameter array (in json format) to be saved.
+ * @return bool TRUE if user already saved the an identical search, FALSE otherwise.
  */
 function is_duplicate_search($uid, $data) {
   $isDuplicate = false;
@@ -517,11 +527,10 @@ function is_duplicate_search($uid, $data) {
 }
 
 /**
- * Implements Hook_user_view_alter.
+ * Implements hook_user_view_alter().
  * Displays the current user's saved searches on his own user profile page.
-
  *
- * @param $build
+ * @param array $build A renderable array representing the user.
  */
 function morphsearch_user_view_alter(&$build) {
   global $user;
@@ -535,6 +544,11 @@ function morphsearch_user_view_alter(&$build) {
   }
 }
 
+/**
+ * Builds the html code of the saved searches to be displayed on the user profile page.
+ *
+ * @return string The html code of the saved searches.
+ */
 function saved_search_html() {
   global $user;
   $uid = $user->uid;
@@ -681,8 +695,8 @@ function saved_search_html() {
 /**
  * Converts features and corresponding values to an HTML table structure.
  *
- * @param $feature {String} First column of table row.
- * @param $values {String} Second column of table row.
+ * @param string $feature First column of table row.
+ * @param string $values Second column of table row.
  * @return {String} HTML table row.
  */
 function get_html_table_row($feature, $values) {
@@ -692,14 +706,13 @@ function get_html_table_row($feature, $values) {
   $html .= "</tr>";
 
   return $html;
-
-};
+}
 
 /**
  * Converts array of node type machine names to a comma separated string of node type names.
  *
- * @param $array {Array} of node type machine names.
- * @return {String} of node type names, separated by comma.
+ * @param array $array The array of node type machine names.
+ * @return String of node type names, separated by comma.
  */
 function get_search_type_string($array) {
   $string = '';
@@ -792,8 +805,8 @@ function biblio_get_locations() {
 /**
  * Returns an array of all taxonomy IDs associated with the given node ID.
  *
- * @param $nid INT Node ID
- * @return {Array} of taxonomy IDs
+ * @param int $nid The Node ID.
+ * @return {Array} of taxonomy IDs.
  */
 function get_taxonomy_ids($nid) {
   $query = "SELECT tid FROM {taxonomy_index} WHERE nid = :nid";
@@ -805,9 +818,9 @@ function get_taxonomy_ids($nid) {
 /**
  * Returns an array of research result node IDs that reference on the given $nid.
  *
- * @param $nid INT Node ID
- * @param $field STRING machine name of the reference field
- * @return {Array} of node IDs
+ * @param int $nid The Node ID.
+ * @param string $field The machine name of the reference field.
+ * @return {Array} of node IDs.
  */
 function get_associated_search_result_ids($nid, $field) {
   $query = 'SELECT DISTINCT entity_id AS reference 
@@ -943,3 +956,14 @@ function morphsearch_apachesolr_query_alter(DrupalSolrQueryInterface $query) {
   $query->removeParam('mm');*/
 }
 
+/**
+ * Implements hook_help().
+ * Display help link to README.txt in module overview (admin/modules).
+ */
+function morphsearch_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#morphsearch':
+      $readme = file_get_contents(drupal_get_path('module', 'morphsearch') . '/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
+  }
+}

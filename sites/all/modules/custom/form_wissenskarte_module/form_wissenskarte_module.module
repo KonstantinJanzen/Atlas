@@ -31,13 +31,24 @@ function form_wissenskarte_module_form($node, $form_state) {
 }
 
 /**
+ * Implements hook_help().
+ * Display help link to README.txt in module overview (admin/modules).
+ */
+function form_wissenskarte_module_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#form_wissenskarte_module':
+      $readme = file_get_contents(drupal_get_path('module', 'form_wissenskarte_module') . '/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
+  }
+}
+
+/**
  * Implements hook_preprocess_HOOK.
  * Adds necessary js and css to edit / clone content type "Wissenskarte" pages.
  *
  * @param $vars: The variables array (modify in place).
  */
-function form_wissenskarte_module_preprocess_page(&$vars)
-{
+function form_wissenskarte_module_preprocess_page(&$vars) {
   if (isset($vars['node']) && $vars['node']->type == 'wissenskarte') {
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/imgmap.js", array('scope' => 'footer', 'weight' => 4));
     drupal_add_js(drupal_get_path('module', 'form_wissenskarte_module') . "/js/morphmapping.js", array('scope' => 'footer', 'weight' => 5));
@@ -68,8 +79,7 @@ function form_wissenskarte_module_preprocess_page(&$vars)
  * @param $form_state: An associative array containing the current state of the form.
  * @param $context:    An associative array containing the following key-value pairs, matching the arguments received by
  */
-function form_wissenskarte_module_field_widget_image_image_form_alter(&$element, &$form_state, $context)
-{
+function form_wissenskarte_module_field_widget_image_image_form_alter(&$element, &$form_state, $context) {
   // load only for type = "wissenskarte"
   $pathAddWissenskarte = 'node/add/wissenskarte';
   $isPathAddWissenskarte = drupal_match_path(current_path(), $pathAddWissenskarte);
@@ -92,7 +102,7 @@ function form_wissenskarte_module_field_widget_image_image_form_alter(&$element,
  * @param $build: A renderable array representing the node content.
  */
 function form_wissenskarte_module_node_view_alter(&$build) {
-  if(module_exists('jq_maphilight')) {
+  if (module_exists('jq_maphilight')) {
 
     if ($build['#node']->type === 'wissenskarte' && $build['#view_mode'] === 'full') {
 
@@ -130,6 +140,6 @@ function form_wissenskarte_module_node_presave($node) {
   // Strip all tags except those relevant to knowledge maps: "map" and "area".
   if ($node->type === 'wissenskarte') {
     $knowledgemap_html = $node->field_markierte_bereiche['und']['0']['value'];
-    $node->field_markierte_bereiche['und']['0']['value'] = strip_tags($knowledgemap_html,'<map><area>');
+    $node->field_markierte_bereiche['und']['0']['value'] = strip_tags($knowledgemap_html, '<map><area>');
   }
 }
