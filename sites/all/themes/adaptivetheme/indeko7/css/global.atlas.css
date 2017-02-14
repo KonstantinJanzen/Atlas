@@ -318,6 +318,11 @@ div.messages {
     user-drag: none;
 }
 
+/* Backup hide in case module fails */
+.node-wissenskarte .field-name-field-markierte-bereiche {
+    display: none;
+}
+
 /* =============================================================================
     FlexSlider (Slideshow for Content Type 'Wissenskarte')
    ========================================================================== */

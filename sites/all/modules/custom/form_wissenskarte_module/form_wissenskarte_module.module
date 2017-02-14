@@ -104,7 +104,11 @@ function form_wissenskarte_module_field_widget_image_image_form_alter(&$element,
 function form_wissenskarte_module_node_view_alter(&$build) {
   if (module_exists('jq_maphilight')) {
 
-    if ($build['#node']->type === 'wissenskarte' && $build['#view_mode'] === 'full') {
+    // Don't display on comment pages.
+    $pathComment = 'comment/reply/*';
+    $isPathComment = drupal_match_path(current_path(), $pathComment);
+
+    if ($build['#node']->type === 'wissenskarte' && $build['#view_mode'] === 'full' && !$isPathComment) {
 
       // Set "button" text that can be accessed in js and translated in Drupal.
       $stringAreaShow = t("Show areas");
