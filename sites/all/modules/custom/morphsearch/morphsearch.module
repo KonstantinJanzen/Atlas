@@ -453,7 +453,7 @@ function morphsearch_menu() {
 /**
  * Function to delete the saved search data from the database.
  *
- * @return object (json) containing the deleted search of the user.
+ * @return string (json) containing the deleted search of the user.
  */
 function delete_search() {
   global $user;
@@ -471,7 +471,7 @@ function delete_search() {
 /**
  * Save search data from JS AJAX request to database.
  *
- * @return object (json) containing the save result and result message for the user.
+ * @return string (json) containing the save result and result message for the user.
  */
 function save_search() {
   global $user;
@@ -560,7 +560,7 @@ function saved_search_html() {
   $result = $result->fetchAll();
 
   /* Dummy for saved Search. */
-  $html = "<h3>Gespeicherte Suchen</h3>";
+  $html = "<h3>" . t("Saved Searches") . "</h3>";
   foreach($result as $currentresult) {
 
     // JSON representation of the saved search
@@ -568,7 +568,7 @@ function saved_search_html() {
 
     $html .= "<fieldset id='" . $currentresult->id . "'>";
     /* Format date to fit the mockup. */
-    $html .= "<legend>" . "Suche vom " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
+    $html .= "<legend>" . t("Search of") . " " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
     $html .= "<table class='searchResultTable'>";
 
     $hasContent = false;
@@ -578,7 +578,7 @@ function saved_search_html() {
     if (!empty($fulltext)) {
       if ($fulltext !== '*') {
         $hasContent = true;
-        $html .= get_html_table_row("Freitextsuche:", htmlspecialchars(urldecode($fulltext)));
+        $html .= get_html_table_row(t("Fulltext Search") . ":", htmlspecialchars(urldecode($fulltext)));
       }
     }
 
@@ -588,7 +588,7 @@ function saved_search_html() {
       $humanReadableType = get_search_type_string($type);
       if (!empty($humanReadableType)) {
         $hasContent = true;
-        $html .= get_html_table_row("Inhaltstyp:", $humanReadableType);
+        $html .= get_html_table_row(t("Content Type") . ":", $humanReadableType);
       }
     }
 
@@ -618,8 +618,8 @@ function saved_search_html() {
 
     // static publication filter array key:data-type value:headline
     // TODO has to be extended if more types are added
-    $pubFilter = ['year' => 'Erscheinungsjahr', 'author' => 'Autor', 'tags' => 'Schlagwort',
-        'publisher' => 'Verlag', 'location' => 'Ort', 'type' => 'Publikationstyp'];
+    $pubFilter = ['year' => t('Year of Publication'), 'author' => t('Author'), 'tags' => t('Keywords'),
+        'publisher' => t('Publisher'), 'location' => t('Location'), 'type' => t('Type of Publication')];
 
     foreach($pubFilter as $type => $headline) {
       if (!empty($pub[$type])) {
@@ -670,19 +670,19 @@ function saved_search_html() {
 
     if (!$hasContent) {
       $html .= "<tr>";
-      $html .= "<td>Es wurden keine Filter gesetzt.</td>";
+      $html .= "<td>" . t("No search filters were set.") . "</td>";
       $html .= "</tr>";
     }
 
     $html .= "</table>";
-    $html .= "<a class='toggleFilter'>Restliche Filter einblenden</a>";
+    $html .= "<a class='toggleFilter'>" . t("Display all filters") . "</a>";
     $html .= "<div class='actions' id='". $currentresult->id . "'>
-                <a href='$currentresult->url' data-input='$currentresult->input' class='searchResultLink'" . ">>> Zu den Ergebnissen</a>
-                <a class='delete'>Löschen</a>
+                <a href='$currentresult->url' data-input='$currentresult->input' class='searchResultLink'" . ">>> " . t('Show Search Results') . "</a>
+                <a class='delete'>" . t('Delete') . "</a>
                 <div class='confirmation' style='display:none;'>
-                  <h4>Diese Suche wirklich löschen?</h4>
-                  <button class='no'>Nein</button>
-                  <button class='yes' onclick='javascript:Indeko.Morphsearch.deleteSavedSearch(" . $currentresult->id . ");'>Ja</button>
+                  <h4>" . t('Do you really want to delete this search?') . "</h4>
+                  <button class='no'>" . t('No') . "</button>
+                  <button class='yes' onclick='javascript:Indeko.Morphsearch.deleteSavedSearch(" . $currentresult->id . ");'>" . t('Yes') . "</button>
                 </div>
               </div>";
     $html .= "";
@@ -718,7 +718,7 @@ function get_search_type_string($array) {
   $string = '';
 
   foreach ($array as $machineName) {
-    $string .= node_type_get_name(node_type_load($machineName)) . ', ';
+    $string .= t(node_type_get_name(node_type_load($machineName))) . ', ';
   }
 
   $string = rtrim($string, ", ");

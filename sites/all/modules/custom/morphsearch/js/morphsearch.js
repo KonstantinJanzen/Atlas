@@ -92,7 +92,7 @@ Indeko.Morphsearch.hookSaveButton = function() {
 
             // display notifications on main content block
             success: function (data, textStatus, jqXHR) {
-                Indeko.createNotification('Hinweis!',data.message, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
+                Indeko.createNotification(Drupal.t('Attention!'),data.message, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
 
                 // reload page if save has been saved and user is on profile page to show new saved search
                 if(data.success === 'true') {
@@ -102,7 +102,7 @@ Indeko.Morphsearch.hookSaveButton = function() {
                 }
             },
             error: function (jqXHR, textStatus, errorThrown) {
-                Indeko.createNotification('Fehler!',textStatus, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
+                Indeko.createNotification(Drupal.t('Error!'),textStatus, 'bottom  right', 'top left', Indeko.Morphsearch.buttonSave);
             }
         });
     });
@@ -419,14 +419,14 @@ Indeko.Morphsearch.styleSearchResults = function() {
     var linkProjectwebsite = $(".search-result .field-name-field-webseite-projekt a");
 
     linkPdf.text('');
-    linkPdf.attr('title','Publikationsdatei');
+    linkPdf.attr('title',Drupal.t('Publication File'));
     linkProjectwebsite.text('');
-    linkProjectwebsite.attr('title','Projekthomepage');
+    linkProjectwebsite.attr('title',Drupal.t('Project Page'));
     linkProjectwebsite.css('background-size','20px');
-    $(".search-result .title a").attr('title','Detailseite');
-    $(".search-result .field-name-field-projektleiter a").attr('title','Projektleiter');
+    $(".search-result .title a").attr('title',Drupal.t('Detail Page'));
+    $(".search-result .field-name-field-projektleiter a").attr('title',Drupal.t('Project Manager'));
 
-    $(".node-wissenskarte.search-result .username").attr('title','Ersteller');
+    $(".node-wissenskarte.search-result .username").attr('title',Drupal.t('Creator'));
 
     // Hide search results page title
     if($(".node-search-result.view-mode-search_result.search-result").length !== 0) {
@@ -599,7 +599,7 @@ Indeko.Morphsearch.addSearchInfo = function() {
             content: {
                 // use hidden element (created in morphsearch.module -> createMorphsearchContent) as tooltip
                 text: Indeko.Morphsearch.elemSearchSyntax,
-                title: {text: "Such-Syntax"}
+                title: {text: Drupal.t("Search Syntax")}
             },
             position: {
                 viewport: $(window)
@@ -738,10 +738,10 @@ $(document).ready(function() {
 
         if($("table tr:nth-last-child(1):visible", this.parentElement).length > 0) {
             $("table tr:gt(3)", this.parentElement).hide();
-            $(".toggleFilter", this.parentElement).text("Restliche Filter einblenden");
+            $(".toggleFilter", this.parentElement).text(Drupal.t("Display all filters"));
         } else {
             $("table tr:gt(3)", this.parentElement).show();
-            $(".toggleFilter", this.parentElement).text("Weniger Filter anzeigen");
+            $(".toggleFilter", this.parentElement).text(Drupal.t("Display less filters"));
         }
     });
 

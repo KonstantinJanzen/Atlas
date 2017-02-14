@@ -1,10 +1,10 @@
 # German translation of Rules (7.x-2.9)
-# Copyright (c) 2015 by the German translation team
+# Copyright (c) 2017 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Rules (7.x-2.9)\n"
-"POT-Creation-Date: 2015-03-27 08:27+0000\n"
+"POT-Creation-Date: 2017-01-12 01:13+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -355,7 +355,7 @@ msgstr "Offset"
 msgid "contains"
 msgstr "enthält"
 msgid "Machine name"
-msgstr "Maschinenlesbarer Name"
+msgstr "Systemname"
 msgid "Account"
 msgstr "Benutzerkonto"
 msgid "Data"

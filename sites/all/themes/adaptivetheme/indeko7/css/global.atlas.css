@@ -327,10 +327,10 @@ div.messages {
     line-height: 1;
 }
 
-/* Remove margin on header for image title.
-#slider_wk .flex-active-slide h1 {
+/* Remove margin on header for image title. */
+#slider_wk .slides h1 {
     margin-top: 0;
-} */
+}
 
 /* Reduce bottom margin of the image. */
 #slider_wk.flexslider {

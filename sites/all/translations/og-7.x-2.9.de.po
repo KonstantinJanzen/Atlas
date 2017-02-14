@@ -1,10 +1,10 @@
 # German translation of Organic groups (7.x-2.9)
-# Copyright (c) 2016 by the German translation team
+# Copyright (c) 2017 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Organic groups (7.x-2.9)\n"
-"POT-Creation-Date: 2016-10-20 21:54+0000\n"
+"POT-Creation-Date: 2017-02-14 03:48+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -288,6 +288,8 @@ msgid "Group permissions"
 msgstr "Gruppen-Berechtigungen"
 msgid "Filter by group permissions."
 msgstr "Nach Gruppen-Berechtigungen sortieren"
+msgid "Group visibility"
+msgstr "Gruppen-Sichtbarkeit"
 msgid "Group content visibility"
 msgstr "Sichtbarkeit in Gruppen"
 msgid "User view"

@@ -1,10 +1,10 @@
 # German translation of Field validation (7.x-2.6)
-# Copyright (c) 2015 by the German translation team
+# Copyright (c) 2017 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Field validation (7.x-2.6)\n"
-"POT-Creation-Date: 2015-10-05 00:19+0000\n"
+"POT-Creation-Date: 2017-01-29 09:48+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -41,7 +41,7 @@ msgstr "Felder"
 msgid "Month"
 msgstr "Monat"
 msgid "Phone"
-msgstr "Telefon"
+msgstr "Telefonnummer"
 msgid "Group name"
 msgstr "Gruppenname"
 msgid "Brazil"

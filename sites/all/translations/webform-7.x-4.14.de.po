@@ -1,10 +1,10 @@
 # German translation of Webform (7.x-4.14)
-# Copyright (c) 2016 by the German translation team
+# Copyright (c) 2017 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Webform (7.x-4.14)\n"
-"POT-Creation-Date: 2016-08-28 12:44+0000\n"
+"POT-Creation-Date: 2017-01-13 20:28+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -1541,6 +1541,8 @@ msgid "Enable a JavaScript date picker next to the date field."
 msgstr "Aktiviert ein JavaScript-Datumsauswahlfeld neben einem Datums-Feld."
 msgid "Open popup calendar"
 msgstr "Popup-Kalender öffnen"
+msgid "Submitter"
+msgstr "Absender"
 msgid "Date modified"
 msgstr "Änderungsdatum"
 msgid "End time"

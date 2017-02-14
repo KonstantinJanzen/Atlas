@@ -1,10 +1,10 @@
 # German translation of Link (7.x-1.4)
-# Copyright (c) 2016 by the German translation team
+# Copyright (c) 2017 by the German translation team
 #
 msgid ""
 msgstr ""
 "Project-Id-Version: Link (7.x-1.4)\n"
-"POT-Creation-Date: 2016-01-15 04:44+0000\n"
+"POT-Creation-Date: 2017-02-03 12:38+0000\n"
 "PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
 "Language-Team: German\n"
 "MIME-Version: 1.0\n"
@@ -182,5 +182,13 @@ msgid "- Basic validation -"
 msgstr "- Basisvalidierung -"
 msgid "Absolute URL"
 msgstr "Absolute URL"
+msgid "Max length of title field"
+msgstr "Maximale Länge des Titel-Feldes"
 msgid "The title of the link."
 msgstr "Der Titel des Links."
+msgid "The URL of the link."
+msgstr "Die URL des Links."
+msgid "The link title is limited to @maxlength characters maximum."
+msgstr "Der Linktitel ist beschränkt auf @maxlength Zeichen maximal"
+msgid "Domain, as link"
+msgstr "Domain, als Link"
