@@ -5,19 +5,57 @@
  */
 
 /**
+ * Implements hook_menu().
+ */
+function node_creation_links_menu() {
+  $items['admin/config/node_creation_links'] = array(
+    'access arguments' => array('administer site configuration'),
+    'page callback' => 'drupal_get_form',
+    'page arguments' => array('admin_settings'),
+    'title' => 'Node Creation Links module',
+    'description' => 'Dynamically creates node creation links (if the user has sufficient permissions) and adds them to the user menu block.',
+  );
+
+  return $items;
+}
+
+/**
+ * Menu callback to configure module settings.
+ * Displays all available content types as checkboxes and saves the admins's selection as a variable 'node_creation_links_types'.
+ *
+ * @param $form
+ *  An associative array containing the structure of the form.
+ * @param $form_state
+ *  A keyed array containing the current state of the form.
+ *
+ * @return
+ *   The form structure.
+ */
+function admin_settings($form, &$form_state) {
+  $allContentTypes = node_type_get_names();
+
+  $form['node_creation_links_types'] = array(
+    '#type' => 'checkboxes',
+    '#title' => t('Added content types'),
+    '#default_value' => variable_get('node_creation_links_types', array()),
+    '#options' => $allContentTypes,
+    '#description' => t('Select any content types which should be added to the creation link.'),
+  );
+
+  return system_settings_form($form);
+}
+
+/**
  * Implements hook_block_view_MODULE_DELTA_alter().
  * Dynamically adds node creation links to the user menu block depending on the users permissions.
- * (with an option to filter content types that should not be displayed by machine name)
  *
- * @param $data The data as returned from the hook_block_view() implementation of the module that defined the block.
- * @param $block The block object, as loaded from the database.
+ * @param $data
+ *  The data as returned from the hook_block_view() implementation of the module that defined the block.
+ * @param $block
+ *  The block object, as loaded from the database.
  */
 function node_creation_links_block_view_system_user_menu_alter(&$data, $block) {
   global $user;
-
-  // Array of content type machine names that will be removed from the created links.
-  //$staticFilter = []; // empty array = no filter applied
-  $staticFilter = ['allgemein', 'forum'];
 
   // Only logged in users can add new content
   if (user_is_logged_in()) {
@@ -25,31 +63,40 @@ function node_creation_links_block_view_system_user_menu_alter(&$data, $block) {
     // Add "create element" link that will toggle the specific content type links
     $data['content']['createnewelement'] = array(
       '#markup' => '<li id="newelement" class="leaf">
-                    <a href="javascript:void(0)">' . t("Element anlegen") . '</a>
+                    <a href="javascript:void(0)">' . t("Create Element") . '</a>
                     </li>',
     );
 
     // new element link style
     drupal_add_css('#newelement.selected a {background-color: DarkGray;}', 'inline');
 
-    // Loop over all content types
+    // All content types that should be added (set in module's configuration menu).
+    $addTypes = variable_get('node_creation_links_types', array());
+
+    // Loop over all content types.
+    $isAvaiable = FALSE;
     foreach (node_type_get_names() as $typeMachineName => $typeDescription) {
 
-      // Only add content types that are not in the filter array.
-      if (!in_array($typeMachineName, $staticFilter, true)) {
+      // Only add content types that are set in the configurtation menu.
+      if (!empty($addTypes[$typeMachineName])) {
 
         // If the current user has permission to create the content type...
         if (node_access('create', $typeMachineName, $user)) {
-
+          $isAvaiable = TRUE;   // at least one links has been created
           //... add a hidden create link to the block
           $addLink = base_path() . 'node/add/' . $typeMachineName;
+          $descriptionText = t('Create @type', array('@type' => t($typeDescription)));
           $data['content'][$typeMachineName] = array(
             '#markup' => '<li class="nodeAddLink" style="display: none;">
-                        <a href=' . $addLink . '>' . $typeDescription . ' ' . t("anlegen") . '</a>
-                        </li>',
+                        <a href=' . $addLink . '>' . $descriptionText . '</a></li>',
           );
         }
       }
+    }
+
+    // Don't display the node creation elements in block if no links were added.
+    if (!$isAvaiable) {
+      unset($data['content']['createnewelement']);
     }
   }
 }
@@ -65,5 +112,3 @@ function node_creation_links_help($path, $arg) {
       return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
   }
 }
-
-

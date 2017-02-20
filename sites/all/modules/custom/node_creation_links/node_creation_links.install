@@ -1,0 +1,13 @@
+<?php
+/**
+ * @file
+ * Install & uninstall functions for node_creation_links module.
+ */
+
+/**
+ * Implements hook_uninstall().
+ * Removes all variables created by the node_creation_module on uninstall.
+ */
+function node_creation_links_uninstall() {
+  variable_del('node_creation_links_types');
+}
