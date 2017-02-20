@@ -1,3 +1,4 @@
+/* Customised asterisks for required fields (authors, year, keywords) in publication form. */
 #biblio-node-form .vertical-tabs-list .first strong:after,
 #biblio-node-form label[for='edit-biblio-year']:after,
 #biblio-node-form label[for='edit-biblio-keywords']:after,

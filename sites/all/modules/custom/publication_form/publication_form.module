@@ -1,8 +1,17 @@
 <?php
+/**
+ * @file
+ * Allows to make adjustments in the publication form (e.g. customised validation, mandatory fields).
+ */
 
 /**
- * Implements hook
+ * Implements hook_form_alter().
+ *
  * Adds necessary css for form of content type publication.
+ *
+ * @param $form Nested array of form elements that comprise the form.
+ * @param $form_state The form state array.
+ * @param $form_id String representing the name of the form itself.
  */
 function publication_form_form_alter(&$form, &$form_state, $form_id) {
 
@@ -12,7 +21,16 @@ function publication_form_form_alter(&$form, &$form_state, $form_id) {
         drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
     }
 }
-// https://www.appnovation.com/blog/drupal-tip-using-formafter-build
+
+/**
+ * This function runs after the form is built and is used to solve the issue that
+ * if the form does not pass the validation, the page is reloaded without the css file.
+ * See also: https://www.appnovation.com/blog/drupal-tip-using-formafter-build.
+ *
+ * @param $form Nested array of form elements that comprise the form.
+ * @param $form_state The form state array.
+ * @return $form Form with css attached.
+ */
 function publication_form_after_build($form, &$form_state) {
 
     drupal_add_css(drupal_get_path('module', 'publication_form') . "/css/publication_form.css");
@@ -22,9 +40,11 @@ function publication_form_after_build($form, &$form_state) {
 /**
  * Implements hook_node_validate().
  *
- * $node: The node being validated.
- * $form: The form being used to edit the node.
- * $form_state: The form state array.
+ * Performs year and author validation before a publication is created.
+ *
+ * @param $node The node being validated.
+ * @param $form The form being used to edit the node.
+ * @param $form_state The form state array.
  */
 function publication_form_node_validate($node, $form, &$form_state) {
     if(module_exists('biblio_bibtex')) {
@@ -38,11 +58,16 @@ function publication_form_node_validate($node, $form, &$form_state) {
             $authors = array_key_exists('biblio_contributors', $form_state['values']) ? $form_state['values']['biblio_contributors'] : null;
 
             validateAuthors($authors);
-
         }
     }
 }
 
+/**
+ * Function to validate the author(s) in the publication form.
+ * Customised validation error, if the author name is empty.
+ *
+ * @param $authors The authors of a publication.
+ */
 function validateAuthors($authors) {
 
     if(!isset($authors)) { return; }
@@ -58,6 +83,12 @@ function validateAuthors($authors) {
     }
 }
 
+/**
+ * Function to validate the year in the publication form.
+ * Customised validation errors, if the year is not numeric and in range.
+ *
+ * @param $year The year of a publication.
+ */
 function validateYear($year) {
 
     if (!isset($year)) { return; }
@@ -67,7 +98,6 @@ function validateYear($year) {
     } elseif ($year < '1800' ||  $year > '2200') {
         form_set_error('biblio_year', t('You have added an invalid date. Enter a year between 1800 and 2200.'));
     }
-
 }
 
 /**
