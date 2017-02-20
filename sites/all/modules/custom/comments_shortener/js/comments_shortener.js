@@ -22,7 +22,7 @@ var Indeko = (function ($, Indeko) {
                 // Add Ellipsis
                 a.appendChild(linkText);
                 a.className = "comment-shortener-link";
-                a.title = "view more";
+                a.title = Drupal.t("view more");
                 a.addEventListener('click', function (event) {
                     comment.text(text);
                 });

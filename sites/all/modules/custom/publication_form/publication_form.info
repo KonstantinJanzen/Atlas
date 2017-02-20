@@ -1,3 +1,6 @@
 name = Publication Form
 description = Allows to make adjustments in the publication form (e.g. customised validation, mandatory fields).
 core = 7.x
+
+package = Atlas
+dependencies[] = biblio

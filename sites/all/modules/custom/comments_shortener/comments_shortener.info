@@ -1,3 +1,5 @@
 name = Comments Shortener
 description = Allows trimmed comments to be displayed. New Comments will be displayed on top.
 core = 7.x
+
+package = Atlas

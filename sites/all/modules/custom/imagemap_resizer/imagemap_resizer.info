@@ -3,5 +3,5 @@ description = Makes HTML image maps responsive, so that they automatically stay 
 core = 7.x
 package = Knowledge Map
 
-configure = admin/config/content/imagemap_resizer
+configure = admin/config/imagemap_resizer
 dependencies[] = libraries

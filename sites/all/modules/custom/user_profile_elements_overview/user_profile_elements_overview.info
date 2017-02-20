@@ -1,3 +1,5 @@
 name = User Profile Elements Overview
 description = Allows created elements of the user to be displayed in the user profile.
 core = 7.x
+
+package = Atlas

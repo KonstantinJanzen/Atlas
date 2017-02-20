@@ -81,3 +81,15 @@ function elements_overview_html($staticFilter = []) {
 
     return $html;
 }
+
+/**
+ * Implements hook_help().
+ * Display help link to README.txt in module overview (admin/modules).
+ */
+function user_profile_elements_overview_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#user_profile_elements_overview':
+      $readme = file_get_contents(drupal_get_path('module', 'user_profile_elements_overview') . '/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
+  }
+}

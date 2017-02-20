@@ -54,4 +54,16 @@ function node_creation_links_block_view_system_user_menu_alter(&$data, $block) {
   }
 }
 
+/**
+ * Implements hook_help().
+ * Display help link to README.txt in module overview (admin/modules).
+ */
+function node_creation_links_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#node_creation_links':
+      $readme = file_get_contents(drupal_get_path('module', 'node_creation_links') . '/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
+  }
+}
+
 

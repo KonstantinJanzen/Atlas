@@ -3,9 +3,8 @@ Dynamically creates node creation links (if the user has sufficient permissions)
 
 
 -- INSTALLATION --
-
 1. Install the node_creation_links Drupal module as you would any Drupal module.
-2. (Only extends the block "User menu". This block shoueld be assigned to a visible region in structure > blocks settings.)
+2. (Only extends the block "User menu". This block should be assigned to a visible region in structure > blocks settings.)
 
 
 -- CONFIGURATION --

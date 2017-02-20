@@ -3,8 +3,8 @@
  *
  */
 
-// const IMAGEMAP_RESIZER_LIBRARY_NAME = 'imageMapResizer.min.js';
-const IMAGEMAP_RESIZER_LIBRARY_NAME = 'imageMapResizer.js';
+const IMAGEMAP_RESIZER_LIBRARY_NAME = 'imageMapResizer.min.js';
+//const IMAGEMAP_RESIZER_LIBRARY_NAME = 'imageMapResizer.js';
 
 /**
  * Implements hook_library().
@@ -40,7 +40,7 @@ function imagemap_resizer_available() {
  */
 function imagemap_resizer_preprocess_page(&$vars) {
 	
-  if (imagemap_resizer_available() !== FALSE && isset($vars['node']) && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'article')) {
+  if (imagemap_resizer_available() !== FALSE && isset($vars['node']) && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'wissenskarte')) {
     $pathEdit = 'node/*/edit';
     $pathClone = 'node/*/clone/confirm';
     $isPathEdit = drupal_match_path(current_path(), $pathEdit);
@@ -62,7 +62,7 @@ function imagemap_resizer_preprocess_page(&$vars) {
  */
 function imagemap_resizer_menu() {
   $items = array();
-  $items['admin/config/content/imagemap_resizer'] = array(
+  $items['admin/config/imagemap_resizer'] = array(
     'title' => 'Image Map Resizer',
     'description' => 'Javascript image map resizing using imageMapResizer.js library.',
     'page callback' => 'drupal_get_form',
@@ -72,6 +72,18 @@ function imagemap_resizer_menu() {
     'type' => MENU_NORMAL_ITEM,
   );
   return $items;
+}
+
+/**
+ * Implements hook_help().
+ * Display help link to README.txt in module overview (admin/modules).
+ */
+function imagemap_resizer_help($path, $arg) {
+  switch ($path) {
+    case 'admin/help#imagemap_resizer':
+      $readme = file_get_contents(drupal_get_path('module', 'imagemap_resizer') . '/README.txt');
+      return module_exists('markdown') ? filter_xss_admin(module_invoke('markdown', 'filter', 'process', 0, -1, $readme)) : '<pre>' . check_plain($readme) . '</pre>';
+  }
 }
 
 /**
@@ -101,7 +113,7 @@ function imagemap_resizer_admin_settings() {
   $form['imagemap_resizer_general']['imagemap_resizer_content_type'] = array(
     '#type' => 'textfield',
     '#title' => t('Content Type'),
-    '#default_value' => variable_get('imagemap_resizer_content_type', 'article'),
+    '#default_value' => variable_get('imagemap_resizer_content_type', 'wissenskarte'),
     '#size' => 16,
     '#description' => 'Load js libraries only on pages with specified content type.'
   );
