@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Adds an image title to the tooltip and displays it on the slider.
+ */
 
 /**
  * Implements function hook_views_pre_render().

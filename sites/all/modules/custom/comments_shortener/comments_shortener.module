@@ -2,6 +2,7 @@
 /**
  * @file
  * Allows trimmed comments to be displayed. New Comments will be displayed on top.
+ * The number of visible characters is configured in the JavaScript file.
  */
 
 /**
@@ -19,6 +20,8 @@ function comments_shortener_preprocess_comment(&$vars) {
  * Implements hook_query_TAG_alter().
  *
  * Alter comments query to order by DESC as well as the default ASC.
+ *
+ * @param QueryAlterableInterface $query The comments query.
  */
 function comments_shortener_query_comment_filter_alter(QueryAlterableInterface $query) {
     $orderby = &$query->getOrderBy();
@@ -38,20 +41,28 @@ function comments_shortener_query_comment_filter_alter(QueryAlterableInterface $
     }
 }
 
+/**
+ * Implements hook_form_alter().
+ *
+ * Ensures that the first page of comments is visible after submitting a comment.
+ *
+ * @param $form Nested array of form elements that comprise the form.
+ * @param $form_state The form state array.
+ * @param $form_id String representing the name of the form itself.
+ */
 function comments_shortener_form_alter(&$form, &$form_state, $form_id) {
     if($form_id == 'comment_node_wissenskarte_form' && $form['#method'] == 'post') {
-        array_push($form['#submit'], 'some_function');
+        array_push($form['#submit'], 'redirectToFirstCommentPage');
     }
 }
 
 /**
- * Attaches the redirect to the submitted form.
+ * Attaches the redirect to the first page of the comments to the submitted form.
  *
- * @param unknown_type $form
- * @param unknown_type $form_state
- * @return unknown
+ * @param $form Nested array of form elements that comprise the form.
+ * @param $form_state The form state array.
  */
-function some_function($form, &$form_state) {
+function redirectToFirstCommentPage($form, &$form_state) {
     // Redirect to the first page
     $form_state['redirect'][1]['query']['page'] = 0;
 }

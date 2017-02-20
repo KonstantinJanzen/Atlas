@@ -1,4 +1,8 @@
 <?php
+/**
+ * @file
+ * Allows created elements of the user to be displayed in the user profile.
+ */
 
 /**
  * Implements hook_user_view_alter().
