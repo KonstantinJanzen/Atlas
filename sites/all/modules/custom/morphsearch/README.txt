@@ -30,20 +30,20 @@ INSTALLATION
 This module can be installed like any other Drupal module:
  1. Place it in the custom modules directory for your site (e.g. sites/all/modules/custom).
  2. Enable it on the 'admin/modules' page.
- 3. (optional) Download the qTip2 jQuery plugin (http://qtip2.com/) and extract the file under sites/all/libraries/qtip.
+ 3. Set the content types that should be displayed in the search block's type search section
+    on the configuration page (admin/config/morphsearch).
+ 4. (optional) Download the qTip2 jQuery plugin (http://qtip2.com/) and extract the file under sites/all/libraries/qtip.
     Otherwise no search syntax tooltips or notifications will be displayed.
- 4. (optional) Install the biblio Drupal module to make use of the search block's publication search capabilities
+ 5. (optional) Install the biblio Drupal module to make use of the search block's publication search capabilities
 
 
 CONFIGURATION
 -------------
 
-The module has no menu or modifiable settings.(TODO config menu Schnickschnack)
+(TODO config menu Schnickschnack)
 
- * Configure content type search:
-Edit morphsearch.module buildTypeSearchHtml(array('analysereport', 'biblio', 'forschungsergebnis', 'projekt', 'wissenskarte')).
-Enter no parameter to display all content types in the search block or enter an array with content type machine names that
-should be displayed in the search block like in the example above.
+ * Configure content type search (admin/config/morphsearch)
+ You can select which content types should be displayed in the search block's type search section.
 
  * Configure morphological search:
 Create new taxonomy vocabulary for each morphological dimension to be displayed (admin/structure/taxonomy).

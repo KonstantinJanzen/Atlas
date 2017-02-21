@@ -1,7 +1,12 @@
 <?php
+/**
+ * @file
+ * Install & uninstall functions for the morphsearch module.
+ */
 
 /**
- * Implement hook_schema()
+ * Implements hook_schema().
+ * Create database structure to store saved user searches.
  */
 function morphsearch_schema() {
   $schema = array();
@@ -31,7 +36,7 @@ function morphsearch_schema() {
       'url' => array(
          'description' => 'The full search URL.',
          'type' => 'varchar',
-         'length' => 10000,
+         'length' => 20000,
          'not null' => TRUE,
          'default' => '',
       ),
@@ -48,4 +53,12 @@ function morphsearch_schema() {
   );
 
   return $schema;
+}
+
+/**
+ * Implements hook_uninstall().
+ * Removes all variables created by the morphsearch module on uninstall.
+ */
+function morphsearch_uninstall() {
+  variable_del('morphsearch_typesearch_types');
 }

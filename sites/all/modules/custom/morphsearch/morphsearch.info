@@ -2,6 +2,7 @@ name = Morphsearch
 description = Dynamically creates a search block in the right sidebar (fulltext search, dynamical content type search, morphological search by taxonomy terms, publication search).
 core = 7.x
 package = Search
+configure = admin/config/morphsearch
 
 dependencies[] = libraries
 dependencies[] = jquery_update
