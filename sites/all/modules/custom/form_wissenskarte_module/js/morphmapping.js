@@ -343,6 +343,16 @@ function gui_addArea(id) {
 	removeAreaButton.click(function () {
 		// eventuell auslagern
 		myimgmap.removeArea(myimgmap.currentid);
+
+		/*
+		 * Deletes the polygon, if the user did not finish drawing the polygon with "SHIFT"
+		 * and tries to delete the figure via delete button.
+		 * This fixes the issue described in CR 1.
+		 * Link: "https://trello.com/c/UxwE6Ftb/191-cr-1-als-registrierter-benutzer-mochte-
+		 * ich-die-konturen-des-bereichs-sowohl-als-kreise-als-auch-als-rechtecke-und-polygone-zeich"
+		 */
+		myimgmap.is_drawing = 0;
+
 		validateAllAreas();
 		var l_nPropsPosition = props.length > 0 ? props.length - 1 : 0;
 		enableDeleteButtonOnSelectedGuiArea(props[l_nPropsPosition]); // enable deletebutton of last area
