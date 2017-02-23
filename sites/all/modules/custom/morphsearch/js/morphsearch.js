@@ -7,7 +7,7 @@ var Indeko = Indeko || {};
 Indeko.Morphsearch = Indeko.Morphsearch || {
         elemFulltext: $('#fulltextsearch'),                     // fulltext search element
         elemFulltextInfo: $('#fulltextsearchinfo'),             // fulltext search info element
-        elemSearchSyntax: $('#searchSyntax'),                   // element with search syntax representaion
+        elemSearchSyntax: $('#searchSyntax'),                   // element with search syntax representation
         elemsType: $('.morphsearch-type-block .type'),           // all type search select elements
         elemTypePublication: $('.morphsearch-type-block .type[data-name="biblio"]'), // publication link in type search block
         elemTypeBlock: $('.morphsearch-type-block'),            // type search element
@@ -190,7 +190,7 @@ Indeko.Morphsearch.hookSearchBlock = function() {
  * TODO: make independent from chosen
  */
 Indeko.Morphsearch.reset = function() {
-    // this.elemFulltext.val(''); // ID 34 do not reset fulltext field on reset
+
     this.elemsMorph.val(-1).trigger("chosen:updated");
     this.elemsPublication.val(-1).trigger("chosen:updated");
 
@@ -207,7 +207,7 @@ Indeko.Morphsearch.reset = function() {
  */
 Indeko.Morphsearch.toArray = function() {
 
-    // search object structure (imitating an assiciative array) that can be easily converted to and from JSON
+    // search object structure (imitating an associative array) that can be easily converted to and from JSON
     var searchArray = {
         fulltext: '',
         morphological: [],
@@ -240,7 +240,7 @@ Indeko.Morphsearch.toArray = function() {
 
         // if user selected an element, add it's taxonomy ID to the searchArray
         if (!$.isEmptyObject(tid)) {
-            // multiselect will return an array of selected items. Add single values to the final searchArray.
+            // multi-select will return an array of selected items. Add single values to the final searchArray.
             if(Array.isArray(tid)) {
                 searchArray.morphological.push.apply(searchArray.morphological, tid);   // multi-select
             } else {
@@ -278,7 +278,7 @@ Indeko.Morphsearch.toArray = function() {
 
             // if user selected an element, add it's ID to the searchArray
             if (!$.isEmptyObject(id)) {
-                // multiselect will return an array of selected items. Add single values to the final searchArray.
+                // multi-select will return an array of selected items. Add single values to the final searchArray.
                 if(Array.isArray(id)) {
                     searchArray.publication[type].push.apply(searchArray.publication[type], id);    // multi-select
                 } else {
@@ -462,9 +462,6 @@ Indeko.Morphsearch.toUrl = function (searchArray) {
     // CR ID 67-1 biblionotselected search for publication even if it is not selected
     var biblionotselected = ($.inArray('biblionotselected', searchArray.type) > -1);
     if ($.inArray('biblio', searchArray.type) > -1 || biblionotselected) {
-        //solrSearchQuery = solrSearchQuery.replace(' OR biblio','');
-        //solrSearchQuery = solrSearchQuery.replace(' AND bundle:(biblio)','');
-        //solrSearchQuery += " AND (bundle:(biblio)";
 
         var pubQuery = '';
         pubQuery += Indeko.Morphsearch.buildSearchString(searchArray.publication.year, "is_year", "OR", false);
@@ -484,7 +481,6 @@ Indeko.Morphsearch.toUrl = function (searchArray) {
         stringArray = Indeko.Morphsearch.getValue(searchArray.publication.tags, "tags");
         pubQuery += Indeko.Morphsearch.buildSearchString(stringArray, "sm_tag", "OR", true);
 
-        //pubQuery += ")"; // publication search done
 
         // if publication filters were set, update biblio restrictions in search
         if(pubQuery !== '') {
@@ -685,6 +681,7 @@ Indeko.Morphsearch.deleteSavedSearch = function(id) {
         });
 };
 
+
 /**
  * Function to show the delete confirmation.
  *
@@ -693,6 +690,7 @@ Indeko.Morphsearch.deleteSavedSearch = function(id) {
 Indeko.Morphsearch.showConfirmation = function(element) {
     $(".confirmation", element).show();
 };
+
 
 /**
  * Function to hide the delete confirmation.
@@ -703,7 +701,9 @@ Indeko.Morphsearch.hideConfirmation = function(element) {
     $(element).hide();
 };
 
+
 Indeko.Morphsearch.init();
+
 
 /*
  * A function to execute after the DOM is fully loaded.
@@ -711,21 +711,22 @@ Indeko.Morphsearch.init();
 $(document).ready(function() {
 
     /* Delete Link. */
-    $(".actions .delete").click(function(){
+    $(".actions .delete").click(function () {
         Indeko.Morphsearch.showConfirmation($(this).parent());
     });
 
     /* No-Button. */
-    $(".actions .no").click(function(){
+    $(".actions .no").click(function () {
         Indeko.Morphsearch.hideConfirmation($(this).parent());
     });
+
 
     /*
      * Show only the first 4 features (rows) for every fieldset.
      */
-    $("#content fieldset").each(function(index, element) {
-        
-        if($("table tr", element).length > 4) {
+    $("#content fieldset").each(function (index, element) {
+
+        if ($("table tr", element).length > 4) {
             $("table tr:gt(3)", element).hide();
         } else {
             $(".toggleFilter", element).hide();
@@ -734,9 +735,9 @@ $(document).ready(function() {
 
 
     /* Toggle the filter link. */
-    $(".toggleFilter").click(function() {
+    $(".toggleFilter").click(function () {
 
-        if($("table tr:nth-last-child(1):visible", this.parentElement).length > 0) {
+        if ($("table tr:nth-last-child(1):visible", this.parentElement).length > 0) {
             $("table tr:gt(3)", this.parentElement).hide();
             $(".toggleFilter", this.parentElement).text(Drupal.t("Display all filters"));
         } else {
@@ -745,27 +746,4 @@ $(document).ready(function() {
         }
     });
 
-    /* Currently no longer required.
-     */
-    /* Open and close saved search fieldset.
-    $('#content legend').click(function() {
-        var i = $('i', this);
-        $('table', $(this).parent()).fadeToggle();
-
-        if(i.hasClass('fa-chevron-down')) {
-            i.removeClass('fa-chevron-down');
-            i.addClass('fa-chevron-left');
-        } else {
-            i.removeClass('fa-chevron-left');
-            i.addClass('fa-chevron-down');
-        }
-    }); */
 });
-
-
-
-
-
-
-
-
