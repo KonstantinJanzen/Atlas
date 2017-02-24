@@ -1,0 +1,192 @@
+# $Id$
+#
+# German translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  morphsearch.module: n/a
+#  morphsearch.info: n/a
+#  js/morphsearch.js: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2017-02-24 10:58+0100\n"
+"PO-Revision-Date: 2017-02-24 10:58+0100\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: morphsearch.module:16
+msgid "Morphsearch Block"
+msgstr ""
+
+#: morphsearch.module:90
+msgid "Portal Search"
+msgstr "Portalsuche"
+
+#: morphsearch.module:130
+msgid "Morphological Search"
+msgstr "Morphologische Suche"
+
+#: morphsearch.module:147
+msgid "Publication Search"
+msgstr "Publikationsbezogene Suche"
+
+#: morphsearch.module:160;660
+msgid "Year of Publication"
+msgstr "Erscheinungsjahr"
+
+#: morphsearch.module:172;660
+msgid "Author"
+msgstr "Autor"
+
+#: morphsearch.module:184
+msgid "Keyword"
+msgstr "Schlagwort"
+
+#: morphsearch.module:196;661
+msgid "Publisher"
+msgstr "Verlag"
+
+#: morphsearch.module:208;661
+msgid "Location"
+msgstr "Ort"
+
+#: morphsearch.module:220;661
+msgid "Type of Publication"
+msgstr "Publikationstyp"
+
+#: morphsearch.module:228
+msgid "Reset Filter"
+msgstr "Filter zurücksetzen"
+
+#: morphsearch.module:235
+msgid "Save Search"
+msgstr "Suche speichern"
+
+#: morphsearch.module:247 morphsearch.info:0
+msgid "Search"
+msgstr "Suche"
+
+#: morphsearch.module:477
+msgid "Search by content type"
+msgstr ""
+
+#: morphsearch.module:483
+msgid "Content types to search for"
+msgstr ""
+
+#: morphsearch.module:486
+msgid "Select all content types which should be added to the content type search section."
+msgstr ""
+
+#: morphsearch.module:523
+msgid "Search has already been saved."
+msgstr "Die Suche wurde bereits gespeichert."
+
+#: morphsearch.module:536
+msgid "Search has been saved."
+msgstr "Die Suche wurde erfolgreich gespeichert."
+
+#: morphsearch.module:540
+msgid "Search has not been saved."
+msgstr ""
+
+#: morphsearch.module:602
+msgid "Saved Searches"
+msgstr "Gespeicherte Suchen"
+
+#: morphsearch.module:610
+msgid "Search of"
+msgstr "Suche vom"
+
+#: morphsearch.module:620
+msgid "Fulltext Search"
+msgstr "Freitextsuche"
+
+#: morphsearch.module:630
+msgid "Content Type"
+msgstr "Inhaltstyp"
+
+#: morphsearch.module:660
+msgid "Keywords"
+msgstr "Schlüsselwörter"
+
+#: morphsearch.module:712
+msgid "No search filters were set."
+msgstr "Es wurden keine Filter gesetzt."
+
+#: morphsearch.module:717 js/morphsearch.js:0
+msgid "Display all filters"
+msgstr "Restliche Filter einblenden"
+
+#: morphsearch.module:719
+msgid "Show Search Results"
+msgstr "Zu den Ergebnissen"
+
+#: morphsearch.module:720
+msgid "Delete"
+msgstr "Löschen"
+
+#: morphsearch.module:722
+msgid "Do you really want to delete this search?"
+msgstr "Diese Suche wirklich löschen?"
+
+#: morphsearch.module:723
+msgid "No"
+msgstr "Nein"
+
+#: morphsearch.module:724
+msgid "Yes"
+msgstr "Ja"
+
+#: morphsearch.module:439
+msgid "Morphsearch module"
+msgstr ""
+
+#: morphsearch.module:440 morphsearch.info:0
+msgid "Dynamically creates a search block in the right sidebar (fulltext search, dynamical content type search, morphological search by taxonomy terms, publication search)."
+msgstr ""
+
+#: morphsearch.info:0
+msgid "Morphsearch"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Attention!"
+msgstr "Hinweis!"
+
+#: js/morphsearch.js:0
+msgid "Error!"
+msgstr "Fehler!"
+
+#: js/morphsearch.js:0
+msgid "Publication File"
+msgstr "Publikationsdatei"
+
+#: js/morphsearch.js:0
+msgid "Project Page"
+msgstr "Projekthomepage"
+
+#: js/morphsearch.js:0
+msgid "Detail Page"
+msgstr "Detailseite"
+
+#: js/morphsearch.js:0
+msgid "Project Manager"
+msgstr "Projektleiter"
+
+#: js/morphsearch.js:0
+msgid "Creator"
+msgstr "Ersteller"
+
+#: js/morphsearch.js:0
+msgid "Search Syntax"
+msgstr "Such-Syntax"
+
+#: js/morphsearch.js:0
+msgid "Display less filters"
+msgstr "Weniger Filter anzeigen"
+

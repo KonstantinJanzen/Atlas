@@ -1,0 +1,192 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  morphsearch.module: n/a
+#  morphsearch.info: n/a
+#  js/morphsearch.js: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2017-02-24 10:57+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: morphsearch.module:16
+msgid "Morphsearch Block"
+msgstr ""
+
+#: morphsearch.module:90
+msgid "Portal Search"
+msgstr ""
+
+#: morphsearch.module:130
+msgid "Morphological Search"
+msgstr ""
+
+#: morphsearch.module:147
+msgid "Publication Search"
+msgstr ""
+
+#: morphsearch.module:160;660
+msgid "Year of Publication"
+msgstr ""
+
+#: morphsearch.module:172;660
+msgid "Author"
+msgstr ""
+
+#: morphsearch.module:184
+msgid "Keyword"
+msgstr ""
+
+#: morphsearch.module:196;661
+msgid "Publisher"
+msgstr ""
+
+#: morphsearch.module:208;661
+msgid "Location"
+msgstr ""
+
+#: morphsearch.module:220;661
+msgid "Type of Publication"
+msgstr ""
+
+#: morphsearch.module:228
+msgid "Reset Filter"
+msgstr ""
+
+#: morphsearch.module:235
+msgid "Save Search"
+msgstr ""
+
+#: morphsearch.module:247 morphsearch.info:0
+msgid "Search"
+msgstr ""
+
+#: morphsearch.module:477
+msgid "Search by content type"
+msgstr ""
+
+#: morphsearch.module:483
+msgid "Content types to search for"
+msgstr ""
+
+#: morphsearch.module:486
+msgid "Select all content types which should be added to the content type search section."
+msgstr ""
+
+#: morphsearch.module:523
+msgid "Search has already been saved."
+msgstr ""
+
+#: morphsearch.module:536
+msgid "Search has been saved."
+msgstr ""
+
+#: morphsearch.module:540
+msgid "Search has not been saved."
+msgstr ""
+
+#: morphsearch.module:602
+msgid "Saved Searches"
+msgstr ""
+
+#: morphsearch.module:610
+msgid "Search of"
+msgstr ""
+
+#: morphsearch.module:620
+msgid "Fulltext Search"
+msgstr ""
+
+#: morphsearch.module:630
+msgid "Content Type"
+msgstr ""
+
+#: morphsearch.module:660
+msgid "Keywords"
+msgstr ""
+
+#: morphsearch.module:712
+msgid "No search filters were set."
+msgstr ""
+
+#: morphsearch.module:717 js/morphsearch.js:0
+msgid "Display all filters"
+msgstr ""
+
+#: morphsearch.module:719
+msgid "Show Search Results"
+msgstr ""
+
+#: morphsearch.module:720
+msgid "Delete"
+msgstr ""
+
+#: morphsearch.module:722
+msgid "Do you really want to delete this search?"
+msgstr ""
+
+#: morphsearch.module:723
+msgid "No"
+msgstr ""
+
+#: morphsearch.module:724
+msgid "Yes"
+msgstr ""
+
+#: morphsearch.module:439
+msgid "Morphsearch module"
+msgstr ""
+
+#: morphsearch.module:440 morphsearch.info:0
+msgid "Dynamically creates a search block in the right sidebar (fulltext search, dynamical content type search, morphological search by taxonomy terms, publication search)."
+msgstr ""
+
+#: morphsearch.info:0
+msgid "Morphsearch"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Attention!"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Error!"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Publication File"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Project Page"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Detail Page"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Project Manager"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Creator"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Search Syntax"
+msgstr ""
+
+#: js/morphsearch.js:0
+msgid "Display less filters"
+msgstr ""
+

@@ -17,7 +17,7 @@ Indeko.AddForm = (function() {
 
 		var fieldset = document.createElement("fieldset");
 		var legend = document.createElement("legend");
-		legend.innerText = "Bild hochladen";
+		legend.innerText = Drupal.t("Upload Image");
 
 		var imagemap = document.getElementById("edit-field-markierte-bereiche");
 		imageDiv = document.getElementById("edit-field-wk-bild");
@@ -56,8 +56,8 @@ Indeko.AddForm = (function() {
 	 * Wrap up the Upload Button (modified to fit the mockups)
 	 */
     function wrapUploadButton() {
-        $("#edit-field-wk-bild-und-0-upload").wrap("<div>Bild vom Computer auswählen:  </div>");
-        $("#edit-field-wk-bild-und-0-upload-button").wrap("<div>Bild akzeptieren und hochladen: </div>");
+        $("#edit-field-wk-bild-und-0-upload").wrap("<div>" + Drupal.t('Select image on your device:') + "  </div>");
+        $("#edit-field-wk-bild-und-0-upload-button").wrap("<div>" + Drupal.t('Upload Image:') + " </div>");
     }
 
     /*

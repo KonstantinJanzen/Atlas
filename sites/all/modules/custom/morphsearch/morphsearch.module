@@ -1,20 +1,21 @@
 <?php
 /**
  * @file
- * Provides a dynamic search block containing fulltext search, content type search, morphological search by taxonomy terms
- * and publication search.
+ * Provides a dynamic search block containing fulltext search, content type search,
+ * morphological search by taxonomy terms and publication search.
  */
 
 /**
  * Implements hook_block_info(). Declares that the 'morphsearch-block' is provided by this module.
  *
  * @return array Each component of the which is an array of block information.
- *               The array keys are the 'delta' values used in other block hooks.
+ *   The array keys are the 'delta' values used in other block hooks.
  */
 function morphsearch_block_info() {
   $blocks['morphsearch-block'] = array(
     'info' => t('Morphsearch Block'),
-    'cache' => DRUPAL_CACHE_GLOBAL, // The block is the same for every user on every page where it is visible.
+    // The block is the same for every user on every page where it is visible.
+    'cache' => DRUPAL_CACHE_GLOBAL,
     //'cache' => DRUPAL_NO_CACHE,
     'status' => TRUE,
     'region' => 'sidebar_second',
@@ -284,7 +285,7 @@ function buildSearchHtml() {
       }
 
       // Check for multivalued morphological item
-      if (strpos($row->vocabulary_machinename, 'tax_morph_m_') === false) { // singleselect
+      if (strpos($row->vocabulary_machinename, 'tax_morph_m_') === FALSE) { // singleselect
         $html .= "<select class='morphsearch-select' data-placeholder='$row->vocabulary_name'>";
       } else { // multiselect
         $html .= "<select multiple='multiple' class='morphsearch-select' size='1' data-placeholder='$row->vocabulary_name'>";
@@ -323,7 +324,7 @@ function buildTypeSearchHtml() {
   // Add all set content types to type search block.
   foreach (node_type_get_names() as $typeMachineName => $typeDescription) {
     if (!empty($visibleTypes[$typeMachineName])) {
-      $html .= '<div class="type" data-name="'.$typeMachineName.'">' . t($typeDescription) . '</div>';
+      $html .= '<div class="type" data-name="' . $typeMachineName . '">' . t($typeDescription) . '</div>';
     }
   }
 
@@ -550,7 +551,7 @@ function save_search() {
  * @return bool TRUE if user already saved the an identical search, FALSE otherwise.
  */
 function is_duplicate_search($uid, $data) {
-  $isDuplicate = false;
+  $isDuplicate = FALSE;
 
   $query = "SELECT id FROM {morphsearch_saved_input}
             WHERE user_id = :uid AND input = :input;";
@@ -558,7 +559,7 @@ function is_duplicate_search($uid, $data) {
 
   // the entry is a duplicate if there are results
   if ($result->rowCount() > 0) {
-    $isDuplicate = true;
+    $isDuplicate = TRUE;
   }
 
   return $isDuplicate;
@@ -599,7 +600,7 @@ function saved_search_html() {
 
   /* Dummy for saved Search. */
   $html = "<h3>" . t("Saved Searches") . "</h3>";
-  foreach($result as $currentresult) {
+  foreach ($result as $currentresult) {
 
     // JSON representation of the saved search
     $json = drupal_json_decode($currentresult->input);
@@ -609,13 +610,13 @@ function saved_search_html() {
     $html .= "<legend>" . t("Search of") . " " . $new_date = date('d.m.Y', strtotime($currentresult->timestamp)) . "</legend>";
     $html .= "<table class='searchResultTable'>";
 
-    $hasContent = false;
+    $hasContent = FALSE;
 
     // saved fulltext search
     $fulltext = $json['fulltext'];
     if (!empty($fulltext)) {
       if ($fulltext !== '*') {
-        $hasContent = true;
+        $hasContent = TRUE;
         $html .= get_html_table_row(t("Fulltext Search") . ":", htmlspecialchars(urldecode($fulltext)));
       }
     }
@@ -625,7 +626,7 @@ function saved_search_html() {
     if (!empty($type)) {
       $humanReadableType = get_search_type_string($type);
       if (!empty($humanReadableType)) {
-        $hasContent = true;
+        $hasContent = TRUE;
         $html .= get_html_table_row(t("Content Type") . ":", $humanReadableType);
       }
     }
@@ -633,7 +634,7 @@ function saved_search_html() {
     // saved morphological search
     $morph = $json['morphological'];
     if (!empty($morph)) {
-      $hasContent = true;
+      $hasContent = TRUE;
       $vocabulary = []; // array of vocabulary machine names and associated taxonomy term names
 
       // get taxonomy term names and assign them to their parent vocabulary terms
@@ -659,12 +660,12 @@ function saved_search_html() {
     $pubFilter = ['year' => t('Year of Publication'), 'author' => t('Author'), 'tags' => t('Keywords'),
         'publisher' => t('Publisher'), 'location' => t('Location'), 'type' => t('Type of Publication')];
 
-    foreach($pubFilter as $type => $headline) {
+    foreach ($pubFilter as $type => $headline) {
       if (!empty($pub[$type])) {
-        $hasContent = true;
+        $hasContent = TRUE;
 
         $result = [];
-        switch($type) {
+        switch ($type) {
           case 'author':
             $query = "SELECT c.name FROM {biblio_contributor_data} c
                       WHERE cid IN (:cid)";
@@ -714,7 +715,7 @@ function saved_search_html() {
 
     $html .= "</table>";
     $html .= "<a class='toggleFilter'>" . t("Display all filters") . "</a>";
-    $html .= "<div class='actions' id='". $currentresult->id . "'>
+    $html .= "<div class='actions' id='" . $currentresult->id . "'>
                 <a href='$currentresult->url' data-input='$currentresult->input' class='searchResultLink'" . ">>> " . t('Show Search Results') . "</a>
                 <a class='delete'>" . t('Delete') . "</a>
                 <div class='confirmation' style='display:none;'>

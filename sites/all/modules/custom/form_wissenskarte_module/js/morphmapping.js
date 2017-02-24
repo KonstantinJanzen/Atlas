@@ -6,11 +6,11 @@ var props = []; // GUI element rows above knowledge map
 var ValidationResult = function() {
 	var l_oValidationResult = {
 		isTitelValid: false,
-		messageTitel: "Bitte geben Sie der Kontur einen Titel um fortzufahren.",
+		messageTitel: Drupal.t("Add the shape's title."),
 		isAreaValid: false,
-		messageArea: "Bitte zeichnen Sie zuerst eine Kontur im Bild ein.",
+		messageArea: Drupal.t("Draw your shape on the image first."),
 		isMorphboxValid: false,
-		messageMorphbox: "Bitte weisen Sie der Kontur Inhalte aus dem Portal zu.",
+		messageMorphbox: Drupal.t("Bitte weisen Sie der Kontur Inhalte aus dem Portal zu."),
 
 		/**
 		 * @returns {boolean} TRUE if all validations are true, otherwiese FALSE.
@@ -329,13 +329,13 @@ function gui_addArea(id) {
 	$('.img_active').hide();
 
 	var l_oSelect = $('<select name="img_shape" class="img_shape">').appendTo(props[id]);
-	$('<option value="rect">Rechteck</option>').appendTo(l_oSelect);
-	$('<option value="circle">Kreis</option>').appendTo(l_oSelect);
-	$('<option value="poly">Polygon</option>').appendTo(l_oSelect);
+	$('<option value="rect">' + Drupal.t("Rectangle") + '</option>').appendTo(l_oSelect);
+	$('<option value="circle">' + Drupal.t("Circle") + '</option>').appendTo(l_oSelect);
+	$('<option value="poly">' + Drupal.t("Polygon") + '</option>').appendTo(l_oSelect);
 	l_oSelect.val("rect");
 	l_oSelect.chosen({disable_search: true}); // transform to chosen select box
 
-	$('<Label class="img_label">Titel:</Label>').appendTo(props[id]);
+	$('<Label class="img_label">' + Drupal.t("Title") + ':</Label>').appendTo(props[id]);
 	$('<input type="text" name="img_alt" class="img_alt" value="">').appendTo(props[id]);
 	$('<input type="text" name="img_coords" class="img_coords" value="" style="display: none;">').appendTo(props[id]);
 
@@ -692,7 +692,7 @@ Indeko.MorphBox.hide = function() {
 Indeko.MorphBox.convertMorphsearch = function() {
     Indeko.MorphBox.searchJson = JSON.stringify(Indeko.Morphsearch.toArray());                      // save search block state to restore it later
     Indeko.MorphBox.reset();
-	Indeko.ImageMap.contentBlockLabel.text("Inhalte der Wissenskarte");									// change label of the search block
+	Indeko.ImageMap.contentBlockLabel.text(Drupal.t("Knowledge Map Content"));					// change label of the search block
 	$('.morphblocktable').remove();                                                 				// remove standard search block search / reset / save elements
 	Indeko.MorphBox.selects.change(Indeko.MorphBox.getSelectedValuesFromMorphBox);  				// changelistener for comboboxes in MorpBox
 	Indeko.MorphBox.searchTypeBlock.click(Indeko.MorphBox.getSelectedValuesFromMorphBox);			// clickevent for Inhaltstypen
@@ -751,7 +751,7 @@ Indeko.ImageMap.hookSaveButton = function () {
 		if ($.isEmptyObject(titleElement.val())) {
 			titleElement.addClass('error');
 			if ($('.errorTitle').length === 0) {
-				titleElement.after('<p class="errorTitle labelAreaErrorText"><label>Das Feld „Titel” ist erforderlich.</label></p>');
+				titleElement.after('<p class="errorTitle labelAreaErrorText"><label>' + Drupal.t("Title field is required.") + '</label></p>');
 			}
 			titleElement.focus();
 			l_bIsValid = false;
@@ -765,7 +765,7 @@ Indeko.ImageMap.hookSaveButton = function () {
 		if ($.isEmptyObject(descriptionElement.val())) {
 			descriptionElement.addClass('error');
 			if ($('.errorDescription').length === 0) {
-				descriptionElement.after('<p class="errorDescription labelAreaErrorText"><label>Das Feld „Beschreibung” ist erforderlich.</label></p>');
+				descriptionElement.after('<p class="errorDescription labelAreaErrorText"><label>' + Drupal.t("Description field is required.") + '</label></p>');
 			}
 			descriptionElement.focus();
 			l_bIsValid = false;

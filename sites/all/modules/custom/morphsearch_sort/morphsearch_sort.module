@@ -68,7 +68,8 @@ function morphsearch_sort_block_view($delta = '') {
           }
 
           foreach ($directions as $direction) {
-            $isActive = $solrsort['#name'].$solrsort['#direction'] === $name.$direction; // to mark active sort filter
+            // to mark active sort filter
+            $isActive = $solrsort['#name'].$solrsort['#direction'] === $name.$direction;
             $new_query->setSolrsort($name, $direction);
             $sort_links[$name.$direction] = array(
               'text' => t($sort['title'] . ' ' . $direction),

@@ -1,0 +1,37 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  comments_shortener.info: n/a
+#  js/comments_shortener.js: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2017-02-24 11:13+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: comments_shortener.info:0
+msgid "Comments Shortener"
+msgstr ""
+
+#: comments_shortener.info:0
+msgid "Allows trimmed comments to be displayed. New Comments will be displayed on top."
+msgstr ""
+
+#: comments_shortener.info:0
+msgid "Atlas"
+msgstr ""
+
+#: js/comments_shortener.js:0
+msgid "view more"
+msgstr ""
+

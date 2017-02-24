@@ -1,0 +1,124 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  form_wissenskarte_module.module: n/a
+#  form_wissenskarte_module.install: n/a
+#  form_wissenskarte_module.info: n/a
+#  js/morphmapping.js: n/a
+#  js/morphmapping_add.js: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2017-02-24 12:05+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: form_wissenskarte_module.module:14;18
+msgid "Wissenskarte"
+msgstr ""
+
+#: form_wissenskarte_module.module:16
+msgid "Eine neue Wissenskarte hinzufügen."
+msgstr ""
+
+#: form_wissenskarte_module.module:114
+msgid "Show areas"
+msgstr ""
+
+#: form_wissenskarte_module.module:115
+msgid "Hide areas"
+msgstr ""
+
+#: (duplicate) form_wissenskarte_module.install:224 
+msgid "Beschreibung"
+msgstr ""
+
+#: (duplicate) form_wissenskarte_module.install:270 
+msgid "markierte Bereiche"
+msgstr ""
+
+#: (duplicate) form_wissenskarte_module.install:322 
+msgid "Bild"
+msgstr ""
+
+#: (duplicate) form_wissenskarte_module.install:376 
+msgid "Tags"
+msgstr ""
+
+#: (duplicate) form_wissenskarte_module.install:435 
+msgid "Rating"
+msgstr ""
+
+#: form_wissenskarte_module.info:0
+msgid "form_wissenskarte_module"
+msgstr ""
+
+#: form_wissenskarte_module.info:0
+msgid "Allows the creation of knowledge maps."
+msgstr ""
+
+#: form_wissenskarte_module.info:0
+msgid "Knowledge Map"
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Add the shape's title."
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Draw your shape on the image first."
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Bitte weisen Sie der Kontur Inhalte aus dem Portal zu."
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Rectangle"
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Circle"
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Polygon"
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Title"
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Knowledge Map Content"
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Title field is required."
+msgstr ""
+
+#: js/morphmapping.js:0
+msgid "Description field is required."
+msgstr ""
+
+#: js/morphmapping_add.js:0
+msgid "Upload Image"
+msgstr ""
+
+#: js/morphmapping_add.js:0
+msgid "Select image on your device:"
+msgstr ""
+
+#: js/morphmapping_add.js:0
+msgid "Upload Image:"
+msgstr ""
+

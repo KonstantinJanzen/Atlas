@@ -41,7 +41,7 @@ function elements_overview_html($staticFilter = []) {
     $results = db_query($query, array(":uid" => $uid, ":staticFilter" => $staticFilter));
     $results = $results->fetchAll();
 
-    $html .= "<h3>Selbst angelegte Elemente</h3>";
+    $html .= "<h3>" . t('Elements created') . "</h3>";
     $html .= "<ol class='elementsoverview' style='list-style-type:none;'>";
 
     /*
@@ -57,19 +57,19 @@ function elements_overview_html($staticFilter = []) {
          */
         switch($result->type) {
             case "biblio":
-                $html .= "<i class='icon biblio' aria-hidden='true' title='Publikation'></i>";
+                $html .= "<i class='icon biblio' aria-hidden='true' title='" . t('Publication') . "'></i>";
                 break;
             case "wissenskarte":
-                $html .= "<i class='icon wissenskarte' aria-hidden='true' title='Wissenskarte'></i>";
+                $html .= "<i class='icon wissenskarte' aria-hidden='true' title='" . t('Knowledge Map') . "'></i>";
                 break;
             case "projekt":
-                $html .= "<i class='icon projekt' aria-hidden='true' title='Projekt'></i>";
+                $html .= "<i class='icon projekt' aria-hidden='true' title='" . t('Project') . "'></i>";
                 break;
             case "analysereport":
-                $html .= "<i class='icon analysereport' aria-hidden='true' title='Analysereport'></i>";
+                $html .= "<i class='icon analysereport' aria-hidden='true' title='" . t('Analysis Report') . "'></i>";
                 break;
             case "forschungsergebnis":
-                $html .= "<i class='icon forschungsergebnis' aria-hidden='true' title='Forschungsergebnis'></i>";
+                $html .= "<i class='icon forschungsergebnis' aria-hidden='true' title='" . t('Research Result') . "'></i>";
                 break;
             default:
                 $html .= "<i class='fa fa-file default' aria-hidden='true'></i>";

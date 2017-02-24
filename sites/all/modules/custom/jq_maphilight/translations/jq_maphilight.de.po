@@ -1,0 +1,163 @@
+# $Id$
+#
+# German translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  jq_maphilight.module: n/a
+#  jq_maphilight.info: n/a
+#  jq_maphilight.install: n/a
+#  drush/jq_maphilight.drush.inc: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2017-02-24 11:18+0100\n"
+"PO-Revision-Date: 2017-02-24 11:18+0100\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: German <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=2; plural=(n!=1);\n"
+
+#: jq_maphilight.module:113
+msgid "The jQuery Maphilight plugin is unavailable."
+msgstr ""
+
+#: jq_maphilight.module:115
+msgid "The jQuery Maphilight plugin is located at:"
+msgstr ""
+
+#: jq_maphilight.module:119
+msgid "Plugin status"
+msgstr ""
+
+#: jq_maphilight.module:126
+msgid "General settings"
+msgstr "Allgemeine Einstellungen"
+
+#: jq_maphilight.module:132
+msgid "Enable highlighting only on pages of content type:"
+msgstr ""
+
+#: jq_maphilight.module:140
+msgid "Enable highlighting for all image maps"
+msgstr ""
+
+#: jq_maphilight.module:142;156;164;172;180;188
+msgid "True"
+msgstr "Wahr"
+
+#: jq_maphilight.module:142;156;164;172;180;188
+msgid "False"
+msgstr "Falsch"
+
+#: jq_maphilight.module:148
+msgid "jQuery Maphilight default settings"
+msgstr ""
+
+#: jq_maphilight.module:154
+msgid "Fill"
+msgstr "Füllen"
+
+#: jq_maphilight.module:162
+msgid "Stroke (outline)"
+msgstr ""
+
+#: jq_maphilight.module:170
+msgid "Fade in"
+msgstr ""
+
+#: jq_maphilight.module:178;242;251
+msgid "Always on"
+msgstr ""
+
+#: jq_maphilight.module:186
+msgid "Group by"
+msgstr ""
+
+#: jq_maphilight.module:194
+msgid "jQuery Maphilight styling settings"
+msgstr ""
+
+#: jq_maphilight.module:199
+msgid "Fill Color"
+msgstr "Füllfarbe"
+
+#: jq_maphilight.module:207
+msgid "Fill Opacity"
+msgstr ""
+
+#: jq_maphilight.module:215
+msgid "Stroke Color"
+msgstr ""
+
+#: jq_maphilight.module:223
+msgid "Stroke Width"
+msgstr ""
+
+#: jq_maphilight.module:231
+msgid "Stroke Opacity"
+msgstr ""
+
+#: jq_maphilight.module:239
+msgid "Fill Opacity on mouseover"
+msgstr ""
+
+#: jq_maphilight.module:248
+msgid "Stroke Opacity on mouseover"
+msgstr ""
+
+#: jq_maphilight.module:93 jq_maphilight.info:0
+msgid "jQuery Maphilight (ATLAS VERSION)"
+msgstr ""
+
+#: jq_maphilight.module:94
+msgid "Javascript image map highlighting using the jQuery Maphilight plugin."
+msgstr ""
+
+#: jq_maphilight.install:26
+msgid "jQuery Maphighlight module uninstalled."
+msgstr ""
+
+#: jq_maphilight.info:0
+msgid "jQuery Map Hilight adds javascript mouseover highlighting of hotspots to HTML image maps. EDIT: necessary libraries and settings only added to nodes of specified content type."
+msgstr ""
+
+#: jq_maphilight.info:0
+msgid "Knowledge Map"
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:41
+msgid "Downloads the Maphilight plugin."
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:44
+msgid "Optional. A path where to install the Maphilight plugin. If omitted Drush will use the default location."
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:67
+msgid "Downloads the Maphilight from plugins.jquery.com, default location is sites/all/libraries."
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:76
+msgid "Missing dependency: unzip. Install it before using this command."
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:90
+msgid "Directory @path was created"
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:102
+msgid "An existing Maphilight plugin was deleted from @path"
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:127
+msgid "Maphilight plugin has been downloaded to @path"
+msgstr ""
+
+#: drush/jq_maphilight.drush.inc:130
+msgid "Drush was unable to download the Maphilight plugin to @path"
+msgstr ""
+

@@ -1,0 +1,45 @@
+# $Id$
+#
+# LANGUAGE translation of Drupal (general)
+# Copyright YEAR NAME <EMAIL@ADDRESS>
+# Generated from files:
+#  publication_form.module: n/a
+#  publication_form.info: n/a
+#
+#, fuzzy
+msgid ""
+msgstr ""
+"Project-Id-Version: PROJECT VERSION\n"
+"POT-Creation-Date: 2017-02-24 11:20+0100\n"
+"PO-Revision-Date: YYYY-mm-DD HH:MM+ZZZZ\n"
+"Last-Translator: NAME <EMAIL@ADDRESS>\n"
+"Language-Team: LANGUAGE <EMAIL@ADDRESS>\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=utf-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"Plural-Forms: nplurals=INTEGER; plural=EXPRESSION;\n"
+
+#: publication_form.module:82
+msgid "You must enter at least one author."
+msgstr ""
+
+#: publication_form.module:97
+msgid "You have added an invalid date. Enter a year."
+msgstr ""
+
+#: publication_form.module:99
+msgid "You have added an invalid date. Enter a year between 1800 and 2200."
+msgstr ""
+
+#: publication_form.info:0
+msgid "Publication Form"
+msgstr ""
+
+#: publication_form.info:0
+msgid "Allows to make adjustments in the publication form (e.g. customised validation, mandatory fields)."
+msgstr ""
+
+#: publication_form.info:0
+msgid "Atlas"
+msgstr ""
+
