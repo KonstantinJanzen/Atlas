@@ -87,7 +87,7 @@
 	citecolor=black, % Verweise auf Literaturverzeichniseinträge im Text
 	filecolor=black, % Verknüpfungen, die lokale Dateien öffnen
 	menucolor=black, % Acrobat-Menüpunkte
-	urlcolor=black, 
+	urlcolor=blue, 
 	bookmarksopenlevel=1,%
 	bookmarksopen=true,%
 	bookmarksnumbered=true,%
@@ -100,7 +100,7 @@
 	pdfsubject={\titel},
 	pdfkeywords={},
 	pdftitle={\titel},
-	linktocpage, % Seitenzahlen anstatt Text im Inhaltsverzeichnis verlinken
+	linktocpage = false, % Seitenzahlen anstatt Text im Inhaltsverzeichnis verlinken
 	pdfstartview=FitH
 ]{hyperref}
 
@@ -204,7 +204,7 @@ morekeywords={}
 \usepackage{microtype}
 
 % Intelligent cross-referencing
-\usepackage[ngerman,noabbrev]{cleveref}
+\usepackage[ngerman,nameinlink]{cleveref}
 
 % Grafiken \ Plots
 \usepackage{pgfplots,pgfplotstable}
@@ -234,3 +234,5 @@ morekeywords={}
 \titlespacing{\subsubsection}{0pt}{0pt}{-5pt}
 
 \usepackage{float}
+\usepackage{enumitem}
+%\usepackage[toc]{glossaries}

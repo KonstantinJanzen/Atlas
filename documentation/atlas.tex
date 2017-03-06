@@ -24,7 +24,7 @@
 \DefineBibliographyStrings{german}{%
   andothers = {et al.},
 }
-\addbibresource{atlas.bib}
+%\addbibresource{atlas.bib}
 \setlength\bibitemsep{5pt}  % Abstand zwischen 2 Einträgen im Verzeichnis 
 
 % Zeilenabstand: 1.5
@@ -33,14 +33,13 @@
 \renewcommand{\arraystretch}{1.2}
 \urlstyle{same}
 
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Hier geht der Text los! %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
 %\bibliographystyle{plainnat}
 %\bibliographystyle{alpha}
-
+\pagenumbering{roman} 
 
 % Erzeugt das Deckblatt
 %   Bei zu langem Arbeitstitel müssen die vertikalen Abstände (\vspace)
@@ -95,11 +94,17 @@
 % Erzeugt das Inhaltsverzeichnis
 \tableofcontents 
 
-
-
-\restoregeometry
+% Erzeugt das Abbildungsverzeichnis
 \newpage
+\listoffigures
+\thispagestyle{empty} 
+
+
+\newpage
+\restoregeometry
 \pagenumbering{arabic}
+
+
 
 
 \section{Installation}
@@ -108,14 +113,14 @@ Dieses Kapitel beschreibt die Installation und Konfiguration des InDeKo.Navi Atl
 
 \subsection{Installationsschritte}
 \begin{enumerate}
-	\item XAMPP installieren \url{https://www.apachefriends.org/de/download.html} (v5.6.12 empfohlen. In nachfolgenden Versionen wurde MySQL durch MariaDB ersetzt. Test der Installation verlief auch mit XAMPP 5.6.30 erfolgreich, aber entwickelt und getestet wurde ausschließlich mit MySQL).
+	\item Vorausgesetzt werden mindestens ein Webserver der PHP unterstützt, PHP 5.2.5 sowie MySQL 5.0.15. Als Komplettpaket lässt sich z.B. \href{https://www.apachefriends.org/de/download.html}{XAMPP} installieren (v5.6.12 empfohlen. In nachfolgenden Versionen wurde MySQL durch MariaDB ersetzt. Test der Installation verlief auch mit XAMPP 5.6.30 erfolgreich, aber entwickelt und getestet wurde ausschließlich mit MySQL).
 	
 	\item GitHub-Projekt herunterladen (Branch KnowledgeMap) \url{https://github.com/KonstantinJanzen/Atlas/tree/KnowledgeMap/}.
 	Das Projekt enthält eine komplett konfigurierte Drupal 7.53 Installation.
 	
-	\item Inhalte des Atlas-Projekts in den Document Root (bzw. ein Unterverzeichnis, je nach gewünschter Konfiguration) des Webservers extrahieren (z.B. \lstinline|htdocs|, \lstinline|www|)
+	\item Inhalte des Atlas-Projekts in den Document Root (bzw. ein Unterverzeichnis, je nach gewünschter Konfiguration) des Webservers entpacken (z.B. \lstinline|htdocs|, \lstinline|www|)
 	
-	\item Drupal 7 Datenbank \lstinline|db_wissenskarte.sql| aus dem Projekt-Unterordner \lstinline|sql_dumps| importieren (hier beispielhaft für mysql user \enquote{root} ohne Passwort):
+	\item Drupal 7 Datenbank-Dump \lstinline|db_wissenskarte.sql| aus dem Projekt-Unterordner \lstinline|sql_dumps| importieren (hier beispielhaft für Datenbank Administrator \enquote{root} ohne Passwort):
 	\begin{enumerate}
 		\item \lstinline|mysqladmin -u root CREATE indeko|
 		
@@ -168,7 +173,7 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 		\caption[]{indeko7 Theme}
 		\label{fig:structuretheme}
 	\end{subfigure}
-	\caption[]{Grundstruktur}
+	\caption{Grundstruktur des Drupal-Projekts}
 	\label{fig:structure}
 \end{figure}
 
@@ -185,6 +190,7 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 	
 	\item \lstinline|sql_dumps|: Enthält den Datanbank-Dump des InDeKo.Navi Atlas Projekts  (\lstinline|db_wissenskarte.sql|).
 \end{itemize}
+
 
 
 \cref{fig:structuretheme} stellt die Hauptstruktur des indeko7 Themes dar (\lstinline|\sites\all\themes\adaptivetheme\indeko7|):
@@ -209,7 +215,7 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 \begin{figure}
 	\centering
 	\includegraphics[height=0.2\textheight]{images/structure_module}
-	\caption[]{Struktur Modul}
+	\caption{Grundstruktur Custom Modul}
 	\label{fig:structuremodule}
 \end{figure}
 
@@ -222,11 +228,11 @@ Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom
 	
 	\item \lstinline|translations|: Enthält eine Übersetzungs-Vorlage (.pot), die alle übersetzbaren Texte des Moduls enthält und eine deutsche Übersetzungsdatei (.de.po). Die Übersetzungen werden während der Installation des Moduls importiert oder können jederzeit manuell in Drupal importiert werden (\lstinline|admin/config/regional/translate/import|). Templates erstellt mit dem Translation template extractor Modul (\url{https://www.drupal.org/project/potx})
 	
-	\item \lstinline|.info|: 
+	\item \lstinline|.info|: Enthält Informationen über das Modul, die von Drupal benötigt werden (Abhängigkeiten, Menüs, \dots).
 	
 	\item \lstinline|.install|: Enthält Installations- und Deinstallationsroutinen (Variablen, Datenbank-Tabellen und Einträge).
 	
-	\item \lstinline|.module|: 
+	\item \lstinline|.module|: Enthält den PHP Quellcode des Moduls.
 	
 	\item \lstinline|README.txt|: Enthält die Beschreibung des Moduls, die Installationsanleitung inklusive Pflicht- und optionaler Module, sowie eine Beschreibung der Konfiguration (in Anlehnung an das Drupal README Template \url{https://www.drupal.org/node/2181737}).
 \end{itemize}
@@ -240,69 +246,173 @@ Dieser Abschnitt enthält Punkte, die bei der Überführung des InDeKo.Navi-Port
 \begin{itemize}
 	\item In der Entwicklung genutzte Benutzeraccounts deaktivieren, da die Passwörter unsicher sind (\lstinline|admin/people|): \enquote{admin}, \enquote{ruser}, \enquote{ruser2}, \enquote{ruser3}, \enquote{ruser4}, \enquote{ruser5}.
 	
-	\item Beispiel-Wissenskarten löschen, da nicht geprüft wurde, ob die verwendeten Bilder lizenzfrei sind (\lstinline|admin/content|).
+	\item Beispiel-Wissenskarten löschen, da nicht geprüft wurde, ob die verwendeten Bilder lizenzfrei sind (\lstinline|admin/content|, siehe \cref*{sub:license} \cref{sub:license_images}).
 	
 	\item Für den CSV-Export der Suchergebnisse, die aus dem Internet erreichbare URL des Apache Solr Servers eintragen (\lstinline|admin/config/morphsearch_csv_export|).
 	
 	\item Anzuzeigende Fehlermeldungen deaktivieren (\lstinline|admin/config/development/logging|).
+	
+	\item \dots \todo{was noch?}
 \end{itemize}
 
 
 
+\newpage
 \section{Funktionalität}\label{sec:function}
-Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalitäten. \cref{sub:custom_modules} beschäftigt sich mit den entstandenen Custom Modulen. \cref{sub:drupal_customizing} beschreibt Funktionalitäten, die ausschließlich durch den Einsatz von Contributed oder Drupal-Core Modulen umgesetzt wurden.
-
+Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalitäten. \cref{sub:custom_modules} beschäftigt sich mit den entstandenen Custom Modulen. \cref{sub:drupal_customizing} beschreibt Funktionalitäten, die ausschließlich durch den Einsatz von Contributed oder Drupal-Core Modulen und Customizing in Drupal umgesetzt wurden.
 
 
 \subsection{Entwickelte Custom Module}\label{sub:custom_modules}
-\begin{figure}[!h]
+
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{images/modules_knowledgemap}
-	\caption[]{Module Wissenskarte}
-	\label{fig:modules_knowledgemap}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/modules_knowledgemap}
+		\caption{Module Wissenskarte}
+		\label{fig:modules_knowledgemap}
+	\end{subfigure}
+	%
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/modules_search}
+		\caption{Module Suche}
+		\label{fig:modules_search}
+	\end{subfigure}
+	\begin{subfigure}{0.45\textwidth}
+		\centering	
+		\includegraphics[width=\linewidth]{images/modules_atlas}
+		\caption{Module Atlas}
+		\label{fig:modules_atlas}
+	\end{subfigure}
+	\caption{Entwickelte Custom Module}
+	\label{fig:modules_all}
 \end{figure}
-\begin{figure}[!h]
+
+Dieser Abschnitt beschreibt die im Laufe des Projekts entwickelten Drupal Custom Module. Diese Module wurden in die Bereiche Wissenskarte (siehe \cref{fig:modules_knowledgemap}), Suche (siehe \cref{fig:modules_search}), sowie Atlas für allgemeine Module (siehe \cref{fig:modules_atlas}) unterteilt.
+Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte \enquote{Vorausgesetzte Module}, \enquote{Empfohlene Module}, \enquote{Installation} und \enquote{Konfiguration} eingegangen. \enquote{Vorausgesetzte Module} listet alle Module, die zusätzlich zum entwickelten Modul installiert sein müssen, auf. Diese Informationen sind auch in den README.txt und den [Modul].info Dateien hinterlegt (somit wird man bei der Installation auch von Drupal auf fehlende vorausgesetzte Module hingewiesen). Der Punkt \enquote{Empfohlene Module} listet Module auf, die nicht zwingend benötigt werden, aber zum Nutzen des entwickelten Moduls beitragen. Unter \enquote{Installation} werden alle nötigen Installationsschritte aufgeführt und \enquote{Konfiguration} erläutert mögliche Einstellungen am Modul bzw. das Konfigurationsmenü.
+
+
+
+
+
+
+\newpage
+\subsubsection{form\_wissenskarte\_module}\label{subsub:form_wissenskarte_module}
+Dieses Modul ermöglicht es Benutzern verweissensitive Grafiken (\textit{image maps}) aus Bilddatein (.jpg, .png) zu erstellen. Hierzu wird bei der Installation ein neuer Inhaltstyp \enquote{Wissenskarte} erstellt. Dies ermöglicht es Bilder an das Drupal-Portal zu übertragen und auf diesen geometrische Bereiche einzuzeichnen. Diese Bereiche können mit Informationen aus dem Drupal-Portal angereichert und anderen Benutzern zugänglich gemacht werden.
+
+\begin{figure}[H]
 	\centering
-	\includegraphics[width=0.8\linewidth]{images/modules_search}
-	\caption[]{Module Suche}
-	\label{fig:modules_search}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/example_knowledgemap_upload}
+		\caption[]{Beispiel Wissenskarte hochladen}
+		\label{fig:example_wissenskarte_upload}
+	\end{subfigure}
+	%
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/example_knowledgemap_edit}
+		\caption[]{Beispiel Wissenskarte bearbeiten}
+		\label{fig:example_wissenskarte_edit}
+	\end{subfigure}
+	\caption{Custom Modul form\_wissenskarte\_module}
+	\label{fig:example_form_wissenskarte_module}
 \end{figure}
-\begin{figure}[!h]
-	\centering
-	\includegraphics[width=0.8\linewidth]{images/modules_atlas}
-	\caption[]{Module Atlas}
-	\label{fig:modules_atlas}
-\end{figure}
+
+\begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
+	\item Vorausgesetzte Module:
+	
+	morphsearch (siehe \cref{subsub:morphsearch}): Wird genutzt, um die Inhalte der gezeichneten Bereiche auszuwählen.
+	
+	
+	\item Empfohlene Module: 
+	
+	Entityreference (\url{https://www.drupal.org/project/entityreference}): Ist dieses Modul installiert werden alle Informationen, die den einzelnen Bereichen der Wissenskarte zugeordnet sind, auch mit der gesamten Wissenskarte verknüpft. Ansonsten lassen sich Wissenskarten nur über Titel und Beschreibung per Suche finden.
+	
+	Fivestar (\url{https://www.drupal.org/project/fivestar}): Ermöglicht es Benutzern Wissenskarten zu bewerten.
+	
+	
+	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
+	\begin{enumerate}
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (z.B. \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
+		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+	\end{enumerate}
+	
+	
+	\item Konfiguration:
+	
+	Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen.
+	Alle nötigen Einstellungen werden automatisch bei der Installation durchgeführt (.install Datei).
+
+	Dieses Modul identifiziert Wissenskarten durch, der Bilddatei zugeordnete, Bildstile (z.B. CSS-Klasse \enquote{image-style-wissenkarte}). Das verwendete Theme muss diese CSS-Klassen im HTML zur verfügung stellen (beim Drupal 7 Standard Theme ist dies nicht der Fall).
+\end{itemize}
 
 
-
-
-\subsubsection{form\_wissenskarte\_module}\label{subsub:km}
-form\_wissenskarte\_module
-Beschreibung, Installation, Konfiguration, vorausgesetzte Module? Sollte alles in den README.txt Dateien stehen.
 
 \subsubsection{comments\_shortener}\label{subsub:commentsshortener}
 comments\_shortener
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.50\linewidth]{images/example_commentsshortener}
-	\caption[]{Beispiel comments\_shortener}
+	\caption{Beispiel comments\_shortener}
 	\label{fig:example_commentshortener}
 \end{figure}
 
 
-
+\newpage
 \subsubsection{imagemap\_resizer}\label{subsub:imagemapresizer}
-imagemap\_resizer
+Dieses Modul sorgt dafür, dass \textit{image maps} \textit{responsive} werden. Die gezeichneten Konturen werden automatisch an die aktuelle Darstellungsgröße der \textit{image map} angepasst (siehe \cref{fig:example_imagemapresizer}).
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[width=0.70\linewidth]{images/config_imagemapresizer}
-	\caption[]{Konfigurationsmenü imagemap\_resizer}
-	\label{fig:config_imagemapresizer}
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/example_imagemapresizer}
+		\caption[]{Beispiel}
+		\label{fig:example_imagemapresizer}
+	\end{subfigure}
+	%
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/config_imagemapresizer}
+		\caption[]{Konfigurationsmenü}
+		\label{fig:config_imagemapresizer}
+	\end{subfigure}
+	\caption{Custom Modul imagemap\_resizer}
+	\label{fig:imagemap_resizer}
 \end{figure}
 
+\begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
+	\item Vorausgesetzte Module:
+	
+	Libraries (\url{https://www.drupal.org/project/libraries})
+	
+	
+	\item Empfohlene Module: 
+	
+	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Legt den Inhaltstyp \lstinline|wissenskarte| an und ermöglicht es \textit{image maps} selbst zu erzeugen.	
+	
+	\item Installation:
+	\begin{enumerate}
+		\item Place it in the custom modules directory for your site (vgl. \cref{fig:structureproject}, e.g. \lstinline|sites/all/modules/custom|)
+		\item Download the Image Map resize plugin from \url{https://github.com/davidjbradshaw/image-map-resizer}
+		\item Extract the \lstinline|imageMapResizer.min.js| file into the \lstinline|sites/all/libraries/image-map-resizer| directory.
+		\item Enable it on the \lstinline|admin/modules| page.
+		\item Set the content type that contains image maps and should be resized on the configuration page \lstinline|admin/config/imagemap_resizer| (siehe \cref{fig:config_imagemapresizer}).
+	\end{enumerate}
+	
+	
+	\item Konfiguration:
+	
+	\cref{fig:config_imagemapresizer} stellt das Konfigurationsmenü dar. Im ersten Abschnitt lässt sich der Status der externen JavaScript Bibliothek ablesen. In dem darauffolgenden Textfeld wird der Maschinenname des Inhaltstyps angegeben der Wissenskarten enthält. Die für die Skalierung von Wissenskarten benötigten JavaScript Dateien werden nur auf Seiten des angegebenen Inhaltstyps geladen. Als Standardwert ist der von dem Custom Modul form\_wissenskarte\_module (\cref{subsub:form_wissenskarte_module}) erstellte Inhaltstyp \lstinline|wissenskarte| definiert.
+	
+\end{itemize}
 
 
+
+\newpage
 \subsubsection{jq\_maphilight}\label{subsub:maphilight}
 jq\_maphilight
 \begin{figure}[H]
@@ -320,13 +430,28 @@ jq\_maphilight
 		\caption[]{Styling Einstellungen}
 		\label{fig:config_maphilight2}
 	\end{subfigure}
-	\caption[]{Konfigurationsmenü jq\_maphilight}
+	\caption{Konfigurationsmenü jq\_maphilight}
 	\label{fig:config_maphilight}
 \end{figure}
 
+\begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
+	\item Vorausgesetzte Module:
+	
+	\item Empfohlene Module:
+	
+	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
+	\begin{enumerate}
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (z.B. \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
+		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+	\end{enumerate}
+	
+	\item Konfiguration:
+	
+\end{itemize}
 
 
 
+\newpage
 \subsubsection{morphsearch}\label{subsub:morphsearch}
 morphsearch
 \begin{figure}[H]
@@ -344,7 +469,7 @@ morphsearch
 		\caption[]{Beispiel}
 		\label{fig:example_morphsearch}
 	\end{subfigure}
-	\caption[]{morphsearch}
+	\caption{Custom Modul morphsearch}
 	\label{fig:morphsearch}
 \end{figure}
 
@@ -355,22 +480,51 @@ morphsearch\_csv\_export
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.70\linewidth]{images/config_searchcsv}
-	\caption[]{Konfigurationsmenü morphsearch\_csv\_export}
+	\caption{Konfigurationsmenü morphsearch\_csv\_export}
 	\label{fig:config_search}
 \end{figure}
 
 
 
+\newpage
 \subsubsection{morphsearch\_sort}\label{subsub:morphsearchsort}
-morphsearch\_sort
+Dieses Modul fügt der Drupal-Installation einen Block hinzu, der es erlaubt Apache Solr Suchergebnisse zu sortieren. Es lässt sich nach Relevanz, sowie Datum und Titel (jeweils auf- und absteigend) sortieren (siehe \cref{fig:example_morphsearchsort}).
+
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.10\textheight]{images/example_morphsearchsort}
-	\caption[]{Konfigurationsmenü morphsearch\_sort}
-	\label{fig:morphsearchsort}
+	\caption{Custom Modul morphsearch\_sort Beispiel}
+	\label{fig:example_morphsearchsort}
 \end{figure}
 
+\begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
+	\item Vorausgesetzte Module:
+	
+	Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
+	
+	
+	\item Empfohlene Module:
+	
+	morphsearch (siehe \cref{subsub:morphsearch}): Ermöglicht es die zu sortierenden Suchergebnisse einzuschränken.
+	
+	
+	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
+	\begin{enumerate}
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (z.B. \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
+		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+	\end{enumerate}
+	
+	\item Konfiguration:
+	
+	Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen.
+	
+	Das Aussehen des Sortierblocks wird im Theme definiert (z.B. \lstinline|drupal.atlas.css|, siehe \cref{sub:strukture_project}).
+	
+\end{itemize}
 
+
+\newpage
 \subsubsection{node\_creation\_links}\label{subsub:nodecreationlinks}
 node\_creation\_links
 \begin{figure}[H]
@@ -388,7 +542,7 @@ node\_creation\_links
 		\caption[]{Beispiel}
 		\label{fig:example_nodecreationlinks}
 	\end{subfigure}
-	\caption[]{node\_creation\_links}
+	\caption{Custom Modul node\_creation\_links}
 	\label{fig:nodecreationlinks}
 \end{figure}
 
@@ -403,7 +557,7 @@ slider\_tooltip
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.10\textheight]{images/example_slidertooltip}
-	\caption[]{slider\_tooltip}
+	\caption{Custom Modul slider\_tooltip}
 	\label{fig:example_slidertooltip}
 \end{figure}
 
@@ -413,11 +567,14 @@ user\_profile\_elements\_overview
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\linewidth]{images/example_userprofile}
-	\caption[]{user\_profile\_elements\_overview}
+	\caption{Custom Modul user\_profile\_elements\_overview}
 	\label{fig:example_userprofile}
 \end{figure}
 
 
+
+
+\newpage
 \subsection{Drupal Customizing}\label{sub:drupal_customizing}
 
 
@@ -426,7 +583,7 @@ Darstellung der Suchergebnisse
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.20\textheight]{images/example_searchresult}
-	\caption[]{Darstellung der Suchergebnisse}
+	\caption{Darstellung der Suchergebnisse}
 	\label{fig:example_searchresult}
 \end{figure}
 
@@ -436,7 +593,7 @@ Slider mit Wissenskarten als Startseite
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.20\textheight]{images/example_slider}
-	\caption[]{Slider mit Wissenskarten als Startseite}
+	\caption{Slider mit Wissenskarten als Startseite}
 	\label{fig:example_slider}
 \end{figure}
 
@@ -445,16 +602,18 @@ CSS / Design / ???
 
 
 
+
+\newpage
 \section{Fehler und deren Lösungen}\label{sec:problems}
 
-\begin{itemize}
-	\item \textit{ERROR 2006 (HY000) at line [...]: MySQL server has gone away}
+\begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
+	\item \textit{ERROR 2006 (HY000) at line [\dots]: MySQL server has gone away}
 	
 	MySQL Konfiguration (my.ini | XAMPP -> MySQL -> Config)
 	\textbf{max\_allowed\_packet} erhöhen (z.B. auf 32M).
 	
 	
-	\item \textit{Fatal error: Allowed memory size of [...] bytes exhausted (tried to allocate [...] bytes) in [...]}
+	\item \textit{Fatal error: Allowed memory size of [\dots] bytes exhausted (tried to allocate [\dots] bytes) in [\dots]}
 	
 	PHP Konfiguration (php.ini | XAMPP -> Apache -> Config)
 	\textbf{memory\_limit} hochsetzen .
@@ -476,21 +635,81 @@ CSS / Design / ???
 	Drupal Konfiguration zur settings.php \textbf{ini\_set('allow\_url\_fopen', 1);} hinzufügen.
 	
 	
-	\item
-		
+	\item \textit{User Warning: The following module is missing from the file system: [\dots]}
+
+	Fehler wurde nach Upgrade auf die neuere Drupal Version angezeigt, siehe \url{https://www.drupal.org/node/2487215}.
+	Betroffene Module neu zu installieren / deinstallieren oder extra Module, die den Fehler beheben sollten halfen nicht. Nur manueller Eingriff in die Datenbank führte zum Erfolg: \lstinline| "DELETE from system where name = 'old_module1' AND type = 'module';"|
 	
+	\item \dots \todo{was noch?}
 \end{itemize}
+
+
+
+\section{Verwendete Ressourcen und deren Lizenzen}\label{sub:license}
+Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem InDeKo.Navi-Portal im Laufe des Projekts hinzugefügt wurden. Es dient als Übersicht was, im Vergleich zum Ursprungsprojekt, neu hinzugekommen ist und zur Versicherung, dass immer noch alles Open Source ist.
+
+\begin{enumerate}
+	\item Drupal Contrib Module (alle \textbf{GPLv2})
+	\begin{itemize}
+		\item Administration menu (\url{https://www.drupal.org/project/admin_menu}) 
+		\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
+		\item Apache Solr Real-Time (\url{https://www.drupal.org/project/apachesolr_realtime})
+		\item Field Group (\url{https://www.drupal.org/project/field_group})
+		\item Fivestar (\url{https://www.drupal.org/project/fivestar})
+		\item Halfstar (\url{https://www.drupal.org/project/halfstar})
+		\item Voting API (\url{https://www.drupal.org/project/votingapi})
+		\item Bibliography Module (\url{https://www.drupal.org/project/biblio})
+		\item Chosen (\url{https://www.drupal.org/project/chosen})
+		\item Conditional Fields (\url{https://www.drupal.org/project/conditional_fields})
+		\item Entity Connect (\url{https://www.drupal.org/project/entityconnect}) (Problem mit Chosen, Links für neue Inhalte werden bei multiselect nicht hinter den chosen Elementen angeordnet. \textbf{Provisorischer Fix in \enquote{entityconnect.js} vom Entity Connect Modul})
+		\item Field Validation (\url{https://www.drupal.org/project/field_validation})
+		\item Display Suite (\url{https://www.drupal.org/project/ds})
+		\item jQuery Autosize (\url{https://www.drupal.org/project/jquery_autosize}) \textbf{Fixed Contrib Modul: Library pattern, Drupal behaviours mussten angepasst werden}
+		\item Corresponding Entity References (\url{https://www.drupal.org/project/cer}) (alpha version)  \todo{cer und elements nicht mehr benötigt?}
+		\item Elements (\url{https://www.drupal.org/project/elements})
+	\end{itemize}
+
+	\item JavaScript Bibliotheken
+	\begin{itemize}
+		\item imgmap (\url{https://github.com/maschek/imgmap})  \textbf{GPLv2}
+		\item Maphilight (\url{https://github.com/kemayo/maphilight}) \textbf{MIT}
+		\item Image Map Resize (\url{https://github.com/davidjbradshaw/image-map-resizer}) \textbf{MIT}
+		\item qTip\textsuperscript{2} (\url{http://qtip2.com/}) \textbf{GPLv2 \& MIT}
+		\item Chosen (\url{https://harvesthq.github.io/chosen/}) \textbf{MIT}
+		\item Autosize (\url{http://www.jacklmoore.com/autosize/}) \textbf{MIT}
+	\end{itemize}
+
+	\item Bilder, Grafiken, Symbole, Sounds, \dots\label{sub:license_images}
+	\begin{itemize}
+		\item Apache Solr (\url{http://lucene.apache.org/solr/}) \textbf{Apache License 2.0}
+		\item Font Awesome Fonts (\url{http://fontawesome.io/license/}) \textbf{SIL OFL 1.1}
+		\item Font Awesome CSS (\url{http://fontawesome.io/license/}) \textbf{MIT}
+		\item Alle Bilder für Beispielwissenskarten \textcolor{red}{\textbf{Lizenz nicht geprüft}}		
+	\end{itemize} 
+
+	\item Erweiterungen indeko7-Theme (vgl. \cref{fig:structuretheme})
+	\begin{itemize}
+		\item \lstinline|global.atlas.css| enthält alle Design Anpassungen am Portal durch das Atlas-Projekt
+		\item Unterordner \lstinline|images/atlas| enthält alle für das Atlas-Projekt erstellten svg Grafiken (von Carlo Frisch erstellt, aus E-Mail vom 5.12.2016)
+		\item \lstinline|js/node-wissenskarte-comments-style.js|, \lstinline|template/comment--node-wissenskarte.tpl.php| und \lstinline|template.php|
+	\end{itemize}
+
+	\item Entwickelte Drupal-Custom-Module (siehe \cref{sub:custom_modules})
+	\begin{itemize}
+		\item form\_wissenskarte\_module, comments\_shortener, imagemap\_resizer, jq\_maphilight, morphsearch, morphsearch\_csv\_export, morphsearch\_sort, node\_creation\_links, publication\_form, slider\_tooltip, user\_profile\_elements\_overview
+	\end{itemize}
+\end{enumerate}
+
 
 
 \section{Offene Punkte}
 
 
-\section{Glossar}\label{sec:glossary}
 
 
+\section{Glossar}
 
-
-\newpage
-\printbibliography
+%\newpage
+%\printbibliography
 %\bibliography{atlas}
 \end{document}
