@@ -1,1 +1,0 @@
-jQuery('map').imageMapResize();

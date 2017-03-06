@@ -9,8 +9,15 @@ REQUIREMENTS
 ------------
 
 This module requires the following modules:
- * Apache Solr Search (https://www.drupal.org/project/apachesolr): This module uses the Apache Solr search capabilities
-     to export search results as a csv file.
+ * Apache Solr Search (https://www.drupal.org/project/apachesolr): This module provides the search results
+    and capabilities to sort.
+
+
+RECOMMENDED MODULES
+-------------------
+
+ * Morphsearch custom module: This modules helps to filter the search results before they are sorted.
+
 
 
 INSTALLATION

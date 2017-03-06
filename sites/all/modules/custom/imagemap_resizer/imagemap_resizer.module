@@ -40,7 +40,9 @@ function imagemap_resizer_available() {
  */
 function imagemap_resizer_preprocess_page(&$vars) {
 	
-  if (imagemap_resizer_available() !== FALSE && isset($vars['node']) && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'wissenskarte')) {
+  if (imagemap_resizer_available() !== FALSE
+      && isset($vars['node'])
+      && $vars['node']->type == variable_get('imagemap_resizer_content_type', 'wissenskarte')) {
     $pathEdit = 'node/*/edit';
     $pathClone = 'node/*/clone/confirm';
     $isPathEdit = drupal_match_path(current_path(), $pathEdit);
@@ -52,7 +54,8 @@ function imagemap_resizer_preprocess_page(&$vars) {
         drupal_add_library('jquery_plugin', 'metadata');
       }
       drupal_add_library('imagemap_resizer', 'image-map-resizer');
-      drupal_add_js(drupal_get_path('module', 'imagemap_resizer') . '/imagemap_resizer_load.js', array('scope' => 'footer', 'weight' => 90));
+      drupal_add_js(drupal_get_path('module', 'imagemap_resizer') . '/js/imagemap_resizer_load.js',
+        array('scope' => 'footer', 'weight' => 90));
     }
   }
 }
