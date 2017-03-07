@@ -17,7 +17,7 @@
 \newcommand{\version}{Version 1.0}
 \newcommand{\veranstaltung}{IT-Studienprojekt Master SoSe 2016 }
 
-\include{preamble}
+\input{preamble}
 \selectlanguage{ngerman}
 
 \newcommand*{\quelle}[1]{\par\raggedleft\scriptsize Quelle:~#1}
@@ -33,10 +33,48 @@
 \renewcommand{\arraystretch}{1.2}
 \urlstyle{same}
 
+% hier wird ein neues Kommando definiert 
+\newcommand{\zB}{z.\,B. }
+\newcommand{\noconfig}{Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen (deutsche Übersetzung sowie Übersetzungstemplate liegen bei).}
+\newcommand{\standardinstall}{Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
+	\begin{enumerate}
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
+		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+	\end{enumerate}}
+
+
+%%%%% Einträge Glossar %%%%%
+\newglossaryentry{imagemap}
+{
+	name=image map,
+	plural=image maps,
+	description={siehe \gls{verweissensitivegrafik}}
+}
+\newglossaryentry{verweissensitivegrafik}
+{
+	name=Verweissensitive Grafik,
+	plural=Verweissensitive Grafiken,
+	description={Verweis-sensitive Grafiken (englisch \textit{\glspl{imagemap}}) sind Grafiken, in denen der Anwender mit der Maus auf ein Detail klicken kann. Daraufhin wird ein Verweis ausgeführt. Auf diese Weise kann der Anwender in einigen Fällen wesentlich intuitiver und schneller zu Information gelangen als durch lange verbale Verweislisten.}
+}
+\newglossaryentry{wissenskarte}
+{
+	name=Wissenskarte,
+	plural=Wissenskarten,
+	description={(englisch \textit{knowledge map}) Visualisierung von Wissen}
+}
+
+
+
+%%%%%% Einträge Abkürzungsverzeichnis  %%%%%
+\newacronym{indeko}{InDeKo}{Integratives demografiesensibles Kompetenzmanagement}
+
+
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 %%%%% Hier geht der Text los! %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
+	
+	
 %\bibliographystyle{plainnat}
 %\bibliographystyle{alpha}
 \pagenumbering{roman} 
@@ -113,12 +151,12 @@ Dieses Kapitel beschreibt die Installation und Konfiguration des InDeKo.Navi Atl
 
 \subsection{Installationsschritte}
 \begin{enumerate}
-	\item Vorausgesetzt werden mindestens ein Webserver der PHP unterstützt, PHP 5.2.5 sowie MySQL 5.0.15. Als Komplettpaket lässt sich z.B. \href{https://www.apachefriends.org/de/download.html}{XAMPP} installieren (v5.6.12 empfohlen. In nachfolgenden Versionen wurde MySQL durch MariaDB ersetzt. Test der Installation verlief auch mit XAMPP 5.6.30 erfolgreich, aber entwickelt und getestet wurde ausschließlich mit MySQL).
+	\item Vorausgesetzt werden mindestens ein Webserver der PHP unterstützt, PHP 5.2.5 sowie MySQL 5.0.15. Als Komplettpaket lässt sich \zB \href{https://www.apachefriends.org/de/download.html}{XAMPP} installieren (v5.6.12 empfohlen. In nachfolgenden Versionen wurde MySQL durch MariaDB ersetzt. Test der Installation verlief auch mit XAMPP 5.6.30 erfolgreich, aber entwickelt und getestet wurde ausschließlich mit MySQL).
 	
 	\item GitHub-Projekt herunterladen (Branch KnowledgeMap) \url{https://github.com/KonstantinJanzen/Atlas/tree/KnowledgeMap/}.
 	Das Projekt enthält eine komplett konfigurierte Drupal 7.53 Installation.
 	
-	\item Inhalte des Atlas-Projekts in den Document Root (bzw. ein Unterverzeichnis, je nach gewünschter Konfiguration) des Webservers entpacken (z.B. \lstinline|htdocs|, \lstinline|www|)
+	\item Inhalte des Atlas-Projekts in den Document Root (bzw. ein Unterverzeichnis, je nach gewünschter Konfiguration) des Webservers entpacken (\zB \lstinline|htdocs|, \lstinline|www|)
 	
 	\item Drupal 7 Datenbank-Dump \lstinline|db_wissenskarte.sql| aus dem Projekt-Unterordner \lstinline|sql_dumps| importieren (hier beispielhaft für Datenbank Administrator \enquote{root} ohne Passwort):
 	\begin{enumerate}
@@ -133,7 +171,7 @@ Dieses Kapitel beschreibt die Installation und Konfiguration des InDeKo.Navi Atl
 		
 		\item Aus dem Projekt-Unterordner \lstinline|solr_config| den Ordner \lstinline|drupal| nach \lstinline|solr-5.5.2\server\solr\| kopieren.
 		
-		\item Solr Server starten (z.B. \lstinline|solr-5.5.2\bin\solr start|).
+		\item Solr Server starten (\zB \lstinline|solr-5.5.2\bin\solr start|).
 		\item Der Apache Solr Server is lokal unter \url{http://localhost:8983/solr} zu erreichen.
 	\end{enumerate}
 	
@@ -180,7 +218,7 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 
 \cref{fig:structureproject} stellt die grundsätzliche Struktur des Drupal-Projekts dar:
 \begin{itemize}
-	\item \lstinline|libraries|: Enthält zusätzlich installierte externe Javascript Bibliotheken (z.B. Chosen, qTip2).
+	\item \lstinline|libraries|: Enthält zusätzlich installierte externe Javascript Bibliotheken (\zB\ Chosen, qTip2).
 	
 	\item \lstinline|modules|: Der Unterordner \lstinline|custom| enthält alle entwickelten Module.
 	
@@ -197,7 +235,7 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 \begin{itemize}
 	\item \lstinline|css|: Enthält .css Dateien, die das grundlegende Design betreffen. Alle das Portal betreffenden Änderungen sind in der Datei \lstinline|global.atlas.css| zusammengefasst.
 	
-	\item \lstinline|images|: Der Unterordner \lstinline|atlas| enthält Bilddateien, die speziell für das Atlas-Projekt entworfen wurden und in den .css Dateien verwendet werden (z.B. spezifische Icons für Inhaltstypen oder Aktionen).
+	\item \lstinline|images|: Der Unterordner \lstinline|atlas| enthält Bilddateien, die speziell für das Atlas-Projekt entworfen wurden und in den .css Dateien verwendet werden (\zB spezifische Icons für Inhaltstypen oder Aktionen).
 	
 	\item \lstinline|js|: Enthält .js Dateien, die ausschließlich das Design betreffen. 
 	
@@ -269,20 +307,20 @@ Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalität
 	\centering
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/modules_knowledgemap}
+		\includegraphics[width=0.95\linewidth]{images/modules_knowledgemap}
 		\caption{Module Wissenskarte}
 		\label{fig:modules_knowledgemap}
 	\end{subfigure}
 	%
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/modules_search}
+		\includegraphics[width=0.95\linewidth]{images/modules_search}
 		\caption{Module Suche}
 		\label{fig:modules_search}
 	\end{subfigure}
 	\begin{subfigure}{0.45\textwidth}
 		\centering	
-		\includegraphics[width=\linewidth]{images/modules_atlas}
+		\includegraphics[width=0.95\linewidth]{images/modules_atlas}
 		\caption{Module Atlas}
 		\label{fig:modules_atlas}
 	\end{subfigure}
@@ -291,7 +329,7 @@ Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalität
 \end{figure}
 
 Dieser Abschnitt beschreibt die im Laufe des Projekts entwickelten Drupal Custom Module. Diese Module wurden in die Bereiche Wissenskarte (siehe \cref{fig:modules_knowledgemap}), Suche (siehe \cref{fig:modules_search}), sowie Atlas für allgemeine Module (siehe \cref{fig:modules_atlas}) unterteilt.
-Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte \enquote{Vorausgesetzte Module}, \enquote{Empfohlene Module}, \enquote{Installation} und \enquote{Konfiguration} eingegangen. \enquote{Vorausgesetzte Module} listet alle Module, die zusätzlich zum entwickelten Modul installiert sein müssen, auf. Diese Informationen sind auch in den README.txt und den [Modul].info Dateien hinterlegt (somit wird man bei der Installation auch von Drupal auf fehlende vorausgesetzte Module hingewiesen). Der Punkt \enquote{Empfohlene Module} listet Module auf, die nicht zwingend benötigt werden, aber zum Nutzen des entwickelten Moduls beitragen. Unter \enquote{Installation} werden alle nötigen Installationsschritte aufgeführt und \enquote{Konfiguration} erläutert mögliche Einstellungen am Modul bzw. das Konfigurationsmenü.
+Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte \enquote{Vorausgesetzte Module}, \enquote{Empfohlene Module}, \enquote{Installation} und \enquote{Konfiguration} eingegangen. \enquote{Vorausgesetzte Module} listet alle Module, die zusätzlich zum entwickelten Modul installiert sein müssen, auf. Diese Informationen sind auch in den README.txt und den [Modul].info Dateien hinterlegt (somit wird man bei der Installation auch von Drupal auf fehlende vorausgesetzte Module hingewiesen). Der Punkt \enquote{Empfohlene Module} listet Module auf, die nicht zwingend benötigt werden, aber zum Nutzen des entwickelten Moduls beitragen. Unter \enquote{Installation} werden alle nötigen Installationsschritte aufgeführt und \enquote{Konfiguration} erläutert mögliche Einstellungen am Modul bzw. das Konfigurationsmenü. Alle Texte der Module sind englisch. Jedem Modul liegen im Unterordner \enquote{translations} jeweils ein Übersetzungstemplate (mit allen übersetzbaren Textstellen) sowie eine deutsche Übersetzung bei. Diese ermöglichen bei aktiviertem Drupal-Core Modul \enquote{locale} die Konfiguration der Sprache (\lstinline|admin/config/regional/translate|, importieren oder Textstellen manuell übersetzen).
 
 
 
@@ -300,20 +338,20 @@ Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte 
 
 \newpage
 \subsubsection{form\_wissenskarte\_module}\label{subsub:form_wissenskarte_module}
-Dieses Modul ermöglicht es Benutzern verweissensitive Grafiken (\textit{image maps}) aus Bilddatein (.jpg, .png) zu erstellen. Hierzu wird bei der Installation ein neuer Inhaltstyp \enquote{Wissenskarte} erstellt. Dies ermöglicht es Bilder an das Drupal-Portal zu übertragen und auf diesen geometrische Bereiche einzuzeichnen. Diese Bereiche können mit Informationen aus dem Drupal-Portal angereichert und anderen Benutzern zugänglich gemacht werden.
+Dieses Modul ermöglicht es Benutzern \glspl{verweissensitivegrafik} (engl. \glspl{imagemap}) aus Bilddatein (.jpg, .png) zu erstellen. Hierzu wird bei der Installation ein neuer Inhaltstyp \enquote{Wissenskarte} erstellt. Dies ermöglicht es Bilder an das Drupal-Portal zu übertragen und auf diesen geometrische Bereiche einzuzeichnen. Diese Bereiche können mit Informationen aus dem Drupal-Portal angereichert und anderen Benutzern zugänglich gemacht werden.
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/example_knowledgemap_upload}
+		\includegraphics[width=0.95\linewidth]{images/example_knowledgemap_upload}
 		\caption[]{Beispiel Wissenskarte hochladen}
 		\label{fig:example_wissenskarte_upload}
 	\end{subfigure}
 	%
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/example_knowledgemap_edit}
+		\includegraphics[width=0.95\linewidth]{images/example_knowledgemap_edit}
 		\caption[]{Beispiel Wissenskarte bearbeiten}
 		\label{fig:example_wissenskarte_edit}
 	\end{subfigure}
@@ -334,49 +372,87 @@ Dieses Modul ermöglicht es Benutzern verweissensitive Grafiken (\textit{image m
 	Fivestar (\url{https://www.drupal.org/project/fivestar}): Ermöglicht es Benutzern Wissenskarten zu bewerten.
 	
 	
-	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
-	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (z.B. \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
-	\end{enumerate}
+	\item Installation: \standardinstall
 	
 	
 	\item Konfiguration:
 	
-	Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen.
+	\noconfig
+	
 	Alle nötigen Einstellungen werden automatisch bei der Installation durchgeführt (.install Datei).
 
-	Dieses Modul identifiziert Wissenskarten durch, der Bilddatei zugeordnete, Bildstile (z.B. CSS-Klasse \enquote{image-style-wissenkarte}). Das verwendete Theme muss diese CSS-Klassen im HTML zur verfügung stellen (beim Drupal 7 Standard Theme ist dies nicht der Fall).
+	Dieses Modul identifiziert Wissenskarten durch, der Bilddatei zugeordnete, Bildstile (\zB CSS-Klasse \enquote{image-style-wissenkarte}). Das verwendete Theme muss diese CSS-Klassen im HTML zur verfügung stellen (beim Drupal 7 Standard Theme ist dies nicht der Fall).
 \end{itemize}
 
 
 
 \subsubsection{comments\_shortener}\label{subsub:commentsshortener}
-comments\_shortener
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=0.50\linewidth]{images/example_commentsshortener}
-	\caption{Beispiel comments\_shortener}
-	\label{fig:example_commentshortener}
-\end{figure}
+Dieses Modul passt das Standard-Verhalten der Drupal Kommentarsektion an:
 
-
-\newpage
-\subsubsection{imagemap\_resizer}\label{subsub:imagemapresizer}
-Dieses Modul sorgt dafür, dass \textit{image maps} \textit{responsive} werden. Die gezeichneten Konturen werden automatisch an die aktuelle Darstellungsgröße der \textit{image map} angepasst (siehe \cref{fig:example_imagemapresizer}).
+\begin{itemize}
+	\item Kommentare werden auf maximal 50 Zeichen gekürzt. Gekürzte Kommentare werden durch Auslassungspunkte am Ende kenntlich gemacht (siehe \cref{fig:example_commentshortener_short}). Ein Klick auf die Auslassungspunkte zeigt den vollständigen Kommentar an (siehe \cref{fig:example_commentshortener_full}).
+	
+	\item Neueste Kommentare werden zuerst angezeigt (dies ließ sich nicht über Drupal-Core Einstellungen konfigurieren).
+	
+	\item Nachdem ein Kommentar abgegeben wurde wird der Benutzer auf die erste Kommentarseite zurückgeleitet (dies ließ sich nicht über Drupal-Core Einstellungen konfigurieren).
+\end{itemize}
 
 \begin{figure}[H]
 	\centering
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/example_imagemapresizer}
+		\includegraphics[width=0.95\linewidth]{images/example_commentsshortener}
+		\caption[]{Beispiel gekürzte Darstellung}
+		\label{fig:example_commentshortener_short}
+	\end{subfigure}
+	%
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{images/example_commentsshortener_full}
+		\caption[]{Beispiel Volldarstellung}
+		\label{fig:example_commentshortener_full}
+	\end{subfigure}
+	\caption{Custom Modul comments\_shortener}
+	\label{fig:example_commentsshortener}
+\end{figure}
+
+\begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
+	\item Vorausgesetzte Module:
+	
+	keine
+	
+	
+	\item Empfohlene Module:
+	
+	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Das comments\_shortener Modul ist auf die Anforderungen von Wissenskarten zugeschnitten, funktioniert aber auch ohne dieses Modul für jede Art von Kommentar.	
+	
+	
+	\item Installation: \standardinstall
+	
+	\item Konfiguration:
+	
+	\noconfig
+	
+\end{itemize}
+
+
+
+\newpage
+\subsubsection{imagemap\_resizer}\label{subsub:imagemapresizer}
+Dieses Modul sorgt dafür, dass \textit{\glspl{imagemap}} \textit{responsive} werden. Die gezeichneten Konturen werden automatisch an die aktuelle Darstellungsgröße der \textit{\gls{imagemap}} angepasst (siehe \cref{fig:example_imagemapresizer}).
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}{0.45\textwidth}
+		\centering
+		\includegraphics[width=0.95\linewidth]{images/example_imagemapresizer}
 		\caption[]{Beispiel}
 		\label{fig:example_imagemapresizer}
 	\end{subfigure}
 	%
 	\begin{subfigure}{0.45\textwidth}
 		\centering
-		\includegraphics[width=\linewidth]{images/config_imagemapresizer}
+		\includegraphics[width=0.95\linewidth]{images/config_imagemapresizer}
 		\caption[]{Konfigurationsmenü}
 		\label{fig:config_imagemapresizer}
 	\end{subfigure}
@@ -392,7 +468,7 @@ Dieses Modul sorgt dafür, dass \textit{image maps} \textit{responsive} werden. 
 	
 	\item Empfohlene Module: 
 	
-	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Legt den Inhaltstyp \lstinline|wissenskarte| an und ermöglicht es \textit{image maps} selbst zu erzeugen.	
+	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Legt den Inhaltstyp \lstinline|wissenskarte| an und ermöglicht es \textit{\glspl{imagemap}} selbst zu erzeugen.	
 	
 	\item Installation:
 	\begin{enumerate}
@@ -400,7 +476,7 @@ Dieses Modul sorgt dafür, dass \textit{image maps} \textit{responsive} werden. 
 		\item Download the Image Map resize plugin from \url{https://github.com/davidjbradshaw/image-map-resizer}
 		\item Extract the \lstinline|imageMapResizer.min.js| file into the \lstinline|sites/all/libraries/image-map-resizer| directory.
 		\item Enable it on the \lstinline|admin/modules| page.
-		\item Set the content type that contains image maps and should be resized on the configuration page \lstinline|admin/config/imagemap_resizer| (siehe \cref{fig:config_imagemapresizer}).
+		\item Set the content type that contains \textit{\glspl{imagemap}} and should be resized on the configuration page \lstinline|admin/config/imagemap_resizer| (siehe \cref{fig:config_imagemapresizer}).
 	\end{enumerate}
 	
 	
@@ -439,11 +515,7 @@ jq\_maphilight
 	
 	\item Empfohlene Module:
 	
-	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
-	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (z.B. \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
-	\end{enumerate}
+	\item Installation: \standardinstall
 	
 	\item Konfiguration:
 	
@@ -509,17 +581,13 @@ Dieses Modul fügt der Drupal-Installation einen Block hinzu, der es erlaubt Apa
 	morphsearch (siehe \cref{subsub:morphsearch}): Ermöglicht es die zu sortierenden Suchergebnisse einzuschränken.
 	
 	
-	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
-	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (z.B. \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
-	\end{enumerate}
+	\item Installation: \standardinstall
 	
 	\item Konfiguration:
 	
-	Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen.
+	\noconfig
 	
-	Das Aussehen des Sortierblocks wird im Theme definiert (z.B. \lstinline|drupal.atlas.css|, siehe \cref{sub:strukture_project}).
+	Das Aussehen des Sortierblocks wird per CSS im Theme definiert (\zB \lstinline|drupal.atlas.css|, siehe \cref{sub:strukture_project}).
 	
 \end{itemize}
 
@@ -610,7 +678,7 @@ CSS / Design / ???
 	\item \textit{ERROR 2006 (HY000) at line [\dots]: MySQL server has gone away}
 	
 	MySQL Konfiguration (my.ini | XAMPP -> MySQL -> Config)
-	\textbf{max\_allowed\_packet} erhöhen (z.B. auf 32M).
+	\textbf{max\_allowed\_packet} erhöhen (\zB auf \enquote{32M}).
 	
 	
 	\item \textit{Fatal error: Allowed memory size of [\dots] bytes exhausted (tried to allocate [\dots] bytes) in [\dots]}
@@ -701,13 +769,15 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem InDeKo.Nav
 \end{enumerate}
 
 
-
 \section{Offene Punkte}
 
 
+\glsaddall
+% Abkürzungsverzeichnis
+\printglossary[type=\acronymtype,title = Abkürzungsverzeichnis]
 
-
-\section{Glossar}
+% Glossar
+\printglossary
 
 %\newpage
 %\printbibliography

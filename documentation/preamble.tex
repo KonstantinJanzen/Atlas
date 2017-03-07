@@ -235,4 +235,14 @@ morekeywords={}
 
 \usepackage{float}
 \usepackage{enumitem}
-%\usepackage[toc]{glossaries}
+
+% Abbildungs- / Tabellenverzeichnis mit vorangestelltem Abb. / Tab. 
+\usepackage{tocloft} 
+\renewcommand{\cfttabpresnum}{Tab. } 
+\renewcommand{\cftfigpresnum}{Abb. } 
+\settowidth{\cfttabnumwidth}{Tab. 10\quad} 
+\settowidth{\cftfignumwidth}{Abb. 10\quad} 
+
+% Abkürzungsverzeichnis und Glossar
+\usepackage[acronyms,automake,toc]{glossaries}
+\makeglossaries
