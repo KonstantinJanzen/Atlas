@@ -15,7 +15,7 @@
 \newcommand{\universitaet}{Universität Hildesheim \textbullet  Universitätsplatz 1 \textbullet  D-31134 Hildesheim}
 \newcommand{\adresse}{\arbeitsgruppe  \textbullet  \institut \\ \universitaet}
 \newcommand{\version}{Version 1.0}
-\newcommand{\veranstaltung}{IT-Studienprojekt Master SoSe 2016 }
+\newcommand{\veranstaltung}{IT-Studienprojekt Master \\SoSe 2016 - WiSe 2016/2017}
 
 \input{preamble}
 \selectlanguage{ngerman}
@@ -25,7 +25,7 @@
   andothers = {et al.},
 }
 %\addbibresource{atlas.bib}
-\setlength\bibitemsep{5pt}  % Abstand zwischen 2 Einträgen im Verzeichnis 
+\setlength\bibitemsep{5pt}  % Abstand zwischen 2 Einträgen im Verzeichnis
 
 % Zeilenabstand: 1.5
 \onehalfspacing
@@ -33,9 +33,9 @@
 \renewcommand{\arraystretch}{1.2}
 \urlstyle{same}
 
-% hier wird ein neues Kommando definiert 
+% hier wird ein neues Kommando definiert
 \newcommand{\zB}{z.\,B. }
-\newcommand{\noconfig}{Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen (deutsche Übersetzung sowie Übersetzungstemplate liegen bei).}
+\newcommand{\noconfig}{Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen (deutsche Übersetzungen sowie das Übersetzungstemplate liegen bei).}
 \newcommand{\standardinstall}{Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
 		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
@@ -73,11 +73,11 @@
 %%%%% Hier geht der Text los! %%%%%
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \begin{document}
-	
-	
+
+
 %\bibliographystyle{plainnat}
 %\bibliographystyle{alpha}
-\pagenumbering{roman} 
+\pagenumbering{roman}
 
 % Erzeugt das Deckblatt
 %   Bei zu langem Arbeitstitel müssen die vertikalen Abstände (\vspace)
@@ -85,26 +85,27 @@
 \begin{titlepage}
 \newgeometry{top=2cm,bottom=2cm,left=2cm,right=2cm}
 \begin{figure}
-    \begin{minipage}{0.2\textwidth}
-        \begin{flushleft}    
-            \includegraphics[scale=0.25]{csm_ISUM_Logo_Final_107dd2fa79.jpg}
+	\centering
+    \begin{minipage}{0.28\textwidth}
+        \begin{flushleft}
+            \includegraphics[scale=0.23]{csm_ISUM_Logo_Final_107dd2fa79.jpg}
         \end{flushleft}
-    \end{minipage}  
-    \begin{minipage}{0.55\textwidth}
+    \end{minipage}
+    \begin{minipage}{0.35\textwidth}
         \centering
         \hspace{0.25cm}
     \end{minipage}
-    \begin{minipage}{0.2\textwidth}
-        \begin{flushleft}   
+    \begin{minipage}{0.25\textwidth}
+        \begin{flushright}
             \includegraphics[scale=0.25]{St_Uni-Logo-9-2003-eps-converted-to.pdf}
-        \end{flushleft}
-    \end{minipage} 
+        \end{flushright}
+    \end{minipage}
     \vspace{4cm}
 \end{figure}
 \begin{center}
-    
+
     \Huge{\textbf{\titel}}
-    
+
     \Huge{\textbf{\untertitel}}
     \vspace{2cm}
 \end{center}
@@ -115,14 +116,14 @@
 \end{center}
 \begin{center}
     Institut für Betriebswirtschaft und Wirtschaftsinformatik,
-    
+
     \arbeitsgruppe
 \end{center}
 \begin{center}
     \vspace{5cm}
     \autor\\
-    
-    
+
+
     \today
 \end{center}
 \end{titlepage}
@@ -130,12 +131,12 @@
 
 
 % Erzeugt das Inhaltsverzeichnis
-\tableofcontents 
+\tableofcontents
 
 % Erzeugt das Abbildungsverzeichnis
 \newpage
 \listoffigures
-\thispagestyle{empty} 
+\thispagestyle{empty}
 
 
 \newpage
@@ -152,36 +153,36 @@ Dieses Kapitel beschreibt die Installation und Konfiguration des InDeKo.Navi Atl
 \subsection{Installationsschritte}
 \begin{enumerate}
 	\item Vorausgesetzt werden mindestens ein Webserver der PHP unterstützt, PHP 5.2.5 sowie MySQL 5.0.15. Als Komplettpaket lässt sich \zB \href{https://www.apachefriends.org/de/download.html}{XAMPP} installieren (v5.6.12 empfohlen. In nachfolgenden Versionen wurde MySQL durch MariaDB ersetzt. Test der Installation verlief auch mit XAMPP 5.6.30 erfolgreich, aber entwickelt und getestet wurde ausschließlich mit MySQL).
-	
+
 	\item GitHub-Projekt herunterladen (Branch KnowledgeMap) \url{https://github.com/KonstantinJanzen/Atlas/tree/KnowledgeMap/}.
 	Das Projekt enthält eine komplett konfigurierte Drupal 7.53 Installation.
-	
-	\item Inhalte des Atlas-Projekts in den Document Root (bzw. ein Unterverzeichnis, je nach gewünschter Konfiguration) des Webservers entpacken (\zB \lstinline|htdocs|, \lstinline|www|)
-	
-	\item Drupal 7 Datenbank-Dump \lstinline|db_wissenskarte.sql| aus dem Projekt-Unterordner \lstinline|sql_dumps| importieren (hier beispielhaft für Datenbank Administrator \enquote{root} ohne Passwort):
+
+	\item Inhalte des Atlas-Projekts in den Document Root (bzw. ein Unterverzeichnis, je nach gewünschter Konfiguration) des Webservers entpacken (\zB \textit{htdocs}, \textit{www})
+
+	\item Drupal 7 Datenbank-Dump \textit{db\_wissenskarte.sql} aus dem Projekt-Unterordner \textit{sql\_dumps} importieren (hier beispielhaft für Datenbank Administrator \enquote{root} ohne Passwort):
 	\begin{enumerate}
 		\item \lstinline|mysqladmin -u root CREATE indeko|
-		
+
 		\item \lstinline|mysql -u root indeko < sql_dumps\db_wissenskarte.sql|
 	\end{enumerate}
-	
+
 	\item Apache Solr Server installieren:
 	\begin{enumerate}
 		\item Apache Solr Version 5.5.2 herunterladen und entpacken \url{http://archive.apache.org/dist/lucene/solr/5.5.2/}.
-		
-		\item Aus dem Projekt-Unterordner \lstinline|solr_config| den Ordner \lstinline|drupal| nach \lstinline|solr-5.5.2\server\solr\| kopieren.
-		
+
+		\item Aus dem Projekt-Unterordner \textit{solr\_config} den Ordner \textit{drupal} nach \lstinline|solr-5.5.2\server\solr\| kopieren.
+
 		\item Solr Server starten (\zB \lstinline|solr-5.5.2\bin\solr start|).
 		\item Der Apache Solr Server is lokal unter \url{http://localhost:8983/solr} zu erreichen.
 	\end{enumerate}
-	
+
 	\item Apache Solr Suchindex in Drupal aktualisieren (\lstinline|admin/config/search/apachesolr|):
 	\begin{enumerate}
 		\item \enquote{Delete the Search \& Solr Index} $\rightarrow$ \enquote{Delete index}
-		
-		\item \enquote{Index all queued content}  $\rightarrow$ \enquote{Index all remaining}  
+
+		\item \enquote{Index all queued content}  $\rightarrow$ \enquote{Index all remaining}
 	\end{enumerate}
-	
+
 	\item Das Portal kann nun genutzt werden.
 	\begin{itemize}
 		\item Administrator-Account \enquote{admin} mit Passwort \enquote{pw}
@@ -218,33 +219,35 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 
 \cref{fig:structureproject} stellt die grundsätzliche Struktur des Drupal-Projekts dar:
 \begin{itemize}
-	\item \lstinline|libraries|: Enthält zusätzlich installierte externe Javascript Bibliotheken (\zB\ Chosen, qTip2).
-	
-	\item \lstinline|modules|: Der Unterordner \lstinline|custom| enthält alle entwickelten Module.
-	
-	\item \lstinline|themes|: Enthält alle installiertes Drupal-Themes. Für das Projekt relevant ist das adaptivetheme indeko7 (siehe \cref{fig:structuretheme}).
-	
-	\item \lstinline|solr_config|: Enthält Konfigurationsdateien für den Apache Solr Server. \lstinline|install.txt| beschreibt die Installation im Detail.
-	
-	\item \lstinline|sql_dumps|: Enthält den Datanbank-Dump des InDeKo.Navi Atlas Projekts  (\lstinline|db_wissenskarte.sql|).
+	\item \textit{libraries}: Enthält zusätzlich installierte externe Javascript Bibliotheken (\zB\ Chosen, qTip2).
+
+	\item \textit{modules}: Der Unterordner \textit{custom} enthält alle entwickelten Module.
+
+	\item \textit{themes}: Enthält alle installierten Drupal-Themes. Für das Projekt relevant ist das adaptivetheme indeko7 (siehe \cref{fig:structuretheme}).
+
+	\item \textit{solr\_config}: Enthält Konfigurationsdateien für den Apache Solr Server. \textit{install.txt} beschreibt die Installation im Detail.
+
+	\item \textit{sql\_dumps}: Enthält den Datanbank-Dump des InDeKo.Navi Atlas-Projekts  (\textit{db\_wissenskarte.sql}).
 \end{itemize}
 
 
 
 \cref{fig:structuretheme} stellt die Hauptstruktur des indeko7 Themes dar (\lstinline|\sites\all\themes\adaptivetheme\indeko7|):
 \begin{itemize}
-	\item \lstinline|css|: Enthält .css Dateien, die das grundlegende Design betreffen. Alle das Portal betreffenden Änderungen sind in der Datei \lstinline|global.atlas.css| zusammengefasst.
-	
-	\item \lstinline|images|: Der Unterordner \lstinline|atlas| enthält Bilddateien, die speziell für das Atlas-Projekt entworfen wurden und in den .css Dateien verwendet werden (\zB spezifische Icons für Inhaltstypen oder Aktionen).
-	
-	\item \lstinline|js|: Enthält .js Dateien, die ausschließlich das Design betreffen. 
-	
-	\item \lstinline|templates|: Enthält Template-Dateien (.tpl.php), die gezielt die Darstellung der Inhalte des Portals steuern.
-	
-	\item \lstinline|indeko7.info|: Enthält einen zusätzlichen Eintrag, um \lstinline|global.atlas.css| einzubinden (\lstinline|stylesheets[screen][] = css/global.atlas.css|).
-	
-	\item \lstinline|template.php|: Enthält Logik, die die von Drupal bereitgestellten Informationen zur Darstellung der Inhalte anpasst.
-	
+	\item \textit{css}: Enthält .css Dateien, die das grundlegende Design betreffen. Alle das Portal betreffenden Änderungen sind in der Datei \textit{global.atlas.css} zusammengefasst.
+
+	\item \textit{images}: Der Unterordner \textit{atlas} enthält Bilddateien, die speziell für das Atlas-Projekt entworfen wurden und in den .css Dateien verwendet werden (\zB spezifische Icons für Inhaltstypen oder Aktionen).
+
+	\item \textit{js}: Enthält .js Dateien, die ausschließlich das Design betreffen.
+
+	\item \textit{templates}: Enthält Template-Dateien (.tpl.php), die gezielt die Darstellung der Inhalte des Portals steuern.
+
+	\item \textit{indeko7.info}: Enthält einen zusätzlichen Eintrag, um \textit{global.atlas.css} einzubinden
+
+	(\lstinline|stylesheets[screen][] = css/global.atlas.css|).
+
+	\item \textit{template.php}: Enthält Logik, die die von Drupal bereitgestellten Informationen zur Darstellung der Inhalte anpasst.
+
 \end{itemize}
 
 
@@ -260,19 +263,19 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom Module (\lstinline|\sites\all\modules\custom|):
 
 \begin{itemize}
-	\item \lstinline|css|: Enthält .css Dateien, die speziell das Modul betreffen.
-	
-	\item \lstinline|js|: Enthält .js Dateien, die speziell das Modul betreffen.
-	
-	\item \lstinline|translations|: Enthält eine Übersetzungs-Vorlage (.pot), die alle übersetzbaren Texte des Moduls enthält und eine deutsche Übersetzungsdatei (.de.po). Die Übersetzungen werden während der Installation des Moduls importiert oder können jederzeit manuell in Drupal importiert werden (\lstinline|admin/config/regional/translate/import|). Templates erstellt mit dem Translation template extractor Modul (\url{https://www.drupal.org/project/potx})
-	
-	\item \lstinline|.info|: Enthält Informationen über das Modul, die von Drupal benötigt werden (Abhängigkeiten, Menüs, \dots).
-	
-	\item \lstinline|.install|: Enthält Installations- und Deinstallationsroutinen (Variablen, Datenbank-Tabellen und Einträge).
-	
-	\item \lstinline|.module|: Enthält den PHP Quellcode des Moduls.
-	
-	\item \lstinline|README.txt|: Enthält die Beschreibung des Moduls, die Installationsanleitung inklusive Pflicht- und optionaler Module, sowie eine Beschreibung der Konfiguration (in Anlehnung an das Drupal README Template \url{https://www.drupal.org/node/2181737}).
+	\item \textit{css}: Enthält CSS Dateien, die speziell das Modul betreffen.
+
+	\item \textit{js}: Enthält JavaScript Dateien, die speziell das Modul betreffen.
+
+	\item \textit{translations}: Enthält eine Übersetzungs-Vorlage (.pot), die alle übersetzbaren Texte des Moduls enthält und eine deutsche Übersetzungsdatei (.de.po). Die Übersetzungen werden während der Installation des Moduls importiert oder können jederzeit manuell in Drupal importiert werden (\lstinline|admin/config/regional/translate/import|). Templates erstellt mit dem Translation template extractor Modul (\url{https://www.drupal.org/project/potx})
+
+	\item \textit{.info}: Enthält Informationen über das Modul, die von Drupal benötigt werden (Abhängigkeiten, Menüs, \dots).
+
+	\item \textit{.install}: Enthält Installations- und Deinstallationsroutinen (Variablen, Datenbank-Tabellen und Einträge).
+
+	\item \textit{.module}: Enthält den PHP Quellcode des Moduls.
+
+	\item \textit{README.txt}: Enthält die Beschreibung des Moduls, die Installationsanleitung inklusive Pflicht- und optionaler Module, sowie eine Beschreibung der Konfiguration (in Anlehnung an das Drupal README Template \url{https://www.drupal.org/node/2181737}).
 \end{itemize}
 
 
@@ -283,14 +286,17 @@ Dieser Abschnitt enthält Punkte, die bei der Überführung des InDeKo.Navi-Port
 
 \begin{itemize}
 	\item In der Entwicklung genutzte Benutzeraccounts deaktivieren, da die Passwörter unsicher sind (\lstinline|admin/people|): \enquote{admin}, \enquote{ruser}, \enquote{ruser2}, \enquote{ruser3}, \enquote{ruser4}, \enquote{ruser5}.
-	
+
 	\item Beispiel-Wissenskarten löschen, da nicht geprüft wurde, ob die verwendeten Bilder lizenzfrei sind (\lstinline|admin/content|, siehe \cref*{sub:license} \cref{sub:license_images}).
-	
+
 	\item Für den CSV-Export der Suchergebnisse, die aus dem Internet erreichbare URL des Apache Solr Servers eintragen (\lstinline|admin/config/morphsearch_csv_export|).
-	
+
 	\item Anzuzeigende Fehlermeldungen deaktivieren (\lstinline|admin/config/development/logging|).
-	
-	\item \dots \todo{was noch?}
+
+	\item \dots \todo{was noch?
+    - Projekte, Publikationen, FEs, die als Test angelegt wurden noch löschen
+    - Benutzer wie "Dagobert Duck", "Miss Piggy" etc. löschen}
+    huhu
 \end{itemize}
 
 
@@ -319,7 +325,7 @@ Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalität
 		\label{fig:modules_search}
 	\end{subfigure}
 	\begin{subfigure}{0.45\textwidth}
-		\centering	
+		\centering
 		\includegraphics[width=0.95\linewidth]{images/modules_atlas}
 		\caption{Module Atlas}
 		\label{fig:modules_atlas}
@@ -338,7 +344,7 @@ Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte 
 
 \newpage
 \subsubsection{form\_wissenskarte\_module}\label{subsub:form_wissenskarte_module}
-Dieses Modul ermöglicht es Benutzern \glspl{verweissensitivegrafik} (engl. \glspl{imagemap}) aus Bilddatein (.jpg, .png) zu erstellen. Hierzu wird bei der Installation ein neuer Inhaltstyp \enquote{Wissenskarte} erstellt. Dies ermöglicht es Bilder an das Drupal-Portal zu übertragen und auf diesen geometrische Bereiche einzuzeichnen. Diese Bereiche können mit Informationen aus dem Drupal-Portal angereichert und anderen Benutzern zugänglich gemacht werden.
+Dieses Modul ermöglicht es Benutzern \glspl{verweissensitivegrafik} (engl. \glspl{imagemap}) aus Bilddateien (.jpg, .png) zu erstellen. Hierzu wird bei der Installation ein neuer Inhaltstyp \enquote{Wissenskarte} erstellt. Dies ermöglicht es Bilder auf das Drupal-Portal zu übertragen und auf diesen geometrische Bereiche einzuzeichnen. Diese Bereiche können mit Informationen aus dem Drupal-Portal angereichert und anderen Benutzern zugänglich gemacht werden.
 
 \begin{figure}[H]
 	\centering
@@ -361,27 +367,27 @@ Dieses Modul ermöglicht es Benutzern \glspl{verweissensitivegrafik} (engl. \gls
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item Vorausgesetzte Module:
-	
+
 	morphsearch (siehe \cref{subsub:morphsearch}): Wird genutzt, um die Inhalte der gezeichneten Bereiche auszuwählen.
-	
-	
-	\item Empfohlene Module: 
-	
-	Entityreference (\url{https://www.drupal.org/project/entityreference}): Ist dieses Modul installiert werden alle Informationen, die den einzelnen Bereichen der Wissenskarte zugeordnet sind, auch mit der gesamten Wissenskarte verknüpft. Ansonsten lassen sich Wissenskarten nur über Titel und Beschreibung per Suche finden.
-	
+
+
+	\item Empfohlene Module:
+
+	Entityreference (\url{https://www.drupal.org/project/entityreference}): Ist dieses Modul installiert, werden alle Informationen, die den einzelnen Bereichen der Wissenskarte zugeordnet sind, auch mit der gesamten Wissenskarte verknüpft. Ansonsten lassen sich Wissenskarten nur über Titel und Beschreibung per Suche finden.
+
 	Fivestar (\url{https://www.drupal.org/project/fivestar}): Ermöglicht es Benutzern Wissenskarten zu bewerten.
-	
-	
+
+
 	\item Installation: \standardinstall
-	
-	
+
+
 	\item Konfiguration:
-	
+
 	\noconfig
-	
+
 	Alle nötigen Einstellungen werden automatisch bei der Installation durchgeführt (.install Datei).
 
-	Dieses Modul identifiziert Wissenskarten durch, der Bilddatei zugeordnete, Bildstile (\zB CSS-Klasse \enquote{image-style-wissenkarte}). Das verwendete Theme muss diese CSS-Klassen im HTML zur verfügung stellen (beim Drupal 7 Standard Theme ist dies nicht der Fall).
+	Dieses Modul identifiziert Wissenskarten durch, der Bilddatei zugeordnete, Bildstile (\zB CSS-Klasse \enquote{image-style-wissenkarte}). Das verwendete Theme muss diese CSS-Klassen im HTML zur Verfügung stellen (beim Drupal 7 Standard Theme ist dies nicht der Fall).
 \end{itemize}
 
 
@@ -389,13 +395,13 @@ Dieses Modul ermöglicht es Benutzern \glspl{verweissensitivegrafik} (engl. \gls
 \subsubsection{comments\_shortener}\label{subsub:commentsshortener}
 Dieses Modul passt das Standard-Verhalten der Drupal Kommentarsektion an:
 
-\begin{itemize}
+\begin{enumerate}
 	\item Kommentare werden auf maximal 50 Zeichen gekürzt. Gekürzte Kommentare werden durch Auslassungspunkte am Ende kenntlich gemacht (siehe \cref{fig:example_commentshortener_short}). Ein Klick auf die Auslassungspunkte zeigt den vollständigen Kommentar an (siehe \cref{fig:example_commentshortener_full}).
-	
+
 	\item Neueste Kommentare werden zuerst angezeigt (dies ließ sich nicht über Drupal-Core Einstellungen konfigurieren).
-	
-	\item Nachdem ein Kommentar abgegeben wurde wird der Benutzer auf die erste Kommentarseite zurückgeleitet (dies ließ sich nicht über Drupal-Core Einstellungen konfigurieren).
-\end{itemize}
+
+	\item Nachdem ein Kommentar abgegeben wurde, wird der Benutzer auf die erste Kommentarseite zurückgeleitet (dies ließ sich nicht über Drupal-Core Einstellungen konfigurieren).
+\end{enumerate}
 
 \begin{figure}[H]
 	\centering
@@ -418,21 +424,21 @@ Dieses Modul passt das Standard-Verhalten der Drupal Kommentarsektion an:
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item Vorausgesetzte Module:
-	
+
 	keine
-	
-	
+
+
 	\item Empfohlene Module:
-	
-	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Das comments\_shortener Modul ist auf die Anforderungen von Wissenskarten zugeschnitten, funktioniert aber auch ohne dieses Modul für jede Art von Kommentar.	
-	
-	
+
+	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Das comments\_shortener Modul ist auf die Anforderungen von Wissenskarten zugeschnitten, funktioniert aber auch ohne dieses Modul für jede Art von Kommentar.
+
+
 	\item Installation: \standardinstall
-	
+
 	\item Konfiguration:
-	
+
 	\noconfig
-	
+
 \end{itemize}
 
 
@@ -462,28 +468,28 @@ Dieses Modul sorgt dafür, dass \textit{\glspl{imagemap}} \textit{responsive} we
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item Vorausgesetzte Module:
-	
+
 	Libraries (\url{https://www.drupal.org/project/libraries})
-	
-	
-	\item Empfohlene Module: 
-	
-	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Legt den Inhaltstyp \lstinline|wissenskarte| an und ermöglicht es \textit{\glspl{imagemap}} selbst zu erzeugen.	
-	
+
+
+	\item Empfohlene Module:
+
+	form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Legt den Inhaltstyp \textit{wissenskarte} an und ermöglicht es \textit{\glspl{imagemap}} selbst zu erzeugen.
+
 	\item Installation:
 	\begin{enumerate}
 		\item Place it in the custom modules directory for your site (vgl. \cref{fig:structureproject}, e.g. \lstinline|sites/all/modules/custom|)
 		\item Download the Image Map resize plugin from \url{https://github.com/davidjbradshaw/image-map-resizer}
-		\item Extract the \lstinline|imageMapResizer.min.js| file into the \lstinline|sites/all/libraries/image-map-resizer| directory.
+		\item Extract the \textit{imageMapResizer.min.js} file into the \lstinline|sites/all/libraries/image-map-resizer| directory.
 		\item Enable it on the \lstinline|admin/modules| page.
 		\item Set the content type that contains \textit{\glspl{imagemap}} and should be resized on the configuration page \lstinline|admin/config/imagemap_resizer| (siehe \cref{fig:config_imagemapresizer}).
 	\end{enumerate}
-	
-	
+
+
 	\item Konfiguration:
-	
-	\cref{fig:config_imagemapresizer} stellt das Konfigurationsmenü dar. Im ersten Abschnitt lässt sich der Status der externen JavaScript Bibliothek ablesen. In dem darauffolgenden Textfeld wird der Maschinenname des Inhaltstyps angegeben der Wissenskarten enthält. Die für die Skalierung von Wissenskarten benötigten JavaScript Dateien werden nur auf Seiten des angegebenen Inhaltstyps geladen. Als Standardwert ist der von dem Custom Modul form\_wissenskarte\_module (\cref{subsub:form_wissenskarte_module}) erstellte Inhaltstyp \lstinline|wissenskarte| definiert.
-	
+
+	\cref{fig:config_imagemapresizer} stellt das Konfigurationsmenü dar. Im ersten Abschnitt lässt sich der Status der externen JavaScript Bibliothek ablesen. In dem darauffolgenden Textfeld wird der Maschinenname des Inhaltstyps angegeben, der Wissenskarten enthält. Die für die Skalierung von Wissenskarten benötigten JavaScript Dateien werden nur auf Seiten des angegebenen Inhaltstyps geladen. Als Standardwert ist der von dem Custom Modul form\_wissenskarte\_module (\cref{subsub:form_wissenskarte_module}) erstellte Inhaltstyp \textit{wissenskarte} definiert.
+
 \end{itemize}
 
 
@@ -512,13 +518,13 @@ jq\_maphilight
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item Vorausgesetzte Module:
-	
+
 	\item Empfohlene Module:
-	
+
 	\item Installation: \standardinstall
-	
+
 	\item Konfiguration:
-	
+
 \end{itemize}
 
 
@@ -528,14 +534,14 @@ jq\_maphilight
 morphsearch
 \begin{figure}[H]
 	\centering
-	\begin{subfigure}[a]{0.4\textwidth}
+	\begin{subfigure}[a]{0.45\textwidth}
 		\centering
 		\includegraphics[height=0.20\textheight]{images/config_morphsearch}
 		\caption[]{Konfigurationsmenü}
 		\label{fig:config_morphsearch}
 	\end{subfigure}
 	%
-	\begin{subfigure}[A]{0.4\textwidth}
+	\begin{subfigure}[A]{0.25\textwidth}
 		\centering
 		\includegraphics[height=0.20\textheight]{images/example_morphsearch}
 		\caption[]{Beispiel}
@@ -572,23 +578,23 @@ Dieses Modul fügt der Drupal-Installation einen Block hinzu, der es erlaubt Apa
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item Vorausgesetzte Module:
-	
+
 	Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
-	
-	
+
+
 	\item Empfohlene Module:
-	
+
 	morphsearch (siehe \cref{subsub:morphsearch}): Ermöglicht es die zu sortierenden Suchergebnisse einzuschränken.
-	
-	
+
+
 	\item Installation: \standardinstall
-	
+
 	\item Konfiguration:
-	
+
 	\noconfig
-	
-	Das Aussehen des Sortierblocks wird per CSS im Theme definiert (\zB \lstinline|drupal.atlas.css|, siehe \cref{sub:strukture_project}).
-	
+
+	Das Aussehen des Sortierblocks wird per CSS im Theme definiert (\zB \textit{drupal.atlas.css}, siehe \cref{sub:strukture_project}).
+
 \end{itemize}
 
 
@@ -665,6 +671,11 @@ Slider mit Wissenskarten als Startseite
 	\label{fig:example_slider}
 \end{figure}
 
+
+\subsubsection{Apache Solr Search}\label{subsub:apachesolr}
+
+
+
 \subsubsection{CSS / Design / ???}\label{subsub:cssdesign}
 CSS / Design / ???
 
@@ -676,38 +687,38 @@ CSS / Design / ???
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item \textit{ERROR 2006 (HY000) at line [\dots]: MySQL server has gone away}
-	
+
 	MySQL Konfiguration (my.ini | XAMPP -> MySQL -> Config)
 	\textbf{max\_allowed\_packet} erhöhen (\zB auf \enquote{32M}).
-	
-	
+
+
 	\item \textit{Fatal error: Allowed memory size of [\dots] bytes exhausted (tried to allocate [\dots] bytes) in [\dots]}
-	
+
 	PHP Konfiguration (php.ini | XAMPP -> Apache -> Config)
 	\textbf{memory\_limit} hochsetzen .
-	
-	
+
+
 	\item \textit{PDOException: SQLSTATE[HY000] [2002] Es konnte keine Verbindung hergestellt werden, da der Zielcomputer die Verbindung verweigerte. in lock\_may\_be\_available()}
-	
+
 	MySQL Server nicht gestartet oder abgestürzt.
-	
-	
+
+
 	\item \textit{PDOException: SQLSTATE[42000]: Syntax error or access violation: 1118 The size of BLOB/TEXT data inserted in one transaction is greater than 10\% of redo log size. Increase the redo log size using innodb\_log\_file\_size.}
-	
+
 	MySQL Konfiguration (my.ini | XAMPP -> MySQL -> Config)
 	\textbf{innodb\_log\_file\_size} erhöhen.
-	
-	
-	\item \textit{Warning: file\_get\_contents(): http:// wrapper disabled in the server configuration by allow\_url\_fopen=0 in \_local\_parse\_js\_file()}
-	
+
+
+	\item \textit{Warning: file\_get\_contents(): http:// wrapper disabled in the server configuration by allow\_url\_fopen = 0 in \_local\_parse\_js\_file()}
+
 	Drupal Konfiguration zur settings.php \textbf{ini\_set('allow\_url\_fopen', 1);} hinzufügen.
-	
-	
+
+
 	\item \textit{User Warning: The following module is missing from the file system: [\dots]}
 
 	Fehler wurde nach Upgrade auf die neuere Drupal Version angezeigt, siehe \url{https://www.drupal.org/node/2487215}.
 	Betroffene Module neu zu installieren / deinstallieren oder extra Module, die den Fehler beheben sollten halfen nicht. Nur manueller Eingriff in die Datenbank führte zum Erfolg: \lstinline| "DELETE from system where name = 'old_module1' AND type = 'module';"|
-	
+
 	\item \dots \todo{was noch?}
 \end{itemize}
 
@@ -719,7 +730,7 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem InDeKo.Nav
 \begin{enumerate}
 	\item Drupal Contrib Module (alle \textbf{GPLv2})
 	\begin{itemize}
-		\item Administration menu (\url{https://www.drupal.org/project/admin_menu}) 
+		\item Administration menu (\url{https://www.drupal.org/project/admin_menu})
 		\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
 		\item Apache Solr Real-Time (\url{https://www.drupal.org/project/apachesolr_realtime})
 		\item Field Group (\url{https://www.drupal.org/project/field_group})
@@ -752,14 +763,14 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem InDeKo.Nav
 		\item Apache Solr (\url{http://lucene.apache.org/solr/}) \textbf{Apache License 2.0}
 		\item Font Awesome Fonts (\url{http://fontawesome.io/license/}) \textbf{SIL OFL 1.1}
 		\item Font Awesome CSS (\url{http://fontawesome.io/license/}) \textbf{MIT}
-		\item Alle Bilder für Beispielwissenskarten \textcolor{red}{\textbf{Lizenz nicht geprüft}}		
-	\end{itemize} 
+		\item Alle Bilder für Beispielwissenskarten \textcolor{red}{\textbf{Lizenz nicht geprüft}}
+	\end{itemize}
 
 	\item Erweiterungen indeko7-Theme (vgl. \cref{fig:structuretheme})
 	\begin{itemize}
-		\item \lstinline|global.atlas.css| enthält alle Design Anpassungen am Portal durch das Atlas-Projekt
-		\item Unterordner \lstinline|images/atlas| enthält alle für das Atlas-Projekt erstellten svg Grafiken (von Carlo Frisch erstellt, aus E-Mail vom 5.12.2016)
-		\item \lstinline|js/node-wissenskarte-comments-style.js|, \lstinline|template/comment--node-wissenskarte.tpl.php| und \lstinline|template.php|
+		\item \textit{global.atlas.css} enthält alle Design Anpassungen am Portal durch das Atlas-Projekt
+		\item Unterordner \textit{images/atlas} enthält alle für das Atlas-Projekt erstellten svg Grafiken (von Carlo Frisch erstellt, aus E-Mail vom 5.12.2016)
+		\item \textit{js/node-wissenskarte-comments-style.js}, \textit{template/comment--node-wissenskarte.tpl.php} und \textit{template.php}
 	\end{itemize}
 
 	\item Entwickelte Drupal-Custom-Module (siehe \cref{sub:custom_modules})
