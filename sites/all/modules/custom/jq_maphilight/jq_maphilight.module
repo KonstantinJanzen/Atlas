@@ -44,7 +44,7 @@ function jq_maphilight_library()
 function jq_maphilight_preprocess_page(&$vars)
 {
   // Check if maphilight library is available and processed node matches desired "content type" for highlighting.
-  if (_jq_maphilight_available() != FALSE && isset($vars['node']) && $vars['node']->type == variable_get('jq_maphilight_content_type', 'article')) {
+  if (_jq_maphilight_available() != FALSE && isset($vars['node']) && $vars['node']->type == variable_get('jq_maphilight_content_type', 'wissenskarte')) {
 
     $pathEdit = 'node/*/edit';
     $pathClone = 'node/*/clone/confirm';

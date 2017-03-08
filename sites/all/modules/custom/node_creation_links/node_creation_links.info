@@ -3,5 +3,5 @@ description = Dynamically creates node creation links (if the user has sufficien
 core = 7.x
 
 package = Atlas
-configure = admin/config/node_creation_links
+configure = admin/config/content/node_creation_links
 scripts[] = js/nodecreation.js

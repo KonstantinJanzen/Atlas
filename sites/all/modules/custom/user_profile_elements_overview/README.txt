@@ -7,8 +7,7 @@ Allows created elements of the user to be displayed in the user profile.
 REQUIREMENTS
 ------------
 
-This module requires no additional modules.
-TODO font-awesome required cause of default icon '<i class='fa fa-file default' aria-hidden='true'></i>'
+ * Font Awesome Icons (https://www.drupal.org/project/fontawesome): Needed just for the default icon.
 
 
 INSTALLATION

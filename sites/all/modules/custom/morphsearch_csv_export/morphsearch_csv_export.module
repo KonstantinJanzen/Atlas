@@ -11,7 +11,7 @@
  */
 function morphsearch_csv_export_menu() {
   $items = array();
-  $items['admin/config/morphsearch_csv_export'] = array(
+  $items['admin/config/search/morphsearch_csv_export'] = array(
     'title' => 'Morphsearch CSV export settings',
     'description' => 'Set the path to access your Apache Sol server from anywhere.',
     'page callback' => 'drupal_get_form',

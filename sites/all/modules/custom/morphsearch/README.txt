@@ -16,6 +16,8 @@ This module requires the following modules:
      additional information for the Solr index.
  * Chosen (https://www.drupal.org/project/chosen): Works even without chosen module, but the standard select elements
      are not styled for use in the search block
+ * Font Awesome Icons (https://www.drupal.org/project/fontawesome): Just needed for the expand icon after morphological
+     or publication search links.
 
 
 RECOMMENDED MODULES

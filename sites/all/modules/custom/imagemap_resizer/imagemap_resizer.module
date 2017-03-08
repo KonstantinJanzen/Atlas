@@ -65,7 +65,7 @@ function imagemap_resizer_preprocess_page(&$vars) {
  */
 function imagemap_resizer_menu() {
   $items = array();
-  $items['admin/config/imagemap_resizer'] = array(
+  $items['admin/config/content/imagemap_resizer'] = array(
     'title' => 'Image Map Resizer',
     'description' => 'Javascript image map resizing using imageMapResizer.js library.',
     'page callback' => 'drupal_get_form',

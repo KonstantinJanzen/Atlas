@@ -11,7 +11,7 @@ REQUIREMENTS
 This module requires the following modules:
  * Apache Solr Search (https://www.drupal.org/project/apachesolr): This module provides the search results
     and capabilities to sort.
-
+ * Font Awesome Icons (https://www.drupal.org/project/fontawesome): Just needed just for the radio button icons.
 
 RECOMMENDED MODULES
 -------------------

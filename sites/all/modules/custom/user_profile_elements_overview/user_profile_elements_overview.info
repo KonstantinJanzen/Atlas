@@ -3,3 +3,4 @@ description = Allows created elements of the user to be displayed in the user pr
 core = 7.x
 
 package = Atlas
+dependencies[] = fontawesome

@@ -11,7 +11,8 @@ This module requires the following modules:
 
  * Apache Solr Search (https://www.drupal.org/project/apachesolr): This module uses the Apache Solr search capabilities
      to export search results as a csv file.
- * Morphsearch custom module
+ * Font Awesome Icons (https://www.drupal.org/project/fontawesome): Just needed for the export icon as long as there is
+     no new custom made icon.
 
 
 INSTALLATION

@@ -44,11 +44,9 @@ function morphsearch_block_view($delta = '') {
       //$block['subject'] = t('Morphsearch Block');
       $block['content'] = createMorphsearchContent();
 
-      // Attach morphsearch CSS and font-awesome CSS to block.
+      // Attach morphsearch CSS to block.
       $block['content']['#attached']['css'] = array(
           drupal_get_path('module', 'morphsearch') . "/css/morphsearch.css",
-          /* Please note: Font-awesome is currently no longer required. */
-          drupal_get_path('module', 'morphsearch') . "/css/font-awesome.min.css"
       );
 
       // Attach search path to make it available in js (Drupal.settings.morphsearch.searchPath).
@@ -432,7 +430,7 @@ function morphsearch_enable() {
  */
 function morphsearch_menu() {
   // Admin configuration menu.
-  $items['admin/config/morphsearch'] = array(
+  $items['admin/config/search/morphsearch'] = array(
     'access arguments' => array('administer site configuration'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('morphsearch_admin_settings'),

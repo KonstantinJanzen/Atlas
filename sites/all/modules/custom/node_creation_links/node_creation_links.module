@@ -8,7 +8,7 @@
  * Implements hook_menu().
  */
 function node_creation_links_menu() {
-  $items['admin/config/node_creation_links'] = array(
+  $items['admin/config/content/node_creation_links'] = array(
     'access arguments' => array('administer site configuration'),
     'page callback' => 'drupal_get_form',
     'page arguments' => array('admin_settings'),
