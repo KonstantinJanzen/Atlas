@@ -9,6 +9,7 @@
  * - Added new configuration option "content type" and replaced hook_init() with hook_preprocess_page().
  * - Module will only add js libraries and highlighting options to a page if it matches the specified "content type".
  * - Added functionality to have different opacity options for mouseover and permanent highlighting.
+ *   (Code ist still present but needs rework to work together with show/hide areas functionality ID 102/103)
  * - Complete revamp of module's admin configuration page.
  */
 
@@ -64,11 +65,12 @@ function jq_maphilight_preprocess_page(&$vars)
           'strokeColor' => variable_get('jq_maphilight_strokecolor', 'ff0000'),
           'strokeOpacity' => variable_get('jq_maphilight_strokeopacity', 10) / 10,
           'strokeWidth' => variable_get('jq_maphilight_strokewidth', 2),
-          'fade' => variable_get('jq_maphilight_fade', 'true'),
+          'fade' => variable_get('jq_maphilight_fade', 'false'),
           'alwaysOn' => variable_get('jq_maphilight_alwayson', 'false'),
           'neverOn' => variable_get('jq_maphilight_neveron', 'false'),
           'groupBy' => variable_get('jq_maphilight_groupby', 'false'),
           'allMapsEnabled' => variable_get('jq_maphilight_all_maps_enabled', 'true'),
+          'mouseover' => variable_get('jq_maphilight_mouseover', 'false'),
           'fillOpacityMouseover' => variable_get('jq_maphilight_fillopacitymouseover', 2) / 10,
           'strokeOpacityMouseover' => variable_get('jq_maphilight_strokeopacitymouseover', 10) / 10,
         )
@@ -135,13 +137,15 @@ function jq_maphilight_admin_settings()
     '#description' => 'Load js libraries and jQuery Maphilight settings only on pages with specified content type.'
   );
 
-  $form['jq_maphilight_general']['jq_maphilight_all_maps_enabled'] = array(
+/*  Setting disabled, all image maps of above set content type will be highlighted.
+    $form['jq_maphilight_general']['jq_maphilight_all_maps_enabled'] = array(
     '#type' => 'radios',
     '#title' => t('Enable highlighting for all image maps'),
     '#default_value' => variable_get('jq_maphilight_all_maps_enabled', 'true'),
     '#options' => array('true' => t('True'), 'false' => t('False')),
     '#description' => 'If false, <em>class="jq_maphilight"</em> must be added to the &lt;img&gt; tag of each image map you want highlighted.'
   );
+*/
 
   $form['jq_maphilight_settings'] = array(
     '#type' => 'fieldset',
@@ -165,6 +169,7 @@ function jq_maphilight_admin_settings()
     '#description' => 'Specify whether the highlighted area will be outlined.'
   );
 
+/* Disabled setting as it did not work anyway.
   $form['jq_maphilight_settings']['jq_maphilight_fade'] = array(
     '#type' => 'radios',
     '#title' => t('Fade in'),
@@ -172,15 +177,27 @@ function jq_maphilight_admin_settings()
     '#options' => array('true' => t('True'), 'false' => t('False')),
     '#description' => 'Specify whether to fade in the shapes on mouseover.'
   );
+*/
+
+/* In the course of the project discarded functionality.
+  $form['jq_maphilight_settings']['jq_maphilight_mouseover'] = array(
+      '#type' => 'radios',
+      '#title' => t('Mouseover effects'),
+      '#default_value' => (variable_get('jq_maphilight_mouseover', 'false')),
+      '#options' => array('true' => t('True'), 'false' => t('False')),
+      '#description' => 'Specify whether to highlight shapes on mouseover.'
+  );
+*/
 
   $form['jq_maphilight_settings']['jq_maphilight_alwayson'] = array(
     '#type' => 'radios',
     '#title' => t('Always on'),
     '#default_value' => (variable_get('jq_maphilight_alwayson', 'false')),
     '#options' => array('true' => t('True'), 'false' => t('False')),
-    '#description' => 'Specify whether to always show the highlighted areas'
+    '#description' => 'Specify whether to always show the highlighted areas.'
   );
 
+  /*
   $form['jq_maphilight_settings']['jq_maphilight_groupby'] = array(
     '#type' => 'radios',
     '#title' => t('Group by'),
@@ -188,6 +205,7 @@ function jq_maphilight_admin_settings()
     '#options' => array('true' => t('True'), 'false' => t('False')),
     '#description' => 'If true, applies the class on the &lt;img&gt; to the wrapper div maphilight created.'
   );
+  */
 
   $form['jq_maphilight_settings']['styling'] = array(
     '#type' => 'fieldset',
@@ -234,6 +252,7 @@ function jq_maphilight_admin_settings()
     '#description' => 'Specify the opacity of the outline (0 = fully transparent, 10 = fully opaque).'
   );
 
+/* In the course of the project discarded functionality.
   $form['jq_maphilight_settings']['styling']['jq_maphilight_fillopacitymouseover'] = array(
     '#type' => 'select',
     '#title' => t('Fill Opacity on mouseover'),
@@ -251,7 +270,7 @@ function jq_maphilight_admin_settings()
     '#description' => 'Specify the opacity of the outline on mouseover if "' . t('Always on') .
       '" is enabled (0 = fully transparent, 10 = fully opaque).'
   );
-
+*/
 
 
   return system_settings_form($form);

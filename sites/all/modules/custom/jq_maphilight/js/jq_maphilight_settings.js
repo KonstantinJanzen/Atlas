@@ -14,6 +14,7 @@
                 alwaysOn: (settings.jq_maphilight.alwaysOn == 'true'),
                 neverOn: (settings.jq_maphilight.neverOn == 'true'),
                 groupBy: (settings.jq_maphilight.groupBy == 'true'),
+                mouseover: (settings.jq_maphilight.mouseover == 'true'),
                 fillOpacityMouseover: settings.jq_maphilight.fillOpacityMouseover,
                 strokeOpacityMouseover: settings.jq_maphilight.strokeOpacityMouseover
             };
@@ -28,24 +29,31 @@
             }
 
             // Use additional highlighting settings for mouseover if highlighting is always on.
-                var mapAreas = $('map area');
-                Drupal.behaviors.jq_maphilight.attachHover(mapAreas);
+            // var mapAreas = $('map area');
+            // Drupal.behaviors.jq_maphilight.attachHover(mapAreas);
         }
     };
 
-    // Use additional highlighting settings for mouseover if highlighting is set to always on.
+    /* Use additional highlighting settings for mouseover if highlighting is set to always on.
+    Functionality has been discarded due to changing requirements in the course of this project (ID 102/103).
+    Mouseover Effekte nicht mehr genutzt, da nicht ohne weiteres kompatibel mit dem Ein- / Ausblenden von Konturen */
     Drupal.behaviors.jq_maphilight.attachHover = function(selector) {
-        if (Drupal.settings.jq_maphilight.alwaysOn == 'true') {
+        if (Drupal.settings.jq_maphilight.mouseover == 'true') {
             selector.on("mouseover.maphilight", function () {
                 var optionsMouseover = {};
+                optionsMouseover.stroke = true;
+                optionsMouseover.fill = true;
                 optionsMouseover.fillOpacity = Drupal.settings.jq_maphilight.fillOpacityMouseover;
                 optionsMouseover.strokeOpacity = Drupal.settings.jq_maphilight.strokeOpacityMouseover;
+
                 $(this).data('maphilight', optionsMouseover).trigger('alwaysOn.maphilight');
             });
 
             // Return to previous highlighting settings if the mouse leaves a map area.
             selector.on("mouseleave.maphilight", function () {
                 var optionsMouseLeave = {};
+                optionsMouseLeave.stroke = Drupal.settings.jq_maphilight.stroke;
+                optionsMouseLeave.fill = Drupal.settings.jq_maphilight.fill;
                 optionsMouseLeave.fillOpacity = Drupal.settings.jq_maphilight.fillOpacity;
                 optionsMouseLeave.strokeOpacity = Drupal.settings.jq_maphilight.strokeOpacity;
                 $(this).data('maphilight', optionsMouseLeave).trigger('alwaysOn.maphilight');
