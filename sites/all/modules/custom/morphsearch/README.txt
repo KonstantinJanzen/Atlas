@@ -1,7 +1,7 @@
 INTRODUCTION
 ------------
 
-Dynamically creates a search block in the right sidebar (fulltext search, dynamical content type search,
+Dynamically creates a search block (fulltext search, dynamical content type search,
 morphological search by taxonomy terms, publication search).
 
 
@@ -33,7 +33,7 @@ This module can be installed like any other Drupal module:
  1. Place it in the custom modules directory for your site (e.g. sites/all/modules/custom).
  2. Enable it on the 'admin/modules' page.
  3. Set the content types that should be displayed in the search block's type search section
-    on the configuration page (admin/config/morphsearch).
+    on the configuration page (admin/config/search/morphsearch).
  4. (optional) Download the qTip2 jQuery plugin (http://qtip2.com/) and extract the file under sites/all/libraries/qtip.
     Otherwise no search syntax tooltips or notifications will be displayed.
  5. (optional) Install the biblio Drupal module to make use of the search block's publication search capabilities
@@ -44,7 +44,7 @@ CONFIGURATION
 
 (TODO config menu Schnickschnack)
 
- * Configure content type search (admin/config/morphsearch)
+ * Configure content type search (admin/config/search/morphsearch)
  You can select which content types should be displayed in the search block's type search section.
 
  * Configure morphological search:

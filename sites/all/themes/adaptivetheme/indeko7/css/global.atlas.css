@@ -319,7 +319,8 @@ div.messages {
 }
 
 /* Backup hide in case module fails */
-.node-wissenskarte .field-name-field-markierte-bereiche {
+.node-wissenskarte .field-name-field-markierte-bereiche,
+#edit-field-markierte-bereiche, #edit-field-tag-combined {
     display: none;
 }
 

@@ -72,7 +72,7 @@ function elements_overview_html($staticFilter = []) {
                 $html .= "<i class='icon forschungsergebnis' aria-hidden='true' title='" . t('Research Result') . "'></i>";
                 break;
             default:
-                $html .= "<i class='fa fa-file default' aria-hidden='true'></i>";
+                $html .= "<i class='fa fa-file default' aria-hidden='true' title='" . $result->type . "'></i>";
         }
 
         /* Links to the View of the created element. */

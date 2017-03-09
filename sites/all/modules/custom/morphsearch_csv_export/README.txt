@@ -21,7 +21,7 @@ INSTALLATION
 This module can be installed like any other Drupal module:
  1. Place it in the custom modules directory for your site (e.g. sites/all/modules/custom).
  2. Enable it on the 'admin/modules' page.
- 3. Set the Apache Solr URL on the configuration page 'admin/config/morphsearch_csv_export'.
+ 3. Set the Apache Solr URL on the configuration page 'admin/config/search/morphsearch_csv_export'.
 
 
 CONFIGURATION

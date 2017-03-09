@@ -28,7 +28,7 @@ This module can be installed like any other Drupal module:
  3. Extract the imageMapResizer.min.js file into the sites/all/libraries/image-map-resizer/ directory.
  4. Enable it on the 'admin/modules' page.
  5. Set the content type that contains image maps and should be resized on the
-    configuration page 'admin/config/imagemap_resizer'.
+    configuration page 'admin/config/content/imagemap_resizer'.
 
 
 CONFIGURATION
