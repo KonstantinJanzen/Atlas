@@ -8,6 +8,8 @@ dependencies[] = libraries
 dependencies[] = jquery_update
 dependencies[] = apachesolr
 dependencies[] = fontawesome
+dependencies[] = taxonomy
+
 
 ; works even without chosen module, but the standard select elements are not styled for use in the search block
 dependencies[] = chosen

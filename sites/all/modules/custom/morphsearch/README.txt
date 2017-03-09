@@ -24,6 +24,7 @@ RECOMMENDED MODULES
 -------------------
  * Bibliography Module (https://www.drupal.org/project/biblio): To make use of the search block's publication search
      capabilities.
+ * Taxonomy (Drupal core module): Used to build the morphological search.
 
 
 INSTALLATION
@@ -31,6 +32,7 @@ INSTALLATION
 
 This module can be installed like any other Drupal module:
  1. Place it in the custom modules directory for your site (e.g. sites/all/modules/custom).
+ 2. Enable the 'taxonomy' Drupal core module.
  2. Enable it on the 'admin/modules' page.
  3. Set the content types that should be displayed in the search block's type search section
     on the configuration page (admin/config/search/morphsearch).

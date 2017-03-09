@@ -26,6 +26,7 @@ INSTALLATION
 This module can be installed like any other Drupal module:
  1. Place it in the custom modules directory for your site (e.g. sites/all/modules/custom).
  2. Enable it on the 'admin/modules' page.
+ 3. Assign the 'Apache Solr Atlas Sort' block to a visible region on the 'admin/structure/block' page.
 
 
 CONFIGURATION

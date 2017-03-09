@@ -18,7 +18,7 @@ function morphsearch_block_info() {
     'cache' => DRUPAL_CACHE_GLOBAL,
     //'cache' => DRUPAL_NO_CACHE,
     'status' => TRUE,
-    'region' => 'sidebar_second',
+    'region' => 'sidebar_first',
   );
 
   return $blocks;
@@ -122,18 +122,21 @@ function createMorphsearchContent() {
     '#suffix' => '</div>',
   );
 
-  // all morphological search elements
-  $content['morphsearch'] = array(
-    '#markup' => buildSearchHtml(),
-    '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">' . t('Morphological Search') .
-      '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
-      '<div id="morphsearch-select-block">',
-    '#suffix' => '</div>',
-  );
+  // Create morphological search only if taxonomy module is installed and enabled
+  if (module_exists('taxonomy')) {
 
-  // remove morphological search if no morphological box taxonomy terms were found
-  if ($content['morphsearch']['#markup'] === '') {
-    unset($content['morphsearch']);
+    $content['morphsearch'] = array(
+      '#markup' => buildSearchHtml(),
+      '#prefix' => '<a href="javascript:void(0)" id="morphsearch-select-block-toggle">' . t('Morphological Search') .
+        '  <i class="fa fa-chevron-down" aria-hidden="true"></i></a>' .
+        '<div id="morphsearch-select-block">',
+      '#suffix' => '</div>',
+    );
+
+    // remove morphological search if no morphological box taxonomy terms were found
+    if ($content['morphsearch']['#markup'] === '') {
+      unset($content['morphsearch']);
+    }
   }
 
   // Create publication search filters only if biblio module is installed
@@ -251,7 +254,7 @@ function createMorphsearchContent() {
 }
 
 /**
- * Creates the HTML for the dynamic search block.
+ * Creates the HTML for the dynamic morphological search block.
  *
  * @return string Contains the HTML code for the dynamic morphological search block.
  */
