@@ -146,6 +146,7 @@
 
 % Erzeugt das Abkürzungsverzeichnis
 \glsaddall
+\todo{was noch? oder überflüssig?}
 \printglossary[type=\acronymtype,title = Abkürzungsverzeichnis]
 
 \newpage
@@ -948,10 +949,15 @@ Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst e
 
 \newpage
 \subsection{Drupal Customizing}\label{sub:drupal_customizing}
-
+Dieser Abschnitt beschreibt Funktionalitäten, die ausschließlich durch den Einsatz von Contributed oder Drupal-Core Modulen und Customizing in Drupal umgesetzt wurden.
 
 \subsubsection{Darstellung der Suchergebnisse}\label{subsub:suchergebnisse}
 \todo{Darstellung der Suchergebnisse}
+Im Folgenden wird beschrieben wie die Darstellung der Suchergebnisse umgesetzt wurde.
+
+Anpassung neuer Inhaltstypen an Design der übrigen Suchergebnisse. Schnelle Veränderung der bisherigen Darstellung. \dots
+
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.20\textheight]{images/example_searchresult}
@@ -960,27 +966,97 @@ Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst e
 \end{figure}
 
 
+Vorausgesetzte Module:
+\begin{itemize}
+	\item Display Suite \url{https://www.drupal.org/project/ds}
+\end{itemize}
+
+
+\newpage
 \subsubsection{Slider mit Wissenskarten als Startseite}\label{subsub:wkslider}
-\todo{Slider mit Wissenskarten als Startseite}
+Vorausgesetzte Module:
+\begin{itemize}
+	\item Flex Slider (\url{https://www.drupal.org/project/flexslider})
+	\item Views (\url{https://www.drupal.org/project/views})
+\end{itemize}
+
+
 \begin{figure}[H]
 	\centering
-	\includegraphics[height=0.20\textheight]{images/example_slider}
+	\begin{subfigure}[b]{0.4\textwidth}
+		\centering
+		\includegraphics[height=0.17\textheight]{images/config_slideroptionset}
+		\caption[]{Konfiguration Flex Slider}
+		\label{fig:config_slideroptionset}
+	\end{subfigure}
+	%
+	\begin{subfigure}[b]{0.55\textwidth}
+		\centering
+		\includegraphics[height=0.17\textheight]{images/config_sliderview}
+		\caption[]{Konfiguration View}
+		\label{fig:config_sliderview}
+	\end{subfigure}
+	%
+	\begin{subfigure}[b]{0.45\textwidth}
+		\centering
+		\includegraphics[height=0.17\textheight]{images/example_slider}
+		\caption[]{Beispiel}
+		\label{fig:example_slider}
+	\end{subfigure}
 	\caption{Slider mit Wissenskarten als Startseite}
-	\label{fig:example_slider}
+	\label{fig:slider}
 \end{figure}
+
+Im Folgenden werden die grundlegenden Schritte beschrieben, die nötig sind um eine Startseite mit zwei zusammenhängen Bild-Slidern (Slider mit Karussell) wie in \cref{fig:example_slider} anzulegen:
+\begin{enumerate}
+	\item Unter den Flex Slider Einstellungen ein neues \textit{option set} hinzufügen (\lstinline|admin/config/media/flexslider/add|).
+	\item Als \textit{Titel} \enquote{carousel\_wk} eintragen und bei \textit{Animation} \enquote{Slide} auswählen.
+	\item Im Tab \textit{Erweiterte Optionen} unter der Option \textit{Use as navigation} \enquote{\#slider\_wk} eintragen (siehe \cref{fig:config_slideroptionset}) und das \textit{option set} speichern.
+	\item Ein zweites \textit{option set} mit dem \textit{Titel} \enquote{slider\_wk} erstellen und im Tab \textit{Erweiterte Optionen} unter \textit{Abgleich} \enquote{\#carousel\_wk} eintragen.
+	\item Einen neuen View mit zwei Blöcken (\enquote{slider} und \enquote{carousel}) anlegen und nach Typ \enquote{Wissenskarte} filtern (siehe \cref{fig:config_sliderview}).
+	\item Für den Slider-Block \textit{Format} auf \enquote{FlexSlider} ändern, in den Einstellungen das zuvor erstellte \enquote{slider\_wk} \textit{option set} auswählen und als \textit{Element-ID} \enquote{\#slider\_wk} setzen.
+	\item Für den Slider-Block ein Feld vom \enquote{Inhalt: Bild} mit der Einstellung \enquote{Bilddarstellung: flexslider\_full} hinzufügen.
+	\item Für den Carousel-Block \textit{Format} auf \enquote{FlexSlider} ändern, in den Einstellungen das zuvor erstellte \enquote{carousel\_wk} \textit{option set} auswählen und als \textit{Element-ID} \enquote{\#carousel\_wk} setzen.
+	\item Für den Carousel-Block ein Feld vom \enquote{Inhalt: Bild} mit der Einstellung \enquote{Bilddarstellung: flexslider\_thumbnail} hinzufügen.
+	\item Die beiden Blöcke der Inhaltsregion zuordnen und nur auf der Seite \enquote{<front>} anzeigen lassen.
+\end{enumerate}
+
+
 
 
 \subsubsection{Apache Solr Search}\label{subsub:apachesolr}
-\todo{Apache Solr Config}
-Wie lassen sich zusätzliche Inhalte in den Solr Index aufnehmen? Laut den Anforderungen durften ja nur die fünf definierten Inhaltstypen gefunden werden. 
+Dieser Abschnitt beschreibt wie sich zusätzliche Inhaltstypen in den Apache Solr Suchindex aufnehmen lassen. Nach den Anforderungen an das Atlas-Projekt soll nur nach den fünf Inhaltstypen Analysereport, Forschungsergebnis, Projekt, Publikation und Wissenskarte gesucht werden können. 
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.20\textheight]{images/config_apachesolr}
+	\caption{Konfigurationsmenü Apache Solr Search Contrib Modul}
+	\label{fig:config_apachesolr}
+\end{figure}
+
+Vorausgesetzte Module:
+\begin{itemize}
+	\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
+\end{itemize}
+
+Weitere Inhaltstypen lassen auf \lstinline|admin/config/search/apachesolr| hinzufügen (siehe \cref{fig:config_apachesolr}):
+\begin{enumerate}
+	\item Unter \enquote{Konfiguration} alle Inhaltstypen auswählen, die in den Suchindex aufgenommen und als Suchergebnisse angezeigt werden sollen
+	\item Änderungen \enquote{Speichern}
+	\item \enquote{Queue all content for reindexing} $\rightarrow$ \enquote{Queue all content}
+	\item \enquote{Index all queued content} $\rightarrow$ \enquote{Index all remaining} (oder warten bis die neuen Inhalte nach und nach im Rahmen der automatischen Wartungsläufe hinzugefügt werden)
+\end{enumerate}
+
+
 
 \subsubsection{Inhaltstypen}\label{subsub:inhaltstypen}
-\todo{todo}
-Es wird nicht näher darauf eingegangen wie die im Laufe des Projekts erstellten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) angelegt und konfiguriert wurden. Struktur und Konfiguration der Inhaltstypen lassen sich direkt im System ablesen (\enquote{Administrationsmenü} $\rightarrow$ \enquote{Struktur} $\rightarrow$  \enquote{Inhaltytypen}). Zum Exportieren aller Einstellungen, um sie auf ein anderen System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an. 
+Auf die im Laufe des Projekts angelegten bzw. erweiterten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) wird an dieser Stelle nicht eingegangen. Die Strukturen der Inhaltstypen lassen sich direkt im System (\enquote{Administrationsmenü} $\rightarrow$ \enquote{Struktur} $\rightarrow$  \enquote{Inhaltytypen}) oder aus den entsprechenden Anforderungsdokumenten ablesen. Zum Exportieren aller Einstellungen, um sie auf ein anderen System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an. 
 
-\subsubsection{CSS / Design / ???}\label{subsub:cssdesign}
-CSS / Design / ???
-Verweis auf \textit{global.atlas.css}?!
+
+
+
+\subsubsection{Design}\label{subsub:cssdesign}
+Alle Änderungen am Design des Portals durch das Atlas-Projekt sind in der Datei \enquote{global.atlas.css} im indeko7 Theme dokumentiert (\lstinline|sites\all\themes\adaptivetheme\indeko7\css|).
 
 
 
@@ -1048,8 +1124,6 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 		\item Field Validation (\url{https://www.drupal.org/project/field_validation})
 		\item Display Suite (\url{https://www.drupal.org/project/ds})
 		\item jQuery Autosize (\url{https://www.drupal.org/project/jquery_autosize}) \textbf{Fixed Contrib Modul: Library pattern, Drupal behaviours mussten angepasst werden}
-		\item Corresponding Entity References (\url{https://www.drupal.org/project/cer}) (alpha version)  \todo{cer und elements nicht mehr benötigt?}
-		\item Elements (\url{https://www.drupal.org/project/elements})
 	\end{itemize}
 
 	\item JavaScript Bibliotheken
@@ -1095,6 +1169,7 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 
 % Glossar
 \printglossary[title = Glossar]
+\todo{was noch? oder überflüssig?}
 
 %\newpage
 %\printbibliography
