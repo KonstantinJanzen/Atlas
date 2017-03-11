@@ -27,19 +27,30 @@
 %\addbibresource{atlas.bib}
 \setlength\bibitemsep{5pt}  % Abstand zwischen 2 Einträgen im Verzeichnis
 
+% Abstände von Listen
+\setlist[itemize]{parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt}
+\setlist[enumerate]{parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt}
+
 % Zeilenabstand: 1.5
 \onehalfspacing
 
+% Zeilenabstand innerhalb von Tabellen
 \renewcommand{\arraystretch}{1.2}
+
+% Schriftart für URLs und Pfadangaben beibehalten (Pfadangaben kursiv)
 \urlstyle{same}
+\DeclareUrlCommand\path{\itshape\urlstyle{same}}
+
+% Abstand nach Bildunterschrift
+\captionsetup{belowskip=0pt}
 
 % hier wird ein neues Kommando definiert
 \newcommand{\zB}{z.\,B. }
 \newcommand{\noconfig}{Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen (deutsche Übersetzungen sowie das Übersetzungstemplate liegen bei).}
 \newcommand{\standardinstall}{Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject}).
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul auf der Seite \path{admin/modules} aktivieren.
 	\end{enumerate}}
 
 
@@ -180,13 +191,13 @@ Dieses Kapitel beschreibt die Komplettinstallation und Konfiguration des \acrsho
 	\begin{enumerate}
 		\item Apache Solr Version 5.5.2 herunterladen und entpacken \url{http://archive.apache.org/dist/lucene/solr/5.5.2/}.
 
-		\item Aus dem Projekt-Unterordner \textit{solr\_config} den Ordner \textit{drupal} nach \lstinline|solr-5.5.2\server\solr\| kopieren.
+		\item Aus dem Projekt-Unterordner \textit{solr\_config} den Ordner \textit{drupal} nach \path{solr-5.5.2/server/solr/} kopieren.
 
-		\item Solr Server starten (\zB \lstinline|solr-5.5.2\bin\solr start|).
+		\item Solr Server starten (\zB \lstinline|solr-5.5.2/bin/solr start|).
 		\item Der Apache Solr Server is lokal unter \url{http://localhost:8983/solr} zu erreichen.
 	\end{enumerate}
 
-	\item Apache Solr Suchindex in Drupal aktualisieren (\lstinline|admin/config/search/apachesolr|):
+	\item Apache Solr Suchindex in Drupal aktualisieren (\path{admin/config/search/apachesolr}):
 	\begin{enumerate}
 		\item \enquote{Delete the Search \& Solr Index} $\rightarrow$ \enquote{Delete index}
 
@@ -242,7 +253,7 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 
 
 
-\cref{fig:structuretheme} stellt die Hauptstruktur des indeko7 Themes dar (\lstinline|\sites\all\themes\adaptivetheme\indeko7|):
+\cref{fig:structuretheme} stellt die Hauptstruktur des indeko7 Themes dar \path{/sites/all/themes/adaptivetheme/indeko7}:
 \begin{itemize}
 	\item \textit{css}: Enthält .css Dateien, die das grundlegende Design betreffen. Alle das Portal betreffenden Änderungen sind in der Datei \textit{global.atlas.css} zusammengefasst.
 
@@ -270,14 +281,14 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 	\label{fig:structuremodule}
 \end{figure}
 
-Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom Module (\lstinline|\sites\all\modules\custom|):
+Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom Module (\path{/sites/all/modules/custom}):
 
 \begin{itemize}
 	\item \textit{css}: Enthält CSS Dateien, die speziell das Modul betreffen.
 
 	\item \textit{js}: Enthält JavaScript Dateien, die speziell das Modul betreffen.
 
-	\item \textit{translations}: Enthält eine Übersetzungs-Vorlage (.pot), die alle übersetzbaren Texte des Moduls enthält und eine deutsche Übersetzungsdatei (.de.po). Die Übersetzungen werden während der Installation des Moduls importiert oder können jederzeit manuell in Drupal importiert werden (\lstinline|admin/config/regional/translate/import|). Templates erstellt mit dem Translation template extractor Modul (\url{https://www.drupal.org/project/potx})
+	\item \textit{translations}: Enthält eine Übersetzungs-Vorlage (.pot), die alle übersetzbaren Texte des Moduls enthält und eine deutsche Übersetzungsdatei (.de.po). Die Übersetzungen werden während der Installation des Moduls importiert oder können jederzeit manuell in Drupal importiert werden (\path{admin/config/regional/translate/import}). Templates erstellt mit dem Translation template extractor Modul (\url{https://www.drupal.org/project/potx})
 
 	\item \textit{.info}: Enthält Informationen über das Modul, die von Drupal benötigt werden (Abhängigkeiten, Menüs, \dots).
 
@@ -285,7 +296,7 @@ Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom
 
 	\item \textit{.module}: Enthält den PHP Quellcode des Moduls.
 
-	\item \textit{README.txt}: Enthält die Beschreibung des Moduls, die Installationsanleitung inklusive Pflicht- und optionaler Module, sowie eine Beschreibung der Konfiguration (in Anlehnung an das Drupal README Template \url{https://www.drupal.org/node/2181737}).
+	\item \textit{README.txt}: Enthält die Beschreibung des Moduls, die Installationsanleitung inklusive Pflicht- und optionaler Module, sowie eine Beschreibung der Konfiguration (in Anlehnung an das Drupal README Template, siehe \url{https://www.drupal.org/node/2181737}).
 \end{itemize}
 
 
@@ -295,15 +306,17 @@ Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom
 Dieser Abschnitt enthält Punkte, die bei der Überführung des \acrshort{indeko}.Navi-Portals aus der Test-Umgebung in eine Live-Umgebung beachtet werden sollten.
 
 \begin{itemize}
-	\item In der Entwicklung genutzte Benutzeraccounts deaktivieren, da die Passwörter unsicher sind (\lstinline|admin/people|): \enquote{admin}, \enquote{ruser}, \enquote{ruser2}, \enquote{ruser3}, \enquote{ruser4}, \enquote{ruser5}.
+	\item In der Entwicklung genutzte Benutzeraccounts deaktivieren, da die Passwörter unsicher sind (\path{admin/people}): \enquote{admin}, \enquote{ruser}, \enquote{ruser2}, \enquote{ruser3}, \enquote{ruser4}, \enquote{ruser5}.
 
-	\item Beispiel-Wissenskarten löschen, da nicht geprüft wurde, ob die verwendeten Bilder lizenzfrei sind (\lstinline|admin/content|, siehe \cref*{sub:license} \cref{sub:license_images}).
+	\item Beispiel-Wissenskarten löschen, da nicht geprüft wurde, ob die verwendeten Bilder lizenzfrei sind (\path{admin/content}, siehe \cref*{sub:license} \cref{sub:license_images}).
 
-	\item Für den CSV-Export der Suchergebnisse, die aus dem Internet erreichbare URL des Apache Solr Servers eintragen (\lstinline|admin/config/search/morphsearch_csv_export|).
+	\item Für den CSV-Export der Suchergebnisse, die aus dem Internet erreichbare URL des Apache Solr Servers eintragen (\path{admin/config/search/morphsearch_csv_export}).
 
-	\item Anzuzeigende Fehlermeldungen deaktivieren (\lstinline|admin/config/development/logging|).
+	\item Anzuzeigende Fehlermeldungen deaktivieren (\path{admin/config/development/logging}).
 	
-	\item Überreste von Dummy-/Test-Daten und Benutzerprofilen löschen (\lstinline|admin/content|).
+	\item Überreste von Dummy-/Test-Daten und Benutzerprofilen löschen (\path{admin/content}).
+
+	\item SMTP/E-Mail-Versand für Registrierung konfigurieren.
 	
 	\item \dots \todo{was noch?}
 
@@ -345,7 +358,7 @@ Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalität
 
 
 Dieser Abschnitt beschreibt die im Laufe des Projekts entwickelten Drupal Custom Module. Diese Module wurden in die Bereiche Wissenskarte (siehe \cref{fig:modules_knowledgemap}), Suche (siehe \cref{fig:modules_search}), sowie Atlas für allgemeine Module (siehe \cref{fig:modules_atlas}) unterteilt.
-Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte \enquote{Vorausgesetzte Module}, \enquote{Empfohlene Module}, \enquote{Installation} und \enquote{Konfiguration} eingegangen. \enquote{Vorausgesetzte Module} listet alle Module, die zusätzlich zum entwickelten Modul installiert sein müssen, auf. Diese Informationen sind auch in den README.txt und den [Modul].info Dateien hinterlegt (somit wird man bei der Installation auch von Drupal auf fehlende vorausgesetzte Module hingewiesen). Der Punkt \enquote{Empfohlene Module} listet Module auf, die nicht zwingend benötigt werden, aber zum Nutzen des entwickelten Moduls beitragen. Unter \enquote{Installation} werden alle nötigen Installationsschritte aufgeführt und \enquote{Konfiguration} erläutert mögliche Einstellungen am Modul bzw. das Konfigurationsmenü. Alle Texte der Module sind englisch. Jedem Modul liegen im Unterordner \enquote{translations} jeweils ein Übersetzungstemplate (mit allen übersetzbaren Textstellen) sowie eine deutsche Übersetzung bei. Diese ermöglichen bei aktiviertem Drupal-Core Modul \enquote{locale} die Konfiguration der Sprache (\lstinline|admin/config/regional/translate|, importieren oder Textstellen manuell übersetzen).
+Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte \textit{Vorausgesetzte Module}, \textit{Empfohlene Module}, \textit{Installation} und \textit{Konfiguration} eingegangen. \textit{Vorausgesetzte Module} listet alle Module, die zusätzlich zum entwickelten Modul installiert sein müssen, auf. Diese Informationen sind auch in den README.txt und den [Modul].info Dateien hinterlegt (somit wird man bei der Installation auch von Drupal auf fehlende vorausgesetzte Module hingewiesen). Der Punkt \textit{Empfohlene Module} listet Module auf, die nicht zwingend benötigt werden, aber zum Nutzen des entwickelten Moduls beitragen. Unter \textit{Installation} werden alle nötigen Installationsschritte aufgeführt und \textit{Konfiguration} erläutert mögliche Einstellungen am Modul bzw. das Konfigurationsmenü. Alle Texte der Module sind englisch. Jedem Modul liegen im Unterordner \textit{translations} jeweils ein Übersetzungstemplate (mit allen übersetzbaren Textstellen) sowie eine deutsche Übersetzung bei. Diese ermöglichen bei aktiviertem Drupal-Core Modul \textit{locale} die Konfiguration der Sprache (\path{admin/config/regional/translate}, importieren oder Textstellen manuell übersetzen).
 
 Auf Implementierungsdetails wird bei der Beschreibung der Custom-Module nicht eingegangen. Diese sind ausführlich in den Quellcodedateien kommentiert.
 
@@ -499,10 +512,10 @@ Dieses Modul sorgt dafür, dass \textit{\glspl{imagemap}} \textit{responsive} we
 
 	\item Installation:
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject})
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject})
 		\item Image Map Resize plugin herunterladen \url{https://github.com/davidjbradshaw/image-map-resizer}
-		\item \textit{imageMapResizer.min.js} Datei in den Ordner \lstinline|sites/all/libraries/image-map-resizer| entpacken.
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+		\item \textit{imageMapResizer.min.js} Datei in den Ordner \path{sites/all/libraries/image-map-resizer} entpacken.
+		\item Modul auf der Seite \path{admin/modules} aktivieren.
 	\end{enumerate}
 
 
@@ -560,10 +573,10 @@ Dieses Modul ermöglicht es Bereiche von \glspl{imagemap} hervorzuheben (siehe \
 
 	\item Installation:
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject}).
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item jQuery Map Hilight Plugin herunterladen \url{https://github.com/kemayo/maphilight}
-		\item \textit{jquery.maphilight.min.js} Datei in den Ordner \lstinline|sites/all/libraries/jquery.maphilight| entpacken.
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+		\item \textit{jquery.maphilight.min.js} Datei in den Ordner \path{sites/all/libraries/jquery.maphilight} entpacken.
+		\item Modul auf der Seite \path{admin/modules} aktivieren.
 	\end{enumerate}
 
 	\item Konfiguration:
@@ -638,10 +651,10 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 
 	\item Installation: 
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject}).
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item qTip2 jQuery Plugin herunterladen (\url{http://qtip2.com/download}) 
-		\item \enquote{jquery.qtip.min.js} und \enquote{jquery.qtip.min.css} in den Ordner \lstinline|sites/all/libraries/qtip| entpacken.
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+		\item \textit{jquery.qtip.min.js} und \textit{jquery.qtip.min.css} in den Ordner \path{sites/all/libraries/qtip} entpacken.
+		\item Modul auf der Seite \path{admin/modules} aktivieren.
 		\item Modul konfigurieren.
 		
 	\end{enumerate}
@@ -674,11 +687,11 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 
 	\item Konfiguration:
 	
-	\cref{fig:config_morphsearch} stellt das Konfigurationsmenü dar (\lstinline|admin/config/search/morphsearch|). Dort lässt sich einstellen welche Inhaltstypen zur Filterung der Suchergebnisse in dem Block zur Auswahl stehen sollen (siehe \cref{fig:example_morphsearchblock}).
+	\cref{fig:config_morphsearch} stellt das Konfigurationsmenü dar (\path{admin/config/search/morphsearch}). Dort lässt sich einstellen welche Inhaltstypen zur Filterung der Suchergebnisse in dem Block zur Auswahl stehen sollen (siehe \cref{fig:example_morphsearchblock}).
 	
 	Die \textit{publikationsbezogene Suche} (siehe \cref{fig:example_morphsearch_publication}) steht nur zur Verfügung, wenn das \textit{Bibliography Module} installiert und aktiviert ist. Eine Anpassung der zur Verfügung gestellten Filter (Erscheinungsjahr, Autor, \dots) ist nicht vorgesehen und lässt sich somit nur durch Änderungen im Quellcode erreichen.
 	
-	Die \textit{morphologisch Suche} (siehe \cref{fig:example_morphsearch_morphological}) steht nur zur Verfügung, wenn das \textit{Taxonomy} Kernmodul aktiviert ist. Für jede Dimension, die in der \textit{morphologischen Suche} angezeigt werden soll, muss ein Vokabular angelegt werden (\lstinline|admin/structure/taxonomy|). Hierbei ist darauf zu achten, dass ein Vokabular nur in die morphologische Suche übernommen wird, wenn der Maschinenname mit
+	Die \textit{morphologisch Suche} (siehe \cref{fig:example_morphsearch_morphological}) steht nur zur Verfügung, wenn das \textit{Taxonomy} Kernmodul aktiviert ist. Für jede Dimension, die in der \textit{morphologischen Suche} angezeigt werden soll, muss ein Vokabular angelegt werden (\path{admin/structure/taxonomy}). Hierbei ist darauf zu achten, dass ein Vokabular nur in die morphologische Suche übernommen wird, wenn der Maschinenname mit
 	\begin{itemize}
 		\item \lstinline|tax_morph_| für Einfachauswahl
 		\item \lstinline|tax_morph_m_| für Mehrfachauswahl
@@ -733,7 +746,7 @@ Dieses Modul fügt der Apache Solr Suchergebnisseite einen Link hinzu, der es er
 	
 	\item Konfiguration:
 	
-	\cref{fig:config_searchcsv} stellt das Konfigurationsmenü dar (\lstinline|admin/config/search/morphsearch_csv_export|). Die Suchergebnisse werden direkt vom Apache Solr-Server als CSV-Datei übertragen, daher muss die Adresse des Solr-Servers eingetragen werden. Die Adresse für die lokale Entwicklung wird automatisch während der Installation gesetzt. Für den Live-Betrieb muss die aus dem Internet erreichbare Adresse angegeben werden.
+	\cref{fig:config_searchcsv} stellt das Konfigurationsmenü dar (\path{admin/config/search/morphsearch_csv_export}). Die Suchergebnisse werden direkt vom Apache Solr-Server als CSV-Datei übertragen, daher muss die Adresse des Solr-Servers eingetragen werden. Die Adresse für die lokale Entwicklung wird automatisch während der Installation gesetzt. Für den Live-Betrieb muss die aus dem Internet erreichbare Adresse angegeben werden.
 
 \end{itemize}
 
@@ -773,9 +786,9 @@ Dieses Modul fügt der Drupal-Installation einen Block hinzu, der es erlaubt Apa
 
 	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject}).
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
-		\item Den \textit{Apache Solr Atlas Sort Block} einer sichtbaren Region zuordnen (\lstinline|admin/structure/block|).
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul auf der Seite \path{admin/modules} aktivieren.
+		\item Den \textit{Apache Solr Atlas Sort Block} einer sichtbaren Region zuordnen (\path{admin/structure/block}).
 	\end{enumerate}
 
 	\item Konfiguration:
@@ -824,14 +837,14 @@ Dieses Modul fügt dem \textit{user menu} Block Links zum Anlegen neuer Inhalte 
 	\item Installation: 
 	Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \lstinline|sites/all/modules/custom|, vgl. \cref{fig:structureproject}).
-		\item Modul auf der Seite \lstinline|admin/modules| aktivieren.
+		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul auf der Seite \path{admin/modules} aktivieren.
 		\item Modul Konfigurieren.
 	\end{enumerate}
 	
 	\item Konfiguration:
 	
-	\cref{fig:config_nodecreationlinks} stellt das Konfigurationsmenü dar (\lstinline|admin/config/content/node_creation_links|). Es werden alle im System definierten Inhaltstypen aufgelistet. Solange keine Inhaltstypen ausgewählt sind ist auch der Eintrag \textit{Element anlegen} nicht sichtbar. Ausgewählte Inhaltstypen stehen einem eingeloggten Benutzer später potentiell in dem Block unter \enquote{Element anlegen} zur Verfügung. Die in \cref{fig:config_nodecreationlinks} dargestellten Links zum Erstellen von Inhaltstypen werden individuell pro Benutzer erzeugt (Links zu Inhaltstypen, die der aktuell eingeloggte Benutzer nicht erstellen darf werden auch nicht erzeugt). 
+	\cref{fig:config_nodecreationlinks} stellt das Konfigurationsmenü dar (\path{admin/config/content/node_creation_links}). Es werden alle im System definierten Inhaltstypen aufgelistet. Solange keine Inhaltstypen ausgewählt sind ist auch der Eintrag \textit{Element anlegen} nicht sichtbar. Ausgewählte Inhaltstypen stehen einem eingeloggten Benutzer später potentiell in dem Block unter \textit{Element anlegen} zur Verfügung. Die in \cref{fig:config_nodecreationlinks} dargestellten Links zum Erstellen von Inhaltstypen werden individuell pro Benutzer erzeugt (Links zu Inhaltstypen, die der aktuell eingeloggte Benutzer nicht erstellen darf werden auch nicht erzeugt). 
 	
 	Das Aussehen des \textit{Element anlegen} Blocks wird per CSS im Theme definiert (\zB \textit{global.atlas.css}, siehe \cref{sub:strukture_project}).
 	
@@ -900,9 +913,7 @@ Dieses Modul fügt dem Wissenskarten Slider-Karussell (siehe \cref{subsub:wkslid
 		\item keine
 	\end{itemize}
 	
-	\item Installation: 
-	
-	\standardinstall
+	\item Installation: \standardinstall
 	
 	
 	\item Konfiguration:
@@ -911,7 +922,7 @@ Dieses Modul fügt dem Wissenskarten Slider-Karussell (siehe \cref{subsub:wkslid
 \end{itemize}
 
 
-
+\newpage
 \subsubsection{user\_profile\_elements\_overview}\label{subsub:userprofileelementsoverview}
 Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst erstellten Publikationen, Wissenskarten, Projekte, Analysereports und Forschungsergebnisse auf (siehe \cref{fig:example_userprofile}). Jedes Element verfügt über ein individuelles sowie Tooltip.
 
@@ -933,9 +944,7 @@ Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst e
 		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome}): Nur für das Standard-Icon benötigt, falls keine individuellen Icons festgelegt wurden.
 	\end{itemize}
 	
-	\item Installation: 
-	
-	\standardinstall
+	\item Installation: \standardinstall
 	
 	
 	\item Konfiguration:
@@ -952,24 +961,60 @@ Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst e
 Dieser Abschnitt beschreibt Funktionalitäten, die ausschließlich durch den Einsatz von Contributed oder Drupal-Core Modulen und Customizing in Drupal umgesetzt wurden.
 
 \subsubsection{Darstellung der Suchergebnisse}\label{subsub:suchergebnisse}
-\todo{Darstellung der Suchergebnisse}
-Im Folgenden wird beschrieben wie die Darstellung der Suchergebnisse umgesetzt wurde.
 
-Anpassung neuer Inhaltstypen an Design der übrigen Suchergebnisse. Schnelle Veränderung der bisherigen Darstellung. \dots
+Im Folgenden wird beschrieben wie die Darstellung der Suchergebnisse umgesetzt wurde. Dies ermöglicht eine schnelle Anpassung neuer Inhaltstypen an das aktuelle Design der Suchergebnisse.
+
+Vorausgesetzte Module:
+\begin{itemize}
+	\item Display Suite (\url{https://www.drupal.org/project/ds}) mit aktivierten Sub-Modulen Display Suite UI, Display Suite Search und Display Suite Format
+\end{itemize}
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.20\textheight]{images/example_searchresult}
-	\caption{Darstellung der Suchergebnisse}
+	\caption{Darstellung der Suchergebnisse Beispiel}
 	\label{fig:example_searchresult}
 \end{figure}
 
 
-Vorausgesetzte Module:
-\begin{itemize}
-	\item Display Suite \url{https://www.drupal.org/project/ds}
-\end{itemize}
+
+Die Darstellung der Suchergebnisse (siehe \cref{fig:example_searchresult}) erfolgt über den Anzeigemodus \enquote{Search result highlighting input}. Dieser muss in den Einstellungen für den Inhaltstyp aktiviert werden (\textit{Struktur} $\rightarrow$ \textit{Inhaltstypen} $\rightarrow$ \textit{Anzeige verwalten}). Dies geschieht wie in \cref{fig:config_searchresult_viewmode} abgebildet unter \textit{Benutzerdefinierte Anzeigeeinstellungen}. Nachdem der Inhaltstyp gespeichert wurde wechselt man in den neuen Anzeigemodus \enquote{Search result highlighting input}.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[height=0.20\textheight]{images/config_searchresult_viewmode}
+	\caption{Darstellung der Suchergebnisse Konfiguration}
+	\label{fig:config_searchresult_viewmode}
+\end{figure}
+
+
+Im Tab Layout wählt man \textit{Fluid two column stacked} (siehe \cref{fig:config_searchresult_viewmodesearch}). Nachdem im Tab \textit{Custom classes} dem Layout die CSS-Klasse \enquote{search-result} zugeordnet wurde (siehe \cref{fig:config_searchresult_viewmodesearchclass}) werden die Änderungen gespeichert. Die gewünschten Felder können nun, wie in Drupal gewohnt, konfiguriert und den einzelnen Regionen des Layouts zugeordnet werden. \cref{fig:config_searchresult_viewmodesearch} zeigt exemplarisch die Konfiguration des Inhaltstyps \textit{Wissenskarte} (der Titel von Suchergebnissen wurde \zB mit \textit{h3} Wrapper und CSS-Klasse \textit{title} konfiguriert).
+
+
+\begin{figure}[H]
+	\centering
+	\begin{subfigure}[b]{0.55\textwidth}
+		\centering
+		\includegraphics[height=0.35\textheight]{images/config_searchresult_viewmodesearch}
+		\caption[]{Layout}
+		\label{fig:config_searchresult_viewmodesearch}
+	\end{subfigure}
+	%
+	\begin{subfigure}[b]{0.30\textwidth}
+		\centering
+		\includegraphics[width=\linewidth]{images/config_searchresult_viewmodesearchclass}
+		\caption[]{Custom classes}
+		\label{fig:config_searchresult_viewmodesearchclass}
+	\end{subfigure}
+	\caption{Konfiguration des Anzeigemodus \enquote{Search result highlighting input}}
+	\label{fig:config_searchresult}
+\end{figure}
+
+
+\textit{Display Suite} ermöglicht es zusätzlich zu den Feldern des Inhaltstyps benutzerdefinierte Felder zu definieren (\path{admin/structure/ds/fields}). Für die Darstellung der Suchergebnisse wurde \zB das benutzerdefinierte Feld \textit{Content Type Icon} hinzugefügt. Dieses Feld fügt den Suchergebnissen ein html-Element hinzu, um in den Suchergebnissen individuelle Inhhaltstypen-Icons und Tooltips anzeigen zu können. 
+
+
 
 
 \newpage
@@ -1008,8 +1053,8 @@ Vorausgesetzte Module:
 \end{figure}
 
 Im Folgenden werden die grundlegenden Schritte beschrieben, die nötig sind um eine Startseite mit zwei zusammenhängen Bild-Slidern (Slider mit Karussell) wie in \cref{fig:example_slider} anzulegen:
-\begin{enumerate}
-	\item Unter den Flex Slider Einstellungen ein neues \textit{option set} hinzufügen (\lstinline|admin/config/media/flexslider/add|).
+\begin{enumerate}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt]
+	\item Unter den Flex Slider Einstellungen ein neues \textit{option set} hinzufügen (\path{admin/config/media/flexslider/add}).
 	\item Als \textit{Titel} \enquote{carousel\_wk} eintragen und bei \textit{Animation} \enquote{Slide} auswählen.
 	\item Im Tab \textit{Erweiterte Optionen} unter der Option \textit{Use as navigation} \enquote{\#slider\_wk} eintragen (siehe \cref{fig:config_slideroptionset}) und das \textit{option set} speichern.
 	\item Ein zweites \textit{option set} mit dem \textit{Titel} \enquote{slider\_wk} erstellen und im Tab \textit{Erweiterte Optionen} unter \textit{Abgleich} \enquote{\#carousel\_wk} eintragen.
@@ -1018,10 +1063,8 @@ Im Folgenden werden die grundlegenden Schritte beschrieben, die nötig sind um e
 	\item Für den Slider-Block ein Feld vom \enquote{Inhalt: Bild} mit der Einstellung \enquote{Bilddarstellung: flexslider\_full} hinzufügen.
 	\item Für den Carousel-Block \textit{Format} auf \enquote{FlexSlider} ändern, in den Einstellungen das zuvor erstellte \enquote{carousel\_wk} \textit{option set} auswählen und als \textit{Element-ID} \enquote{\#carousel\_wk} setzen.
 	\item Für den Carousel-Block ein Feld vom \enquote{Inhalt: Bild} mit der Einstellung \enquote{Bilddarstellung: flexslider\_thumbnail} hinzufügen.
-	\item Die beiden Blöcke der Inhaltsregion zuordnen und nur auf der Seite \enquote{<front>} anzeigen lassen.
+	\item Beide Blöcke der Inhaltsregion zuordnen und nur auf der Seite \enquote{<front>} anzeigen lassen.
 \end{enumerate}
-
-
 
 
 \subsubsection{Apache Solr Search}\label{subsub:apachesolr}
@@ -1039,8 +1082,8 @@ Vorausgesetzte Module:
 	\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
 \end{itemize}
 
-Weitere Inhaltstypen lassen auf \lstinline|admin/config/search/apachesolr| hinzufügen (siehe \cref{fig:config_apachesolr}):
-\begin{enumerate}
+Weitere Inhaltstypen lassen sich unter \path{admin/config/search/apachesolr} hinzufügen (siehe \cref{fig:config_apachesolr}):
+\begin{enumerate}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt]
 	\item Unter \enquote{Konfiguration} alle Inhaltstypen auswählen, die in den Suchindex aufgenommen und als Suchergebnisse angezeigt werden sollen
 	\item Änderungen \enquote{Speichern}
 	\item \enquote{Queue all content for reindexing} $\rightarrow$ \enquote{Queue all content}
@@ -1049,14 +1092,16 @@ Weitere Inhaltstypen lassen auf \lstinline|admin/config/search/apachesolr| hinzu
 
 
 
+
+
 \subsubsection{Inhaltstypen}\label{subsub:inhaltstypen}
-Auf die im Laufe des Projekts angelegten bzw. erweiterten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) wird an dieser Stelle nicht eingegangen. Die Strukturen der Inhaltstypen lassen sich direkt im System (\enquote{Administrationsmenü} $\rightarrow$ \enquote{Struktur} $\rightarrow$  \enquote{Inhaltytypen}) oder aus den entsprechenden Anforderungsdokumenten ablesen. Zum Exportieren aller Einstellungen, um sie auf ein anderen System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an. 
+Auf die im Laufe des Projekts angelegten bzw. erweiterten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) wird an dieser Stelle nicht eingegangen. Die Strukturen der Inhaltstypen lassen sich direkt im System (\textit{Administrationsmenü} $\rightarrow$ \textit{Struktur} $\rightarrow$  \textit{Inhaltytypen}) oder aus den entsprechenden Anforderungsdokumenten ablesen. Zum Exportieren aller Einstellungen, um sie auf ein anderen System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an. 
 
 
 
 
 \subsubsection{Design}\label{subsub:cssdesign}
-Alle Änderungen am Design des Portals durch das Atlas-Projekt sind in der Datei \enquote{global.atlas.css} im indeko7 Theme dokumentiert (\lstinline|sites\all\themes\adaptivetheme\indeko7\css|).
+Alle Änderungen am Design des Portals durch das Atlas-Projekt sind in der Datei \textit{global.atlas.css} im indeko7 Theme dokumentiert (\path{sites/all/themes/adaptivetheme/indeko7/css}).
 
 
 
@@ -1068,7 +1113,7 @@ Alle Änderungen am Design des Portals durch das Atlas-Projekt sind in der Datei
 	\item \textit{ERROR 2006 (HY000) at line [\dots]: MySQL server has gone away}
 
 	MySQL Konfiguration (my.ini | XAMPP -> MySQL -> Config)
-	\textbf{max\_allowed\_packet} erhöhen (\zB auf \enquote{32M}).
+	\textbf{max\_allowed\_packet} erhöhen (\zB auf 32M).
 
 
 	\item \textit{Fatal error: Allowed memory size of [\dots] bytes exhausted (tried to allocate [\dots] bytes) in [\dots]}
@@ -1102,28 +1147,31 @@ Alle Änderungen am Design des Portals durch das Atlas-Projekt sind in der Datei
 \end{itemize}
 
 
-
+\newpage
 \section{Verwendete Ressourcen und deren Lizenzen}\label{sub:license}
 Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{indeko}.Navi-Portal im Laufe des Projekts hinzugefügt wurden. Es dient als Übersicht was, im Vergleich zum Ursprungsprojekt, neu hinzugekommen ist und zur Versicherung, dass immer noch alles Open Source ist.
 
-\begin{enumerate}
+\begin{enumerate}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item Drupal Contrib Module (alle \textbf{GPLv2})
 	\begin{itemize}
-		\item Administration menu (\url{https://www.drupal.org/project/admin_menu})
-		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome})
 		\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
+		
+		Anbindung Apache Solr Server
+		
 		\item Apache Solr Real-Time (\url{https://www.drupal.org/project/apachesolr_realtime})
-		\item Field Group (\url{https://www.drupal.org/project/field_group})
+		\item Bibliography Module (\url{https://www.drupal.org/project/biblio})
 		\item Fivestar (\url{https://www.drupal.org/project/fivestar})
 		\item Halfstar (\url{https://www.drupal.org/project/halfstar})
 		\item Voting API (\url{https://www.drupal.org/project/votingapi})
-		\item Bibliography Module (\url{https://www.drupal.org/project/biblio})
+		\item Display Suite (\url{https://www.drupal.org/project/ds})
 		\item Chosen (\url{https://www.drupal.org/project/chosen})
 		\item Conditional Fields (\url{https://www.drupal.org/project/conditional_fields})
-		\item Entity Connect (\url{https://www.drupal.org/project/entityconnect}) (Problem mit Chosen, Links für neue Inhalte werden bei multiselect nicht hinter den chosen Elementen angeordnet. \textbf{Provisorischer Fix in \enquote{entityconnect.js} vom Entity Connect Modul})
 		\item Field Validation (\url{https://www.drupal.org/project/field_validation})
-		\item Display Suite (\url{https://www.drupal.org/project/ds})
+		\item Field Group (\url{https://www.drupal.org/project/field_group})
+		\item Entity Connect (\url{https://www.drupal.org/project/entityconnect}) (Problem mit Chosen, Links für neue Inhalte werden bei multiselect nicht hinter den chosen Elementen angeordnet. \textbf{Provisorischer Fix in \textit{entityconnect.js} vom Entity Connect Modul})
 		\item jQuery Autosize (\url{https://www.drupal.org/project/jquery_autosize}) \textbf{Fixed Contrib Modul: Library pattern, Drupal behaviours mussten angepasst werden}
+		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome})	
+		\item Administration menu (\url{https://www.drupal.org/project/admin_menu})
 	\end{itemize}
 
 	\item JavaScript Bibliotheken
@@ -1158,11 +1206,19 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 \end{enumerate}
 
 
+\newpage
 \section{Offene Punkte}
 \begin{itemize}
 	\item Problem mit News-Block:
 	
-	Wenn der News-Block leer ist (keine in der Zukunft liegenden Events mehr im System), werden alle Drupal Fehler-/Bestätigungsmeldungen in dem News-Block, statt im oberen Bereich der Seite, angezeigt.
+	\begin{figure}[H]
+		\centering
+		\includegraphics[height=0.20\textheight]{images/example_newserror}
+		\caption{Falsche Position von Drupal Fehler- und Bestätigungsmeldungen}
+		\label{fig:example_newserror}
+	\end{figure}
+
+	Wenn der News-Block leer ist (keine in der Zukunft liegenden Events mehr im System), werden alle Drupal Fehler-/Bestätigungsmeldungen in dem News-Block, statt im oberen Bereich der Seite, angezeigt (siehe \cref{fig:example_newserror}).
 	
 
 \end{itemize}
