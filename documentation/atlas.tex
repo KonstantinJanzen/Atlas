@@ -4,10 +4,10 @@
 %%%%%%%%%%%%%%%%%%%%%
 % Meta-Informationen 
 \newcommand{\titel}{Community-basierte Wissensportale InDeKo.Navi Atlas}
-\newcommand{\untertitel}{Installationsanleitung} 
+\newcommand{\untertitel}{Installationshandbuch} 
 \newcommand{\art}{Ausarbeitung}
 \newcommand{\studiengang}{Wirtschaftsinformatik}
-\newcommand{\autor}{Robin Helmedach, Konstantin Janzen, Friederike Lauterbach, Stephan Mende}
+\newcommand{\autor}{Autoren}
 \newcommand{\email}{}
 \newcommand{\matnr}{}
 \newcommand{\institut}{Institut für Betriebswirtschaft und Wirtschaftsinformatik}
@@ -49,7 +49,7 @@
 \newcommand{\noconfig}{Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen (deutsche Übersetzungen sowie das Übersetzungstemplate liegen bei).}
 \newcommand{\standardinstall}{Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
 	\end{enumerate}}
 
@@ -71,7 +71,7 @@
 {
 	name=Verweissensitive Grafik,
 	plural=Verweissensitive Grafiken,
-	description={Verweis-sensitive Grafiken (englisch \textit{\glspl{imagemap}}) sind Grafiken, in denen der Anwender mit der Maus auf ein Detail klicken kann. Daraufhin wird ein Verweis ausgeführt. Auf diese Weise kann der Anwender in einigen Fällen wesentlich intuitiver und schneller zu Information gelangen als durch lange verbale Verweislisten.}
+	description={Verweis-sensitive Grafiken (englisch \textit{\glspl{imagemap}}) sind Grafiken, in denen der Anwender mit der Maus auf ein Detail klicken kann. Daraufhin wird ein Verweis ausgeführt. Auf diese Weise kann der Anwender in einigen Fällen wesentlich intuitiver und schneller zu Information gelangen als durch lange verbale Verweislisten}
 }
 \newglossaryentry{wissenskarte}
 {
@@ -79,7 +79,24 @@
 	plural=Wissenskarten,
 	description={(englisch \textit{\gls{knowledgemap}}) Visualisierung von Wissen}
 }
-
+\newglossaryentry{coremodul}
+{
+	name=Core-Modul,
+	plural=Core-Module,
+	description={Modul, das Bestandteil der Drupal-Standardinstallation ist}
+}
+\newglossaryentry{contribmodul}
+{
+	name=Contrib-Modul,
+	plural=Contrib-Module,
+	description={(Contributed-Modul) Modul, das von der Drupal-Community oder Drittanbietern entwickelt und zur Verfügung gestellt wird}
+}
+\newglossaryentry{custommodul}
+{
+	name=Custom-Modul,
+	plural=Custom-Module,
+	description={Modul, das selbst entwickelt wurde, um zusätzliche Funktionalitäten zur Verfügung zu stellen oder Drupal Core-/Contrib-Funktionalitäten zu erweitern}
+}
 
 
 %%%%%% Einträge Abkürzungsverzeichnis  %%%%%
@@ -157,7 +174,6 @@
 
 % Erzeugt das Abkürzungsverzeichnis
 \glsaddall
-\todo{was noch? oder überflüssig?}
 \printglossary[type=\acronymtype,title = Abkürzungsverzeichnis]
 
 \newpage
@@ -168,7 +184,7 @@
 
 
 \section{Installation}
-Dieses Kapitel beschreibt die Komplettinstallation und Konfiguration des \acrshort{indeko}.Navi Atlas Projekts. Auf die Installation und Konfiguration einzelner entwickelter Custom Module wird in \cref{sub:custom_modules} eingegangen.
+Dieses Kapitel beschreibt die Komplettinstallation und Konfiguration des \acrshort{indeko}.Navi Atlas-Projekts. Auf die Installation und Konfiguration einzelner entwickelter \glspl{custommodul} wird in \cref{sub:custom_modules} eingegangen.
 
 
 \subsection{Installationsschritte}
@@ -214,7 +230,7 @@ Dieses Kapitel beschreibt die Komplettinstallation und Konfiguration des \acrsho
 
 
 \section{Projektstruktur}
-Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle Änderungen im Vergleich zum \acrshort{indeko}.Navi Ausgangsprojekt sind hervorgehoben und beschrieben. \cref{sub:strukture_project} beschreibt die Struktur des Drupal-Projekts und \cref{sub:strukture_module} geht auf die Struktur der entwickelten Custom Module ein.
+Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas-Projekts. Alle Änderungen im Vergleich zum \acrshort{indeko}.Navi Ausgangsprojekt sind hervorgehoben und beschrieben. \cref{sub:strukture_project} beschreibt die Struktur des Drupal-Projekts und \cref{sub:strukture_module} geht auf die Struktur der entwickelten \glspl{custommodul} ein.
 
 
 \subsection{Grundsätzliche Drupal-Strukur}\label{sub:strukture_project}
@@ -248,7 +264,7 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 
 	\item \textit{solr\_config}: Enthält Konfigurationsdateien für den Apache Solr Server. \textit{install.txt} beschreibt die Installation im Detail.
 
-	\item \textit{sql\_dumps}: Enthält den Datanbank-Dump des \acrshort{indeko}.Navi Atlas-Projekts  (\textit{db\_wissenskarte.sql}).
+	\item \textit{sql\_dumps}: Enthält den Datenbank-Dump des \acrshort{indeko}.Navi Atlas-Projekts  (\textit{db\_wissenskarte.sql}).
 \end{itemize}
 
 
@@ -277,11 +293,11 @@ Dieses Kapitel beschreibt die grundsätzliche Struktur des Atlas Projekts. Alle 
 \begin{figure}
 	\centering
 	\includegraphics[height=0.2\textheight]{images/structure_module}
-	\caption{Grundstruktur Custom Modul}
+	\caption{Grundstruktur \gls{custommodul}}
 	\label{fig:structuremodule}
 \end{figure}
 
-Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom Module (\path{/sites/all/modules/custom}):
+Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten \glspl{custommodul} (\path{/sites/all/modules/custom}):
 
 \begin{itemize}
 	\item \textit{css}: Enthält CSS Dateien, die speziell das Modul betreffen.
@@ -296,7 +312,7 @@ Dieser Abschnitt beschreibt die grundsätzliche Struktur der entwickelten Custom
 
 	\item \textit{.module}: Enthält den PHP Quellcode des Moduls.
 
-	\item \textit{README.txt}: Enthält die Beschreibung des Moduls, die Installationsanleitung inklusive Pflicht- und optionaler Module, sowie eine Beschreibung der Konfiguration (in Anlehnung an das Drupal README Template, siehe \url{https://www.drupal.org/node/2181737}).
+	\item \textit{README.txt}: Enthält die Beschreibung des Moduls, die Installationsanleitung inklusive Pflicht- und optionaler Module sowie eine Beschreibung der Konfiguration (in Anlehnung an das Drupal README Template, siehe \url{https://www.drupal.org/node/2181737}).
 \end{itemize}
 
 
@@ -315,8 +331,8 @@ Dieser Abschnitt enthält Punkte, die bei der Überführung des \acrshort{indeko
 	\item Anzuzeigende Fehlermeldungen deaktivieren (\path{admin/config/development/logging}).
 	
 	\item Überreste von Dummy-/Test-Daten und Benutzerprofilen löschen (\path{admin/content}).
-
-	\item SMTP/E-Mail-Versand für Registrierung konfigurieren.
+	
+	\item SMTP / E-Mail-Versand für Registrierung konfigurieren.
 	
 	\item \dots \todo{was noch?}
 
@@ -326,9 +342,9 @@ Dieser Abschnitt enthält Punkte, die bei der Überführung des \acrshort{indeko
 
 \newpage
 \section{Funktionalität}\label{sec:function}
-Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalitäten. \cref{sub:custom_modules} beschäftigt sich mit den entstandenen Custom Modulen. \cref{sub:drupal_customizing} beschreibt Funktionalitäten, die ausschließlich durch den Einsatz von Contributed oder Drupal-Core Modulen und Customizing in Drupal umgesetzt wurden.
+Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalitäten. \cref{sub:custom_modules} beschäftigt sich mit den entstandenen \glspl{custommodul}n. \cref{sub:drupal_customizing} beschreibt Funktionalitäten, die ausschließlich durch Drupal \glspl{contribmodul} oder \glspl{coremodul} sowie Customizing in Drupal realisiert wurden.
 
-\subsection{Entwickelte Custom Module}\label{sub:custom_modules}
+\subsection{Entwickelte Custom-Module}\label{sub:custom_modules}
 \vspace{-1em}
 \begin{figure}[H]
 	\centering
@@ -351,16 +367,16 @@ Dieses Kapitel beschreibt die im Laufe des Projekts entwickelten Funktionalität
 		\caption{Module Atlas}
 		\label{fig:modules_atlas}
 	\end{subfigure}
-	\caption{Entwickelte Custom Module}
+	\caption{Entwickelte \glspl{custommodul}}
 	\label{fig:modules_all}
 \end{figure}
 \vspace{-1em}
 
 
-Dieser Abschnitt beschreibt die im Laufe des Projekts entwickelten Drupal Custom Module. Diese Module wurden in die Bereiche Wissenskarte (siehe \cref{fig:modules_knowledgemap}), Suche (siehe \cref{fig:modules_search}), sowie Atlas für allgemeine Module (siehe \cref{fig:modules_atlas}) unterteilt.
-Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte \textit{Vorausgesetzte Module}, \textit{Empfohlene Module}, \textit{Installation} und \textit{Konfiguration} eingegangen. \textit{Vorausgesetzte Module} listet alle Module, die zusätzlich zum entwickelten Modul installiert sein müssen, auf. Diese Informationen sind auch in den README.txt und den [Modul].info Dateien hinterlegt (somit wird man bei der Installation auch von Drupal auf fehlende vorausgesetzte Module hingewiesen). Der Punkt \textit{Empfohlene Module} listet Module auf, die nicht zwingend benötigt werden, aber zum Nutzen des entwickelten Moduls beitragen. Unter \textit{Installation} werden alle nötigen Installationsschritte aufgeführt und \textit{Konfiguration} erläutert mögliche Einstellungen am Modul bzw. das Konfigurationsmenü. Alle Texte der Module sind englisch. Jedem Modul liegen im Unterordner \textit{translations} jeweils ein Übersetzungstemplate (mit allen übersetzbaren Textstellen) sowie eine deutsche Übersetzung bei. Diese ermöglichen bei aktiviertem Drupal-Core Modul \textit{locale} die Konfiguration der Sprache (\path{admin/config/regional/translate}, importieren oder Textstellen manuell übersetzen).
+Dieser Abschnitt beschreibt die im Laufe des Projekts entwickelten Drupal \glspl{custommodul}. Diese Module wurden in die Bereiche Wissenskarte (siehe \cref{fig:modules_knowledgemap}), Suche (siehe \cref{fig:modules_search}) sowie Atlas für allgemeine Module (siehe \cref{fig:modules_atlas}) unterteilt.
+Für jedes Modul wird der Funktionsumfang kurz beschrieben sowie auf die Punkte \textit{Vorausgesetzte Module}, \textit{Empfohlene Module}, \textit{Installation} und \textit{Konfiguration} eingegangen. \textit{Vorausgesetzte Module} listet alle Module, die zusätzlich zum entwickelten Modul installiert sein müssen, auf. Diese Informationen sind auch in den README.txt und den [Modul].info Dateien hinterlegt (somit wird man bei der Installation auch von Drupal auf fehlende vorausgesetzte Module hingewiesen). Der Punkt \textit{Empfohlene Module} listet Module auf, die nicht zwingend benötigt werden, aber zum Nutzen des entwickelten Moduls beitragen. Unter \textit{Installation} werden alle nötigen Installationsschritte aufgeführt und \textit{Konfiguration} erläutert mögliche Einstellungen am Modul bzw. das Konfigurationsmenü. Alle Texte der Module sind englisch. Jedem Modul liegen im Unterordner \textit{translations} jeweils ein Übersetzungstemplate (mit allen übersetzbaren Textstellen) sowie eine deutsche Übersetzung bei. Diese ermöglichen bei aktiviertem Drupal \gls{coremodul} \textit{locale} die Konfiguration der Sprache (\path{admin/config/regional/translate}, importieren oder Textstellen manuell übersetzen).
 
-Auf Implementierungsdetails wird bei der Beschreibung der Custom-Module nicht eingegangen. Diese sind ausführlich in den Quellcodedateien kommentiert.
+Auf Implementierungsdetails wird bei der Beschreibung der \glspl{custommodul} nicht eingegangen. Diese sind ausführlich in den Quellcodedateien kommentiert.
 
 
 
@@ -383,7 +399,7 @@ Dieses Modul ermöglicht es Benutzern \glspl{verweissensitivegrafik} (engl. \gls
 		\caption[]{Beispiel Wissenskarte bearbeiten}
 		\label{fig:example_wissenskarte_edit}
 	\end{subfigure}
-	\caption{Custom Modul form\_wissenskarte\_module}
+	\caption{\gls{custommodul} form\_wissenskarte\_module}
 	\label{fig:example_form_wissenskarte_module}
 \end{figure}
 
@@ -413,7 +429,7 @@ Dieses Modul ermöglicht es Benutzern \glspl{verweissensitivegrafik} (engl. \gls
 
 	Alle nötigen Einstellungen werden automatisch bei der Installation durchgeführt (.install Datei).
 
-	Dieses Modul identifiziert Wissenskarten durch, der Bilddatei zugeordnete, Bildstile (\zB CSS-Klasse \enquote{image-style-wissenkarte}). Das verwendete Theme muss diese CSS-Klassen im HTML zur Verfügung stellen (beim Drupal 7 Standard Theme ist dies nicht der Fall).
+	Dieses Modul identifiziert Wissenskarten anhand, der Bilddatei zugeordneter, Bildstile (\zB CSS-Klasse \enquote{image-style-wissenkarte}). Das verwendete Theme muss diese CSS-Klassen im HTML zur Verfügung stellen (beim Drupal 7 Standard Theme ist dies nicht der Fall).
 \end{itemize}
 
 
@@ -424,9 +440,9 @@ Dieses Modul passt das Standard-Verhalten der Drupal Kommentarsektion an:
 \begin{enumerate}
 	\item Kommentare werden auf maximal 50 Zeichen gekürzt. Gekürzte Kommentare werden durch Auslassungspunkte am Ende kenntlich gemacht (siehe \cref{fig:example_commentshortener_short}). Ein Klick auf die Auslassungspunkte zeigt den vollständigen Kommentar an (siehe \cref{fig:example_commentshortener_full}).
 
-	\item Neueste Kommentare werden zuerst angezeigt (dies ließ sich nicht über Drupal-Core Einstellungen konfigurieren).
+	\item Neueste Kommentare werden zuerst angezeigt (dies ließ sich nicht über die Drupal Core-Einstellungen konfigurieren).
 
-	\item Nachdem ein Kommentar abgegeben wurde, wird der Benutzer auf die erste Kommentarseite zurückgeleitet (dies ließ sich nicht über Drupal-Core Einstellungen konfigurieren).
+	\item Nachdem ein Kommentar abgegeben wurde, wird der Benutzer auf die erste Kommentarseite zurückgeleitet (dies ließ sich nicht über Drupal Core-Einstellungen konfigurieren).
 \end{enumerate}
 
 \begin{figure}[H]
@@ -444,7 +460,7 @@ Dieses Modul passt das Standard-Verhalten der Drupal Kommentarsektion an:
 		\caption[]{Beispiel Volldarstellung}
 		\label{fig:example_commentshortener_full}
 	\end{subfigure}
-	\caption{Custom Modul comments\_shortener}
+	\caption{\gls{custommodul} comments\_shortener}
 	\label{fig:example_commentsshortener}
 \end{figure}
 
@@ -459,7 +475,7 @@ Dieses Modul passt das Standard-Verhalten der Drupal Kommentarsektion an:
 	\item Empfohlene Module:
 
 	\begin{itemize}
-		\item form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Das comments\_shortener Modul ist auf die Anforderungen von Wissenskarten zugeschnitten, funktioniert aber auch ohne dieses Modul für jede Art von Kommentar.
+		\item form\_wissenskarte\_module (siehe \cref{subsub:form_wissenskarte_module}): Das comments\_shortener Modul ist auf die Anforderungen an \glspl{wissenskarte} zugeschnitten, funktioniert aber auch ohne dieses Modul für jede Art von Kommentar.
 	\end{itemize}
 
 
@@ -492,7 +508,7 @@ Dieses Modul sorgt dafür, dass \textit{\glspl{imagemap}} \textit{responsive} we
 		\caption[]{Konfigurationsmenü}
 		\label{fig:config_imagemapresizer}
 	\end{subfigure}
-	\caption{Custom Modul imagemap\_resizer}
+	\caption{\gls{custommodul} imagemap\_resizer}
 	\label{fig:imagemap_resizer}
 \end{figure}
 
@@ -512,7 +528,7 @@ Dieses Modul sorgt dafür, dass \textit{\glspl{imagemap}} \textit{responsive} we
 
 	\item Installation:
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject})
+		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject})
 		\item Image Map Resize plugin herunterladen \url{https://github.com/davidjbradshaw/image-map-resizer}
 		\item \textit{imageMapResizer.min.js} Datei in den Ordner \path{sites/all/libraries/image-map-resizer} entpacken.
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
@@ -521,7 +537,7 @@ Dieses Modul sorgt dafür, dass \textit{\glspl{imagemap}} \textit{responsive} we
 
 	\item Konfiguration:
 
-	\cref{fig:config_imagemapresizer} stellt das Konfigurationsmenü dar. Im ersten Abschnitt lässt sich der Status der externen JavaScript Bibliothek ablesen. In dem darauffolgenden Textfeld wird der Maschinenname des Inhaltstyps angegeben, der \glspl{imagemap} enthält. Die für die Skalierung von \glspl{imagemap} benötigten JavaScript Dateien werden nur auf Seiten des angegebenen Inhaltstyps geladen. Als Standardwert ist der von dem Custom Modul form\_wissenskarte\_module (\cref{subsub:form_wissenskarte_module}) erstellte Inhaltstyp \textit{wissenskarte} definiert.
+	\cref{fig:config_imagemapresizer} stellt das Konfigurationsmenü dar. Im ersten Abschnitt lässt sich der Status der externen JavaScript Bibliothek ablesen. In dem darauffolgenden Textfeld wird der Maschinenname des Inhaltstyps angegeben, der \glspl{imagemap} enthält. Die für die Skalierung von \glspl{imagemap} benötigten JavaScript Dateien werden nur auf Seiten des angegebenen Inhaltstyps geladen. Als Standardwert ist der von dem \gls{custommodul} form\_wissenskarte\_module (\cref{subsub:form_wissenskarte_module}) erstellte Inhaltstyp \textit{wissenskarte} definiert.
 
 \end{itemize}
 
@@ -552,7 +568,7 @@ Dieses Modul ermöglicht es Bereiche von \glspl{imagemap} hervorzuheben (siehe \
 		\caption[]{Beispiel}
 		\label{fig:example_maphilight}
 	\end{subfigure}
-	\caption{Custom Modul jq\_maphilight}
+	\caption{\gls{custommodul} jq\_maphilight}
 	\label{fig:config_maphilight}
 \end{figure}
 
@@ -573,7 +589,7 @@ Dieses Modul ermöglicht es Bereiche von \glspl{imagemap} hervorzuheben (siehe \
 
 	\item Installation:
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item jQuery Map Hilight Plugin herunterladen \url{https://github.com/kemayo/maphilight}
 		\item \textit{jquery.maphilight.min.js} Datei in den Ordner \path{sites/all/libraries/jquery.maphilight} entpacken.
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
@@ -581,7 +597,7 @@ Dieses Modul ermöglicht es Bereiche von \glspl{imagemap} hervorzuheben (siehe \
 
 	\item Konfiguration:
 
-	\cref{fig:config_maphilight_general} stellt das Konfigurationsmenü dar. Im ersten Abschnitt lässt sich der Status der externen JavaScript Bibliothek ablesen. In dem darauffolgenden Textfeld wird der Maschinenname des Inhaltstyps angegeben, der \textit{\glspl{imagemap}} enthält. Die für das Hervorheben von Bereichen auf \textit{\glspl{imagemap}} benötigten JavaScript Dateien werden nur auf Seiten des angegebenen Inhaltstyps geladen. Als Standardwert ist der von dem Custom Modul form\_wissenskarte\_module (\cref{subsub:form_wissenskarte_module}) erstellte Inhaltstyp \textit{wissenskarte} definiert. Der letzte Abschnitt enthält allgemeine Einstellungen zu Rahmen und Füllung von Bereichen.
+	\cref{fig:config_maphilight_general} stellt das Konfigurationsmenü dar. Im ersten Abschnitt lässt sich der Status der externen JavaScript Bibliothek ablesen. In dem darauffolgenden Textfeld wird der Maschinenname des Inhaltstyps angegeben, der \textit{\glspl{imagemap}} enthält. Die für das Hervorheben von Bereichen auf \textit{\glspl{imagemap}} benötigten JavaScript Dateien werden nur auf Seiten des angegebenen Inhaltstyps geladen. Als Standardwert ist der von dem \gls{custommodul} form\_wissenskarte\_module (\cref{subsub:form_wissenskarte_module}) erstellte Inhaltstyp \textit{wissenskarte} definiert. Der letzte Abschnitt enthält allgemeine Einstellungen zu Rahmen und Füllung von Bereichen.
 
 	\cref{fig:config_maphilight_style} stellt die Designeinstellungen des Konfigurationsmenüs dar. Dies umfasst mehrere Einstellungen zu Rahmen und Füllung für die Darstellung beim Endanwender (siehe \cref{fig:example_maphilight}).
 
@@ -621,7 +637,7 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 		\caption[]{Beispiel gespeicherte Suche}
 		\label{fig:example_morphsearch_savedsearch}
 	\end{subfigure}
-	\caption{Custom Modul morphsearch}
+	\caption{\gls{custommodul} morphsearch}
 	\label{fig:morphsearch}
 \end{figure}
 
@@ -629,7 +645,7 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.10\textheight]{images/example_morphsearch_publication}
-	\caption{Custom Modul morphsearch Beispiel publikationsbezogene Suche}
+	\caption{\gls{custommodul} morphsearch Beispiel publikationsbezogene Suche}
 	\label{fig:example_morphsearch_publication}
 \end{figure}
 
@@ -645,13 +661,13 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 	
 	\item Empfohlene Module:
 	\begin{itemize}
-		\item Bibliography Module (\url{https://www.drupal.org/project/biblio}): Wenn \textit{biblio} installiert ist wird der Suchblock um die \textit{publikationsbezogene Suche} erweitert.
-		\item Taxanomy (Drupal Kernmodul): Stellt den Kern der morphologischen Suche dar.
+		\item Bibliography Module (\url{https://www.drupal.org/project/biblio}): Wenn \textit{biblio} installiert ist, wird der Suchblock um die \textit{publikationsbezogene Suche} erweitert.
+		\item Taxonomy (Drupal \gls{coremodul}): Stellt den Kern der morphologischen Suche dar.
 	\end{itemize}
 
 	\item Installation: 
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item qTip2 jQuery Plugin herunterladen (\url{http://qtip2.com/download}) 
 		\item \textit{jquery.qtip.min.js} und \textit{jquery.qtip.min.css} in den Ordner \path{sites/all/libraries/qtip} entpacken.
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
@@ -681,17 +697,17 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 			\caption[]{Beispiel}
 			\label{fig:example_morphsearch_morphological}
 		\end{subfigure}
-		\caption{Custom Modul morphsearch Konfiguration morphologische Suche}
+		\caption{\gls{custommodul} morphsearch Konfiguration morphologische Suche}
 		\label{fig:config_morphsearch_morphological}
 	\end{figure}
 
 	\item Konfiguration:
 	
-	\cref{fig:config_morphsearch} stellt das Konfigurationsmenü dar (\path{admin/config/search/morphsearch}). Dort lässt sich einstellen welche Inhaltstypen zur Filterung der Suchergebnisse in dem Block zur Auswahl stehen sollen (siehe \cref{fig:example_morphsearchblock}).
+	\cref{fig:config_morphsearch} stellt das Konfigurationsmenü dar (\path{admin/config/search/morphsearch}). Dort lässt sich einstellen, welche Inhaltstypen zur Filterung der Suchergebnisse in dem Block zur Auswahl stehen sollen (siehe \cref{fig:example_morphsearchblock}).
 	
-	Die \textit{publikationsbezogene Suche} (siehe \cref{fig:example_morphsearch_publication}) steht nur zur Verfügung, wenn das \textit{Bibliography Module} installiert und aktiviert ist. Eine Anpassung der zur Verfügung gestellten Filter (Erscheinungsjahr, Autor, \dots) ist nicht vorgesehen und lässt sich somit nur durch Änderungen im Quellcode erreichen.
+	Die \textit{publikationsbezogene Suche} (siehe \cref{fig:example_morphsearch_publication}) steht nur zur Verfügung, wenn das \textit{Bibliography Module} installiert und aktiviert ist. Eine Anpassung, der zur Verfügung gestellten Filter (Erscheinungsjahr, Autor, \dots), ist nicht vorgesehen und lässt sich somit nur durch Änderungen im Quellcode erreichen.
 	
-	Die \textit{morphologisch Suche} (siehe \cref{fig:example_morphsearch_morphological}) steht nur zur Verfügung, wenn das \textit{Taxonomy} Kernmodul aktiviert ist. Für jede Dimension, die in der \textit{morphologischen Suche} angezeigt werden soll, muss ein Vokabular angelegt werden (\path{admin/structure/taxonomy}). Hierbei ist darauf zu achten, dass ein Vokabular nur in die morphologische Suche übernommen wird, wenn der Maschinenname mit
+	Die \textit{morphologisch Suche} (siehe \cref{fig:example_morphsearch_morphological}) steht nur zur Verfügung, wenn das \textit{Taxonomy} \gls{coremodul} aktiviert ist. Für jede Dimension, die in der \textit{morphologischen Suche} angezeigt werden soll, muss ein Vokabular angelegt werden (\path{admin/structure/taxonomy}). Hierbei ist darauf zu achten, dass ein Vokabular nur in die morphologische Suche übernommen wird, wenn der Maschinenname mit
 	\begin{itemize}
 		\item \lstinline|tax_morph_| für Einfachauswahl
 		\item \lstinline|tax_morph_m_| für Mehrfachauswahl
@@ -720,7 +736,7 @@ Dieses Modul fügt der Apache Solr Suchergebnisseite einen Link hinzu, der es er
 		\caption[]{Beispiel}
 		\label{fig:example_searchcsv}
 	\end{subfigure}
-	\caption{Custom Modul morphsearch\_csv\_export}
+	\caption{\gls{custommodul} morphsearch\_csv\_export}
 	\label{fig:searchcsvexport}
 \end{figure}
 
@@ -757,13 +773,13 @@ Dieses Modul fügt der Apache Solr Suchergebnisseite einen Link hinzu, der es er
 
 \newpage
 \subsubsection{morphsearch\_sort}\label{subsub:morphsearchsort}
-Dieses Modul fügt der Drupal-Installation einen Block hinzu, der es erlaubt Apache Solr Suchergebnisse zu sortieren. Es lässt sich nach Relevanz, sowie Datum und Titel (jeweils auf- und absteigend) sortieren (siehe \cref{fig:example_morphsearchsort}).
+Dieses Modul fügt der Drupal-Installation einen Block hinzu, der es erlaubt Apache Solr Suchergebnisse zu sortieren. Es lässt sich nach Relevanz sowie Datum und Titel (jeweils auf- und absteigend) sortieren (siehe \cref{fig:example_morphsearchsort}).
 
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.10\textheight]{images/example_morphsearchsort}
-	\caption{Custom Modul morphsearch\_sort Beispiel}
+	\caption{\gls{custommodul} morphsearch\_sort Beispiel}
 	\label{fig:example_morphsearchsort}
 \end{figure}
 
@@ -786,7 +802,7 @@ Dieses Modul fügt der Drupal-Installation einen Block hinzu, der es erlaubt Apa
 
 	\item Installation: Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
 		\item Den \textit{Apache Solr Atlas Sort Block} einer sichtbaren Region zuordnen (\path{admin/structure/block}).
 	\end{enumerate}
@@ -819,7 +835,7 @@ Dieses Modul fügt dem \textit{user menu} Block Links zum Anlegen neuer Inhalte 
 		\caption[]{Beispiel}
 		\label{fig:example_nodecreationlinks}
 	\end{subfigure}
-	\caption{Custom Modul node\_creation\_links}
+	\caption{\gls{custommodul} node\_creation\_links}
 	\label{fig:nodecreationlinks}
 \end{figure}
 
@@ -837,14 +853,14 @@ Dieses Modul fügt dem \textit{user menu} Block Links zum Anlegen neuer Inhalte 
 	\item Installation: 
 	Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
-		\item Modul in das Custom-Module-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
+		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
-		\item Modul Konfigurieren.
+		\item Modul konfigurieren.
 	\end{enumerate}
 	
 	\item Konfiguration:
 	
-	\cref{fig:config_nodecreationlinks} stellt das Konfigurationsmenü dar (\path{admin/config/content/node_creation_links}). Es werden alle im System definierten Inhaltstypen aufgelistet. Solange keine Inhaltstypen ausgewählt sind ist auch der Eintrag \textit{Element anlegen} nicht sichtbar. Ausgewählte Inhaltstypen stehen einem eingeloggten Benutzer später potentiell in dem Block unter \textit{Element anlegen} zur Verfügung. Die in \cref{fig:config_nodecreationlinks} dargestellten Links zum Erstellen von Inhaltstypen werden individuell pro Benutzer erzeugt (Links zu Inhaltstypen, die der aktuell eingeloggte Benutzer nicht erstellen darf werden auch nicht erzeugt). 
+	\cref{fig:config_nodecreationlinks} stellt das Konfigurationsmenü dar (\path{admin/config/content/node_creation_links}). Es werden alle im System definierten Inhaltstypen aufgelistet. Solange keine Inhaltstypen ausgewählt sind, ist auch der Eintrag \textit{Element anlegen} nicht sichtbar. Ausgewählte Inhaltstypen stehen einem eingeloggten Benutzer später potentiell in dem Block unter \textit{Element anlegen} zur Verfügung. Die in \cref{fig:config_nodecreationlinks} dargestellten Links zum Erstellen von Inhaltstypen werden individuell pro Benutzer erzeugt (Links zu Inhaltstypen, die der aktuell eingeloggte Benutzer nicht erstellen darf, werden auch nicht erzeugt). 
 	
 	Das Aussehen des \textit{Element anlegen} Blocks wird per CSS im Theme definiert (\zB \textit{global.atlas.css}, siehe \cref{sub:strukture_project}).
 	
@@ -866,7 +882,7 @@ Dieses Modul ergänzt fehlende Funktionalitäten des \textit{Bibliography} Modul
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.20\textheight]{images/example_publicationform}
-	\caption{Custom Modul publication\_form}
+	\caption{\gls{custommodul} publication\_form}
 	\label{fig:example_publicationform}
 \end{figure}
 
@@ -898,7 +914,7 @@ Dieses Modul fügt dem Wissenskarten Slider-Karussell (siehe \cref{subsub:wkslid
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.10\textheight]{images/example_slidertooltip}
-	\caption{Custom Modul slider\_tooltip}
+	\caption{\gls{custommodul} slider\_tooltip}
 	\label{fig:example_slidertooltip}
 \end{figure}
 
@@ -924,12 +940,12 @@ Dieses Modul fügt dem Wissenskarten Slider-Karussell (siehe \cref{subsub:wkslid
 
 \newpage
 \subsubsection{user\_profile\_elements\_overview}\label{subsub:userprofileelementsoverview}
-Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst erstellten Publikationen, Wissenskarten, Projekte, Analysereports und Forschungsergebnisse auf (siehe \cref{fig:example_userprofile}). Jedes Element verfügt über ein individuelles sowie Tooltip.
+Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst erstellten Publikationen, Wissenskarten, Projekte, Analysereports und Forschungsergebnisse auf (siehe \cref{fig:example_userprofile}). Jedes Element verfügt über ein individuelles Icon sowie Tooltip.
 
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.80\linewidth]{images/example_userprofile}
-	\caption{Custom Modul user\_profile\_elements\_overview Beispiel}
+	\caption{\gls{custommodul} user\_profile\_elements\_overview Beispiel}
 	\label{fig:example_userprofile}
 \end{figure}
 
@@ -958,11 +974,11 @@ Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst e
 
 \newpage
 \subsection{Drupal Customizing}\label{sub:drupal_customizing}
-Dieser Abschnitt beschreibt Funktionalitäten, die ausschließlich durch den Einsatz von Contributed oder Drupal-Core Modulen und Customizing in Drupal umgesetzt wurden.
+Dieser Abschnitt beschreibt Funktionalitäten, die ausschließlich durch Drupal \glspl{contribmodul} oder \glspl{coremodul} sowie Customizing in Drupal realisiert wurden.
 
 \subsubsection{Darstellung der Suchergebnisse}\label{subsub:suchergebnisse}
 
-Im Folgenden wird beschrieben wie die Darstellung der Suchergebnisse umgesetzt wurde. Dies ermöglicht eine schnelle Anpassung neuer Inhaltstypen an das aktuelle Design der Suchergebnisse.
+Im Folgenden wird beschrieben, wie die Darstellung der Suchergebnisse umgesetzt wurde. Dies ermöglicht eine schnelle Anpassung neuer Inhaltstypen an das aktuelle Design der Suchergebnisse.
 
 Vorausgesetzte Module:
 \begin{itemize}
@@ -979,7 +995,7 @@ Vorausgesetzte Module:
 
 
 
-Die Darstellung der Suchergebnisse (siehe \cref{fig:example_searchresult}) erfolgt über den Anzeigemodus \enquote{Search result highlighting input}. Dieser muss in den Einstellungen für den Inhaltstyp aktiviert werden (\textit{Struktur} $\rightarrow$ \textit{Inhaltstypen} $\rightarrow$ \textit{Anzeige verwalten}). Dies geschieht wie in \cref{fig:config_searchresult_viewmode} abgebildet unter \textit{Benutzerdefinierte Anzeigeeinstellungen}. Nachdem der Inhaltstyp gespeichert wurde wechselt man in den neuen Anzeigemodus \enquote{Search result highlighting input}.
+Die Darstellung der Suchergebnisse (siehe \cref{fig:example_searchresult}) erfolgt über den Anzeigemodus \enquote{Search result highlighting input}. Dieser muss in den Einstellungen für den Inhaltstyp aktiviert werden (\textit{Struktur} $\rightarrow$ \textit{Inhaltstypen} $\rightarrow$ \textit{Anzeige verwalten}). Dies geschieht, wie in \cref{fig:config_searchresult_viewmode} dargestellt, unter \textit{Benutzerdefinierte Anzeigeeinstellungen}. Nachdem der Inhaltstyp gespeichert wurde, wechselt man in den neuen Anzeigemodus \enquote{Search result highlighting input}.
 
 \begin{figure}[H]
 	\centering
@@ -989,7 +1005,7 @@ Die Darstellung der Suchergebnisse (siehe \cref{fig:example_searchresult}) erfol
 \end{figure}
 
 
-Im Tab Layout wählt man \textit{Fluid two column stacked} (siehe \cref{fig:config_searchresult_viewmodesearch}). Nachdem im Tab \textit{Custom classes} dem Layout die CSS-Klasse \enquote{search-result} zugeordnet wurde (siehe \cref{fig:config_searchresult_viewmodesearchclass}) werden die Änderungen gespeichert. Die gewünschten Felder können nun, wie in Drupal gewohnt, konfiguriert und den einzelnen Regionen des Layouts zugeordnet werden. \cref{fig:config_searchresult_viewmodesearch} zeigt exemplarisch die Konfiguration des Inhaltstyps \textit{Wissenskarte} (der Titel von Suchergebnissen wurde \zB mit \textit{h3} Wrapper und CSS-Klasse \textit{title} konfiguriert).
+Im Tab Layout wählt man \textit{Fluid two column stacked} (siehe \cref{fig:config_searchresult_viewmodesearch}). Nachdem im Tab \textit{Custom classes} dem Layout die CSS-Klasse \enquote{search-result} zugeordnet wurde (siehe \cref{fig:config_searchresult_viewmodesearchclass}), werden die Änderungen gespeichert. Die gewünschten Felder können nun, wie in Drupal gewohnt, konfiguriert und den einzelnen Regionen des Layouts zugeordnet werden. \cref{fig:config_searchresult_viewmodesearch} zeigt exemplarisch die Konfiguration des Inhaltstyps \textit{Wissenskarte} (der Titel von Suchergebnissen wurde \zB mit \textit{h3} Wrapper und CSS-Klasse \textit{title} konfiguriert).
 
 
 \begin{figure}[H]
@@ -1012,7 +1028,7 @@ Im Tab Layout wählt man \textit{Fluid two column stacked} (siehe \cref{fig:conf
 \end{figure}
 
 
-\textit{Display Suite} ermöglicht es zusätzlich zu den Feldern des Inhaltstyps benutzerdefinierte Felder zu definieren (\path{admin/structure/ds/fields}). Für die Darstellung der Suchergebnisse wurde \zB das benutzerdefinierte Feld \textit{Content Type Icon} hinzugefügt. Dieses Feld fügt den Suchergebnissen ein html-Element hinzu, um in den Suchergebnissen individuelle Inhhaltstypen-Icons und Tooltips anzeigen zu können. 
+\textit{Display Suite} ermöglicht es, zusätzlich zu den Feldern des Inhaltstyps, benutzerdefinierte Felder zu definieren (\path{admin/structure/ds/fields}). Für die Darstellung der Suchergebnisse wurde \zB das benutzerdefinierte Feld \textit{Content Type Icon} hinzugefügt. Dieses Feld fügt den Suchergebnissen ein html-Element hinzu, um in den Suchergebnissen individuelle Inhhaltstypen-Icons und Tooltips anzeigen zu können. 
 
 
 
@@ -1073,7 +1089,7 @@ Dieser Abschnitt beschreibt wie sich zusätzliche Inhaltstypen in den Apache Sol
 \begin{figure}[H]
 	\centering
 	\includegraphics[height=0.20\textheight]{images/config_apachesolr}
-	\caption{Konfigurationsmenü Apache Solr Search Contrib Modul}
+	\caption{Konfigurationsmenü Apache Solr Search \gls{contribmodul}}
 	\label{fig:config_apachesolr}
 \end{figure}
 
@@ -1095,7 +1111,7 @@ Weitere Inhaltstypen lassen sich unter \path{admin/config/search/apachesolr} hin
 
 
 \subsubsection{Inhaltstypen}\label{subsub:inhaltstypen}
-Auf die im Laufe des Projekts angelegten bzw. erweiterten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) wird an dieser Stelle nicht eingegangen. Die Strukturen der Inhaltstypen lassen sich direkt im System (\textit{Administrationsmenü} $\rightarrow$ \textit{Struktur} $\rightarrow$  \textit{Inhaltytypen}) oder aus den entsprechenden Anforderungsdokumenten ablesen. Zum Exportieren aller Einstellungen, um sie auf ein anderen System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an. 
+Auf die im Laufe des Projekts angelegten bzw. erweiterten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) wird an dieser Stelle nicht eingegangen. Die Strukturen der Inhaltstypen lassen sich direkt im System (\textit{Administrationsmenü} $\rightarrow$ \textit{Struktur} $\rightarrow$  \textit{Inhaltytypen}), oder aus den entsprechenden Anforderungsdokumenten, ablesen. Zum Exportieren aller Einstellungen, um sie auf ein anderes System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an. 
 
 
 
@@ -1152,26 +1168,57 @@ Alle Änderungen am Design des Portals durch das Atlas-Projekt sind in der Datei
 Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{indeko}.Navi-Portal im Laufe des Projekts hinzugefügt wurden. Es dient als Übersicht was, im Vergleich zum Ursprungsprojekt, neu hinzugekommen ist und zur Versicherung, dass immer noch alles Open Source ist.
 
 \begin{enumerate}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
-	\item Drupal Contrib Module (alle \textbf{GPLv2})
+	\item Drupal \glspl{contribmodul} (alle \textbf{GPLv2})
 	\begin{itemize}
-		\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
+		\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr}):
+		Integration der Apache Solr Such-Plattform in Drupal
 		
-		Anbindung Apache Solr Server
+		\item Apache Solr Real-Time (\url{https://www.drupal.org/project/apachesolr_realtime}):
+		Echtzeit Indexierung von Dokumenten
 		
-		\item Apache Solr Real-Time (\url{https://www.drupal.org/project/apachesolr_realtime})
-		\item Bibliography Module (\url{https://www.drupal.org/project/biblio})
-		\item Fivestar (\url{https://www.drupal.org/project/fivestar})
-		\item Halfstar (\url{https://www.drupal.org/project/halfstar})
-		\item Voting API (\url{https://www.drupal.org/project/votingapi})
-		\item Display Suite (\url{https://www.drupal.org/project/ds})
-		\item Chosen (\url{https://www.drupal.org/project/chosen})
-		\item Conditional Fields (\url{https://www.drupal.org/project/conditional_fields})
-		\item Field Validation (\url{https://www.drupal.org/project/field_validation})
-		\item Field Group (\url{https://www.drupal.org/project/field_group})
-		\item Entity Connect (\url{https://www.drupal.org/project/entityconnect}) (Problem mit Chosen, Links für neue Inhalte werden bei multiselect nicht hinter den chosen Elementen angeordnet. \textbf{Provisorischer Fix in \textit{entityconnect.js} vom Entity Connect Modul})
-		\item jQuery Autosize (\url{https://www.drupal.org/project/jquery_autosize}) \textbf{Fixed Contrib Modul: Library pattern, Drupal behaviours mussten angepasst werden}
-		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome})	
-		\item Administration menu (\url{https://www.drupal.org/project/admin_menu})
+		\item Bibliography Module (\url{https://www.drupal.org/project/biblio}):
+		Verwaltung von Publikationen
+		
+		\item Fivestar (\url{https://www.drupal.org/project/fivestar}):
+		Bewertung von Inhalten (\zB auf Inhaltstyp \textit{Wissenskarte})
+		
+		\item Halfstar (\url{https://www.drupal.org/project/halfstar}):
+		Feingranularere Bewertung
+		
+		\item Voting API (\url{https://www.drupal.org/project/votingapi}):
+		Voraussetzung für Bewertungen
+
+		\item Display Suite (\url{https://www.drupal.org/project/ds}):
+		UI zur Anpassung des Layouts von Nodes
+		
+		\item Flex Slider (\url{https://www.drupal.org/project/flexslider}):
+		Responsive Slideshows (\zB auf Projektstartseite)
+		
+		\item Chosen (\url{https://www.drupal.org/project/chosen}):
+		Modernere Auswahllisten
+		
+		\item Conditional Fields (\url{https://www.drupal.org/project/conditional_fields}):
+		UI zur Definition von Abhängigkeiten zwischen Feldern (\zB auf Inhaltstyp \textit{Forschungsergebnis})
+		
+		\item Field Validation (\url{https://www.drupal.org/project/field_validation}):
+		UI zur Definition von Validierungsregeln (\zB auf Inhaltstyp \textit{Projekt}, Feld \textit{Projektzeitraum})
+		
+		\item Field Group (\url{https://www.drupal.org/project/field_group}):
+		Gruppierung von Feldern
+		
+		\item Entity Connect (\url{https://www.drupal.org/project/entityconnect}):
+		Komfortablere Erstellung von referenzierten Inhalten 
+		(Problem mit Chosen, Links für neue Inhalte werden bei \textit{multiselect} nicht hinter den Chosen-Elementen angeordnet. \textbf{Provisorischer Fix in \textit{entityconnect.js} vom \textit{Entity Connect} Modul})
+		
+		\item jQuery Autosize (\url{https://www.drupal.org/project/jquery_autosize}):
+		Automatische Anpassung von Textareas an deren Inhalt
+		(\textbf{Fix: Library pattern, Drupal behaviours angepasst})
+		
+		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome}):
+		Skalierbare sowie individuell anpassbare Vektor-Icon-Suite
+			
+		\item Administration menu (\url{https://www.drupal.org/project/admin_menu}):
+		effizienteres Admin-Menü
 	\end{itemize}
 
 	\item JavaScript Bibliotheken
@@ -1199,9 +1246,9 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 		\item \textit{js/node-wissenskarte-comments-style.js}, \textit{template/comment--node-wissenskarte.tpl.php} und \textit{template.php}
 	\end{itemize}
 
-	\item Entwickelte Drupal-Custom-Module (siehe \cref{sub:custom_modules})
+	\item Entwickelte Drupal-\glspl{custommodul} (siehe \cref{sub:custom_modules})
 	\begin{itemize}
-		\item form\_wissenskarte\_module, comments\_shortener, imagemap\_resizer, jq\_maphilight, morphsearch, morphsearch\_csv\_export, morphsearch\_sort, node\_creation\_links, publication\_form, slider\_tooltip, user\_profile\_elements\_overview
+		\item \textit{form\_wissenskarte\_module, comments\_shortener, imagemap\_resizer, jq\_maphilight, morphsearch, morphsearch\_csv\_export, morphsearch\_sort, node\_creation\_links, publication\_form, slider\_tooltip, user\_profile\_elements\_overview}
 	\end{itemize}
 \end{enumerate}
 
@@ -1225,7 +1272,7 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 
 % Glossar
 \printglossary[title = Glossar]
-\todo{was noch? oder überflüssig?}
+\todo{was noch?}
 
 %\newpage
 %\printbibliography
