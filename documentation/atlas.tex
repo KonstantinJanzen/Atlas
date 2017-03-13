@@ -7,7 +7,7 @@
 \newcommand{\untertitel}{Installationshandbuch} 
 \newcommand{\art}{Ausarbeitung}
 \newcommand{\studiengang}{Wirtschaftsinformatik}
-\newcommand{\autor}{Autoren}
+\newcommand{\autor}{Stephan Mende, Friederike Lauterbach, Konstantin Janzen, Robin Helmedach}
 \newcommand{\email}{}
 \newcommand{\matnr}{}
 \newcommand{\institut}{Institut für Betriebswirtschaft und Wirtschaftsinformatik}
@@ -329,12 +329,10 @@ Dieser Abschnitt enthält Punkte, die bei der Überführung des \acrshort{indeko
 	\item Für den CSV-Export der Suchergebnisse, die aus dem Internet erreichbare URL des Apache Solr Servers eintragen (\path{admin/config/search/morphsearch_csv_export}).
 
 	\item Anzuzeigende Fehlermeldungen deaktivieren (\path{admin/config/development/logging}).
-	
+
 	\item Überreste von Dummy-/Test-Daten und Benutzerprofilen löschen (\path{admin/content}).
-	
+
 	\item SMTP / E-Mail-Versand für Registrierung konfigurieren.
-	
-	\item \dots \todo{was noch?}
 
 \end{itemize}
 
@@ -465,8 +463,8 @@ Dieses Modul passt das Standard-Verhalten der Drupal Kommentarsektion an:
 \end{figure}
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
-	\item Vorausgesetzte Module: 
-	
+	\item Vorausgesetzte Module:
+
 	\begin{itemize}
 		\item keine
 	\end{itemize}
@@ -655,26 +653,27 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 		\item Libraries (\url{https://www.drupal.org/project/libraries})
 		\item jQuery Update (\url{https://www.drupal.org/project/jquery_update})
 		\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
-		\item Chosen (\url{https://www.drupal.org/project/chosen}): Funktioniert theoretisch auch ohne, aber das (Interaktions-)Design ist auf Chosen Auswahllisten abgestimmt.  
+		\item Chosen (\url{https://www.drupal.org/project/chosen}): Funktioniert theoretisch auch ohne, aber das (Interaktions-)Design ist auf Chosen Auswahllisten abgestimmt.
 		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome}): Nur für die Icons zum Ausklappen der \textit{morphologischen / publikationsbezogenen Suche}.
 	\end{itemize}
-	
+	\newpage
+
 	\item Empfohlene Module:
 	\begin{itemize}
 		\item Bibliography Module (\url{https://www.drupal.org/project/biblio}): Wenn \textit{biblio} installiert ist, wird der Suchblock um die \textit{publikationsbezogene Suche} erweitert.
 		\item Taxonomy (Drupal \gls{coremodul}): Stellt den Kern der morphologischen Suche dar.
 	\end{itemize}
 
-	\item Installation: 
+	\item Installation:
 	\begin{enumerate}
 		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
-		\item qTip2 jQuery Plugin herunterladen (\url{http://qtip2.com/download}) 
+		\item qTip2 jQuery Plugin herunterladen (\url{http://qtip2.com/download})
 		\item \textit{jquery.qtip.min.js} und \textit{jquery.qtip.min.css} in den Ordner \path{sites/all/libraries/qtip} entpacken.
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
 		\item Modul konfigurieren.
-		
+
 	\end{enumerate}
-	
+
 	\begin{figure}[H]
 		\centering
 		\begin{subfigure}[b]{0.35\textwidth}
@@ -702,18 +701,18 @@ Dieses Modul stellt einen Block zur Apache Solr basierten Suche mit folgender Fu
 	\end{figure}
 
 	\item Konfiguration:
-	
+
 	\cref{fig:config_morphsearch} stellt das Konfigurationsmenü dar (\path{admin/config/search/morphsearch}). Dort lässt sich einstellen, welche Inhaltstypen zur Filterung der Suchergebnisse in dem Block zur Auswahl stehen sollen (siehe \cref{fig:example_morphsearchblock}).
-	
+
 	Die \textit{publikationsbezogene Suche} (siehe \cref{fig:example_morphsearch_publication}) steht nur zur Verfügung, wenn das \textit{Bibliography Module} installiert und aktiviert ist. Eine Anpassung, der zur Verfügung gestellten Filter (Erscheinungsjahr, Autor, \dots), ist nicht vorgesehen und lässt sich somit nur durch Änderungen im Quellcode erreichen.
-	
+
 	Die \textit{morphologisch Suche} (siehe \cref{fig:example_morphsearch_morphological}) steht nur zur Verfügung, wenn das \textit{Taxonomy} \gls{coremodul} aktiviert ist. Für jede Dimension, die in der \textit{morphologischen Suche} angezeigt werden soll, muss ein Vokabular angelegt werden (\path{admin/structure/taxonomy}). Hierbei ist darauf zu achten, dass ein Vokabular nur in die morphologische Suche übernommen wird, wenn der Maschinenname mit
 	\begin{itemize}
 		\item \lstinline|tax_morph_| für Einfachauswahl
 		\item \lstinline|tax_morph_m_| für Mehrfachauswahl
 	\end{itemize}
 	beginnt (siehe \cref{fig:config_morphsearch_taxvoc}). Nachdem ein Vokabular angelegt wurde, können Begriffe hinzugefügt werden. Diese stehen dann zur Einfach-/Mehrfachauswahl bei der \textit{publikationsbezogenen Suche} zur Verfügung.
-	
+
 \end{itemize}
 
 
@@ -743,25 +742,25 @@ Dieses Modul fügt der Apache Solr Suchergebnisseite einen Link hinzu, der es er
 
 \begin{itemize}[parsep=0pt, itemsep=5.0pt plus 2.0pt minus 1.0pt, leftmargin=*]
 	\item Vorausgesetzte Module:
-	
+
 	\begin{itemize}
 		\item 	Apache Solr Search (\url{https://www.drupal.org/project/apachesolr})
-		
+
 		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome}): Nur für das csv Download Icon (siehe \cref{fig:example_searchcsv}) benötigt.
 	\end{itemize}
-	
-	
+
+
 	\item Empfohlene Module:
-	
+
 	\begin{itemize}
 		\item morphsearch (siehe \cref{subsub:morphsearch}): Ermöglicht es die zu exportierenden Suchergebnisse einzuschränken.
 	\end{itemize}
-	
-	
+
+
 	\item Installation: \standardinstall
-	
+
 	\item Konfiguration:
-	
+
 	\cref{fig:config_searchcsv} stellt das Konfigurationsmenü dar (\path{admin/config/search/morphsearch_csv_export}). Die Suchergebnisse werden direkt vom Apache Solr-Server als CSV-Datei übertragen, daher muss die Adresse des Solr-Servers eingetragen werden. Die Adresse für die lokale Entwicklung wird automatisch während der Installation gesetzt. Für den Live-Betrieb muss die aus dem Internet erreichbare Adresse angegeben werden.
 
 \end{itemize}
@@ -844,28 +843,28 @@ Dieses Modul fügt dem \textit{user menu} Block Links zum Anlegen neuer Inhalte 
 	\begin{itemize}
 		\item keine
 	\end{itemize}
-	
+
 	\item Empfohlene Module:
 	\begin{itemize}
 		\item keine
 	\end{itemize}
-	
-	\item Installation: 
+
+	\item Installation:
 	Dieses Modul lässt sich wie jedes andere Drupal Modul installieren.
 	\begin{enumerate}
 		\item Modul in das \glspl{custommodul}-Verzeichnis der Drupal-Installation kopieren  (\zB \path{sites/all/modules/custom}, vgl. \cref{fig:structureproject}).
 		\item Modul auf der Seite \path{admin/modules} aktivieren.
 		\item Modul konfigurieren.
 	\end{enumerate}
-	
+
 	\item Konfiguration:
-	
-	\cref{fig:config_nodecreationlinks} stellt das Konfigurationsmenü dar (\path{admin/config/content/node_creation_links}). Es werden alle im System definierten Inhaltstypen aufgelistet. Solange keine Inhaltstypen ausgewählt sind, ist auch der Eintrag \textit{Element anlegen} nicht sichtbar. Ausgewählte Inhaltstypen stehen einem eingeloggten Benutzer später potentiell in dem Block unter \textit{Element anlegen} zur Verfügung. Die in \cref{fig:config_nodecreationlinks} dargestellten Links zum Erstellen von Inhaltstypen werden individuell pro Benutzer erzeugt (Links zu Inhaltstypen, die der aktuell eingeloggte Benutzer nicht erstellen darf, werden auch nicht erzeugt). 
-	
+
+	\cref{fig:config_nodecreationlinks} stellt das Konfigurationsmenü dar (\path{admin/config/content/node_creation_links}). Es werden alle im System definierten Inhaltstypen aufgelistet. Solange keine Inhaltstypen ausgewählt sind, ist auch der Eintrag \textit{Element anlegen} nicht sichtbar. Ausgewählte Inhaltstypen stehen einem eingeloggten Benutzer später potentiell in dem Block unter \textit{Element anlegen} zur Verfügung. Die in \cref{fig:config_nodecreationlinks} dargestellten Links zum Erstellen von Inhaltstypen werden individuell pro Benutzer erzeugt (Links zu Inhaltstypen, die der aktuell eingeloggte Benutzer nicht erstellen darf, werden auch nicht erzeugt).
+
 	Das Aussehen des \textit{Element anlegen} Blocks wird per CSS im Theme definiert (\zB \textit{global.atlas.css}, siehe \cref{sub:strukture_project}).
-	
+
 	Dieses Modul ergänzt ausschließlich den Block \textit{user menu}. Dieser sollte daher einer sichtbaren Region zugeordnet sein (\textit{Struktur} $\rightarrow$ \textit{Blöcke}).
-	
+
 \end{itemize}
 
 
@@ -891,25 +890,25 @@ Dieses Modul ergänzt fehlende Funktionalitäten des \textit{Bibliography} Modul
 	\begin{itemize}
 		\item Bibliography Module (\url{https://www.drupal.org/project/biblio})
 	\end{itemize}
-	
+
 	\item Empfohlene Module:
 	\begin{itemize}
 		\item keine
 	\end{itemize}
-	
+
 	\item Installation: \standardinstall
-	
-	\item Konfiguration: 
-	
+
+	\item Konfiguration:
+
 	\noconfig
-	
-	
+
+
 \end{itemize}
 
 
 \newpage
 \subsubsection{slider\_tooltip}\label{subsub:slidertooltip}
-Dieses Modul fügt dem Wissenskarten Slider-Karussell (siehe \cref{subsub:wkslider}) die einzelnen Bildtitel als Tooltip hinzu (siehe \cref{fig:example_slidertooltip}). 
+Dieses Modul fügt dem Wissenskarten Slider-Karussell (siehe \cref{subsub:wkslider}) die einzelnen Bildtitel als Tooltip hinzu (siehe \cref{fig:example_slidertooltip}).
 
 \begin{figure}[H]
 	\centering
@@ -923,18 +922,18 @@ Dieses Modul fügt dem Wissenskarten Slider-Karussell (siehe \cref{subsub:wkslid
 	\begin{itemize}
 		\item keine
 	\end{itemize}
-	
+
 	\item Empfohlene Module:
 	\begin{itemize}
 		\item keine
 	\end{itemize}
-	
+
 	\item Installation: \standardinstall
-	
-	
+
+
 	\item Konfiguration:
-	
-	Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen.	
+
+	Dieses Modul verfügt über kein Konfigurationsmenü oder veränderbare Einstellungen.
 \end{itemize}
 
 
@@ -954,20 +953,20 @@ Dieses Modul listet einem registrierten Benutzer in seinem Profil seine selbst e
 	\begin{itemize}
 		\item keine
 	\end{itemize}
-	
+
 	\item Empfohlene Module:
 	\begin{itemize}
 		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome}): Nur für das Standard-Icon benötigt, falls keine individuellen Icons festgelegt wurden.
 	\end{itemize}
-	
+
 	\item Installation: \standardinstall
-	
-	
+
+
 	\item Konfiguration:
-	
+
 	\noconfig
-	
-	Sollen mehr als die fünf definierten Inhaltstypen (Publikationen, Wissenskarten, Projekte, Analysereports und Forschungsergebnisse) im Benutzerprofil angezeigt werden, muss im Quellcode Zeile 20 der Funktionsaufruf \lstinline|elements_overview_html(array('biblio', 'wissenskarte', ...))| ergänzt werden.	
+
+	Sollen mehr als die fünf definierten Inhaltstypen (Publikationen, Wissenskarten, Projekte, Analysereports und Forschungsergebnisse) im Benutzerprofil angezeigt werden, muss im Quellcode Zeile 20 der Funktionsaufruf \lstinline|elements_overview_html(array('biblio', 'wissenskarte', ...))| ergänzt werden.
 \end{itemize}
 
 
@@ -1028,7 +1027,7 @@ Im Tab Layout wählt man \textit{Fluid two column stacked} (siehe \cref{fig:conf
 \end{figure}
 
 
-\textit{Display Suite} ermöglicht es, zusätzlich zu den Feldern des Inhaltstyps, benutzerdefinierte Felder zu definieren (\path{admin/structure/ds/fields}). Für die Darstellung der Suchergebnisse wurde \zB das benutzerdefinierte Feld \textit{Content Type Icon} hinzugefügt. Dieses Feld fügt den Suchergebnissen ein html-Element hinzu, um in den Suchergebnissen individuelle Inhhaltstypen-Icons und Tooltips anzeigen zu können. 
+\textit{Display Suite} ermöglicht es, zusätzlich zu den Feldern des Inhaltstyps, benutzerdefinierte Felder zu definieren (\path{admin/structure/ds/fields}). Für die Darstellung der Suchergebnisse wurde \zB das benutzerdefinierte Feld \textit{Content Type Icon} hinzugefügt. Dieses Feld fügt den Suchergebnissen ein html-Element hinzu, um in den Suchergebnissen individuelle Inhhaltstypen-Icons und Tooltips anzeigen zu können.
 
 
 
@@ -1084,7 +1083,7 @@ Im Folgenden werden die grundlegenden Schritte beschrieben, die nötig sind um e
 
 
 \subsubsection{Apache Solr Search}\label{subsub:apachesolr}
-Dieser Abschnitt beschreibt wie sich zusätzliche Inhaltstypen in den Apache Solr Suchindex aufnehmen lassen. Nach den Anforderungen an das Atlas-Projekt soll nur nach den fünf Inhaltstypen Analysereport, Forschungsergebnis, Projekt, Publikation und Wissenskarte gesucht werden können. 
+Dieser Abschnitt beschreibt wie sich zusätzliche Inhaltstypen in den Apache Solr Suchindex aufnehmen lassen. Nach den Anforderungen an das Atlas-Projekt soll nur nach den fünf Inhaltstypen Analysereport, Forschungsergebnis, Projekt, Publikation und Wissenskarte gesucht werden können.
 
 \begin{figure}[H]
 	\centering
@@ -1111,7 +1110,7 @@ Weitere Inhaltstypen lassen sich unter \path{admin/config/search/apachesolr} hin
 
 
 \subsubsection{Inhaltstypen}\label{subsub:inhaltstypen}
-Auf die im Laufe des Projekts angelegten bzw. erweiterten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) wird an dieser Stelle nicht eingegangen. Die Strukturen der Inhaltstypen lassen sich direkt im System (\textit{Administrationsmenü} $\rightarrow$ \textit{Struktur} $\rightarrow$  \textit{Inhaltytypen}), oder aus den entsprechenden Anforderungsdokumenten, ablesen. Zum Exportieren aller Einstellungen, um sie auf ein anderes System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an. 
+Auf die im Laufe des Projekts angelegten bzw. erweiterten Inhaltstypen (Forschungsergebnis, Projekt, Umsetzungspartner, Institution, \dots) wird an dieser Stelle nicht eingegangen. Die Strukturen der Inhaltstypen lassen sich direkt im System (\textit{Administrationsmenü} $\rightarrow$ \textit{Struktur} $\rightarrow$  \textit{Inhaltytypen}), oder aus den entsprechenden Anforderungsdokumenten, ablesen. Zum Exportieren aller Einstellungen, um sie auf ein anderes System zu übertragen, bietet sich \zB das Features Modul (\url{https://www.drupal.org/project/features}) an.
 
 
 
@@ -1159,7 +1158,6 @@ Alle Änderungen am Design des Portals durch das Atlas-Projekt sind in der Datei
 	Fehler wurde nach Upgrade auf die neuere Drupal Version angezeigt, siehe \url{https://www.drupal.org/node/2487215}.
 	Betroffene Module neu zu installieren / deinstallieren oder extra Module, die den Fehler beheben sollten halfen nicht. Nur manueller Eingriff in die Datenbank führte zum Erfolg: \lstinline| "DELETE from system where name = 'old_module1' AND type = 'module';"|
 
-	\item \dots \todo{was noch?}
 \end{itemize}
 
 
@@ -1172,51 +1170,51 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 	\begin{itemize}
 		\item Apache Solr Search (\url{https://www.drupal.org/project/apachesolr}):
 		Integration der Apache Solr Such-Plattform in Drupal
-		
+
 		\item Apache Solr Real-Time (\url{https://www.drupal.org/project/apachesolr_realtime}):
 		Echtzeit Indexierung von Dokumenten
-		
+
 		\item Bibliography Module (\url{https://www.drupal.org/project/biblio}):
 		Verwaltung von Publikationen
-		
+
 		\item Fivestar (\url{https://www.drupal.org/project/fivestar}):
 		Bewertung von Inhalten (\zB auf Inhaltstyp \textit{Wissenskarte})
-		
+
 		\item Halfstar (\url{https://www.drupal.org/project/halfstar}):
 		Feingranularere Bewertung
-		
+
 		\item Voting API (\url{https://www.drupal.org/project/votingapi}):
 		Voraussetzung für Bewertungen
 
 		\item Display Suite (\url{https://www.drupal.org/project/ds}):
 		UI zur Anpassung des Layouts von Nodes
-		
+
 		\item Flex Slider (\url{https://www.drupal.org/project/flexslider}):
 		Responsive Slideshows (\zB auf Projektstartseite)
-		
+
 		\item Chosen (\url{https://www.drupal.org/project/chosen}):
 		Modernere Auswahllisten
-		
+
 		\item Conditional Fields (\url{https://www.drupal.org/project/conditional_fields}):
 		UI zur Definition von Abhängigkeiten zwischen Feldern (\zB auf Inhaltstyp \textit{Forschungsergebnis})
-		
+
 		\item Field Validation (\url{https://www.drupal.org/project/field_validation}):
 		UI zur Definition von Validierungsregeln (\zB auf Inhaltstyp \textit{Projekt}, Feld \textit{Projektzeitraum})
-		
+
 		\item Field Group (\url{https://www.drupal.org/project/field_group}):
 		Gruppierung von Feldern
-		
+
 		\item Entity Connect (\url{https://www.drupal.org/project/entityconnect}):
-		Komfortablere Erstellung von referenzierten Inhalten 
+		Komfortablere Erstellung von referenzierten Inhalten
 		(Problem mit Chosen, Links für neue Inhalte werden bei \textit{multiselect} nicht hinter den Chosen-Elementen angeordnet. \textbf{Provisorischer Fix in \textit{entityconnect.js} vom \textit{Entity Connect} Modul})
-		
+
 		\item jQuery Autosize (\url{https://www.drupal.org/project/jquery_autosize}):
 		Automatische Anpassung von Textareas an deren Inhalt
 		(\textbf{Fix: Library pattern, Drupal behaviours angepasst})
-		
+
 		\item Font Awesome Icons (\url{https://www.drupal.org/project/fontawesome}):
 		Skalierbare sowie individuell anpassbare Vektor-Icon-Suite
-			
+
 		\item Administration menu (\url{https://www.drupal.org/project/admin_menu}):
 		effizienteres Admin-Menü
 	\end{itemize}
@@ -1257,7 +1255,7 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 \section{Offene Punkte}
 \begin{itemize}
 	\item Problem mit News-Block:
-	
+
 	\begin{figure}[H]
 		\centering
 		\includegraphics[height=0.20\textheight]{images/example_newserror}
@@ -1266,13 +1264,12 @@ Dieses Kapitel listet alle Ressourcen und deren Lizenzen auf, die dem \acrshort{
 	\end{figure}
 
 	Wenn der News-Block leer ist (keine in der Zukunft liegenden Events mehr im System), werden alle Drupal Fehler-/Bestätigungsmeldungen in dem News-Block, statt im oberen Bereich der Seite, angezeigt (siehe \cref{fig:example_newserror}).
-	
+
 
 \end{itemize}
 
 % Glossar
 \printglossary[title = Glossar]
-\todo{was noch?}
 
 %\newpage
 %\printbibliography
